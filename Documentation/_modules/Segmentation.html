@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Segmentation &mdash; PHYMOBAT 1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for Segmentation</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># This file is part of PHYMOBAT 1.0.</span>
+<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c"># </span>
+<span class="c"># PHYMOBAT 1.0 is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c"># </span>
+<span class="c"># PHYMOBAT 1.0 is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c"># </span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with PHYMOBAT 1.0.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">Vector</span> <span class="kn">import</span> <span class="n">Vector</span>
+<span class="k">try</span> <span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">ogr</span>
+<span class="k">except</span> <span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Segmentation"><a class="viewcode-back" href="../package.html#Segmentation.Segmentation">[docs]</a><span class="k">class</span> <span class="nc">Segmentation</span><span class="p">(</span><span class="n">Vector</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vector class inherits the super vector class properties. This class create the final shapefile : Cartography </span>
+<span class="sd">    on a input segmentation by decision tree.</span>
+<span class="sd">    </span>
+<span class="sd">    The output classname are (**out_class_name** variable):</span>
+<span class="sd">        - Vegetation non naturelle</span>
+<span class="sd">        - Vegetation semi-naturelle</span>
+<span class="sd">        - Herbacees</span>
+<span class="sd">        - Ligneux</span>
+<span class="sd">        - Ligneux mixtes</span>
+<span class="sd">        - Ligneux denses</span>
+<span class="sd">        - Forte phytomasse</span>
+<span class="sd">        - Moyenne phytomasse</span>
+<span class="sd">        - Faible phytomasse</span>
+<span class="sd">    </span>
+<span class="sd">    :param vector_used: Input/Output shapefile to clip (path)</span>
+<span class="sd">    :type vector_used: str</span>
+<span class="sd">    :param vector_cut: Area shapefile (path)</span>
+<span class="sd">    :type vector_cut: str</span>
+<span class="sd">    :param output_file: Output shapefile cartography. This path is the same than the segmentation path.</span>
+<span class="sd">    :type output_file: str</span>
+<span class="sd">    :param out_class_name: List of output class name</span>
+<span class="sd">    :type out_class_name: list of str</span>
+<span class="sd">    :param out_threshold: List of output threshold</span>
+<span class="sd">    :type out_threshold: list of str</span>
+<span class="sd">    :param max_...: Biomass and density (IDM, SFS index) maximum</span>
+<span class="sd">    :type max_...: float</span>
+<span class="sd">    :param class_tab_final: Final decision tree table</span>
+<span class="sd">    :type class_tab_final: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">used</span><span class="p">,</span> <span class="n">cut</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new &#39;Clustering&#39; instance</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Vector</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">used</span><span class="p">,</span> <span class="n">cut</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span>  <span class="s">&#39;Final_classification.shp&#39;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_class_name</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_tab_final</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+      
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_wood_idm</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_wood_sfs</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_bio</span> <span class="o">=</span> <span class="mi">0</span>
+    
+<div class="viewcode-block" id="Segmentation.create_cartography"><a class="viewcode-back" href="../package.html#Segmentation.Segmentation.create_cartography">[docs]</a>    <span class="k">def</span> <span class="nf">create_cartography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_fieldnames</span><span class="p">,</span> <span class="n">out_fieldtype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to create a output shapefile. In this output file,</span>
+<span class="sd">        there is the final cartography. With output defined field names</span>
+<span class="sd">        and field type in the main process.</span>
+
+<span class="sd">        :param out_fieldnames: List of output field names</span>
+<span class="sd">        :type out_fieldnames: list of str</span>
+<span class="sd">        :param out_fieldtype: List of outpu field type</span>
+<span class="sd">        :type out_fieldtype: list of str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">shp_ogr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span>
+        
+        <span class="c"># Projection</span>
+        <span class="c"># Import input shapefile projection</span>
+        <span class="n">srsObj</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">GetSpatialRef</span><span class="p">()</span>
+        <span class="c"># Conversion to syntax ESRI</span>
+        <span class="n">srsObj</span><span class="o">.</span><span class="n">MorphToESRI</span><span class="p">()</span>
+            
+        <span class="c">## Remove the output shapefile if it exists</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_file</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetDriver</span><span class="p">()</span><span class="o">.</span><span class="n">DeleteDataSource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)</span>
+        <span class="n">out_ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetDriver</span><span class="p">()</span><span class="o">.</span><span class="n">CreateDataSource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">out_ds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Could not create file&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            
+        <span class="c">#  Specific output layer</span>
+        <span class="n">out_layer</span> <span class="o">=</span> <span class="n">out_ds</span><span class="o">.</span><span class="n">CreateLayer</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">),</span> <span class="n">srsObj</span><span class="p">,</span> <span class="n">geom_type</span><span class="o">=</span><span class="n">ogr</span><span class="o">.</span><span class="n">wkbMultiPolygon</span><span class="p">)</span>
+        
+        <span class="c"># Add new fields</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_fieldnames</span><span class="p">)):</span>
+            <span class="n">fieldDefn</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">FieldDefn</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_fieldnames</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">out_fieldtype</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">out_layer</span><span class="o">.</span><span class="n">CreateField</span><span class="p">(</span><span class="n">fieldDefn</span><span class="p">)</span>
+        
+        <span class="c"># Feature for the ouput shapefile</span>
+        <span class="n">featureDefn</span> <span class="o">=</span> <span class="n">out_layer</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span>
+        
+        <span class="n">in_feature</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">SetNextByIndex</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c"># Polygons initialisation</span>
+        <span class="n">in_feature</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">GetNextFeature</span><span class="p">()</span>
+        <span class="c"># Loop on input polygons</span>
+        <span class="k">while</span> <span class="n">in_feature</span><span class="p">:</span>
+            
+            <span class="n">geom</span> <span class="o">=</span> <span class="n">in_feature</span><span class="o">.</span><span class="n">GetGeometryRef</span><span class="p">()</span> <span class="c"># Extract input geometry</span>
+
+            <span class="c"># Create a new polygon</span>
+            <span class="n">out_feature</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">featureDefn</span><span class="p">)</span>
+        
+            <span class="c"># Set the polygon geometry and attribute</span>
+            <span class="n">out_feature</span><span class="o">.</span><span class="n">SetGeometry</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+            <span class="c"># Set the existing ID </span>
+            <span class="n">out_feature</span><span class="o">.</span><span class="n">SetField</span><span class="p">(</span><span class="n">out_fieldnames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">in_feature</span><span class="o">.</span><span class="n">GetField</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_names</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="c"># Set the area</span>
+            <span class="n">out_feature</span><span class="o">.</span><span class="n">SetField</span><span class="p">(</span><span class="n">out_fieldnames</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">geom</span><span class="o">.</span><span class="n">GetArea</span><span class="p">()</span><span class="o">/</span><span class="mi">10000</span><span class="p">)</span>
+            <span class="c"># Set the others polygons fields with the decision tree dictionnary</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_fieldnames</span><span class="p">)):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">out_feature</span><span class="o">.</span><span class="n">SetField</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_fieldnames</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">in_feature</span><span class="o">.</span><span class="n">GetFID</span><span class="p">()][</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                
+            <span class="c"># Append polygon to the output shapefile</span>
+            <span class="n">out_layer</span><span class="o">.</span><span class="n">CreateFeature</span><span class="p">(</span><span class="n">out_feature</span><span class="p">)</span>
+    
+            <span class="c"># Destroy polygons</span>
+            <span class="n">out_feature</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>    
+            <span class="n">in_feature</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
+            
+            <span class="c"># Next polygon</span>
+            <span class="n">in_feature</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">GetNextFeature</span><span class="p">()</span>
+            
+        <span class="c"># Close data</span>
+        <span class="n">out_ds</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span> 
+</div>
+<div class="viewcode-block" id="Segmentation.decision_tree"><a class="viewcode-back" href="../package.html#Segmentation.Segmentation.decision_tree">[docs]</a>    <span class="k">def</span> <span class="nf">decision_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">combin_tree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to build the decision tree. Taking account output threshold and input </span>
+<span class="sd">        class name.</span>
+<span class="sd">        </span>
+<span class="sd">        :param combin_tree: Decision tree combination</span>
+<span class="sd">        :type combin_tree: list of number class name</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># Combination tree on a sentence. Every sentence will be in a table.</span>
+        <span class="n">cond_tab</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">combin_tree</span><span class="p">:</span>
+            <span class="n">cond_a</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="c"># Condition Term</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ct</span><span class="p">):</span>
+                <span class="c"># Loop on tree combinaison</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="p">[</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]]</span> <span class="o">==</span><span class="s">&#39;&#39;</span><span class="p">:</span>
+                    <span class="c"># For interval condition</span>
+                    <span class="n">cond_a</span> <span class="o">=</span> <span class="n">cond_a</span> <span class="o">+</span> <span class="s">&#39;self.stats_dict[ind_stats][&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span> <span class="o">+</span>\
+                             <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="p">[</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;=&#39;</span><span class="p">)</span> <span class="o">+</span> \
+                             <span class="s">&#39; and self.stats_dict[ind_stats][&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span> <span class="o">+</span>\
+                             <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="p">[</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;=&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39; and &#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cond_a</span> <span class="o">=</span> <span class="n">cond_a</span> <span class="o">+</span> <span class="s">&#39;self.stats_dict[ind_stats][&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;]&#39;</span> <span class="o">+</span>\
+                            <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="p">[</span><span class="n">ct</span><span class="p">[</span><span class="n">c</span><span class="p">]]</span> <span class="o">+</span> <span class="s">&#39; and &#39;</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">cond_tab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cond_a</span><span class="p">[:</span><span class="o">-</span><span class="mi">5</span><span class="p">])</span> <span class="c"># Remove the last &#39;and&#39;</span>
+        
+        <span class="c"># Loop on every value </span>
+        <span class="k">for</span> <span class="n">ind_stats</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_dict</span><span class="p">)):</span>
+            <span class="c"># Loop on decision tree combination.</span>
+            <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">cond_tab</span><span class="p">:</span>
+                <span class="c"># Add class name in the output table</span>
+                <span class="k">if</span> <span class="nb">eval</span><span class="p">(</span><span class="n">cond</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">ind_stats</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">out_class_name</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> \
+                                                       <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">combin_tree</span><span class="p">[</span><span class="n">cond_tab</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">cond</span><span class="p">)]]</span>
+                </div>
+<div class="viewcode-block" id="Segmentation.compute_biomass_density"><a class="viewcode-back" href="../package.html#Segmentation.Segmentation.compute_biomass_density">[docs]</a>    <span class="k">def</span> <span class="nf">compute_biomass_density</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute the biomass and density distribution.</span>
+<span class="sd">        It returns biomass level threshold.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">distri</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;v[0]&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        
+        <span class="n">distri_bio</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">distri_den</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">distri</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;b[0]&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;inf&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="s">&#39;nan&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">distri_bio</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">distri_den</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="c"># Tranpose table        </span>
+        <span class="n">t_distri_bio</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">distri_bio</span><span class="p">)))</span>
+        <span class="n">t_distri_den</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">distri_den</span><span class="p">)))</span>
+        
+        <span class="c"># Biomass threshold</span>
+        <span class="n">stdmore</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">t_distri_bio</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">t_distri_bio</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">stdless</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">t_distri_bio</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">t_distri_bio</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&gt;&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">stdmore</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">stdless</span><span class="p">))</span>
+        
+        <span class="c"># Compute density and biomass maximum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_wood_idm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">t_distri_den</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_wood_sfs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">t_distri_den</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_bio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">t_distri_bio</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        </div>
+<div class="viewcode-block" id="Segmentation.append_scale"><a class="viewcode-back" href="../package.html#Segmentation.Segmentation.append_scale">[docs]</a>    <span class="k">def</span> <span class="nf">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">select_class</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to complete the &#39;class_tab_final&#39; list with density and biomass information. This list will be used to build</span>
+<span class="sd">        the final shapefile.</span>
+<span class="sd">        </span>
+<span class="sd">        :param select_class: Class name to add degree</span>
+<span class="sd">        :type select_class: str</span>
+<span class="sd">        :param form: Formula to add degree</span>
+<span class="sd">        :type form: str</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">for</span> <span class="n">ind_stats</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_dict</span><span class="p">)):</span>
+            <span class="c"># Only valid on the second level</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">ind_stats</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">select_class</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">ind_stats</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">form</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

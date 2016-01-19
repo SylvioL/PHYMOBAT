@@ -1,0 +1,432 @@
+Processus utilisées et tutoriels API
+====================================
+
+Cette chaîne de traitement répond à un objectif du programme CarHab (Cartographie des Habitats naturels) à savoir : réaliser pour les milieux ouverts de basse altitude (MOBA) un "fond blanc physionomique", c’est-à-dire d’une carte physionomique de ces milieux à l’aide des techniques de télédétection.
+
+Pour cela, une méthode de classification orientée-objet selon une approche experte a été developpée. Le détail des étapes pour aboutir aux classifications du fond blanc
+physionomique est donné selon l’arbre de décision ci-dessous.
+
+.. figure:: /images_doc/arbreDecision_cut.png
+   :align: center
+   :alt: Arbre de decision
+
+La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales. Pour ce faire, les données de télédétection multi-temporelles sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l'indice du minimum de NDVI sur la série temporelle équivalente à l'étape de labour (ie à une végétation non-naturelle).
+
+Dans la deuxième étape, la télédétection permet de caractériser la végétation naturelle en termes de structure et de densité c’est-à-dire du point de vue physionomique. Cette analyse se fait par l’utilisation d’images de très hautes résolutions (ici les orthophotographies BD ORTHO |copy| IRC). Il s’agit de distinguer les surfaces herbacées des végétations ligneuses basses à l'aide de l'indice de texture SFS'SD (Structural Feature Set Standard Deviation).
+
+Pour l'étape suivante, les végétations ligneuses basses sont déclinées en deux niveaux de densités : mixtes (ouverts) et denses. Ils sont également caractérisés par leur structure et leur densité. La distinction entre ces deux classes se fait en calculant cette fois-çi l'indice d'Haralick, IDM (inverse Inverse Difference).
+
+Une dernière phase consiste à extraire de l’information sur la production chlorophyllienne des zones herbacées. Cette étape utilise les séries temporelles. Elle se base sur le calcul de l'indice du maximum de NDVI dans l'année.
+
+(Pour plus de renseignements, voir "Rapport méthodologique pour la cartographie physionomique des milieux ouverts de basse altitude par télédétection" - *Samuel Alleaume 2014*). 
+
+Processus algorithmiques utilisées
+----------------------------------
+
+Le Processus utilisé se décompose en trois parties :
+
+- Traitements des images
+- Traitements des échantillons
+- Traitements de classification
+
+.. figure:: /images_doc/ChaineTraitementCarHab.png
+   :align: center
+   :alt: Modèle conceptuel de la chaîne de traitement
+
+Traitement des images
+~~~~~~~~~~~~~~~~~~~~~
+
+.. include:: <isonum.txt>
+
+Deux types d'images sont utilisés dans cette chaîne de traitement : les orthophotographies |copy| de l'IGN en IRC (infra-rouge fausse couleur) et les images gratuites issues du satellite Landsat 8 OLI (Operational Land Imager). Ce dernier satellite en orbitre depuis 2013 fourni des images à 30 mètres de résolution spatiale et 9 bandes spectrales (aérosols, bleu, vert, rouge, proche infra-rouge, moyen infra-rouge 1 et 2, panchromatique-15m, cirrus). A ces images, est joint un raster de détection des nuages, figure ci-dessous b (masque des nuages), utilisé pour sélection les images dans le processus.
+
+.. figure:: /images_doc/spectral_cloud.png
+   :align: center
+   :alt: spectral_cloud
+
+Le traitement des images se décompose quant à lui en trois parties :
+
+1. Listing et téléchargement des images sur la plate-forme Theia
+2. Traitement des images téléchargées
+3. Traitement des images très haute résolution spatiales (calcul des indices de textures)
+
+1. Listing et téléchargements des images sur la plate-forme Theia
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Le listing des images disponibles se fait à travers une base de données GeoJSON via une API serveur : https://theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&_pretty=true&q=2013&box=4.5,43.16,5.8,43.5&maxRecord=500
+
+*Avec q=2013 : Année des images disponibles*
+
+     *box=4.5,43.16,5.8,43.5 : Zone d'emprise en degrés décimaux*
+
+La fonction :func:`Archive.Archive.listing` utilise cette base. Elle remplace dans l'exemple "2013" par l'année entrée par un utilisateur. Ensuite, à l'aide du shapefile de la zone d'étude, la fonction convertie les coordonnées des extrémités du fichier vecteur en degrés décimaux pour les inclure dans l'url ci-dessus (*box =*).
+
+A l'issue du listing, l'url des images est stocké dans une liste. A cause d'un protocole Oauth2.0 utilisé par le site Theia Land, on ne peut pas télécharger automatiquement les images avec un simple script. Il faut cliquer sur l'icône **télécharger** sur chaque page associé à une image.
+
+La solution *temporaire* trouvée à ce problème est d'utiliser un module de simulation d'utilisateur ``selenium``. A la base ``selenium`` est utilisé pour tester des sites internet expérimentaux. Dans cette chaîne de traitement il est utilisé pour automatiser le téléchargement c'est-a-dire qu'il simule l'action d'un utilisateur voulant télécharger des images (*méthode clique-bouton*).
+
+L'utilisation de ce module, découle de l'installation du navigateur internet ``Firefox``. C'est sur ce navigateur que la simulation sera effectuée.
+
+``selenium`` utilise le code source du site pour identifier les actions de l'utilisateur. Il est dépendant de toute modification de ce site. En 1 an (2015) le site a été modifié au moins 3 fois. Donc le code de la chaîne de traitement doit être modifié en conséquence régulièrement.
+
+Dans ce cas il est important de connaître les actions de l'utilisateur et les balises associées dans le code source de la page internet. Il y a neuf principales actions :func:`Archive.Archive.download`:
+
+1. **Définition** de la variable *"profile Firefox"* (dossier de téléchargement, type de fichier téléchargé automatiquement, ...)
+
+2. **Ouverture du site** via l'url https://theia.cnes.fr/rocket/#/home comme ceci :
+
+.. code-block:: python
+	
+	driver.get("https://theia.cnes.fr/rocket/#/home")
+
+3. **Connexion** :
+
+.. code-block:: python
+
+	driver.find_element_by_xpath('//li[@class="link link--signin ng-binding ng-scope"]').click()
+
+.. figure:: /images_doc/theia_1.png
+   :align: center
+   :alt: Theia
+
+.. figure:: /images_doc/theia_2.png
+   :align: center
+   :alt: Theia
+
+4. **Changement de fenêtre pour l'authentification** :
+
+.. code-block:: python
+
+	driver.switch_to_window(driver.window_handles[1])
+
+5. Remplissage des champs d'**authentification**
+
+.. code-block:: python
+
+	driver.find_element_by_id('username').send_keys("sylvio.laventure@teledetection.fr")
+	driver.find_element_by_id('password').send_keys("********")
+	driver.find_element_by_id("loginBtn").click()
+
+.. figure:: /images_doc/theia_3.png
+   :align: center
+   :alt: Theia
+
+.. figure:: /images_doc/theia_4.png
+   :align: center
+   :alt: Theia
+
+.. figure:: /images_doc/theia_5.png
+   :align: center
+   :alt: Theia
+
+.. figure:: /images_doc/theia_6.png
+   :align: center
+   :alt: Theia
+
+.. figure:: /images_doc/theia_7.png
+   :align: center
+   :alt: Theia
+
+6. **Ouverture d'une page** d'après la **liste d'url** remplie plus haut :
+
+.. code-block:: python
+
+	driver.get(imgtodownloadL8[d])
+
+.. figure:: /images_doc/theia_8.png
+   :align: center
+   :alt: Theia
+
+7. **Téléchargement** de l'image :
+
+.. code-block:: python
+
+	driver.find_element_by_xpath("//a[@class=\'fa fa-3x fa-cloud-download padded-small ng-scope\']").click()
+
+8. Pour **accepter la licence** d'utilisation (si demander) :
+
+.. code-block:: python
+
+	driver.driver.find_element_by_xpath("//a[@class=\'button bconfirm ng-binding\']").click()
+
+9. Le fichier sera automatiquement téléchargé dans le dossier spécifié dans le *"profile"*. La partie du code suivant est une astuce qui permet à l'algorithme d'attendre que le téléchargement soit fini.
+
+.. code-block:: python
+
+	while WaitDownload == 0:
+	 if glob.glob(Dossier + '/' + RepertoryL8 + '/*.part') == []:
+	 	shutil.move(Dossier + '/' + os.path.split(OutImgL8[d])[1], OutImgL8[d])
+	 	WaitDownload = 1
+
+Quand un fichier compressé *.tar.gz* est en cours de téléchargement, un fichier *.part* est crée.
+
+Dès que le téléchargement est fini, le fichier .part disparaît. Par conséquent, pour l'algorithme le téléchargement sera terminé et il passera au suivant.
+
+A la fin du téléchargement des images, :func:`Archive.Archive.decompress` va décompresser les archives grâce au module ``tarfile``.
+
+2. Traitements des images téléchargées
+++++++++++++++++++++++++++++++++++++++
+
+Toutes les images décompréssées (images spectrales à 9 bandes et masque de nuages) sont découpées :func:`Toolbox.clip_raster` en fonction de la zone d'étude. Le découpage est éffectué en ligne de commande grâce au module python ``subprocess`` :
+
+.. code-block:: bash
+
+	$ gdalwarp -dstnodata -10000 -q -cutline study_area.shp -crop_to_cutline -of GTiff raster.TIF Clip_raster.TIF
+
+Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d'étude. Pour cela, le processus regroupe :func:`Landsat8_by_date.Landsat8_by_date.group_by_date` et mosaïque d'abord les rasters par date :func:`Landsat8_by_date.Landsat8_by_date.mosaic_by_date`.
+
+Le mosaïquage est réalisé en ligne de commande :func:`Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal` en utilisant le format virtuel de `gdal`, *VRT (Virtual Dataset)* :
+
+.. code-block:: bash
+
+	$ gdalbuildvrt -srcnodata -10000 dst_data.VRT raster1.TIF raster2.TIF
+	Input file size is 286, 467
+	0...10...20...30...40...50...60...70...80...90...100 - done.
+	$
+	$ gdal_translate -a_nodata -10000 dst_data.TIF dst_data.VRT
+	Input file size is 286, 467
+	0...10...20...30...40...50...60...70...80...90...100 - done.
+
+La selection est faite dans :func:`Landsat8_by_date.Landsat8_by_date.pourc_cloud`. Elle renvoie le pourcentage de couverture claire **cl** par mosaïque de la façon suivante :
+
+- Extrait l'étendue de l'image en matrice :
+
+.. code-block:: python
+
+        mask_spec = np.in1d(data_spec[0], [-10000, math.isnan], invert=True)
+
+- Extrait les pixels correspondant aux nuages :
+
+.. code-block:: python	
+
+	mask_cloud = np.in1d(data_cloud, 0)
+	
+- Détermine les pixels de nuages par rapport à l'emprise de l'image :
+
+.. code-block:: python
+
+	cloud = np.choose(mask_cloud, (False, mask_spec))
+
+- Détermine la somme de pixels en nuages et le pourcentage dans la zone d'emprise :
+
+.. code-block:: python
+
+	dist = np.sum(cloud)
+	nb0 = float(dist)/(np.sum(mask_spec))
+
+Par défaut, le pourcentage de couverture nuageuse maximum accepté est de 40%.
+
+Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions :func:`Landsat8_by_date.Landsat8_by_date.calcul_ndvi` (calcul de NDVI), :func:`Toolbox.calc_serie_stats` (calcul de minimum, maximum de ndvi et temporalité nuageuse) et :func:`Landsat8_by_date.Landsat8_by_date.create_raster`. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d'image utilisé par pixel clair (exemple sur l'image ci-dessous).
+
+.. figure:: /images_doc/temporal_cloud.png
+   :align: center
+   :alt: temporal_cloud
+
+3. Traitements des images THRS
+++++++++++++++++++++++++++++++
+
+Le traitement des images THRS est éffectué pour déterminer les ligneux et différents types de ligneux. Ligneux sont caractérisés par leur texture vis-à-vis des herbacés, et de leur type. Ces caractéristiques sont extraits à l'aide d'indices de textures issus de l'``OTB`` via :func:`Vhrs.Vhrs`.
+
+Deux indices ont été sélectionnés pour discriminer les classes par rapport aux ligneux :
+
+- SFS’SD des indices de textures de Structural Feature Set Standard Deviation (Herbacés / Ligneux)
+
+.. code-block:: bash
+
+	$ otbcli_SFSTextureExtraction -in raster.tif -channel 2 -parameters.spethre 50.0 -parameters.spathre 100 -out out_sfs.tif
+
+- Inverse Difference Moment des indices d'Haralick (Ligneux mixtes / Ligneux denses)
+
+.. code-block:: bash
+
+	$ otbcli_HaralickTextureExtraction -in raster.tif -channel 2 -parameters.xrad 3 -parameters.yrad 3 -texture simple -out out_haralick.tif
+
+Pour extraire deux indices, il faut lancer les deux commandes ci-dessus qui calculent malgré tout 14 indices. Par conséquent, les traitements deviennent très long. Pour réduire ce temps de calcul, la chaîne de traitement utilise le ``multiprocessing``. Il permet de lancer tous les traitements en même temps.
+
+Le code Python associé au ``multiprocessing`` est le suivant :
+
+>>> from multiprocessing import Process
+>>> p_sfs = Process(target=sfs_function)
+>>> p_har = Process(target=haralick_function)
+>>> # Lancement des traitements
+>>> p_sfs.start()
+>>> p_har.start()
+>>> # Attente de la fin des calculs
+>>> p_sfs.join()
+>>> p_har.join()
+
+.. warning:: Pour utiliser le ``multiprocessing``, il faut une machine avec minimum 12Go de mémoire vive. Sinon les traitements seront plus long que sans l'utilisation du ``multiprocessing``!
+
+.. note:: L'image THRS utilisée est l'orthophotographie |copy| IGN. A la base c'est un maillage de plusieurs images carrées de 5km de coté. Ces images sont en 8bit à 50cm de résolution spatiale et au format compréssé ECW (Enhanced Compression Wavelet). En dehors de la chaîne de traitement, un mosaïquage de ces images sur la zone d'étude doit être construit. Cette mosaïque doit être ré-échantillonnée à 2m car différentes études ont montré que l'image à 50cm apportait la même information. De plus, il y a un gagne-temps non négligeable sur les calculs pour une image de plus basse résolution.
+
+Traitements des échantillons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Il faut trois paires d'échantillons pour compléter l'arbre de décision défini plus haut. Un échantillon pour séparer : **Cultures / Végétation semi-naturelle**, **Herbacées / Ligneux** et **Ligneux mixtes / Ligneux denses**.
+
+Les traitements des échantillons :func:`Processing.Processing.i_sample` est le même pour les trois, soit :
+
+- En partant du principe que tous les échantillons soit dans un même shapefile, il faut indiquer le nom de la classe et le champs où il se trouve.
+
+>>> kwargs['fieldname'] = self.fieldname_args[sple]
+>>> kwargs['class'] = self.class_args[sple]
+
+- Créer un shapefile par échantillon :func:`Sample.Sample.create_sample` puis réaliser une statistique zonale par polygone :func:`Vector.Vector.zonal_stats`.
+
+>>> sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
+>>> sample_rd[sple].create_sample(**kwargs)
+>>> sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+
+La création du shapefile est fait sur un certain nombre de polygone (chiffre indiqué par l'utilisateur) tiré aléatoirement.
+
+Au final, à l'aide des valeurs déterminer par :func:`Vector.Vector.zonal_stats`, la fonction :func:`Seath.Seath.separability_and_threshold` détermine le seuil optimal (*SEaTH–A new tool for automated feature extraction in the context of object-based image analysis S. Nussbaum et al.*) pour discriminer les classes issues de l'arbre de décision.
+
+Pour l'instant, l'utilisation du RPG (Régistre Parcellaire Graphique) est insdispensable comme échantillon de **Cultures**. Hors le RPG possède des polygones poly-culturaux. 
+
+Il se pourrait qu'un polygone renseigné soit ainsi blé, maïs et une prairie permanente. Par conséquent, ce polygones injecterait une erreur dans le calcul du seuil optimal puisque le polygone est un mélange de végétation non naturelle et semi-naturelle. Dans ce cas, :func:`Rpg.Rpg` a été mis en place pour créer des échantillons mon-culturaux de cultures et de prairies permanentes.
+
+Traitements de classification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La classification est réalisée sur la segmentation issue de la l'orthophotographie |copy| IGN. A chaque polygone, est affecté une valeur moyenne :func:`Vector.Vector.zonal_stats` par image. Les statistiques zonales sur les rasters à THRS sont très long. Le ``multiprocessing`` est, une nouvelle fois, utilisé par ici pour accélérer le gain de temps de calcul.
+
+:func:`Segmentation.Segmentation.compute_biomass_density` extrait la distribution de la densité de ligneux et de phytomasse.
+
+.. figure:: /images_doc/phytomasse.png
+   :align: center
+   :alt: Distribution normale et pourcentage de représentation en fonction de l’écart-type
+
+:func:`Segmentation.Segmentation.decision_tree` classe les polygones en fonction des seuils optimaux pré-déterminés :func:`Seath.Seath.separability_and_threshold` et des valeurs zonales par raster.
+
+:func:`Segmentation.Segmentation.create_cartography` va créer le shapefile final qui représentera le **FB physionomique MOBA**.
+
+Tutoriels interface
+-------------------
+
+L'interface utilisateur est présenté sous cette forme :
+
+.. figure:: /images_doc/API_0.png
+   :align: center
+   :alt: API
+
+Elle est ouverte en tapant dans la console :
+
+.. code-block:: bash
+
+	$ python Interface_MOBA.py
+
+Cette interface est composé de trois onglets. Chaque onglet représente les parties du processus algorithmique décrit plus haut.
+
+Elle possède également tout en bas une "check box" pour lancer la chaîne de traitement en multi-processing *(cochée par défaut mais à décocher si la machine ne possède pas minimum 12Go de mémoire vive)* et des boutons obligatoires : "Annuler" *(fermer l'application)* "OK" *(lancer le traitement)*.
+
+.. note:: Les traitements sont lancés en appuyant sur le bouton "OK" et si au moins une "check box" associée à chaque onglets et fonction est cochée. Si aucune "check box" n'est cochée, aucun traitement ne sera lancé.
+
+Cette présentation d'API se compose suivant les trois onglets.
+
+Interface du traitement des images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note:: Cet onglet est indépendant des autres onglets.
+
+.. figure:: /images_doc/API.png
+   :align: center
+   :alt: API
+
+Dans cet onglet il y a quatres traitements (quatres "check box") qui peuvent être lancés :
+
+1. **Images disponibles** : Cherche le nombre d'images disponibles sur la plate-forme Theia et l'inscrit dans la ligne d'édition en face.
+
+2. **Télécharger** : Télécharge les images à partir de la plate-forme Theia. Pour cela, il faut obligatoirement que la "check box" 1 soit également cochée et remplir dans les lignes d'édition en-dessous correspondant aux identifiants Theia (Utilisateur et mot de passe).
+
+3. **Traitement des images** : Traitement des images satellites. Il faut obligatoirement que les "check box" 1 et 2 soient cochées car le traitement des images ne peut pas être éffectué si les images ne sont pas téléchargées.
+
+4. **Image THRS** : Calcul des indices de textures. Cette "check box" peut-être lancée indépendamment des autres. Par contre il faut renseigner dans la ligne d'édition associée, le raster THRS.
+
+Avant de lancer un traitement, il faut renseigner toutes les premières lignes d'édition et sélectionner un *capteur*.
+
+.. figure:: /images_doc/API_01.png
+   :align: center
+   :alt: API
+
+Interface du traitement des échantillons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note:: Cet onglet peut être indépendant des autres onglets. Il faut cocher la "check box" **Image échantillonnée** pour signaler au processus que les traitements du premier onglet n'ont pas été lancés. Ainsi renseigner le raster associé aux échantillons dans la ligne d'édition en-dessous.
+
+.. note:: Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner dans le premier onglet "Traitement des images", le **chemin du dossier principal** et l'**emprise de la zone**.
+
+.. figure:: /images_doc/API_20.png
+   :align: center
+   :alt: API 2
+
+Dans cet onglet il y a trois "check box" dont deux correspondent à des fonctions de traitement :
+
+1. **RPG** : Création du shapefile RPG mono-cultural :func:`Processing.Processing.i_vhrs`. 
+
+.. note :: Ce traitement est lancé en appuyant sur le bouton "Ajouter".
+
+2. **Déterminer les seuils optimaux** : Calcul des seuils optimaux par paire de classes :func:`Seath.Seath.separability_and_threshold`. Ce traitement est activé en appuyant sur "OK".
+
+Cette dernière fonction est l'objectif principal de cet onglet. Il faut ajouter à la chaîne de traitement, les échantillons associés aux paires de classes. Les deux exemples suivants montrent la démarche à suivre pour remplir les champs associés aux échantillons.
+
+**Exemple pour la classe 1**, Végétation non naturelle (cultures) / Semi-naturelle :
+
+.. figure:: /images_doc/API_threshold.png
+   :align: center
+   :alt: API 2
+
+L'échantillon est un fichier RPG, il faut cocher la case RPG et entrer le nom du fichier, les classes à extraire (si il y en a plusieurs, les séparer d'une virgule), les champs associés aux classes et le nombre de polygones à extraire.
+
+En appuyant sur "Ajouter", une vérification des données entrées peut être éffectuée comme indiqué ci-dessous :
+
+.. figure:: /images_doc/API_threshold_ajout.png
+   :align: center
+   :alt: API 2
+
+**Exemple pour la classe 2**, Herbacés / Ligneux :
+
+Ce fichier n'est pas un fichier RPG, la case RPG reste décoché.
+
+.. figure:: /images_doc/API_threshold_1.png
+   :align: center
+   :alt: API 2
+
+.. figure:: /images_doc/API_threshold_2.png
+   :align: center
+   :alt: API 2
+
+Le bouton **Effacer**, efface toutes les informations entrées par l'utilisateur.
+
+Interface du traitement de classification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note :: Cet onglet est dépendant des deux autres. Au préalable, il faut obligatoirement lancer tous les traitements précédents.
+
+.. figure:: /images_doc/API_class.png
+   :align: center
+   :alt: API 2
+
+Le seul traitement qui sera lancé dans cet onglet est le processus de classification -> "check box" **Classifier** :func:`Processing.Processing.i_classifier`.
+
+Un fichier shapefile sera crée à l'emplacement indiqué par l'utilisateur, **fichier de sortie**. Il dépend du shapefile en entrée issue de la **segmentation** IGN.
+
+L'utilisateur doit personnaliser les champs des entités de sortie comme ceci :
+
+.. figure:: /images_doc/API_class_1.png
+   :align: center
+   :alt: API 2
+
+Où :
+
+- ID : Identifiant unique
+- AREA : Superficie du polygone en ha
+- NIVEAU_1 : Végétation non naturelle / Semi-naturelle
+- NIVEAU_2 : Herbacés / Ligneux
+- NIVEAU_3 : Lingeux denses / mixtes et Phytomasse faible / moyenne / forte
+- POURC : Densité de ligneux et de phytomasse
+
+Les listes déroulantes indiquent la nature des champs, il y a deux choix :
+
+* ogr.OFTString = Chaîne de caractères
+* ogr.OFTReal = Chiffre réel
+

@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; PHYMOBAT 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PHYMOBAT 1 documentation" href="index.html" />
+    <link rel="next" title="Processus utilisées et tutoriels API" href="methode_tuto.html" />
+    <link rel="prev" title="Documentation de PHYMOBAT" href="PHYMOBAT_documentation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methode_tuto.html" title="Processus utilisées et tutoriels API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="PHYMOBAT_documentation.html" title="Documentation de PHYMOBAT"
+             accesskey="P">previous</a> |</li>
+        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-sig-open-source">
+<h2>Installation SIG open source<a class="headerlink" href="#installation-sig-open-source" title="Permalink to this headline">¶</a></h2>
+<p>La chaîne de traitement est construite sous divers outils open-source, comme <tt class="docutils literal"><span class="pre">GDAL</span></tt> et <tt class="docutils literal"><span class="pre">OGR</span></tt>. La démarche à suivre pour installer ces outils est indiquée ci-dessous sous Linux et Windows.</p>
+<div class="section" id="sous-linux-ubuntu-14-04-trusty">
+<h3>Sous Linux (Ubuntu 14.04 Trusty)<a class="headerlink" href="#sous-linux-ubuntu-14-04-trusty" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Ajouter le dépôt ubuntugis-unstable</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+<span class="nv">$ </span>sudo apt-get update
+</pre></div>
+</div>
+<ul class="simple">
+<li>Installer GDAL et OTB</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install gdal-bin otb-bin
+</pre></div>
+</div>
+<p>Pour vérifier que GDAL est bien installé, taper :</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>gdalinfo
+</pre></div>
+</div>
+<p>Il est bien installé, si vous avez l&#8217;aide de gdalinfo qui s&#8217;affiche (Idem pour OGR) :</p>
+<div class="highlight-bash"><div class="highlight"><pre>Usage: gdalinfo <span class="o">[</span>--help-general<span class="o">]</span> <span class="o">[</span>-mm<span class="o">]</span> <span class="o">[</span>-stats<span class="o">]</span> <span class="o">[</span>-hist<span class="o">]</span> <span class="o">[</span>-nogcp<span class="o">]</span> <span class="o">[</span>-nomd<span class="o">]</span>
+        <span class="o">[</span>-norat<span class="o">]</span> <span class="o">[</span>-noct<span class="o">]</span> <span class="o">[</span>-nofl<span class="o">]</span> <span class="o">[</span>-checksum<span class="o">]</span> <span class="o">[</span>-proj4<span class="o">]</span>
+        <span class="o">[</span>-listmdd<span class="o">]</span> <span class="o">[</span>-mdd domain|<span class="sb">`</span>all<span class="sb">`</span><span class="o">]</span>*
+        <span class="o">[</span>-sd subdataset<span class="o">]</span> datasetname
+
+FAILURE: No datasource specified.
+</pre></div>
+</div>
+</div>
+<div class="section" id="sous-windows-windows-7-64bit">
+<h3>Sous Windows (Windows 7 64bit)<a class="headerlink" href="#sous-windows-windows-7-64bit" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Télécharger <tt class="docutils literal"><span class="pre">OSGeo4W</span></tt> (regroupement d&#8217;outils open source géospatial) sur <a class="reference external" href="https://trac.osgeo.org/osgeo4w/">https://trac.osgeo.org/osgeo4w/</a>.</li>
+<li>Ouvrir le fichier téléchargé, osgeo4w-setup-x86_64.exe par exemple :</li>
+</ul>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/1.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/2.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/3.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/4.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/5.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/6.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/7.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/8.png" />
+</div>
+<p>Depuis la nouvelle version d&#8217;<tt class="docutils literal"><span class="pre">OSGeo4W</span></tt>, <tt class="docutils literal"><span class="pre">GDAL</span></tt> est automatiquement installé avec <tt class="docutils literal"><span class="pre">Python</span></tt>. Par contre <tt class="docutils literal"><span class="pre">OTB</span></tt> ne l&#8217;est pas.</p>
+<p>Par conséquent, dans le menu démarrer de Windows, ouvrir le <tt class="docutils literal"><span class="pre">setup</span></tt> d&#8217;<tt class="docutils literal"><span class="pre">OSGeo4W</span></tt> et choisir les installations avancés :</p>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_1.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_2.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_3.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_4.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_5.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_6.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_7.png" />
+</div>
+<p>Dans la case &#8220;Search&#8221;, tapez <em>otb</em>.</p>
+<p>Normalement <tt class="docutils literal"><span class="pre">OTB</span></tt> n&#8217;est pas installé sinon on verrait la version dans la colonne &#8220;Current&#8221;.</p>
+<p>Cliquez sur &#8220;Skip&#8221;, pour installer une version sur <tt class="docutils literal"><span class="pre">otb-bin</span></tt>, <tt class="docutils literal"><span class="pre">otb-ice</span></tt>, et <tt class="docutils literal"><span class="pre">otb-python</span></tt>.</p>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_8.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_9.png" />
+</div>
+<div class="figure align-center">
+<img alt="OSGeo4W install" src="_images/_10.png" />
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Pour utiliser les outils installés par <tt class="docutils literal"><span class="pre">OSGeo4W</span></tt> en ligne de commande, il faut lancer <tt class="docutils literal"><span class="pre">OSGeo4W</span> <span class="pre">Shell</span></tt> et non l&#8217;invite de commande de Windows. Les outils de géo-spatialisation issus de l&#8217;<tt class="docutils literal"><span class="pre">OSGeo4W</span></tt> sont installés dans ce shell.</p>
+</div>
+</div>
+</div>
+<div class="section" id="modules-python">
+<h2>Modules python<a class="headerlink" href="#modules-python" title="Permalink to this headline">¶</a></h2>
+<p>La version de Python utilisée est 2.7. Le code n&#8217;a pas encore été testé sur Python 3.</p>
+<div class="section" id="installation-des-modules-python">
+<h3>Installation des modules python<a class="headerlink" href="#installation-des-modules-python" title="Permalink to this headline">¶</a></h3>
+<p>Pour installer des modules Python, télécharger dans un premier temps le module correspondant sur <a class="reference external" href="https://pypi.python.org">https://pypi.python.org</a> (Windows / Linux).</p>
+<p>Sous Linux, on peut chercher le module dans le dépôt du système de la façon suivante (exemple pour le module <tt class="docutils literal"><span class="pre">python-gdal</span></tt>):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>apt-cache search python-gdal
+</pre></div>
+</div>
+<p>Il existe plusieurs façons d&#8217;installer un module (au préalable, sur <a class="reference external" href="https://pip.pypa.io/en/stable/installing/#install-pip">https://pip.pypa.io/en/stable/installing/#install-pip</a>, télécharger et installer le module <tt class="docutils literal"><span class="pre">pip</span></tt>) :</p>
+<ul class="simple">
+<li>Pour les <strong>fichiers compréssés</strong> (.zip, .tar.gz, ...). dans le dossier du module, taper la commande :</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python setup.py install
+</pre></div>
+</div>
+<ul class="simple">
+<li>Pour les <strong>fichiers Windows</strong> (.whl) :</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>pip install selenium-2.48.0-py2-none-any.whl
+</pre></div>
+</div>
+<ul class="simple">
+<li>Via les <strong>dépôts de téléchargements</strong> de logiciels sur Linux :</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre>$ apt-get search selenium
+
+ruby-childprocess - Bibliothèque Ruby pour le contrôle des programmes externes en cours d&#39;exécution en arrière-plan
+python-selenium - liaisons Python pour Selenium
+libtest-www-selenium-perl - Perl test framework using Selenium Remote Control
+phpunit-selenium - Selenium RC integration for PHPUnit
+chromium-chromedriver - Pilote WebDriver pour le navigateur web Chromium
+oxideqt-chromedriver - Web browser engine library for Qt (chromedriver build)
+</pre></div>
+</div>
+<p>Si le module est dans le dépôt et qu&#8217;il n&#8217;est pas installé :</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install python-selenium
+</pre></div>
+</div>
+</div>
+<div class="section" id="modules-utilises-par-la-chaine-de-traitement">
+<h3>Modules utilisés par la chaîne de traitement<a class="headerlink" href="#modules-utilises-par-la-chaine-de-traitement" title="Permalink to this headline">¶</a></h3>
+<p>Les principaux modules à installer pour le bon fonctionnement de la chaîne de traitement sont cités dans le tableau ci-dessous.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Module</th>
+<th class="head">Version</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>gdal</td>
+<td>1.11.2</td>
+</tr>
+<tr class="row-odd"><td>numpy</td>
+<td>1.8.2</td>
+</tr>
+<tr class="row-even"><td>selenium</td>
+<td>2.47.3</td>
+</tr>
+<tr class="row-odd"><td>rasterstats</td>
+<td>0.3.2</td>
+</tr>
+</tbody>
+</table>
+<p>Pour vérifier si ces modules sont dèjà installé, il suffit de taper dans la console Python (Par exemple pour le module gdal):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Si ils ne sont pas encore installé vous aurez ces réponses. Dans ce cas il faudra les installer (voir section ci-dessus) :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span>
+<span class="go">ImportError: cannot import name gdal</span>
+</pre></div>
+</div>
+<p>Ou</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span>
+<span class="go">ImportError: No module named gdal</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="PHYMOBAT_documentation.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#installation-sig-open-source">Installation SIG open source</a><ul>
+<li><a class="reference internal" href="#sous-linux-ubuntu-14-04-trusty">Sous Linux (Ubuntu 14.04 Trusty)</a></li>
+<li><a class="reference internal" href="#sous-windows-windows-7-64bit">Sous Windows (Windows 7 64bit)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#modules-python">Modules python</a><ul>
+<li><a class="reference internal" href="#installation-des-modules-python">Installation des modules python</a></li>
+<li><a class="reference internal" href="#modules-utilises-par-la-chaine-de-traitement">Modules utilisés par la chaîne de traitement</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="PHYMOBAT_documentation.html"
+                        title="previous chapter">Documentation de PHYMOBAT</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="methode_tuto.html"
+                        title="next chapter">Processus utilisées et tutoriels API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/install.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="methode_tuto.html" title="Processus utilisées et tutoriels API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="PHYMOBAT_documentation.html" title="Documentation de PHYMOBAT"
+             >previous</a> |</li>
+        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

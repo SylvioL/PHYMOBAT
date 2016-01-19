@@ -1,0 +1,71 @@
+CarHab Phy MOBA package
+=======================
+
+The class diagram associated to the processing is this :
+
+.. figure:: /images_doc/ChainedeTraitementCarHab_UML_v2.png
+   :align: center
+   :alt: Class diagram
+
+Image processing
+----------------
+
+Archive
+~~~~~~~
+
+.. automodule:: Archive
+	:members:
+
+Landsat image processing
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: Landsat8_by_date
+	:members:
+
+Texture index processing
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: Vhrs
+	:members:
+
+Toolbox
+~~~~~~~
+
+.. automodule:: Toolbox
+	:members:
+
+Vector processing
+-----------------
+
+Super vector
+~~~~~~~~~~~~
+
+.. automodule:: Vector
+	:members:
+
+Sample
+~~~~~~
+
+.. automodule:: Sample
+	:members:
+
+RPG
+~~~
+
+.. automodule:: Rpg
+	:members:
+
+Separability and threshold index
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: Seath
+	:members:
+
+Classification
+~~~~~~~~~~~~~~
+
+.. automodule:: Segmentation
+	:members:
+
+
+

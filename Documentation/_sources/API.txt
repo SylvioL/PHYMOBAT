@@ -1,0 +1,27 @@
+Graphical User Interface package
+================================
+
+The class diagram associated to the interface is this :
+
+.. figure:: /images_doc/ChainedeTraitementCarHab_API_UML_v3.png
+   :align: center
+   :alt: Class diagram Interface
+
+Carhab processing MOBA main system
+----------------------------------
+
+.. automodule:: Processing
+	:members:
+
+Interface command
+-----------------
+
+.. automodule:: PHYMOBAT
+	:members:
+
+Interface element
+-----------------
+
+.. automodule:: ui_PHYMOBAT_tab
+	:members:
+

@@ -1,0 +1,224 @@
+Installation
+============
+
+Installation SIG open source
+----------------------------
+
+La chaîne de traitement est construite sous divers outils open-source, comme ``GDAL`` et ``OGR``. La démarche à suivre pour installer ces outils est indiquée ci-dessous sous Linux et Windows.
+
+Sous Linux (Ubuntu 14.04 Trusty)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Ajouter le dépôt ubuntugis-unstable
+
+.. code-block:: bash
+	
+	$ sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+	$ sudo apt-get update
+
+- Installer GDAL et OTB
+
+.. code-block:: bash
+	
+	$ sudo apt-get install gdal-bin otb-bin
+
+Pour vérifier que GDAL est bien installé, taper :
+
+.. code-block:: bash
+
+	$ gdalinfo
+
+Il est bien installé, si vous avez l'aide de gdalinfo qui s'affiche (Idem pour OGR) :
+
+.. code-block:: bash
+
+	Usage: gdalinfo [--help-general] [-mm] [-stats] [-hist] [-nogcp] [-nomd]
+                [-norat] [-noct] [-nofl] [-checksum] [-proj4]
+                [-listmdd] [-mdd domain|`all`]*
+                [-sd subdataset] datasetname
+
+	FAILURE: No datasource specified.
+
+Sous Windows (Windows 7 64bit)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Télécharger ``OSGeo4W`` (regroupement d'outils open source géospatial) sur https://trac.osgeo.org/osgeo4w/.
+
+- Ouvrir le fichier téléchargé, osgeo4w-setup-x86\_64.exe par exemple :
+
+.. figure:: /images_doc/1.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/2.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/3.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/4.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/5.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/6.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/7.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/8.png
+   :align: center
+   :alt: OSGeo4W install
+
+Depuis la nouvelle version d'``OSGeo4W``, ``GDAL`` est automatiquement installé avec ``Python``. Par contre ``OTB`` ne l'est pas.
+
+Par conséquent, dans le menu démarrer de Windows, ouvrir le ``setup`` d'``OSGeo4W`` et choisir les installations avancés :
+
+.. figure:: /images_doc/_1.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_2.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_3.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_4.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_5.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_6.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_7.png
+   :align: center
+   :alt: OSGeo4W install
+
+Dans la case "Search", tapez *otb*. 
+
+Normalement ``OTB`` n'est pas installé sinon on verrait la version dans la colonne "Current".
+
+Cliquez sur "Skip", pour installer une version sur ``otb-bin``, ``otb-ice``, et ``otb-python``.
+
+.. figure:: /images_doc/_8.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_9.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. figure:: /images_doc/_10.png
+   :align: center
+   :alt: OSGeo4W install
+
+.. warning:: Pour utiliser les outils installés par ``OSGeo4W`` en ligne de commande, il faut lancer ``OSGeo4W Shell`` et non l'invite de commande de Windows. Les outils de géo-spatialisation issus de l'``OSGeo4W`` sont installés dans ce shell.
+
+Modules python
+--------------
+
+La version de Python utilisée est 2.7. Le code n'a pas encore été testé sur Python 3.
+
+Installation des modules python
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Pour installer des modules Python, télécharger dans un premier temps le module correspondant sur https://pypi.python.org (Windows / Linux).
+
+Sous Linux, on peut chercher le module dans le dépôt du système de la façon suivante (exemple pour le module ``python-gdal``):
+
+.. code-block:: bash
+
+	$ apt-cache search python-gdal
+
+Il existe plusieurs façons d'installer un module (au préalable, sur https://pip.pypa.io/en/stable/installing/#install-pip, télécharger et installer le module ``pip``) :
+
+- Pour les **fichiers compréssés** (.zip, .tar.gz, ...). dans le dossier du module, taper la commande :
+
+.. code-block:: bash
+
+	$ python setup.py install
+
+- Pour les **fichiers Windows** (.whl) :
+
+.. code-block:: bash
+
+	$ pip install selenium-2.48.0-py2-none-any.whl
+
+- Via les **dépôts de téléchargements** de logiciels sur Linux :
+
+.. code-block:: bash
+
+	$ apt-get search selenium
+
+	ruby-childprocess - Bibliothèque Ruby pour le contrôle des programmes externes en cours d'exécution en arrière-plan
+	python-selenium - liaisons Python pour Selenium
+	libtest-www-selenium-perl - Perl test framework using Selenium Remote Control
+	phpunit-selenium - Selenium RC integration for PHPUnit
+	chromium-chromedriver - Pilote WebDriver pour le navigateur web Chromium
+	oxideqt-chromedriver - Web browser engine library for Qt (chromedriver build)
+
+Si le module est dans le dépôt et qu'il n'est pas installé :
+
+.. code-block:: bash
+
+	$ sudo apt-get install python-selenium
+
+Modules utilisés par la chaîne de traitement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Les principaux modules à installer pour le bon fonctionnement de la chaîne de traitement sont cités dans le tableau ci-dessous.
+
+.. tabularcolumns:: |c|c|
+
++---------------+-------------------+ 
+| Module        | Version           | 
++===============+===================+
+| gdal          |  1.11.2           |
++---------------+-------------------+
+| numpy         |  1.8.2            |
++---------------+-------------------+
+| selenium      |  2.47.3           |
++---------------+-------------------+
+| rasterstats   |  0.3.2            |
++---------------+-------------------+
+
+Pour vérifier si ces modules sont dèjà installé, il suffit de taper dans la console Python (Par exemple pour le module gdal):
+
+>>> from osgeo import gdal
+>>> 
+
+Si ils ne sont pas encore installé vous aurez ces réponses. Dans ce cas il faudra les installer (voir section ci-dessus) :
+
+>>> from osgeo import gdal
+ImportError: cannot import name gdal
+
+Ou
+
+>>> from osgeo import gdal
+ImportError: No module named gdal
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Archive &mdash; PHYMOBAT 1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for Archive</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># This file is part of PHYMOBAT 1.0.</span>
+<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c">#</span>
+<span class="c"># PHYMOBAT 1.0 is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c"># </span>
+<span class="c"># PHYMOBAT 1.0 is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c"># </span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with PHYMOBAT 1.0.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">urllib2</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="k">try</span> <span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">ogr</span>
+<span class="k">except</span> <span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+    
+<span class="kn">import</span> <span class="nn">UserDict</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+
+<div class="viewcode-block" id="Archive"><a class="viewcode-back" href="../package.html#Archive.Archive">[docs]</a><span class="k">class</span> <span class="nc">Archive</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to list, upload and unpack Theia image archive because of a shapefile (box).</span>
+<span class="sd">    This shapefile get extent of the area.</span>
+<span class="sd">            </span>
+<span class="sd">    :param captor: Name of the satellite (ex: Landsat or SpotWorldHeritage ...). </span>
+<span class="sd">                                </span>
+<span class="sd">                            Name used to the url on website Theia Land</span>
+<span class="sd">    :type captor: str</span>
+<span class="sd">    :param list_year: Processing&#39;s year (string for one year)</span>
+<span class="sd">    :type list_year: list of str</span>
+<span class="sd">    :param box: Path of the study area</span>
+<span class="sd">    :type box: str</span>
+<span class="sd">    :param folder: Path of the source folder</span>
+<span class="sd">    :type folder: str</span>
+<span class="sd">    :param repertoryL8: Name of the archive&#39;s folder</span>
+<span class="sd">    :type repertoryL8: str</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertoryL8</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new &#39;Archive&#39; instance</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">=</span> <span class="n">captor</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">list_year</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_box</span> <span class="o">=</span> <span class="n">box</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">=</span> <span class="n">folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span> <span class="o">=</span> <span class="n">repertoryL8</span>
+        
+        <span class="c"># Archive&#39;s list (two dimensions) :</span>
+        <span class="c"># 1. List of the website path archives</span>
+        <span class="c"># 2. List of the local path archives</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="c"># str : website JSON database</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># List (dim 5) to get year, month, day, path of multispectral&#39;s images and path of cloud&#39;s images</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># date list without duplication</span>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;Year</span><span class="se">\&#39;</span><span class="s">s list : &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span>
+    
+<div class="viewcode-block" id="Archive.set_list_archive_to_try"><a class="viewcode-back" href="../package.html#Archive.Archive.set_list_archive_to_try">[docs]</a>    <span class="k">def</span> <span class="nf">set_list_archive_to_try</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">few_list_archive</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test function to upload a few archives</span>
+<span class="sd">        </span>
+<span class="sd">        :param few_list_archive: [archive_download, out_archive]</span>
+<span class="sd">                    </span>
+<span class="sd">                    with :</span>
+<span class="sd">        </span>
+<span class="sd">                    * archive_dowload : Archives downloaded</span>
+<span class="sd">                    </span>
+<span class="sd">                    * out_archive : Output archives path</span>
+<span class="sd">                    </span>
+<span class="sd">        :type few_list_archive: list dimension 2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">_few_list_archive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">few_list_archive</span><span class="p">)</span>
+        <span class="c"># Verify list informations</span>
+        <span class="k">if</span> <span class="n">_few_list_archive</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span> 
+            <span class="k">print</span> <span class="s">&#39;Few information in the list&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">=</span> <span class="n">few_list_archive</span>
+        </div>
+<div class="viewcode-block" id="Archive.utm_to_latlng"><a class="viewcode-back" href="../package.html#Archive.Archive.utm_to_latlng">[docs]</a>    <span class="k">def</span> <span class="nf">utm_to_latlng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">easting</span><span class="p">,</span> <span class="n">northing</span><span class="p">,</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to convert UTM to geographic coordinates </span>
+<span class="sd">        </span>
+<span class="sd">        :param zone: UTM zone</span>
+<span class="sd">        :type zone: int</span>
+<span class="sd">        :param easting: Coordinates UTM in x</span>
+<span class="sd">        :type easting: float</span>
+<span class="sd">        :param northing: Coordinates UTM in y</span>
+<span class="sd">        :type northing: float</span>
+<span class="sd">        :param northernHemisphere: North hemisphere or not</span>
+<span class="sd">        :type northernHemisphere: boolean</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: tuple -- integer on the **longitude** and **latitude**</span>
+<span class="sd">        </span>
+<span class="sd">        Source : http://www.ibm.com/developerworks/java/library/j-coordconvert/index.html</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">northernHemisphere</span><span class="p">:</span>
+            <span class="n">northing</span> <span class="o">=</span> <span class="mi">10000000</span> <span class="o">-</span> <span class="n">northing</span>
+        
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">6378137</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="mf">0.081819191</span>
+        <span class="n">e1sq</span> <span class="o">=</span> <span class="mf">0.006739497</span>
+        <span class="n">k0</span> <span class="o">=</span> <span class="mf">0.9996</span>
+        
+        <span class="n">arc</span> <span class="o">=</span> <span class="n">northing</span> <span class="o">/</span> <span class="n">k0</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">arc</span> <span class="o">/</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="mf">64.0</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="o">/</span> <span class="mf">256.0</span><span class="p">))</span>
+        
+        <span class="n">ei</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span> <span class="o">*</span> <span class="n">e</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span> <span class="o">*</span> <span class="n">e</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)))</span>
+        
+        <span class="n">ca</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">ei</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">27</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">32.0</span>
+        
+        <span class="n">cb</span> <span class="o">=</span> <span class="mi">21</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">16</span> <span class="o">-</span> <span class="mi">55</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="mi">32</span>
+        <span class="n">cc</span> <span class="o">=</span> <span class="mi">151</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">96</span>
+        <span class="n">cd</span> <span class="o">=</span> <span class="mi">1097</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="mi">512</span>
+        <span class="n">phi1</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">ca</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="n">cb</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="n">cc</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="n">cd</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">mu</span><span class="p">)</span>
+        
+        <span class="n">n0</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">e</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)),</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+        
+        <span class="n">r0</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span> <span class="o">*</span> <span class="n">e</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">((</span><span class="n">e</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi1</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)),</span> <span class="p">(</span><span class="mi">3</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span>
+        <span class="n">fact1</span> <span class="o">=</span> <span class="n">n0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span> <span class="o">/</span> <span class="n">r0</span>
+        
+        <span class="n">_a1</span> <span class="o">=</span> <span class="mi">500000</span> <span class="o">-</span> <span class="n">easting</span>
+        <span class="n">dd0</span> <span class="o">=</span> <span class="n">_a1</span> <span class="o">/</span> <span class="p">(</span><span class="n">n0</span> <span class="o">*</span> <span class="n">k0</span><span class="p">)</span>
+        <span class="n">fact2</span> <span class="o">=</span> <span class="n">dd0</span> <span class="o">*</span> <span class="n">dd0</span> <span class="o">/</span> <span class="mi">2</span>
+        
+        <span class="n">t0</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">Q0</span> <span class="o">=</span> <span class="n">e1sq</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">fact3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">Q0</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">Q0</span> <span class="o">*</span> <span class="n">Q0</span> <span class="o">-</span> <span class="mi">9</span> <span class="o">*</span> <span class="n">e1sq</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">dd0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span> <span class="mi">24</span>
+        
+        <span class="n">fact4</span> <span class="o">=</span> <span class="p">(</span><span class="mi">61</span> <span class="o">+</span> <span class="mi">90</span> <span class="o">*</span> <span class="n">t0</span> <span class="o">+</span> <span class="mi">298</span> <span class="o">*</span> <span class="n">Q0</span> <span class="o">+</span> <span class="mi">45</span> <span class="o">*</span> <span class="n">t0</span> <span class="o">*</span> <span class="n">t0</span> <span class="o">-</span> <span class="mi">252</span> <span class="o">*</span> <span class="n">e1sq</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">Q0</span> <span class="o">*</span> <span class="n">Q0</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">dd0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span> <span class="o">/</span> <span class="mi">720</span>
+        
+        <span class="n">lof1</span> <span class="o">=</span> <span class="n">_a1</span> <span class="o">/</span> <span class="p">(</span><span class="n">n0</span> <span class="o">*</span> <span class="n">k0</span><span class="p">)</span>
+        <span class="n">lof2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">Q0</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">dd0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">6.0</span>
+        <span class="n">lof3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">Q0</span> <span class="o">+</span> <span class="mi">28</span> <span class="o">*</span> <span class="n">t0</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">Q0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">e1sq</span> <span class="o">+</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">t0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">dd0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">/</span> <span class="mi">120</span>
+        <span class="n">_a2</span> <span class="o">=</span> <span class="p">(</span><span class="n">lof1</span> <span class="o">-</span> <span class="n">lof2</span> <span class="o">+</span> <span class="n">lof3</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span>
+        <span class="n">_a3</span> <span class="o">=</span> <span class="n">_a2</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+        
+        <span class="n">latitude</span> <span class="o">=</span> <span class="mi">180</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi1</span> <span class="o">-</span> <span class="n">fact1</span> <span class="o">*</span> <span class="p">(</span><span class="n">fact2</span> <span class="o">+</span> <span class="n">fact3</span> <span class="o">+</span> <span class="n">fact4</span><span class="p">))</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">northernHemisphere</span><span class="p">:</span>
+            <span class="n">latitude</span> <span class="o">=</span> <span class="o">-</span><span class="n">latitude</span>
+        
+        <span class="n">longitude</span> <span class="o">=</span> <span class="p">((</span><span class="n">zone</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">zone</span> <span class="o">-</span> <span class="mf">183.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">_a3</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Archive.coord_box_dd"><a class="viewcode-back" href="../package.html#Archive.Archive.coord_box_dd">[docs]</a>    <span class="k">def</span> <span class="nf">coord_box_dd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to get area&#39;s coordinates of shapefile</span>
+
+<span class="sd">        :returns: str -- Area coordinates corner </span>
+<span class="sd">        </span>
+<span class="sd">                    --&gt; Left bottom on x, Left bottom on y, Right top on x, Right top on y</span>
+<span class="sd">        :Example:</span>
+<span class="sd">        </span>
+<span class="sd">        &gt;&gt;&gt; import Archive</span>
+<span class="sd">        &gt;&gt;&gt; test = Archive(captor, list_year, box, folder, repertoryL8) </span>
+<span class="sd">        &gt;&gt;&gt; coor_test = test.coord_box_dd()</span>
+<span class="sd">        &gt;&gt;&gt; coor_test</span>
+<span class="sd">        &#39;45.52, 2.25, 46.71, 3.27&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># Processus to convert the UTM shapefile in decimal degrees shapefile with ogr2ogr in command line </span>
+        <span class="n">utm_outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/UTM_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">utm_outfile</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">utm_outfile</span><span class="p">)</span>
+        
+        <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="s">&#39;Esri Shapefile&#39;</span><span class="p">,</span> <span class="s">&#39;-t_srs&#39;</span><span class="p">,</span> <span class="s">&#39;EPSG:32631&#39;</span><span class="p">,</span> <span class="n">utm_outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">]</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
+        
+        <span class="c"># To get shapefile extent</span>
+        <span class="c"># Avec import ogr</span>
+        <span class="n">driver</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s">&#39;ESRI Shapefile&#39;</span><span class="p">)</span>
+        <span class="c"># Open shapefile</span>
+        <span class="n">data_source</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">utm_outfile</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">data_source</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;Could not open file&#39;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">shp_ogr</span> <span class="o">=</span> <span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span>
+        <span class="c"># Extent</span>
+        <span class="n">extent_</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">()</span> <span class="c"># (xMin, xMax, yMin, yMax)</span>
+        
+        <span class="c">## Close source data</span>
+        <span class="n">data_source</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
+        
+        <span class="c"># Coordinates min in decimal degrees</span>
+        <span class="n">LL_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utm_to_latlng</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="n">extent_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">extent_</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># Coordinates max in decimal degrees</span>
+        <span class="n">LL_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utm_to_latlng</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="n">extent_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="n">extent_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                                            
+        <span class="c"># AdressUrl = &#39;http://spirit.cnes.fr/resto/Landsat/?format=html&amp;lang=fr&amp;q=2013&amp;box=&#39; + str(LL_Min[0]) + &#39;,&#39; + str(LL_Min[1]) + &#39;,&#39; + str(LL_Max[0]) + &#39;,&#39; + str(LL_Max[1])</span>
+        
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_min</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_min</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_max</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_max</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    </div>
+<div class="viewcode-block" id="Archive.listing"><a class="viewcode-back" href="../package.html#Archive.Archive.listing">[docs]</a>    <span class="k">def</span> <span class="nf">listing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to list available archive on plateform Theia Land, and on the area</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># Loop on the years</span>
+        <span class="k">print</span> <span class="s">&quot;Images availables&quot;</span>
+        <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span><span class="p">:</span>
+            
+            <span class="k">print</span> <span class="s">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ===============&quot;</span>
+            <span class="c"># Initialisation variable for a next page </span>
+            <span class="c"># There is a next page, next = 1</span>
+            <span class="c"># There isn&#39;t next page, next = 0</span>
+            <span class="n">next_</span> <span class="o">=</span> <span class="mi">1</span>
+            
+            <span class="c"># Link to connect in the database JSON of the Theia plateform</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">r&#39;https://theia.cnes.fr/resto/api/collections/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="s">&#39;/search.json?lang=fr&amp;_pretty=true&amp;q=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;&amp;box=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39;&amp;maxRecord=500&#39;</span>
+            
+            <span class="n">listing_repertoryL8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertoryL8</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertoryL8</span><span class="p">)</span>
+                
+            <span class="c"># To know path to upload images</span>
+            <span class="k">while</span> <span class="n">next_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                
+                <span class="k">try</span> <span class="p">:</span>
+                    <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">))</span> <span class="c"># Connexion in the database</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c"># Read in the database</span>
+                    
+                    <span class="n">new_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;null&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;null&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="c"># Remove &quot;null&quot; because Python don&#39;t like</span>
+                    
+                    <span class="c"># Transform the data in dictionary</span>
+                    <span class="n">data_Dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+                    <span class="n">data_Dict</span> <span class="o">=</span> <span class="n">UserDict</span><span class="o">.</span><span class="n">UserDict</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">new_data</span><span class="p">))</span>    
+                    
+                    <span class="c"># Select archives to upload</span>
+                    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">])):</span>
+                        <span class="n">name_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;productIdentifier&#39;</span><span class="p">]</span>               
+                        <span class="n">link_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;services&#39;</span><span class="p">][</span><span class="s">&#39;download&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+                        <span class="n">url_archive</span> <span class="o">=</span> <span class="n">link_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;resto&quot;</span><span class="p">,</span> <span class="s">&quot;rocket/#&quot;</span><span class="p">)</span>
+                        <span class="n">archive_download</span> <span class="o">=</span> <span class="n">url_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;/download&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="c"># Path to upload</span>
+                        <span class="n">out_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertoryL8</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">name_archive</span> <span class="o">+</span> <span class="s">&#39;.tgz&#39;</span> <span class="c"># Name after download</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">archive_download</span><span class="p">,</span> <span class="n">out_archive</span><span class="p">])</span>  
+                    
+                    <span class="c"># Verify if there is another page (next)</span>
+                    <span class="k">if</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;suivant&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">next_</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;Error connexion or error variable !&quot;</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">print</span> <span class="s">&quot;There is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot; images to upload !&quot;</span>
+</div>
+<div class="viewcode-block" id="Archive.download"><a class="viewcode-back" href="../package.html#Archive.Archive.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to upload images archive with selenium module </span>
+<span class="sd">        </span>
+<span class="sd">        :param user_theia: Username Theia Land data center</span>
+<span class="sd">        :type user_theia: str</span>
+<span class="sd">        :param password_theia: Password Theia Land data center</span>
+<span class="sd">        :type password_theia: str</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c"># Verify that archive&#39;s list isn&#39;t empty</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="k">print</span> <span class="s">&#39;Before you have to launch listing method to get archive</span><span class="se">\&#39;</span><span class="s">s list&#39;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c"># Use selenium on Firefox</span>
+        <span class="c"># Firefox&#39;s properties in profile</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.download.folderList&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># Controls the default folder to upload a file to. 0 indicates the Desktop; 1 indicates the systems default downloads location; 2 indicates a custom folder</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.download.manager.showWhenStarting&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span> <span class="c"># Turns of showing upload progress</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.download.dir&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">))</span> <span class="c"># archive&#39;s folder that will upload</span>
+        <span class="c">#mmtypes = dataDict[&#39;features&#39;][0][&#39;properties&#39;][&#39;services&#39;][&#39;download&#39;][&#39;mimeType&#39;].replace(&quot;\\&quot;, &quot;&quot;)</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.helperApps.neverAsk.saveToDisk&quot;</span><span class="p">,</span> <span class="s">&#39;application/x-gzip&#39;</span><span class="p">)</span><span class="c"># Tells Firefox to automatically upload the files of the selected mime-types (Internet media type or Content-type)</span>
+        <span class="c"># mime-types used : text/html, application/octet-stream, application/json, application/x-tgz, application/gnutar, application/x-compressed, application/x-gzip</span>
+        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.helperApps.alwaysAsk.force&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        
+        <span class="c"># Old version of selenium or problem with lastest version of firefox </span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">firefox_profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span> <span class="c"># Open a Firefox&#39;s window</span>
+        <span class="k">except</span> <span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Installer une version plus récente de selenium !!!&quot;</span>
+            <span class="k">print</span> <span class="s">&quot;Si ça ne fonctionne toujours pas, installer une ancienne version de Firefox alors !!!&quot;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># Open the website here</span>
+        <span class="c"># driver.get(&quot;http://spirit.cnes.fr/resto/Landsat/?format=html&amp;lang=fr&amp;q=&quot; + str(Annee) + &quot;&amp;box=2,46,3,48&quot;)</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;https://theia.cnes.fr/rocket/#/home&quot;</span><span class="p">)</span>
+         
+        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Variable to try the good statement of the website</span>
+        <span class="c"># Connexion&#39;s button</span>
+        <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span> <span class="p">:</span>
+                <span class="n">connexion</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//li[@class=&quot;link link--signin ng-binding ng-scope&quot;]&#39;</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&#39;Connexion</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">print</span> <span class="s">&#39;Error on Connexion</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
+        <span class="c"># Click on</span>
+        <span class="n">connexion</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+         
+        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># Authentification&#39;s button</span>
+        <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span> <span class="p">:</span>
+                <span class="n">authentification</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//button[@class=&quot;colored ng-binding&quot;]&#39;</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&#39;Authentification</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">print</span> <span class="s">&#39;Error on Authentification</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
+        <span class="c"># Click on</span>
+        <span class="n">authentification</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+        <span class="c"># Switch beetween two windows : main and popup</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_window</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">window_handles</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c">#OAuth2.0 Login</span>
+         
+        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span> 
+        <span class="c"># Fill login and password&#39;s fields</span>
+        <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">try</span> <span class="p">:</span>
+                <span class="n">username</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&#39;Field</span><span class="se">\&#39;</span><span class="s">s select AdressMail&#39;</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">print</span> <span class="s">&#39;Error on field</span><span class="se">\&#39;</span><span class="s">s select AdressMail&#39;</span>
+        <span class="n">username</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">user_theia</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">)</span>
+        <span class="n">password</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">password_theia</span><span class="p">)</span>
+         
+        <span class="c"># Login&#39;s button</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">login</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;signInButton&quot;</span><span class="p">)</span>
+            <span class="n">login</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Already connected !&quot;</span>
+        
+        <span class="c"># Button to accept terms and conditions</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;approveButton&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+         
+        <span class="c"># Switch on main window</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_window</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">window_handles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c"># Main window</span>
+         
+        <span class="c"># Verify if this is connected</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># Wait 5sec</span>
+            <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//li[@href=&quot;#/profile&quot;]&#39;</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Connected !&quot;</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Not connected !&quot;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+         
+        <span class="c"># Loop on list archive to upload images</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">)):</span>
+            <span class="c"># Upload if not exist</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
+                 
+                <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;%&quot;</span> <span class="c"># Print loading bar</span>
+                <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">]</span>
+                 
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="c"># Wait 5sec</span>
+                <span class="c"># Open website where is store archive</span>
+                <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+                
+                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c"># Upload&#39;s button</span>
+                <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">try</span> <span class="p">:</span>
+                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c"># Wait 10sec</span>
+                        <span class="n">child_img</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&quot;//a[@class=</span><span class="se">\&#39;</span><span class="s">fa fa-3x fa-cloud-download padded-small ng-scope</span><span class="se">\&#39;</span><span class="s">]&quot;</span><span class="p">)</span>
+                        <span class="k">print</span> <span class="s">&#39;Upload</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
+                        <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">print</span> <span class="s">&#39;Error on Upload</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
+                <span class="c"># Wait 5sec and click on upload&#39;s button</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                <span class="n">child_img</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+                
+                <span class="c"># To accept license if required</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c"># Wait 3sec</span>
+                    <span class="n">licence</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&quot;//a[@class=</span><span class="se">\&#39;</span><span class="s">button bconfirm ng-binding</span><span class="se">\&#39;</span><span class="s">]&quot;</span><span class="p">)</span>
+                    <span class="n">licence</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">print</span> <span class="s">&quot;Not license&quot;</span>
+                
+                <span class="c"># Wait 10 sec. It&#39;s the latency period.</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+                <span class="n">wait_download</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="c"># Tip to wait download&#39;s end</span>
+                <span class="c"># While wait_download = 0, it wait</span>
+                <span class="k">while</span> <span class="n">wait_download</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  
+                    <span class="c"># Look if the tar.part exist. If not exist, then download is over. Next ! And then wait_download = 1</span>
+                    <span class="k">if</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/*.part&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">]):</span>
+                        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+                        <span class="n">wait_download</span> <span class="o">=</span> <span class="mi">1</span>
+         
+        <span class="k">print</span> <span class="s">&quot;100%&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;END OF DOWNLOAD !&quot;</span>
+        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        </div>
+<div class="viewcode-block" id="Archive.decompress"><a class="viewcode-back" href="../package.html#Archive.Archive.decompress">[docs]</a>    <span class="k">def</span> <span class="nf">decompress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to unpack archives and store informations of the images (date, path, ...)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">print</span> <span class="s">&quot;Unpack archives&quot;</span>
+        
+        <span class="k">for</span> <span class="n">annee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span><span class="p">:</span>
+            
+            <span class="k">print</span> <span class="s">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ===============&quot;</span>
+            
+            <span class="n">img_in_glob</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">img_in_glob</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/*gz&#39;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">img_in_glob</span> <span class="o">==</span> <span class="p">[]:</span>
+                <span class="k">print</span> <span class="s">&quot;There isn&#39;t tgzfile in the folder&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c"># Create a folder &quot;Unpack&quot;</span>
+                <span class="n">folder_unpack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/Unpack&#39;</span>
+                
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">):</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;The folder already exists&#39;</span><span class="p">)</span>
+            <span class="c">#        shutil.rmtree(FolderOut) # Remove the folder that it contains if exists ...</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;mkdir&#39;</span><span class="p">,</span> <span class="n">folder_unpack</span><span class="p">]</span>
+                    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
+                
+                <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">img_in_glob</span><span class="p">:</span>
+                    <span class="n">out_folder_unpack</span> <span class="o">=</span> <span class="n">folder_unpack</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+                    <span class="c"># Unpack the archives if they aren&#39;t again!</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_folder_unpack</span><span class="p">):</span>
+                        <span class="k">print</span> <span class="s">&#39;Unpack :&#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">tfile</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="s">&#39;r:gz&#39;</span><span class="p">)</span>
+                        <span class="n">tfile</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">))</span>
+                    
+                    <span class="c"># On xmlfile, extract dates, path of images, cloud&#39;s images</span>
+                    <span class="n">xmlfile</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_folder_unpack</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.xml&#39;</span><span class="p">)</span>
+                    
+                    <span class="c"># Date images</span>
+                    <span class="c"># Exemple : &#39;2015-09-27 10:41:25.956749&#39;</span>
+                    <span class="c"># To get year, month and day ---&gt; .split(&#39; &#39;)[0].split(&#39;-&#39;)</span>
+                    <span class="n">di</span> <span class="o">=</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;/METADATA/HEADER/DATE_PDV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
+                    <span class="c"># Multispectral images</span>
+                    <span class="n">hi</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;/METADATA/FILES/ORTHO_SURF_CORR_ENV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+                    <span class="c"># Cloud images</span>
+                    <span class="c"># Cloud&#39;s path not exists in xmlfile, then replace &#39;SAT&#39; by &#39;NUA&#39;</span>
+                    <span class="n">ci</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;/METADATA/FILES/MASK_SATURATION&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_SAT&#39;</span><span class="p">,</span> <span class="s">&#39;_NUA&#39;</span><span class="p">)</span>
+                                            
+                    <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">di</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">di</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">di</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">hi</span><span class="p">,</span> <span class="n">ci</span><span class="p">])</span>
+                    
+                    <span class="c"># Create a list with dates without duplicates</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">di</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
+                    
+        <span class="k">print</span> <span class="s">&quot;End of unpack archives&quot;</span>
+    </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

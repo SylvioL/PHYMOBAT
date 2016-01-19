@@ -1,0 +1,920 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CarHab Phy MOBA package &mdash; PHYMOBAT 1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PHYMOBAT 1 documentation" href="index.html" />
+    <link rel="next" title="Graphical User Interface package" href="API.html" />
+    <link rel="prev" title="Processus utilisées et tutoriels API" href="methode_tuto.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="Graphical User Interface package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="methode_tuto.html" title="Processus utilisées et tutoriels API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="carhab-phy-moba-package">
+<h1>CarHab Phy MOBA package<a class="headerlink" href="#carhab-phy-moba-package" title="Permalink to this headline">¶</a></h1>
+<p>The class diagram associated to the processing is this :</p>
+<div class="figure align-center">
+<img alt="Class diagram" src="_images/ChainedeTraitementCarHab_UML_v2.png" />
+</div>
+<div class="section" id="image-processing">
+<h2>Image processing<a class="headerlink" href="#image-processing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-Archive">
+<span id="archive"></span><h3>Archive<a class="headerlink" href="#module-Archive" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Archive.Archive">
+<em class="property">class </em><tt class="descclassname">Archive.</tt><tt class="descname">Archive</tt><big>(</big><em>captor</em>, <em>list_year</em>, <em>box</em>, <em>folder</em>, <em>repertoryL8</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to list, upload and unpack Theia image archive because of a shapefile (box).
+This shapefile get extent of the area.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>captor</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <p>Name of the satellite (ex: Landsat or SpotWorldHeritage ...).</p>
+<p>Name used to the url on website Theia Land</p>
+</li>
+<li><strong>list_year</strong> (<em>list of str</em>) &#8211; Processing&#8217;s year (string for one year)</li>
+<li><strong>box</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path of the study area</li>
+<li><strong>folder</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path of the source folder</li>
+<li><strong>repertoryL8</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the archive&#8217;s folder</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Archive.Archive.coord_box_dd">
+<tt class="descname">coord_box_dd</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.coord_box_dd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.coord_box_dd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get area&#8217;s coordinates of shapefile</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">str &#8211; Area coordinates corner<p>&#8211;&gt; Left bottom on x, Left bottom on y, Right top on x, Right top on y</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Archive</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertoryL8</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coor_test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coor_test</span>
+<span class="go">&#39;45.52, 2.25, 46.71, 3.27&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Archive.Archive.decompress">
+<tt class="descname">decompress</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.decompress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.decompress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to unpack archives and store informations of the images (date, path, ...)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Archive.Archive.download">
+<tt class="descname">download</tt><big>(</big><em>user_theia</em>, <em>password_theia</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to upload images archive with selenium module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_theia</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Username Theia Land data center</li>
+<li><strong>password_theia</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Password Theia Land data center</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Archive.Archive.listing">
+<tt class="descname">listing</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.listing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.listing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to list available archive on plateform Theia Land, and on the area</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Archive.Archive.set_list_archive_to_try">
+<tt class="descname">set_list_archive_to_try</tt><big>(</big><em>few_list_archive</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.set_list_archive_to_try"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.set_list_archive_to_try" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test function to upload a few archives</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>few_list_archive</strong> (<em>list dimension 2</em>) &#8211; <p>[archive_download, out_archive]</p>
+<p>with :</p>
+<ul class="simple">
+<li>archive_dowload : Archives downloaded</li>
+<li>out_archive : Output archives path</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Archive.Archive.utm_to_latlng">
+<tt class="descname">utm_to_latlng</tt><big>(</big><em>zone</em>, <em>easting</em>, <em>northing</em>, <em>northernHemisphere=True</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.utm_to_latlng"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.utm_to_latlng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to convert UTM to geographic coordinates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>zone</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; UTM zone</li>
+<li><strong>easting</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Coordinates UTM in x</li>
+<li><strong>northing</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Coordinates UTM in y</li>
+<li><strong>northernHemisphere</strong> (<em>boolean</em>) &#8211; North hemisphere or not</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple &#8211; integer on the <strong>longitude</strong> and <strong>latitude</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Source : <a class="reference external" href="http://www.ibm.com/developerworks/java/library/j-coordconvert/index.html">http://www.ibm.com/developerworks/java/library/j-coordconvert/index.html</a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Landsat8_by_date">
+<span id="landsat-image-processing"></span><h3>Landsat image processing<a class="headerlink" href="#module-Landsat8_by_date" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Landsat8_by_date.Landsat8_by_date">
+<em class="property">class </em><tt class="descclassname">Landsat8_by_date.</tt><tt class="descname">Landsat8_by_date</tt><big>(</big><em>class_archive</em>, <em>big_folder</em>, <em>one_date</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Satellite image  processing&#8217;s class. This class include several processes to group images by date, mosaic images by date,
+extract images information, compute ndvi, compute cloud pourcent and create new rasters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>class_archive</strong> (<em>class</em>) &#8211; Archive class name with every information on downloaded images</li>
+<li><strong>big_folder</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Image processing folder</li>
+<li><strong>one_date</strong> (<em>list of str</em>) &#8211; [year, month, day] ...
+This variable is modified in the function <a class="reference internal" href="#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Landsat8_by_date.Landsat8_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">mosaic_by_date()</span></tt></a>. 
+To append mosaic image path, mosaic cloud image path, cloud pixel value table, mosaic ndvi image path and ndvi pixel value table.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.calcul_ndvi">
+<tt class="descname">calcul_ndvi</tt><big>(</big><em>img_spec</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.calcul_ndvi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.calcul_ndvi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computer NDVI index for a Landsat image.</p>
+<p>NDVI = band4 - band3 / band4 + band3</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img_spec</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Spectral image path</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.create_raster">
+<tt class="descname">create_raster</tt><big>(</big><em>out_raster</em>, <em>data</em>, <em>in_ds</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.create_raster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.create_raster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create raster</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_raster</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Output image path</li>
+<li><strong>data</strong> (<em>matrix</em>) &#8211; Pixel value matrix. Matrix size equal to that of a raster.</li>
+<li><strong>in_ds</strong> (<em>gdal pointer</em>) &#8211; Raster information</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.group_by_date">
+<tt class="descname">group_by_date</tt><big>(</big><em>d_uni</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.group_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.group_by_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to extract images on a single date</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d_uni</strong> (<em>list of str</em>) &#8211; [year, month, day]</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of str &#8211; variable <strong>group</strong> = [year, month, day, multispectral image path, cloud image path]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.mosaic_by_date">
+<tt class="descname">mosaic_by_date</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.mosaic_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to merge images of the same date in a image group <a class="reference internal" href="#Landsat8_by_date.Landsat8_by_date.group_by_date" title="Landsat8_by_date.Landsat8_by_date.group_by_date"><tt class="xref py py-func docutils literal"><span class="pre">group_by_date()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.pourc_cloud">
+<tt class="descname">pourc_cloud</tt><big>(</big><em>img_spec</em>, <em>img_cloud</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.pourc_cloud"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.pourc_cloud" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return clear pixel percentage on the image <strong>img_spec</strong> because of a cloud image <strong>img_cloud</strong>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>img_spec</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Spectral image path</li>
+<li><strong>img_cloud</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Cloud image path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">float &#8211; variable <strong>nb0</strong>, clear pixel percentage.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Landsat8_by_date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Landsat_test</span> <span class="o">=</span> <span class="n">Landsat8_by_date</span><span class="p">(</span><span class="n">class_archive</span><span class="p">,</span> <span class="n">big_folder</span><span class="p">,</span> <span class="n">one_date</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb0_test</span> <span class="o">=</span> <span class="n">Landsat_test</span><span class="o">.</span><span class="n">pourc_cloud</span><span class="p">(</span><span class="n">Landsat_test</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">Landsat_test</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nb0_test</span>
+<span class="go">98</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.raster_data">
+<tt class="descname">raster_data</tt><big>(</big><em>img</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.raster_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.raster_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to extract raster information.
+Return table of pixel values and raster information like line number, pixel size, ... (gdal pointer)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>img</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Raster path</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">matrix &#8211; variable <strong>data</strong>, Pixel value matrix of a raster.<p>gdal pointer &#8211; variable <strong>_in_ds</strong>, Raster information.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal">
+<tt class="descname">vrt_translate_gdal</tt><big>(</big><em>vrt_translate</em>, <em>src_data</em>, <em>dst_data</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.vrt_translate_gdal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to launch gdal tools in command line. With <tt class="docutils literal"><span class="pre">gdalbuildvrt</span></tt> and <tt class="docutils literal"><span class="pre">gdal_translate</span></tt>.
+This function is used <a class="reference internal" href="#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Landsat8_by_date.Landsat8_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">mosaic_by_date()</span></tt></a> to mosaic image by date.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vrt_translate</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; <tt class="docutils literal"><span class="pre">vrt</span></tt> or <tt class="docutils literal"><span class="pre">translate</span></tt></li>
+<li><strong>src_data</strong> (list (process <tt class="docutils literal"><span class="pre">vrt</span></tt>) or str (process <tt class="docutils literal"><span class="pre">translate</span></tt>)) &#8211; Data source. Several data for vrt process and one data (vrt data) for gdal_translate</li>
+<li><strong>dst_data</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Output path</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Vhrs">
+<span id="texture-index-processing"></span><h3>Texture index processing<a class="headerlink" href="#module-Vhrs" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Vhrs.Vhrs">
+<em class="property">class </em><tt class="descclassname">Vhrs.</tt><tt class="descname">Vhrs</tt><big>(</big><em>imag</em>, <em>mp</em><big>)</big><a class="reference internal" href="_modules/Vhrs.html#Vhrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vhrs.Vhrs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to compute Haralick and SFS textures because of OTB application in command line</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>imag</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; The input image path to compute texture image</li>
+<li><strong>out_sfs/out_haralick</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Output path</li>
+<li><strong>mp</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable -&gt; 0 or 1.</p>
+<ul>
+<li>0 means, not multi-processing</li>
+<li>1 means, launch process with multi-processing</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Vhrs.Vhrs.haralick_texture_extraction">
+<tt class="descname">haralick_texture_extraction</tt><big>(</big><em>texture_choice</em><big>)</big><a class="reference internal" href="_modules/Vhrs.html#Vhrs.haralick_texture_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vhrs.Vhrs.haralick_texture_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Function to compute Haralick texture image with OTB command line.</dt>
+<dd><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">otbcli_HaralickTextureExtraction -in qb_RoadExtract.tif -channel 2 -parameters.xrad 3 -parameters.yrad 3 -texture simple -out HaralickTextures.tif</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><dl class="first docutils">
+<dt>OTB help :</dt>
+<dd><ul class="first last">
+<li><p class="first">in : Input Image</p>
+</li>
+<li><p class="first">channel : Selected Channel</p>
+</li>
+<li><dl class="first docutils">
+<dt>Texture feature parameters <span class="classifier-delimiter">:</span> <span class="classifier">This group of parameters allows to define texture parameters.</span></dt>
+<dd><ul class="first last simple">
+<li>X Radius : X Radius</li>
+<li>Y Radius : Y Radius</li>
+<li>X Offset : X Offset</li>
+<li>Y Offset : Y Offset</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Image Minimum : Image Minimum</p>
+</li>
+<li><p class="first">Image Maximum : Image Maximum</p>
+</li>
+<li><p class="first">Histogram number of bin : Histogram number of bin</p>
+</li>
+<li><dl class="first docutils">
+<dt>Texture Set Selection Choice of The Texture Set Available choices are :</dt>
+<dd><ul class="first last simple">
+<li>Simple Haralick Texture Features: This group of parameters defines the 8 local Haralick texture feature output image. The image channels are: Energy, Entropy, Correlation, Inverse Difference Moment, Inertia, Cluster Shade, Cluster Prominence and Haralick Correlation</li>
+<li>Advanced Texture Features: This group of parameters defines the 9 advanced texture feature output image. The image channels are: Mean, Variance, Sum Average, Sum Variance, Sum Entropy, Difference of Entropies, Difference of Variances, IC1 and IC2</li>
+<li>Higher Order Texture Features: This group of parameters defines the 11 higher order texture feature output image. The image channels are: Short Run Emphasis, Long Run Emphasis, Grey-Level Nonuniformity, Run Length Nonuniformity, Run Percentage, Low Grey-Level Run Emphasis, High Grey-Level Run Emphasis, Short Run Low Grey-Level Emphasis, Short Run High Grey-Level Emphasis, Long Run Low Grey-Level Emphasis and Long Run High Grey-Level Emphasis</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">out : Feature Output Image</p>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p class="last">Source : <a class="reference external" href="http://otbcb.readthedocs.org/en/latest/Applications/app_HaralickTextureExtraction.html">http://otbcb.readthedocs.org/en/latest/Applications/app_HaralickTextureExtraction.html</a></p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>texture_choice</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Order texture choice -&gt; Simple / Advanced / Higher</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Vhrs.Vhrs.sfs_texture_extraction">
+<tt class="descname">sfs_texture_extraction</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Vhrs.html#Vhrs.sfs_texture_extraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vhrs.Vhrs.sfs_texture_extraction" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Function to compute SFS texture image with OTB command line.</dt>
+<dd><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body">otbcli_SFSTextureExtraction -in qb_RoadExtract.tif -channel 1 -parameters.spethre 50.0 -parameters.spathre 100 -out SFSTextures.tif</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><dl class="first docutils">
+<dt>OTB help :</dt>
+<dd><ul class="first last">
+<li><p class="first">in : Input Image</p>
+</li>
+<li><p class="first">channel : Selected Channel</p>
+</li>
+<li><dl class="first docutils">
+<dt>parameters <span class="classifier-delimiter">:</span> <span class="classifier">Texture feature parameters. This group of parameters allows to define SFS texture parameters. The available texture features are SFS’Length, SFS’Width, SFS’PSI, SFS’W-Mean, SFS’Ratio and SFS’SD. They are provided in this exact order in the output image.</span></dt>
+<dd><ul class="first last simple">
+<li>parameters.spethre : Spectral Threshold</li>
+<li>parameters.spathre : Spatial Threshold</li>
+<li>parameters.nbdir : Number of Direction</li>
+<li>parameters.alpha : Alpha</li>
+<li>parameters.maxcons : Ratio Maximum Consideration Number</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">out : Feature Output Image</p>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p class="last">Source : <a class="reference external" href="http://otbcb.readthedocs.org/en/latest/Applications/app_SFSTextureExtraction.html">http://otbcb.readthedocs.org/en/latest/Applications/app_SFSTextureExtraction.html</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Toolbox">
+<span id="toolbox"></span><h3>Toolbox<a class="headerlink" href="#module-Toolbox" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="Toolbox.calc_serie_stats">
+<tt class="descclassname">Toolbox.</tt><tt class="descname">calc_serie_stats</tt><big>(</big><em>table</em><big>)</big><a class="reference internal" href="_modules/Toolbox.html#calc_serie_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Toolbox.calc_serie_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute stats on temporal cloud and ndvi spectral table
+Ndvi stats : min    max    std    max-min</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>table</strong> (<em>numpy.ndarray</em>) &#8211; Spectral data, cloud raster and ndvi raster</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of numpy.ndarray &#8211; variable <strong>account_stats</strong>, list of temporal NDVI stats.<p>numpy.ndarray &#8211; variable <strong>account_cloud</strong>, pixel number clear on the area.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Toolbox.clip_raster">
+<tt class="descclassname">Toolbox.</tt><tt class="descname">clip_raster</tt><big>(</big><em>imag</em>, <em>vect</em><big>)</big><a class="reference internal" href="_modules/Toolbox.html#clip_raster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Toolbox.clip_raster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to clip a raster with a vector. The raster created will be in the same folder than the input raster.
+With a prefix <em>Clip_</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>imag</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Input image (path)</li>
+<li><strong>vect</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Extent shapefile (path)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str &#8211; variable <strong>outclip</strong>, output raster clip (path).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="vector-processing">
+<h2>Vector processing<a class="headerlink" href="#vector-processing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-Vector">
+<span id="super-vector"></span><h3>Super vector<a class="headerlink" href="#module-Vector" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Vector.Vector">
+<em class="property">class </em><tt class="descclassname">Vector.</tt><tt class="descname">Vector</tt><big>(</big><em>used</em>, <em>cut</em><big>)</big><a class="reference internal" href="_modules/Vector.html#Vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vector.Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector class to extract a area, vector data and zonal statistic (<tt class="docutils literal"><span class="pre">rasterstats</span> <span class="pre">0.3.2</span> <span class="pre">package</span></tt>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vector_used</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Input/Output shapefile to clip (path)</li>
+<li><strong>vector_cut</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Area shapefile (path)</li>
+<li><strong>data_source</strong> (<em>ogr pointer</em>) &#8211; Input shapefile information</li>
+<li><strong>stats_dict</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; <tt class="docutils literal"><span class="pre">Rasterstats</span></tt> results</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Vector.Vector.clip_vector">
+<tt class="descname">clip_vector</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Vector.html#Vector.clip_vector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vector.Vector.clip_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to clip a vector with a vector</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Vector.Vector.close_data">
+<tt class="descname">close_data</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Vector.html#Vector.close_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vector.Vector.close_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to remove allocate memory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Vector.Vector.vector_data">
+<tt class="descname">vector_data</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Vector.html#Vector.vector_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vector.Vector.vector_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to extract vector layer information</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Vector.Vector.zonal_stats">
+<tt class="descname">zonal_stats</tt><big>(</big><em>(inraster</em>, <em>band)</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Vector.html#Vector.zonal_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Vector.Vector.zonal_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the average in every polygons for a raster
+because of package <tt class="docutils literal"><span class="pre">rasterstats</span></tt> in <em>/usr/local/lib/python2.7/dist-packages/rasterstats-0.3.2-py2.7.egg/rasterstats/</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>(inraster,band)</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) &#8211; inraster -&gt; Input image path, and band -&gt; band number</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Kwargs:</th><td class="field-body"><p class="first"><strong>rank</strong> (int) - Zonal stats ranking launch</p>
+<p class="last"><strong>nb_img</strong> (int) - Number images launched with zonal stats</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Sample">
+<span id="sample"></span><h3>Sample<a class="headerlink" href="#module-Sample" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Sample.Sample">
+<em class="property">class </em><tt class="descclassname">Sample.</tt><tt class="descname">Sample</tt><big>(</big><em>used</em>, <em>cut</em>, <em>nb_sample</em><big>)</big><a class="reference internal" href="_modules/Sample.html#Sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Sample.Sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector class inherits the super vector class properties. This class create training sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vector_used</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Input/Output shapefile to clip (path)</li>
+<li><strong>vector_cut</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Area shapefile (path)</li>
+<li><strong>nb_sample</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number of polygons for every sample</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Sample.Sample.create_sample">
+<tt class="descname">create_sample</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Sample.html#Sample.create_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Sample.Sample.create_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to create a sample shapefile of a specific class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Kwargs:</th><td class="field-body"><p class="first"><strong>fieldname</strong> (list of str) - Fieldname in the input shapefile (if the user want select polygons of the class names specific)</p>
+<p class="last"><strong>class</strong> (list of str) - class names in the input shapefile (with fieldname index).
+Can use one or several classes like this &#8211;&gt; example : [classname1, classname2, ...]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Sample.Sample.select_random_sample">
+<tt class="descname">select_random_sample</tt><big>(</big><em>kw_field</em>, <em>kw_classes</em><big>)</big><a class="reference internal" href="_modules/Sample.html#Sample.select_random_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Sample.Sample.select_random_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to select id with class name specific only. This function is used in <a class="reference internal" href="#Sample.Sample.create_sample" title="Sample.Sample.create_sample"><tt class="xref py py-func docutils literal"><span class="pre">create_sample()</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>kw_field</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Field name in the input shapefile</li>
+<li><strong>kw_classes</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Class names in the input shapefile like this &#8211;&gt; &#8216;classname1, classname2&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list &#8211; variable <strong>select_id</strong>, List of id with a class name specific.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Rpg">
+<span id="rpg"></span><h3>RPG<a class="headerlink" href="#module-Rpg" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Rpg.Rpg">
+<em class="property">class </em><tt class="descclassname">Rpg.</tt><tt class="descname">Rpg</tt><big>(</big><em>used</em>, <em>cut</em><big>)</big><a class="reference internal" href="_modules/Rpg.html#Rpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Rpg.Rpg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector class inherits the super vector class properties. This class create a new RPG shapefile
+with mono-crops. It needs a basic RPG shapefile and a basic RPG CSV file <em>(...-GROUPES-CULTURE...)</em> in <a class="reference internal" href="#Rpg.Rpg.mono_rpg" title="Rpg.Rpg.mono_rpg"><tt class="xref py py-func docutils literal"><span class="pre">mono_rpg()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vector_used</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Input/Output shapefile to clip (path)</li>
+<li><strong>vector_cut</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Area shapefile (path)</li>
+<li><strong>rm_dupli</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Rpg table with no duplicated crops group</li>
+<li><strong>head_in_read</strong> (<em>list of str</em>) &#8211; List of rgp header</li>
+<li><strong>min_size</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Minimum size to extract a rpg polygons</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Rpg.Rpg.create_new_rpg_files">
+<tt class="descname">create_new_rpg_files</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Rpg.html#Rpg.create_new_rpg_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Rpg.Rpg.create_new_rpg_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to create new rpg shapefile with <strong>rm_dpli</strong> variable. The output shapefile
+will be create in the same folder than the input shapefile with prefix <em>MONO_</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Rpg.Rpg.mono_rpg">
+<tt class="descname">mono_rpg</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Rpg.html#Rpg.mono_rpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Rpg.Rpg.mono_rpg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to extract no duplicated crops.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Seath">
+<span id="separability-and-threshold-index"></span><h3>Separability and threshold index<a class="headerlink" href="#module-Seath" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Seath.Seath">
+<em class="property">class </em><tt class="descclassname">Seath.</tt><tt class="descname">Seath</tt><a class="reference internal" href="_modules/Seath.html#Seath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Seath.Seath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the optimal threshold and Bhattacharyya distance for a separability between two classes</p>
+<p>Source article : SEaTH–A new tool for automated feature extraction in the context of object-based image analysis S. Nussbaum et al.</p>
+<p>Source Info : Kenji Ose (IRSTEA) et Nathalie St-Geours (IRSTEA)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value_1</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of index mean by polygons (sample 1)</li>
+<li><strong>value_2</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; List of index mean by polygons (sample 2)</li>
+<li><strong>threshold</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Optimal threshold under this form <em>&gt;0.56</em></li>
+<li><strong>J</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><em>list</em></a>) &#8211; Jeffries-Matusita distance (measure separability between 2 classes on a 0 to 2 scale)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Seath</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">Seath</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">value_1</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stats_dict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">value_2</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stats_dict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">separability_and_threshold</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&#39;&gt;0.56&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">J</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">1.86523428</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="Seath.Seath.separability_and_threshold">
+<tt class="descname">separability_and_threshold</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/Seath.html#Seath.separability_and_threshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Seath.Seath.separability_and_threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to extract the optimal threshold for a separability between two classes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Kwargs:</th><td class="field-body"><strong>index</strong> (str) - The processing will prints the string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Segmentation">
+<span id="classification"></span><h3>Classification<a class="headerlink" href="#module-Segmentation" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Segmentation.Segmentation">
+<em class="property">class </em><tt class="descclassname">Segmentation.</tt><tt class="descname">Segmentation</tt><big>(</big><em>used</em>, <em>cut</em><big>)</big><a class="reference internal" href="_modules/Segmentation.html#Segmentation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Segmentation.Segmentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Vector class inherits the super vector class properties. This class create the final shapefile : Cartography 
+on a input segmentation by decision tree.</p>
+<dl class="docutils">
+<dt>The output classname are (<strong>out_class_name</strong> variable):</dt>
+<dd><ul class="first last simple">
+<li>Vegetation non naturelle</li>
+<li>Vegetation semi-naturelle</li>
+<li>Herbacees</li>
+<li>Ligneux</li>
+<li>Ligneux mixtes</li>
+<li>Ligneux denses</li>
+<li>Forte phytomasse</li>
+<li>Moyenne phytomasse</li>
+<li>Faible phytomasse</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vector_used</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Input/Output shapefile to clip (path)</li>
+<li><strong>vector_cut</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Area shapefile (path)</li>
+<li><strong>output_file</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Output shapefile cartography. This path is the same than the segmentation path.</li>
+<li><strong>out_class_name</strong> (<em>list of str</em>) &#8211; List of output class name</li>
+<li><strong>out_threshold</strong> (<em>list of str</em>) &#8211; List of output threshold</li>
+<li><strong>max...</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Biomass and density (IDM, SFS index) maximum</li>
+<li><strong>class_tab_final</strong> (<a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) &#8211; Final decision tree table</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Segmentation.Segmentation.append_scale">
+<tt class="descname">append_scale</tt><big>(</big><em>select_class</em>, <em>form</em><big>)</big><a class="reference internal" href="_modules/Segmentation.html#Segmentation.append_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Segmentation.Segmentation.append_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to complete the &#8216;class_tab_final&#8217; list with density and biomass information. This list will be used to build
+the final shapefile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>select_class</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Class name to add degree</li>
+<li><strong>form</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Formula to add degree</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Segmentation.Segmentation.compute_biomass_density">
+<tt class="descname">compute_biomass_density</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Segmentation.html#Segmentation.compute_biomass_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Segmentation.Segmentation.compute_biomass_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute the biomass and density distribution.
+It returns biomass level threshold.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Segmentation.Segmentation.create_cartography">
+<tt class="descname">create_cartography</tt><big>(</big><em>out_fieldnames</em>, <em>out_fieldtype</em><big>)</big><a class="reference internal" href="_modules/Segmentation.html#Segmentation.create_cartography"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Segmentation.Segmentation.create_cartography" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to create a output shapefile. In this output file,
+there is the final cartography. With output defined field names
+and field type in the main process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_fieldnames</strong> (<em>list of str</em>) &#8211; List of output field names</li>
+<li><strong>out_fieldtype</strong> (<em>list of str</em>) &#8211; List of outpu field type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Segmentation.Segmentation.decision_tree">
+<tt class="descname">decision_tree</tt><big>(</big><em>combin_tree</em><big>)</big><a class="reference internal" href="_modules/Segmentation.html#Segmentation.decision_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Segmentation.Segmentation.decision_tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to build the decision tree. Taking account output threshold and input 
+class name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>combin_tree</strong> (<em>list of number class name</em>) &#8211; Decision tree combination</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="PHYMOBAT_documentation.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">CarHab Phy MOBA package</a><ul>
+<li><a class="reference internal" href="#image-processing">Image processing</a><ul>
+<li><a class="reference internal" href="#module-Archive">Archive</a></li>
+<li><a class="reference internal" href="#module-Landsat8_by_date">Landsat image processing</a></li>
+<li><a class="reference internal" href="#module-Vhrs">Texture index processing</a></li>
+<li><a class="reference internal" href="#module-Toolbox">Toolbox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vector-processing">Vector processing</a><ul>
+<li><a class="reference internal" href="#module-Vector">Super vector</a></li>
+<li><a class="reference internal" href="#module-Sample">Sample</a></li>
+<li><a class="reference internal" href="#module-Rpg">RPG</a></li>
+<li><a class="reference internal" href="#module-Seath">Separability and threshold index</a></li>
+<li><a class="reference internal" href="#module-Segmentation">Classification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="methode_tuto.html"
+                        title="previous chapter">Processus utilisées et tutoriels API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="API.html"
+                        title="next chapter">Graphical User Interface package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/package.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="API.html" title="Graphical User Interface package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="methode_tuto.html" title="Processus utilisées et tutoriels API"
+             >previous</a> |</li>
+        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Vhrs &mdash; PHYMOBAT 1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for Vhrs</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c">#</span>
+<span class="c"># This file is part of PHYMOBAT 1.0.</span>
+<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c"># </span>
+<span class="c"># PHYMOBAT 1.0 is free software: you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published by</span>
+<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+<span class="c"># </span>
+<span class="c"># PHYMOBAT 1.0 is distributed in the hope that it will be useful,</span>
+<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+<span class="c"># </span>
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with PHYMOBAT 1.0.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+
+<div class="viewcode-block" id="Vhrs"><a class="viewcode-back" href="../package.html#Vhrs.Vhrs">[docs]</a><span class="k">class</span> <span class="nc">Vhrs</span><span class="p">():</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to compute Haralick and SFS textures because of OTB application in command line</span>
+<span class="sd">    </span>
+<span class="sd">    :param imag: The input image path to compute texture image</span>
+<span class="sd">    :type imag: str</span>
+<span class="sd">    :param out_sfs/out_haralick: Output path</span>
+<span class="sd">    :type out_sfs/out_haralick: str</span>
+<span class="sd">    :param mp: Boolean variable -&gt; 0 or 1.</span>
+<span class="sd">    </span>
+<span class="sd">            - 0 means, not multi-processing</span>
+<span class="sd">            - 1 means, launch process with multi-processing</span>
+<span class="sd">    :type mp: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imag</span><span class="p">,</span> <span class="n">mp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new &#39;Texture&#39; instance</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_imag</span> <span class="o">=</span> <span class="n">imag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">=</span> <span class="n">mp</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;SFS image&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_sfs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imag</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;_sfs.TIF&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sfs</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;SFS image don</span><span class="se">\&#39;</span><span class="s">t exists !&#39;</span><span class="p">)</span>
+            <span class="n">p_sfs</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sfs_texture_extraction</span><span class="p">)</span>
+            <span class="n">p_sfs</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">mp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">p_sfs</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="c">#             self.sfs_texture_extraction()</span>
+            
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Haralick image&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_haralick</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imag</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;_haralick.TIF&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_haralick</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Haralick image don</span><span class="se">\&#39;</span><span class="s">t exists !&#39;</span><span class="p">)</span>
+            <span class="n">p_har</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">haralick_texture_extraction</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="s">&#39;simple&#39;</span><span class="p">,</span> <span class="p">))</span>
+            <span class="n">p_har</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">mp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">p_har</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="c">#             self.haralick_texture_extraction(&#39;simple&#39;)</span>
+        
+        <span class="k">if</span> <span class="n">mp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_sfs</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_haralick</span><span class="p">):</span>
+                <span class="n">p_sfs</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+                <span class="n">p_har</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        
+<div class="viewcode-block" id="Vhrs.sfs_texture_extraction"><a class="viewcode-back" href="../package.html#Vhrs.Vhrs.sfs_texture_extraction">[docs]</a>    <span class="k">def</span> <span class="nf">sfs_texture_extraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute SFS texture image with OTB command line.</span>
+<span class="sd">            :Example: otbcli_SFSTextureExtraction -in qb_RoadExtract.tif -channel 1 -parameters.spethre 50.0 -parameters.spathre 100 -out SFSTextures.tif</span>
+<span class="sd">            </span>
+<span class="sd">            - OTB help :</span>
+<span class="sd">                * in : Input Image</span>
+<span class="sd">                * channel : Selected Channel</span>
+<span class="sd">                * parameters : Texture feature parameters. This group of parameters allows to define SFS texture parameters. The available texture features are SFS’Length, SFS’Width, SFS’PSI, SFS’W-Mean, SFS’Ratio and SFS’SD. They are provided in this exact order in the output image.</span>
+<span class="sd">                    - parameters.spethre : Spectral Threshold</span>
+<span class="sd">                    - parameters.spathre : Spatial Threshold</span>
+<span class="sd">                    - parameters.nbdir : Number of Direction</span>
+<span class="sd">                    - parameters.alpha : Alpha</span>
+<span class="sd">                    - parameters.maxcons : Ratio Maximum Consideration Number</span>
+<span class="sd">                * out : Feature Output Image</span>
+<span class="sd">                </span>
+<span class="sd">            Source : http://otbcb.readthedocs.org/en/latest/Applications/app_SFSTextureExtraction.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+              
+        <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;otbcli_SFSTextureExtraction&#39;</span><span class="p">,</span> <span class="s">&#39;-in&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imag</span><span class="p">,</span> <span class="s">&#39;-channel&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;-parameters.spethre&#39;</span><span class="p">,</span> <span class="s">&#39;50.0&#39;</span><span class="p">,</span> \
+                          <span class="s">&#39;-parameters.spathre&#39;</span><span class="p">,</span> <span class="s">&#39;100&#39;</span><span class="p">,</span> <span class="s">&#39;-out&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_sfs</span><span class="p">]</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span> 
+        </div>
+<div class="viewcode-block" id="Vhrs.haralick_texture_extraction"><a class="viewcode-back" href="../package.html#Vhrs.Vhrs.haralick_texture_extraction">[docs]</a>    <span class="k">def</span> <span class="nf">haralick_texture_extraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texture_choice</span><span class="p">):</span>
+        
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute Haralick texture image with OTB command line.</span>
+<span class="sd">            :Example: otbcli_HaralickTextureExtraction -in qb_RoadExtract.tif -channel 2 -parameters.xrad 3 -parameters.yrad 3 -texture simple -out HaralickTextures.tif</span>
+<span class="sd">            </span>
+<span class="sd">            - OTB help :</span>
+<span class="sd">                * in : Input Image</span>
+<span class="sd">                * channel : Selected Channel</span>
+<span class="sd">                * Texture feature parameters : This group of parameters allows to define texture parameters.</span>
+<span class="sd">                    - X Radius : X Radius</span>
+<span class="sd">                    - Y Radius : Y Radius</span>
+<span class="sd">                    - X Offset : X Offset</span>
+<span class="sd">                    - Y Offset : Y Offset</span>
+<span class="sd">                * Image Minimum : Image Minimum</span>
+<span class="sd">                * Image Maximum : Image Maximum</span>
+<span class="sd">                * Histogram number of bin : Histogram number of bin </span>
+<span class="sd">                * Texture Set Selection Choice of The Texture Set Available choices are :</span>
+<span class="sd">                    - Simple Haralick Texture Features: This group of parameters defines the 8 local Haralick texture feature output image. The image channels are: Energy, Entropy, Correlation, Inverse Difference Moment, Inertia, Cluster Shade, Cluster Prominence and Haralick Correlation</span>
+<span class="sd">                    - Advanced Texture Features: This group of parameters defines the 9 advanced texture feature output image. The image channels are: Mean, Variance, Sum Average, Sum Variance, Sum Entropy, Difference of Entropies, Difference of Variances, IC1 and IC2</span>
+<span class="sd">                    - Higher Order Texture Features: This group of parameters defines the 11 higher order texture feature output image. The image channels are: Short Run Emphasis, Long Run Emphasis, Grey-Level Nonuniformity, Run Length Nonuniformity, Run Percentage, Low Grey-Level Run Emphasis, High Grey-Level Run Emphasis, Short Run Low Grey-Level Emphasis, Short Run High Grey-Level Emphasis, Long Run Low Grey-Level Emphasis and Long Run High Grey-Level Emphasis</span>
+<span class="sd">                * out : Feature Output Image </span>
+<span class="sd">                </span>
+<span class="sd">            Source : http://otbcb.readthedocs.org/en/latest/Applications/app_HaralickTextureExtraction.html</span>
+<span class="sd">        </span>
+<span class="sd">        :param texture_choice: Order texture choice -&gt; Simple / Advanced / Higher</span>
+<span class="sd">        :type texture_choice: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">process_tocall</span> <span class="o">=</span>  <span class="p">[</span><span class="s">&#39;otbcli_HaralickTextureExtraction&#39;</span><span class="p">,</span> <span class="s">&#39;-in&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imag</span><span class="p">,</span> <span class="s">&#39;-channel&#39;</span><span class="p">,</span> <span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;-parameters.xrad&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> \
+                           <span class="s">&#39;-parameters.yrad&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">,</span> <span class="s">&#39;-texture&#39;</span><span class="p">,</span> <span class="n">texture_choice</span><span class="p">,</span> <span class="s">&#39;-out&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_haralick</span><span class="p">]</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span> 
+        </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

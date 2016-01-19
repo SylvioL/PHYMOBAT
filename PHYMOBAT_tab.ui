@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PHYMOBAT</class>
+ <widget class="QDialog" name="PHYMOBAT">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>491</width>
+    <height>556</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="checkBox_multiprocess">
+     <property name="text">
+      <string>Multi-processing</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <property name="autoRepeat">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Traitement images</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="label_year_images">
+         <property name="text">
+          <string>Année des images</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="5">
+        <widget class="QPushButton" name="pushButton_browser_VHRS">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <widget class="QLabel" name="label_id_theia">
+         <property name="text">
+          <string>Identifiant Theia :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="3">
+        <widget class="QLabel" name="label_captor">
+         <property name="text">
+          <string>Capteur des images à télécharger</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_principal_folder"/>
+       </item>
+       <item row="9" column="3">
+        <widget class="QLabel" name="label_password">
+         <property name="text">
+          <string>Mot de passe</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="lineEdit_user"/>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_user">
+         <property name="text">
+          <string>Utilisateur :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_VHRS">
+         <property name="text">
+          <string>Images THRS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_VHRS"/>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lineEdit_year_images"/>
+       </item>
+       <item row="6" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_listing">
+         <property name="text">
+          <string>Images disponibles :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QComboBox" name="comboBox_captor"/>
+       </item>
+       <item row="9" column="2">
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_area_path"/>
+       </item>
+       <item row="5" column="5">
+        <widget class="QPushButton" name="pushButton_browser_area_path">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLineEdit" name="lineEdit_listing"/>
+       </item>
+       <item row="1" column="5">
+        <widget class="QPushButton" name="pushButton_browser_principal_folder">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_principal_folder">
+         <property name="text">
+          <string>Chemin du dossier principal</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QLabel" name="label_area_path">
+         <property name="text">
+          <string>Emprise de la zone (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_download">
+         <property name="text">
+          <string>Télécharger</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="4" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_password"/>
+       </item>
+       <item row="10" column="0" colspan="2">
+        <widget class="QCheckBox" name="checkBox_processing">
+         <property name="text">
+          <string>Traitement des images</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="13" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Echantillons</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="6" column="0" colspan="4">
+        <widget class="QCheckBox" name="checkBox_img_sample">
+         <property name="text">
+          <string>Image échantillonnée (Si &quot;traitement images&quot; n'est pas lancé) :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_2"/>
+       </item>
+       <item row="9" column="1">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>49</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="3">
+        <widget class="QPushButton" name="pushButton_browser_sample_path">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>106</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_1"/>
+       </item>
+       <item row="9" column="3">
+        <widget class="QPushButton" name="pushButton_add_sample">
+         <property name="text">
+          <string>Ajouter</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_select_sample_fieldname">
+         <property name="text">
+          <string>Champs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>49</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_sample_path">
+         <property name="text">
+          <string>Echantillon (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>49</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_select_sample_nb_poly">
+         <property name="text">
+          <string>Nombre de polygones</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>49</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="7" column="3">
+        <widget class="QPushButton" name="pushButton_img_sample">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="4">
+        <widget class="QPlainTextEdit" name="plainTextEdit_sample">
+         <property name="plainText">
+          <string>1 - Végétation non naturelle / Semi-naturelle
+2 - Herbacés / Ligneux
+3 - Lingeux denses / mixtes
+
+
+</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_select_sample_class">
+         <property name="text">
+          <string>Classes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_1"/>
+       </item>
+       <item row="9" column="2">
+        <widget class="QPushButton" name="pushButton_clear_sample">
+         <property name="text">
+          <string>Effacer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QCheckBox" name="checkBox_RPG">
+         <property name="text">
+          <string>RPG</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_select_sample">
+         <property name="text">
+          <string>Sélection par classe de 2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QLineEdit" name="lineEdit_sample_path"/>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_nb_poly"/>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_2"/>
+       </item>
+       <item row="7" column="0" colspan="3">
+        <widget class="QLineEdit" name="lineEdit_img_sample"/>
+       </item>
+       <item row="13" column="0" colspan="3">
+        <widget class="QCheckBox" name="checkBox_threshold">
+         <property name="text">
+          <string>Déterminer les seuils optimaux</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Classification</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="6" column="6">
+        <widget class="QPushButton" name="pushButton_browser_output">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="6">
+        <widget class="QLineEdit" name="lineEdit_fieldname_4"/>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLabel" name="label_area_fieldname">
+         <property name="text">
+          <string>AREA</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="5">
+        <widget class="QLabel" name="label_ouput_fieldname">
+         <property name="text">
+          <string>Champs du fichier de sortie</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_id_fieldname">
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_fieldname_1"/>
+       </item>
+       <item row="9" column="5">
+        <widget class="QComboBox" name="comboBox_fieldname_3"/>
+       </item>
+       <item row="3" column="0" colspan="4">
+        <widget class="QLabel" name="label_segmentation">
+         <property name="text">
+          <string>Segmentation (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <widget class="QPushButton" name="pushButton_browser_segmentation">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="6">
+        <widget class="QComboBox" name="comboBox_fieldname_4"/>
+       </item>
+       <item row="10" column="0" colspan="3">
+        <widget class="QCheckBox" name="checkBox_classifier">
+         <property name="text">
+          <string>Classifier</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2" colspan="2">
+        <widget class="QComboBox" name="comboBox_fieldname_1"/>
+       </item>
+       <item row="4" column="0" colspan="6">
+        <widget class="QLineEdit" name="lineEdit_segmentation"/>
+       </item>
+       <item row="9" column="4">
+        <widget class="QComboBox" name="comboBox_fieldname_2"/>
+       </item>
+       <item row="8" column="5">
+        <widget class="QLineEdit" name="lineEdit_fieldname_3"/>
+       </item>
+       <item row="6" column="0" colspan="6">
+        <widget class="QLineEdit" name="lineEdit_output"/>
+       </item>
+       <item row="8" column="4">
+        <widget class="QLineEdit" name="lineEdit_fieldname_2"/>
+       </item>
+       <item row="5" column="0" colspan="4">
+        <widget class="QLabel" name="label_ouput">
+         <property name="text">
+          <string>Fichier de sortie (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>PHYMOBAT</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>PHYMOBAT</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,23 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.0.
+# This file is part of PHYMOBAT 1.1.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.0 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.0 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.0.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys, os
+import sys, os, math
 import numpy as np
 from Vector import Vector
 try :
@@ -169,7 +169,7 @@ class Segmentation(Vector):
             cond_a = '' # Condition Term
             c = 0
             while c < len(ct):
-                # Loop on tree combinaison
+                # Loop on tree combinaison                    
                 if self.out_threshold[ct[c]] =='':
                     # For interval condition
                     cond_a = cond_a + 'self.stats_dict[ind_stats][' + str(ct[c]/2) + ']' +\
@@ -187,14 +187,20 @@ class Segmentation(Vector):
             # Loop on decision tree combination.
             for cond in cond_tab:
                 # Add class name in the output table
-                if eval(cond):
-                    self.class_tab_final[ind_stats] = [self.out_class_name[s] \
-                                                       for s in combin_tree[cond_tab.index(cond)]]
-                
+                try:
+                    if eval(cond):
+                        self.class_tab_final[ind_stats] = [self.out_class_name[s] \
+                                                           for s in combin_tree[cond_tab.index(cond)]]
+                except NameError:
+                    # If there is 'nan' in the table statistics
+                    if eval(cond.replace('nan','-10000')):# If there is 'nan' in the table statistics
+                        self.class_tab_final[ind_stats] = [self.out_class_name[s] \
+                                                           for s in combin_tree[cond_tab.index(cond)]]
+    
     def compute_biomass_density(self):
         """
         Function to compute the biomass and density distribution.
-        It returns biomass level threshold.
+        It returns threshold of biomass level.
         
         """
         
@@ -203,7 +209,7 @@ class Segmentation(Vector):
         distri_bio = []
         distri_den = []
         for b in distri:
-            if eval('b[0]' + self.out_threshold[2]) and b[2] != float('inf') and b[2] != float('nan') and b[2] < 1:
+            if eval('b[0]' + self.out_threshold[2]) and b[len(b)-1] != float('inf') and b[len(b)-1] != float('nan') and b[len(b)-1] < 1:
                 distri_bio.append(b)
             else:
                 distri_den.append(b)

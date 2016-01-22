@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>507</width>
+    <height>578</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>A propos de PHYMOBAT</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>		      A propos de PHYMOBAT
+		      -------------------------------------
+
+L'interface utilisateur PHYMOBAT (FB PHYsionomique des Milieux Ouverts 
+de Basse Altitude par Télédétection)
+
+Cet outil répond à un objectif du programme CarHab (Cartographie des 
+Habitats naturels) à savoir : réaliser pour les milieux ouverts de basse 
+altitude (MOBA) un “fond blanc physionomique”, c’est-à-dire d’une carte 
+physionomique de ces milieux à l’aide des techniques de télédétection.
+
+__name__ = &quot;PHYMOBAT 1.1&quot;
+__version__ = &quot;1.1&quot;
+__author__ = &quot;LAVENTURE Sylvio - UMR TETIS / IRSTEA&quot;
+__date__ = &quot;Janvier 2016&quot;
+__license__ = &quot;GPL&quot;
+
+Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
+
+PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>193</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="close_newWindow">
+     <property name="text">
+      <string>Fermer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>193</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

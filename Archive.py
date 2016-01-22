@@ -1,24 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.0.
+# This file is part of PHYMOBAT 1.1.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 #
-# PHYMOBAT 1.0 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.0 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.0.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys, glob, re, shutil, time
-import math, subprocess, urllib2
+import math, subprocess, json, urllib2
 import tarfile
 
 try :
@@ -47,11 +47,11 @@ class Archive():
     :type box: str
     :param folder: Path of the source folder
     :type folder: str
-    :param repertoryL8: Name of the archive's folder
-    :type repertoryL8: str
+    :param repertory: Name of the archive's folder
+    :type repertory: str
     """
     
-    def __init__(self, captor, list_year, box, folder, repertoryL8):
+    def __init__(self, captor, list_year, box, folder, repertory):
         """Create a new 'Archive' instance
         
         """
@@ -59,7 +59,7 @@ class Archive():
         self._list_year = [int(list_year)]
         self._box = box
         self._folder = folder
-        self._repertoryL8 = repertoryL8
+        self._repertory = repertory
         
         # Archive's list (two dimensions) :
         # 1. List of the website path archives
@@ -69,7 +69,7 @@ class Archive():
         
         self.list_img = [] # List (dim 5) to get year, month, day, path of multispectral's images and path of cloud's images
         self.single_date = [] # date list without duplication
-    
+        
     def __str__(self) :
         return 'Year\'s list : ', self._list_year
     
@@ -174,7 +174,7 @@ class Archive():
         :Example:
         
         >>> import Archive
-        >>> test = Archive(captor, list_year, box, folder, repertoryL8) 
+        >>> test = Archive(captor, list_year, box, folder, repertory) 
         >>> coor_test = test.coord_box_dd()
         >>> coor_test
         '45.52, 2.25, 46.71, 3.27'
@@ -234,9 +234,9 @@ class Archive():
             # Link to connect in the database JSON of the Theia plateform
             self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
             
-            listing_repertoryL8 = self._repertoryL8 + '/' + str(year)
-            if not os.path.exists(self._folder + '/' + listing_repertoryL8):
-                os.mkdir(self._folder + '/' + listing_repertoryL8)
+            listing_repertory = self._repertory + '/' + str(year)
+            if not os.path.exists(self._folder + '/' + listing_repertory):
+                os.mkdir(self._folder + '/' + listing_repertory)
                 
             # To know path to upload images
             while next_ == 1:
@@ -253,12 +253,13 @@ class Archive():
                     
                     # Select archives to upload
                     for d in range(len(data_Dict['features'])):
-                        name_archive = data_Dict['features'][d]['properties']['productIdentifier']               
+                        name_archive = data_Dict['features'][d]['properties']['productIdentifier']    
+                        feature_id = data_Dict["features"][d]['id']
                         link_archive = data_Dict['features'][d]['properties']['services']['download']['url'].replace("\\", "")
                         url_archive = link_archive.replace("resto", "rocket/#")
                         archive_download = url_archive.replace("/download", "") # Path to upload
-                        out_archive = self._folder + '/' + listing_repertoryL8 + '/' + name_archive + '.tgz' # Name after download
-                        self.list_archive.append([archive_download, out_archive])  
+                        out_archive = self._folder + '/' + listing_repertory + '/' + name_archive + '.tgz' # Name after download
+                        self.list_archive.append([archive_download, out_archive, feature_id])  
                     
                     # Verify if there is another page (next)
                     if data_Dict['properties']['links'][len(data_Dict['properties']['links'])-1]['title'] == 'suivant':
@@ -271,9 +272,51 @@ class Archive():
 
         print "There is " + str(len(self.list_archive)) + " images to upload !"
 
-    def download(self, user_theia, password_theia):
+    def download_auto(self, user_theia, password_theia):
         """
-        Function to upload images archive with selenium module 
+        Function to download images archive automatically on Theia land data center.
+        Source : https://github.com/olivierhagolle/theia_download
+        
+        :param user_theia: Username Theia Land data center
+        :type user_theia: str
+        :param password_theia: Password Theia Land data center
+        :type password_theia: str
+        
+        """
+        #============================================================
+        # get a token to be allowed to bypass the authentification.
+        # The token is only valid for two hours. If your connection is slow
+        # or if you are downloading lots of products, it might be an issue
+        #=============================================================
+        if os.path.exists('token.json'):
+            os.remove('token.json')
+        get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(user_theia, password_theia)
+        os.system(get_token)
+        
+        with open('token.json') as data_file:    
+            token_json = json.load(data_file)
+            token = token_json["access_token"]
+            
+        #====================
+        # Download
+        #====================  
+        # Loop on list archive to download images  
+        for d in range(len(self.list_archive)):
+            # Download if not exist
+            if not os.path.exists(self.list_archive[d][1]):
+                 
+                print str(round(100*float(d)/len(self.list_archive),2)) + "%" # Print loading bar
+                print os.path.split(str(self.list_archive[d][1]))[1]
+                
+                get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(self.list_archive[d][1], token, self.list_archive[d][2])
+                print get_product
+                os.system(get_product)
+            
+        os.remove('token.json')
+        
+    def download_with_selenium(self, user_theia, password_theia):
+        """
+        Function to download images archive with selenium module 
         
         :param user_theia: Username Theia Land data center
         :type user_theia: str
@@ -292,7 +335,7 @@ class Archive():
         profile = webdriver.FirefoxProfile()
         profile.set_preference("browser.download.folderList", 2) # Controls the default folder to upload a file to. 0 indicates the Desktop; 1 indicates the systems default downloads location; 2 indicates a custom folder
         profile.set_preference("browser.download.manager.showWhenStarting", False) # Turns of showing upload progress
-        profile.set_preference("browser.download.dir", str(self._folder) + '/' + str(self._repertoryL8)) # archive's folder that will upload
+        profile.set_preference("browser.download.dir", str(self._folder) + '/' + str(self._repertory)) # archive's folder that will upload
         #mmtypes = dataDict['features'][0]['properties']['services']['download']['mimeType'].replace("\\", "")
         profile.set_preference("browser.helperApps.neverAsk.saveToDisk", 'application/x-gzip')# Tells Firefox to automatically upload the files of the selected mime-types (Internet media type or Content-type)
         # mime-types used : text/html, application/octet-stream, application/json, application/x-tgz, application/gnutar, application/x-compressed, application/x-gzip
@@ -375,7 +418,7 @@ class Archive():
             print "Not connected !"
             sys.exit(1)
          
-        # Loop on list archive to upload images
+        # Loop on list archive to download images
         for d in range(len(self.list_archive)):
             # Upload if not exist
             if not os.path.exists(self.list_archive[d][1]):
@@ -417,8 +460,8 @@ class Archive():
                 # While wait_download = 0, it wait
                 while wait_download == 0:  
                     # Look if the tar.part exist. If not exist, then download is over. Next ! And then wait_download = 1
-                    if glob.glob(str(self._folder) + '/' + str(self._repertoryL8) + '/*.part') == [] and os.path.exists(str(self._folder) + '/' + str(self._repertoryL8) + '/' + os.path.split(str(self.list_archive[d][1]))[1]):
-                        shutil.move(str(self._folder) + '/' + str(self._repertoryL8) + '/' + os.path.split(str(self.list_archive[d][1]))[1], str(self.list_archive[d][1]))
+                    if glob.glob(str(self._folder) + '/' + str(self._repertory) + '/*.part') == [] and os.path.exists(str(self._folder) + '/' + str(self._repertory) + '/' + os.path.split(str(self.list_archive[d][1]))[1]):
+                        shutil.move(str(self._folder) + '/' + str(self._repertory) + '/' + os.path.split(str(self.list_archive[d][1]))[1], str(self.list_archive[d][1]))
                         wait_download = 1
          
         print "100%"
@@ -437,13 +480,13 @@ class Archive():
             print "=============== " + str(annee) + " ==============="
             
             img_in_glob = []
-            img_in_glob = glob.glob(str(self._folder) + '/'+ str(self._repertoryL8) +'/'+ str(annee) + '/*gz')
+            img_in_glob = glob.glob(str(self._folder) + '/'+ str(self._repertory) +'/'+ str(annee) + '/*gz')
             
             if img_in_glob == []:
                 print "There isn't tgzfile in the folder"
             else:
                 # Create a folder "Unpack"
-                folder_unpack = self._folder + '/' + self._repertoryL8 +'/'+ str(annee) + '/Unpack'
+                folder_unpack = self._folder + '/' + self._repertory +'/'+ str(annee) + '/Unpack'
                 
                 if os.path.isdir(folder_unpack):
                     print('The folder already exists')

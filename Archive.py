@@ -30,7 +30,6 @@ import UserDict
 import numpy as np
 from lxml import etree
 from collections import defaultdict
-from selenium import webdriver
 
 class Archive():
     """
@@ -311,162 +310,10 @@ class Archive():
                 get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(self.list_archive[d][1], token, self.list_archive[d][2])
                 print get_product
                 os.system(get_product)
-            
+                
         os.remove('token.json')
-        
-    def download_with_selenium(self, user_theia, password_theia):
-        """
-        Function to download images archive with selenium module 
-        
-        :param user_theia: Username Theia Land data center
-        :type user_theia: str
-        :param password_theia: Password Theia Land data center
-        :type password_theia: str
-        
-        """
-        
-        # Verify that archive's list isn't empty
-        if self.list_archive == []:
-            print 'Before you have to launch listing method to get archive\'s list'
-            sys.exit(1)
-        
-        # Use selenium on Firefox
-        # Firefox's properties in profile
-        profile = webdriver.FirefoxProfile()
-        profile.set_preference("browser.download.folderList", 2) # Controls the default folder to upload a file to. 0 indicates the Desktop; 1 indicates the systems default downloads location; 2 indicates a custom folder
-        profile.set_preference("browser.download.manager.showWhenStarting", False) # Turns of showing upload progress
-        profile.set_preference("browser.download.dir", str(self._folder) + '/' + str(self._repertory)) # archive's folder that will upload
-        #mmtypes = dataDict['features'][0]['properties']['services']['download']['mimeType'].replace("\\", "")
-        profile.set_preference("browser.helperApps.neverAsk.saveToDisk", 'application/x-gzip')# Tells Firefox to automatically upload the files of the selected mime-types (Internet media type or Content-type)
-        # mime-types used : text/html, application/octet-stream, application/json, application/x-tgz, application/gnutar, application/x-compressed, application/x-gzip
-        profile.set_preference("browser.helperApps.alwaysAsk.force", False)
-        
-        # Old version of selenium or problem with lastest version of firefox 
-        try:
-            driver = webdriver.Firefox(firefox_profile=profile) # Open a Firefox's window
-        except :
-            print "Installer une version plus récente de selenium !!!"
-            print "Si ça ne fonctionne toujours pas, installer une ancienne version de Firefox alors !!!"
-            sys.exit(1)
-
-        # Open the website here
-        # driver.get("http://spirit.cnes.fr/resto/Landsat/?format=html&lang=fr&q=" + str(Annee) + "&box=2,46,3,48")
-        driver.get("https://theia.cnes.fr/rocket/#/home")
-         
-        test = 0 # Variable to try the good statement of the website
-        # Connexion's button
-        while test == 0:
-            try :
-                connexion = driver.find_element_by_xpath('//li[@class="link link--signin ng-binding ng-scope"]')
-                print 'Connexion\'s button'
-                test = 1
-            except:
-                test = 0
-                print 'Error on Connexion\'s button'
-        # Click on
-        connexion.click()
-         
-        test = 0
-        # Authentification's button
-        while test == 0:
-            try :
-                authentification = driver.find_element_by_xpath('//button[@class="colored ng-binding"]')
-                print 'Authentification\'s button'
-                test = 1
-            except:
-                test = 0
-                print 'Error on Authentification\'s button'
-        # Click on
-        authentification.click()
-
-        # Switch beetween two windows : main and popup
-        driver.switch_to_window(driver.window_handles[1]) #OAuth2.0 Login
-         
-        test = 0 
-        # Fill login and password's fields
-        while test == 0:
-            try :
-                username = driver.find_element_by_id('username')
-                print 'Field\'s select AdressMail'
-                test = 1
-            except:
-                test = 0
-                print 'Error on field\'s select AdressMail'
-        username.send_keys(user_theia)
-        password = driver.find_element_by_id('password')
-        password.send_keys(password_theia)
-         
-        # Login's button
-        try:
-            login = driver.find_element_by_id("signInButton")
-            login.click()
-        except:
-            print "Already connected !"
-        
-        # Button to accept terms and conditions
-        driver.find_element_by_id("approveButton").click()
-         
-        # Switch on main window
-        driver.switch_to_window(driver.window_handles[0]) # Main window
-         
-        # Verify if this is connected
-        try:
-            time.sleep(5) # Wait 5sec
-            driver.find_element_by_xpath('//li[@href="#/profile"]')
-            print "Connected !"
-        except:
-            print "Not connected !"
-            sys.exit(1)
-         
-        # Loop on list archive to download images
-        for d in range(len(self.list_archive)):
-            # Upload if not exist
-            if not os.path.exists(self.list_archive[d][1]):
-                 
-                print str(round(100*float(d)/len(self.list_archive),2)) + "%" # Print loading bar
-                print os.path.split(str(self.list_archive[d][1]))[1]
-                 
-                time.sleep(5)# Wait 5sec
-                # Open website where is store archive
-                driver.get(self.list_archive[d][0])
-                
-                test = 0
-                # Upload's button
-                while test == 0:
-                    try :
-                        time.sleep(10) # Wait 10sec
-                        child_img = driver.find_element_by_xpath("//a[@class=\'fa fa-3x fa-cloud-download padded-small ng-scope\']")
-                        print 'Upload\'s button'
-                        test = 1
-                    except:
-                        test = 0
-                        print 'Error on Upload\'s button'
-                # Wait 5sec and click on upload's button
-                time.sleep(5)
-                child_img.click()
-                
-                # To accept license if required
-                try:
-                    time.sleep(3) # Wait 3sec
-                    licence = driver.find_element_by_xpath("//a[@class=\'button bconfirm ng-binding\']")
-                    licence.click()
-                except:
-                    print "Not license"
-                
-                # Wait 10 sec. It's the latency period.
-                time.sleep(10)
-                wait_download = 0
-                # Tip to wait download's end
-                # While wait_download = 0, it wait
-                while wait_download == 0:  
-                    # Look if the tar.part exist. If not exist, then download is over. Next ! And then wait_download = 1
-                    if glob.glob(str(self._folder) + '/' + str(self._repertory) + '/*.part') == [] and os.path.exists(str(self._folder) + '/' + str(self._repertory) + '/' + os.path.split(str(self.list_archive[d][1]))[1]):
-                        shutil.move(str(self._folder) + '/' + str(self._repertory) + '/' + os.path.split(str(self.list_archive[d][1]))[1], str(self.list_archive[d][1]))
-                        wait_download = 1
-         
         print "100%"
-        print "END OF DOWNLOAD !"
-        driver.close()
+        print "END OF DOWNLOAD !"   
         
     def decompress(self):
         """

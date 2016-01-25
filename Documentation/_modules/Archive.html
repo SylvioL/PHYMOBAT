@@ -51,24 +51,24 @@
 <span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="c">#</span>
-<span class="c"># This file is part of PHYMOBAT 1.0.</span>
+<span class="c"># This file is part of PHYMOBAT 1.1.</span>
 <span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
 <span class="c">#</span>
-<span class="c"># PHYMOBAT 1.0 is free software: you can redistribute it and/or modify</span>
+<span class="c"># PHYMOBAT 1.1 is free software: you can redistribute it and/or modify</span>
 <span class="c"># it under the terms of the GNU General Public License as published by</span>
 <span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
 <span class="c"># (at your option) any later version.</span>
 <span class="c"># </span>
-<span class="c"># PHYMOBAT 1.0 is distributed in the hope that it will be useful,</span>
+<span class="c"># PHYMOBAT 1.1 is distributed in the hope that it will be useful,</span>
 <span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
 <span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
 <span class="c"># GNU General Public License for more details.</span>
 <span class="c"># </span>
 <span class="c"># You should have received a copy of the GNU General Public License</span>
-<span class="c"># along with PHYMOBAT 1.0.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c"># along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">urllib2</span>
+<span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">urllib2</span>
 <span class="kn">import</span> <span class="nn">tarfile</span>
 
 <span class="k">try</span> <span class="p">:</span>
@@ -80,7 +80,6 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
 
 <div class="viewcode-block" id="Archive"><a class="viewcode-back" href="../package.html#Archive.Archive">[docs]</a><span class="k">class</span> <span class="nc">Archive</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -97,11 +96,11 @@
 <span class="sd">    :type box: str</span>
 <span class="sd">    :param folder: Path of the source folder</span>
 <span class="sd">    :type folder: str</span>
-<span class="sd">    :param repertoryL8: Name of the archive&#39;s folder</span>
-<span class="sd">    :type repertoryL8: str</span>
+<span class="sd">    :param repertory: Name of the archive&#39;s folder</span>
+<span class="sd">    :type repertory: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertoryL8</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a new &#39;Archive&#39; instance</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -109,7 +108,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">list_year</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_box</span> <span class="o">=</span> <span class="n">box</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">=</span> <span class="n">folder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span> <span class="o">=</span> <span class="n">repertoryL8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">=</span> <span class="n">repertory</span>
         
         <span class="c"># Archive&#39;s list (two dimensions) :</span>
         <span class="c"># 1. List of the website path archives</span>
@@ -119,7 +118,7 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># List (dim 5) to get year, month, day, path of multispectral&#39;s images and path of cloud&#39;s images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># date list without duplication</span>
-    
+        
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="k">return</span> <span class="s">&#39;Year</span><span class="se">\&#39;</span><span class="s">s list : &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span>
     
@@ -224,7 +223,7 @@
 <span class="sd">        :Example:</span>
 <span class="sd">        </span>
 <span class="sd">        &gt;&gt;&gt; import Archive</span>
-<span class="sd">        &gt;&gt;&gt; test = Archive(captor, list_year, box, folder, repertoryL8) </span>
+<span class="sd">        &gt;&gt;&gt; test = Archive(captor, list_year, box, folder, repertory) </span>
 <span class="sd">        &gt;&gt;&gt; coor_test = test.coord_box_dd()</span>
 <span class="sd">        &gt;&gt;&gt; coor_test</span>
 <span class="sd">        &#39;45.52, 2.25, 46.71, 3.27&#39;</span>
@@ -284,9 +283,9 @@
             <span class="c"># Link to connect in the database JSON of the Theia plateform</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">r&#39;https://theia.cnes.fr/resto/api/collections/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="s">&#39;/search.json?lang=fr&amp;_pretty=true&amp;q=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;&amp;box=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39;&amp;maxRecord=500&#39;</span>
             
-            <span class="n">listing_repertoryL8</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertoryL8</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertoryL8</span><span class="p">)</span>
+            <span class="n">listing_repertory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertory</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertory</span><span class="p">)</span>
                 
             <span class="c"># To know path to upload images</span>
             <span class="k">while</span> <span class="n">next_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -303,12 +302,13 @@
                     
                     <span class="c"># Select archives to upload</span>
                     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">])):</span>
-                        <span class="n">name_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;productIdentifier&#39;</span><span class="p">]</span>               
+                        <span class="n">name_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;productIdentifier&#39;</span><span class="p">]</span>    
+                        <span class="n">feature_id</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&quot;features&quot;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
                         <span class="n">link_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;services&#39;</span><span class="p">][</span><span class="s">&#39;download&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
                         <span class="n">url_archive</span> <span class="o">=</span> <span class="n">link_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;resto&quot;</span><span class="p">,</span> <span class="s">&quot;rocket/#&quot;</span><span class="p">)</span>
                         <span class="n">archive_download</span> <span class="o">=</span> <span class="n">url_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;/download&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="c"># Path to upload</span>
-                        <span class="n">out_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertoryL8</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">name_archive</span> <span class="o">+</span> <span class="s">&#39;.tgz&#39;</span> <span class="c"># Name after download</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">archive_download</span><span class="p">,</span> <span class="n">out_archive</span><span class="p">])</span>  
+                        <span class="n">out_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertory</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">name_archive</span> <span class="o">+</span> <span class="s">&#39;.tgz&#39;</span> <span class="c"># Name after download</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">archive_download</span><span class="p">,</span> <span class="n">out_archive</span><span class="p">,</span> <span class="n">feature_id</span><span class="p">])</span>  
                     
                     <span class="c"># Verify if there is another page (next)</span>
                     <span class="k">if</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;suivant&#39;</span><span class="p">:</span>
@@ -321,9 +321,10 @@
 
         <span class="k">print</span> <span class="s">&quot;There is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot; images to upload !&quot;</span>
 </div>
-<div class="viewcode-block" id="Archive.download"><a class="viewcode-back" href="../package.html#Archive.Archive.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">):</span>
+<div class="viewcode-block" id="Archive.download_auto"><a class="viewcode-back" href="../package.html#Archive.Archive.download_auto">[docs]</a>    <span class="k">def</span> <span class="nf">download_auto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Function to upload images archive with selenium module </span>
+<span class="sd">        Function to download images archive automatically on Theia land data center.</span>
+<span class="sd">        Source : https://github.com/olivierhagolle/theia_download</span>
 <span class="sd">        </span>
 <span class="sd">        :param user_theia: Username Theia Land data center</span>
 <span class="sd">        :type user_theia: str</span>
@@ -331,149 +332,38 @@
 <span class="sd">        :type password_theia: str</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#============================================================</span>
+        <span class="c"># get a token to be allowed to bypass the authentification.</span>
+        <span class="c"># The token is only valid for two hours. If your connection is slow</span>
+        <span class="c"># or if you are downloading lots of products, it might be an issue</span>
+        <span class="c">#=============================================================</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">)</span>
+        <span class="n">get_token</span><span class="o">=</span><span class="s">&#39;curl -k -s -X POST --data-urlencode &quot;ident=</span><span class="si">%s</span><span class="s">&quot; --data-urlencode &quot;pass=</span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/services/authenticate/&gt;token.json&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_token</span><span class="p">)</span>
         
-        <span class="c"># Verify that archive&#39;s list isn&#39;t empty</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">==</span> <span class="p">[]:</span>
-            <span class="k">print</span> <span class="s">&#39;Before you have to launch listing method to get archive</span><span class="se">\&#39;</span><span class="s">s list&#39;</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        
-        <span class="c"># Use selenium on Firefox</span>
-        <span class="c"># Firefox&#39;s properties in profile</span>
-        <span class="n">profile</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
-        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.download.folderList&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># Controls the default folder to upload a file to. 0 indicates the Desktop; 1 indicates the systems default downloads location; 2 indicates a custom folder</span>
-        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.download.manager.showWhenStarting&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span> <span class="c"># Turns of showing upload progress</span>
-        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.download.dir&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">))</span> <span class="c"># archive&#39;s folder that will upload</span>
-        <span class="c">#mmtypes = dataDict[&#39;features&#39;][0][&#39;properties&#39;][&#39;services&#39;][&#39;download&#39;][&#39;mimeType&#39;].replace(&quot;\\&quot;, &quot;&quot;)</span>
-        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.helperApps.neverAsk.saveToDisk&quot;</span><span class="p">,</span> <span class="s">&#39;application/x-gzip&#39;</span><span class="p">)</span><span class="c"># Tells Firefox to automatically upload the files of the selected mime-types (Internet media type or Content-type)</span>
-        <span class="c"># mime-types used : text/html, application/octet-stream, application/json, application/x-tgz, application/gnutar, application/x-compressed, application/x-gzip</span>
-        <span class="n">profile</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s">&quot;browser.helperApps.alwaysAsk.force&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
-        
-        <span class="c"># Old version of selenium or problem with lastest version of firefox </span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">firefox_profile</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span> <span class="c"># Open a Firefox&#39;s window</span>
-        <span class="k">except</span> <span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Installer une version plus récente de selenium !!!&quot;</span>
-            <span class="k">print</span> <span class="s">&quot;Si ça ne fonctionne toujours pas, installer une ancienne version de Firefox alors !!!&quot;</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="c"># Open the website here</span>
-        <span class="c"># driver.get(&quot;http://spirit.cnes.fr/resto/Landsat/?format=html&amp;lang=fr&amp;q=&quot; + str(Annee) + &quot;&amp;box=2,46,3,48&quot;)</span>
-        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;https://theia.cnes.fr/rocket/#/home&quot;</span><span class="p">)</span>
-         
-        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Variable to try the good statement of the website</span>
-        <span class="c"># Connexion&#39;s button</span>
-        <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">try</span> <span class="p">:</span>
-                <span class="n">connexion</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//li[@class=&quot;link link--signin ng-binding ng-scope&quot;]&#39;</span><span class="p">)</span>
-                <span class="k">print</span> <span class="s">&#39;Connexion</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">print</span> <span class="s">&#39;Error on Connexion</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
-        <span class="c"># Click on</span>
-        <span class="n">connexion</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-         
-        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c"># Authentification&#39;s button</span>
-        <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">try</span> <span class="p">:</span>
-                <span class="n">authentification</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//button[@class=&quot;colored ng-binding&quot;]&#39;</span><span class="p">)</span>
-                <span class="k">print</span> <span class="s">&#39;Authentification</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">print</span> <span class="s">&#39;Error on Authentification</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
-        <span class="c"># Click on</span>
-        <span class="n">authentification</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-
-        <span class="c"># Switch beetween two windows : main and popup</span>
-        <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_window</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">window_handles</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c">#OAuth2.0 Login</span>
-         
-        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span> 
-        <span class="c"># Fill login and password&#39;s fields</span>
-        <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">try</span> <span class="p">:</span>
-                <span class="n">username</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span>
-                <span class="k">print</span> <span class="s">&#39;Field</span><span class="se">\&#39;</span><span class="s">s select AdressMail&#39;</span>
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">print</span> <span class="s">&#39;Error on field</span><span class="se">\&#39;</span><span class="s">s select AdressMail&#39;</span>
-        <span class="n">username</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">user_theia</span><span class="p">)</span>
-        <span class="n">password</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">)</span>
-        <span class="n">password</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">password_theia</span><span class="p">)</span>
-         
-        <span class="c"># Login&#39;s button</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">login</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;signInButton&quot;</span><span class="p">)</span>
-            <span class="n">login</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Already connected !&quot;</span>
-        
-        <span class="c"># Button to accept terms and conditions</span>
-        <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;approveButton&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-         
-        <span class="c"># Switch on main window</span>
-        <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_window</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">window_handles</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c"># Main window</span>
-         
-        <span class="c"># Verify if this is connected</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c"># Wait 5sec</span>
-            <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//li[@href=&quot;#/profile&quot;]&#39;</span><span class="p">)</span>
-            <span class="k">print</span> <span class="s">&quot;Connected !&quot;</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;Not connected !&quot;</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-         
-        <span class="c"># Loop on list archive to upload images</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_file</span><span class="p">:</span>    
+            <span class="n">token_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="n">token_json</span><span class="p">[</span><span class="s">&quot;access_token&quot;</span><span class="p">]</span>
+            
+        <span class="c">#====================</span>
+        <span class="c"># Download</span>
+        <span class="c">#====================  </span>
+        <span class="c"># Loop on list archive to download images  </span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">)):</span>
-            <span class="c"># Upload if not exist</span>
+            <span class="c"># Download if not exist</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
                  
                 <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;%&quot;</span> <span class="c"># Print loading bar</span>
                 <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">]</span>
-                 
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="c"># Wait 5sec</span>
-                <span class="c"># Open website where is store archive</span>
-                <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
                 
-                <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="c"># Upload&#39;s button</span>
-                <span class="k">while</span> <span class="n">test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">try</span> <span class="p">:</span>
-                        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c"># Wait 10sec</span>
-                        <span class="n">child_img</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&quot;//a[@class=</span><span class="se">\&#39;</span><span class="s">fa fa-3x fa-cloud-download padded-small ng-scope</span><span class="se">\&#39;</span><span class="s">]&quot;</span><span class="p">)</span>
-                        <span class="k">print</span> <span class="s">&#39;Upload</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
-                        <span class="n">test</span> <span class="o">=</span> <span class="mi">1</span>
-                    <span class="k">except</span><span class="p">:</span>
-                        <span class="n">test</span> <span class="o">=</span> <span class="mi">0</span>
-                        <span class="k">print</span> <span class="s">&#39;Error on Upload</span><span class="se">\&#39;</span><span class="s">s button&#39;</span>
-                <span class="c"># Wait 5sec and click on upload&#39;s button</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-                <span class="n">child_img</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+                <span class="n">get_product</span><span class="o">=</span><span class="s">&#39;curl -o </span><span class="si">%s</span><span class="s"> -k -H &quot;Authorization: Bearer </span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/resto/collections/Landsat/</span><span class="si">%s</span><span class="s">/download/?issuerId=theia&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+                <span class="k">print</span> <span class="n">get_product</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_product</span><span class="p">)</span>
                 
-                <span class="c"># To accept license if required</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c"># Wait 3sec</span>
-                    <span class="n">licence</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&quot;//a[@class=</span><span class="se">\&#39;</span><span class="s">button bconfirm ng-binding</span><span class="se">\&#39;</span><span class="s">]&quot;</span><span class="p">)</span>
-                    <span class="n">licence</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-                <span class="k">except</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s">&quot;Not license&quot;</span>
-                
-                <span class="c"># Wait 10 sec. It&#39;s the latency period.</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-                <span class="n">wait_download</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="c"># Tip to wait download&#39;s end</span>
-                <span class="c"># While wait_download = 0, it wait</span>
-                <span class="k">while</span> <span class="n">wait_download</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  
-                    <span class="c"># Look if the tar.part exist. If not exist, then download is over. Next ! And then wait_download = 1</span>
-                    <span class="k">if</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/*.part&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
-                        <span class="n">wait_download</span> <span class="o">=</span> <span class="mi">1</span>
-         
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">)</span>
         <span class="k">print</span> <span class="s">&quot;100%&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;END OF DOWNLOAD !&quot;</span>
-        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;END OF DOWNLOAD !&quot;</span>   
         </div>
 <div class="viewcode-block" id="Archive.decompress"><a class="viewcode-back" href="../package.html#Archive.Archive.decompress">[docs]</a>    <span class="k">def</span> <span class="nf">decompress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -487,13 +377,13 @@
             <span class="k">print</span> <span class="s">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ===============&quot;</span>
             
             <span class="n">img_in_glob</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">img_in_glob</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/*gz&#39;</span><span class="p">)</span>
+            <span class="n">img_in_glob</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/*gz&#39;</span><span class="p">)</span>
             
             <span class="k">if</span> <span class="n">img_in_glob</span> <span class="o">==</span> <span class="p">[]:</span>
                 <span class="k">print</span> <span class="s">&quot;There isn&#39;t tgzfile in the folder&quot;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c"># Create a folder &quot;Unpack&quot;</span>
-                <span class="n">folder_unpack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertoryL8</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/Unpack&#39;</span>
+                <span class="n">folder_unpack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/Unpack&#39;</span>
                 
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">):</span>
                     <span class="k">print</span><span class="p">(</span><span class="s">&#39;The folder already exists&#39;</span><span class="p">)</span>

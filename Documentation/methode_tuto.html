@@ -61,9 +61,9 @@ physionomique est donné selon l’arbre de décision ci-dessous.</p>
 <div class="figure align-center">
 <img alt="Arbre de decision" src="_images/arbreDecision_cut.png" />
 </div>
-<p>La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales. Pour ce faire, les données de télédétection multi-temporelles sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l&#8217;indice du minimum de NDVI sur la série temporelle équivalente à l&#8217;étape de labour (ie à une végétation non-naturelle).</p>
-<p>Dans la deuxième étape, la télédétection permet de caractériser la végétation naturelle en termes de structure et de densité c’est-à-dire du point de vue physionomique. Cette analyse se fait par l’utilisation d’images de très hautes résolutions (ici les orthophotographies BD ORTHO © IRC). Il s’agit de distinguer les surfaces herbacées des végétations ligneuses basses à l&#8217;aide de l&#8217;indice de texture SFS&#8217;SD (Structural Feature Set Standard Deviation).</p>
-<p>Pour l&#8217;étape suivante, les végétations ligneuses basses sont déclinées en deux niveaux de densités : mixtes (ouverts) et denses. Ils sont également caractérisés par leur structure et leur densité. La distinction entre ces deux classes se fait en calculant cette fois-çi l&#8217;indice d&#8217;Haralick, IDM (inverse Inverse Difference).</p>
+<p>La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales et éboulis. Pour ce faire, les données de télédétection multi-temporelles sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l&#8217;indice du minimum de NDVI sur la série temporelle équivalente à l&#8217;étape de labour (ie à une végétation non-naturelle et aux éboulis).</p>
+<p>Le deuxième niveau se décompose en deux parties. Dans un premier temps, le modèle numérique de terrain est utilisé pour distinguer les éboulis (&gt;30% en pente) des surfaces agricoles (+PHYMOBAT 1.1). Dans la seconde partie de cette étape, la télédétection permet de caractériser la végétation naturelle en termes de structure et de densité c’est-à-dire du point de vue physionomique. Cette analyse se fait par l’utilisation d’images de très hautes résolutions (ici les orthophotographies BD ORTHO © IRC). Il s’agit de distinguer les surfaces herbacées des végétations ligneuses basses à l&#8217;aide de l&#8217;indice de texture SFS&#8217;SD (Structural Feature Set Standard Deviation).</p>
+<p>Pour le niveau suivante, les végétations ligneuses basses sont déclinées en deux niveaux de densités : mixtes (ouverts) et denses. Ils sont également caractérisés par leur structure et leur densité. La distinction entre ces deux classes se fait en calculant cette fois-çi l&#8217;indice d&#8217;Haralick, IDM (inverse Inverse Difference).</p>
 <p>Une dernière phase consiste à extraire de l’information sur la production chlorophyllienne des zones herbacées. Cette étape utilise les séries temporelles. Elle se base sur le calcul de l&#8217;indice du maximum de NDVI dans l&#8217;année.</p>
 <p>(Pour plus de renseignements, voir &#8220;Rapport méthodologique pour la cartographie physionomique des milieux ouverts de basse altitude par télédétection&#8221; - <em>Samuel Alleaume 2014</em>).</p>
 <div class="section" id="processus-algorithmiques-utilisees">
@@ -96,91 +96,19 @@ physionomique est donné selon l’arbre de décision ci-dessous.</p>
 <blockquote>
 <div><em>box=4.5,43.16,5.8,43.5 : Zone d&#8217;emprise en degrés décimaux</em></div></blockquote>
 <p>La fonction <a class="reference internal" href="package.html#Archive.Archive.listing" title="Archive.Archive.listing"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.listing()</span></tt></a> utilise cette base. Elle remplace dans l&#8217;exemple &#8220;2013&#8221; par l&#8217;année entrée par un utilisateur. Ensuite, à l&#8217;aide du shapefile de la zone d&#8217;étude, la fonction convertie les coordonnées des extrémités du fichier vecteur en degrés décimaux pour les inclure dans l&#8217;url ci-dessus (<em>box =</em>).</p>
-<p>A l&#8217;issue du listing, l&#8217;url des images est stocké dans une liste. A cause d&#8217;un protocole Oauth2.0 utilisé par le site Theia Land, on ne peut pas télécharger automatiquement les images avec un simple script. Il faut cliquer sur l&#8217;icône <strong>télécharger</strong> sur chaque page associé à une image.</p>
-<p>La solution <em>temporaire</em> trouvée à ce problème est d&#8217;utiliser un module de simulation d&#8217;utilisateur <tt class="docutils literal"><span class="pre">selenium</span></tt>. A la base <tt class="docutils literal"><span class="pre">selenium</span></tt> est utilisé pour tester des sites internet expérimentaux. Dans cette chaîne de traitement il est utilisé pour automatiser le téléchargement c&#8217;est-a-dire qu&#8217;il simule l&#8217;action d&#8217;un utilisateur voulant télécharger des images (<em>méthode clique-bouton</em>).</p>
-<p>L&#8217;utilisation de ce module, découle de l&#8217;installation du navigateur internet <tt class="docutils literal"><span class="pre">Firefox</span></tt>. C&#8217;est sur ce navigateur que la simulation sera effectuée.</p>
-<p><tt class="docutils literal"><span class="pre">selenium</span></tt> utilise le code source du site pour identifier les actions de l&#8217;utilisateur. Il est dépendant de toute modification de ce site. En 1 an (2015) le site a été modifié au moins 3 fois. Donc le code de la chaîne de traitement doit être modifié en conséquence régulièrement.</p>
-<p>Dans ce cas il est important de connaître les actions de l&#8217;utilisateur et les balises associées dans le code source de la page internet. Il y a neuf principales actions <a class="reference internal" href="package.html#Archive.Archive.download" title="Archive.Archive.download"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.download()</span></tt></a>:</p>
-<ol class="arabic simple">
-<li><strong>Définition</strong> de la variable <em>&#8220;profile Firefox&#8221;</em> (dossier de téléchargement, type de fichier téléchargé automatiquement, ...)</li>
-<li><strong>Ouverture du site</strong> via l&#8217;url <a class="reference external" href="https://theia.cnes.fr/rocket/#/home">https://theia.cnes.fr/rocket/#/home</a> comme ceci :</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;https://theia.cnes.fr/rocket/#/home&quot;</span><span class="p">)</span>
+<p>A l&#8217;issue du listing, le nom et l&#8217;identifiant des images sont stockés dans une liste. Le nom de l&#8217;image est utilisé pour nommer l&#8217;image après téléchargement et l&#8217;identifiant est utilisé pour le téléchargement <a class="reference internal" href="package.html#Archive.Archive.download_auto" title="Archive.Archive.download_auto"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.download_auto()</span></tt></a> (+PHYMOBAT 1.1):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">## Source : https://github.com/olivierhagolle/theia_download</span>
+<span class="c"># Authentification</span>
+<span class="n">get_token</span><span class="o">=</span><span class="s">&#39;curl -k -s -X POST --data-urlencode &quot;ident=</span><span class="si">%s</span><span class="s">&quot; --data-urlencode &quot;pass=</span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/services/authenticate/&gt;token.json&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_token</span><span class="p">)</span>
+<span class="c"># .</span>
+<span class="c"># .</span>
+<span class="c">#.</span>
+<span class="c"># Téléchargement -&gt; loop ... d in range(...)</span>
+<span class="n">get_product</span><span class="o">=</span><span class="s">&#39;curl -o </span><span class="si">%s</span><span class="s"> -k -H &quot;Authorization: Bearer </span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/resto/collections/Landsat/</span><span class="si">%s</span><span class="s">/download/?issuerId=theia&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_product</span><span class="p">)</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="3">
-<li><strong>Connexion</strong> :</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&#39;//li[@class=&quot;link link--signin ng-binding ng-scope&quot;]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_1.png" />
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_2.png" />
-</div>
-<ol class="arabic simple" start="4">
-<li><strong>Changement de fenêtre pour l&#8217;authentification</strong> :</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">switch_to_window</span><span class="p">(</span><span class="n">driver</span><span class="o">.</span><span class="n">window_handles</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="5">
-<li>Remplissage des champs d&#8217;<strong>authentification</strong></li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;username&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">&quot;sylvio.laventure@teledetection.fr&quot;</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="s">&quot;********&quot;</span><span class="p">)</span>
-<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s">&quot;loginBtn&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_3.png" />
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_4.png" />
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_5.png" />
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_6.png" />
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_7.png" />
-</div>
-<ol class="arabic simple" start="6">
-<li><strong>Ouverture d&#8217;une page</strong> d&#8217;après la <strong>liste d&#8217;url</strong> remplie plus haut :</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">imgtodownloadL8</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
-</pre></div>
-</div>
-<div class="figure align-center">
-<img alt="Theia" src="_images/theia_8.png" />
-</div>
-<ol class="arabic simple" start="7">
-<li><strong>Téléchargement</strong> de l&#8217;image :</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&quot;//a[@class=</span><span class="se">\&#39;</span><span class="s">fa fa-3x fa-cloud-download padded-small ng-scope</span><span class="se">\&#39;</span><span class="s">]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="8">
-<li>Pour <strong>accepter la licence</strong> d&#8217;utilisation (si demander) :</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">driver</span><span class="o">.</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_xpath</span><span class="p">(</span><span class="s">&quot;//a[@class=</span><span class="se">\&#39;</span><span class="s">button bconfirm ng-binding</span><span class="se">\&#39;</span><span class="s">]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="9">
-<li>Le fichier sera automatiquement téléchargé dans le dossier spécifié dans le <em>&#8220;profile&#8221;</em>. La partie du code suivant est une astuce qui permet à l&#8217;algorithme d&#8217;attendre que le téléchargement soit fini.</li>
-</ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">while</span> <span class="n">WaitDownload</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
- <span class="k">if</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">Dossier</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">RepertoryL8</span> <span class="o">+</span> <span class="s">&#39;/*.part&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">[]:</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">Dossier</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">OutImgL8</span><span class="p">[</span><span class="n">d</span><span class="p">])[</span><span class="mi">1</span><span class="p">],</span> <span class="n">OutImgL8</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
-        <span class="n">WaitDownload</span> <span class="o">=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-<p>Quand un fichier compressé <em>.tar.gz</em> est en cours de téléchargement, un fichier <em>.part</em> est crée.</p>
-<p>Dès que le téléchargement est fini, le fichier .part disparaît. Par conséquent, pour l&#8217;algorithme le téléchargement sera terminé et il passera au suivant.</p>
 <p>A la fin du téléchargement des images, <a class="reference internal" href="package.html#Archive.Archive.decompress" title="Archive.Archive.decompress"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.decompress()</span></tt></a> va décompresser les archives grâce au module <tt class="docutils literal"><span class="pre">tarfile</span></tt>.</p>
 </div>
 <div class="section" id="traitements-des-images-telechargees">
@@ -189,8 +117,8 @@ physionomique est donné selon l’arbre de décision ci-dessous.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>gdalwarp -dstnodata -10000 -q -cutline study_area.shp -crop_to_cutline -of GTiff raster.TIF Clip_raster.TIF
 </pre></div>
 </div>
-<p>Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d&#8217;étude. Pour cela, le processus regroupe <a class="reference internal" href="package.html#Landsat8_by_date.Landsat8_by_date.group_by_date" title="Landsat8_by_date.Landsat8_by_date.group_by_date"><tt class="xref py py-func docutils literal"><span class="pre">Landsat8_by_date.Landsat8_by_date.group_by_date()</span></tt></a> et mosaïque d&#8217;abord les rasters par date <a class="reference internal" href="package.html#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Landsat8_by_date.Landsat8_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">Landsat8_by_date.Landsat8_by_date.mosaic_by_date()</span></tt></a>.</p>
-<p>Le mosaïquage est réalisé en ligne de commande <a class="reference internal" href="package.html#Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal" title="Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal"><tt class="xref py py-func docutils literal"><span class="pre">Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal()</span></tt></a> en utilisant le format virtuel de <cite>gdal</cite>, <em>VRT (Virtual Dataset)</em> :</p>
+<p>Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d&#8217;étude. Pour cela, le processus regroupe <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.group_by_date" title="RasterSat_by_date.RasterSat_by_date.group_by_date"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.group_by_date()</span></tt></a> et mosaïque d&#8217;abord les rasters par date <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.mosaic_by_date" title="RasterSat_by_date.RasterSat_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.mosaic_by_date()</span></tt></a>.</p>
+<p>Le mosaïquage est réalisé en ligne de commande <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal" title="RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal()</span></tt></a> en utilisant le format virtuel de <cite>gdal</cite>, <em>VRT (Virtual Dataset)</em> :</p>
 <div class="highlight-bash"><div class="highlight"><pre>$ gdalbuildvrt -srcnodata -10000 dst_data.VRT raster1.TIF raster2.TIF
 Input file size is 286, 467
 0...10...20...30...40...50...60...70...80...90...100 - done.
@@ -200,7 +128,7 @@ Input file size is 286, 467
 0...10...20...30...40...50...60...70...80...90...100 - done.
 </pre></div>
 </div>
-<p>La selection est faite dans <a class="reference internal" href="package.html#Landsat8_by_date.Landsat8_by_date.pourc_cloud" title="Landsat8_by_date.Landsat8_by_date.pourc_cloud"><tt class="xref py py-func docutils literal"><span class="pre">Landsat8_by_date.Landsat8_by_date.pourc_cloud()</span></tt></a>. Elle renvoie le pourcentage de couverture claire <strong>cl</strong> par mosaïque de la façon suivante :</p>
+<p>La selection est faite dans <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.pourc_cloud" title="RasterSat_by_date.RasterSat_by_date.pourc_cloud"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.pourc_cloud()</span></tt></a>. Elle renvoie le pourcentage de couverture claire <strong>cl</strong> par mosaïque de la façon suivante :</p>
 <ul class="simple">
 <li>Extrait l&#8217;étendue de l&#8217;image en matrice :</li>
 </ul>
@@ -227,7 +155,7 @@ Input file size is 286, 467
 </pre></div>
 </div>
 <p>Par défaut, le pourcentage de couverture nuageuse maximum accepté est de 40%.</p>
-<p>Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions <a class="reference internal" href="package.html#Landsat8_by_date.Landsat8_by_date.calcul_ndvi" title="Landsat8_by_date.Landsat8_by_date.calcul_ndvi"><tt class="xref py py-func docutils literal"><span class="pre">Landsat8_by_date.Landsat8_by_date.calcul_ndvi()</span></tt></a> (calcul de NDVI), <a class="reference internal" href="package.html#Toolbox.calc_serie_stats" title="Toolbox.calc_serie_stats"><tt class="xref py py-func docutils literal"><span class="pre">Toolbox.calc_serie_stats()</span></tt></a> (calcul de minimum, maximum de ndvi et temporalité nuageuse) et <a class="reference internal" href="package.html#Landsat8_by_date.Landsat8_by_date.create_raster" title="Landsat8_by_date.Landsat8_by_date.create_raster"><tt class="xref py py-func docutils literal"><span class="pre">Landsat8_by_date.Landsat8_by_date.create_raster()</span></tt></a>. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d&#8217;image utilisé par pixel clair (exemple sur l&#8217;image ci-dessous).</p>
+<p>Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.calcul_ndvi" title="RasterSat_by_date.RasterSat_by_date.calcul_ndvi"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.calcul_ndvi()</span></tt></a> (calcul de NDVI), <a class="reference internal" href="package.html#Toolbox.calc_serie_stats" title="Toolbox.calc_serie_stats"><tt class="xref py py-func docutils literal"><span class="pre">Toolbox.calc_serie_stats()</span></tt></a> (calcul de minimum, maximum de ndvi et temporalité nuageuse) et <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.create_raster" title="RasterSat_by_date.RasterSat_by_date.create_raster"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.create_raster()</span></tt></a>. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d&#8217;image utilisé par pixel clair (exemple sur l&#8217;image ci-dessous).</p>
 <div class="figure align-center">
 <img alt="temporal_cloud" src="_images/temporal_cloud.png" />
 </div>
@@ -313,11 +241,12 @@ Input file size is 286, 467
 <img alt="API" src="_images/API_0.png" />
 </div>
 <p>Elle est ouverte en tapant dans la console :</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python Interface_MOBA.py
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python PHYMOBAT.py
 </pre></div>
 </div>
 <p>Cette interface est composé de trois onglets. Chaque onglet représente les parties du processus algorithmique décrit plus haut.</p>
-<p>Elle possède également tout en bas une &#8220;check box&#8221; pour lancer la chaîne de traitement en multi-processing <em>(cochée par défaut mais à décocher si la machine ne possède pas minimum 12Go de mémoire vive)</em> et des boutons obligatoires : &#8220;Annuler&#8221; <em>(fermer l&#8217;application)</em> &#8220;OK&#8221; <em>(lancer le traitement)</em>.</p>
+<p>Elle possède également en haut à droite une barre de menu : <em>Menu</em> et <em>Aide</em>. <em>Menu</em> permet de sauvegarder les informations entrées ou d&#8217;ouvrir une sauvegarde (fichier .xml). <em>Aide</em> ouvrir la documentation et une fenêtre d&#8217;information sur l&#8217;outil (+PHYMOBAT 1.1).</p>
+<p>A la dernière ligne de l&#8217;interface est indépendante des onglets. Il y a une &#8220;check box&#8221; pour lancer la chaîne de traitement en multi-processing <em>(cochée par défaut mais à décocher si la machine ne possède pas minimum 12Go de mémoire vive)</em> et des boutons : &#8220;Annuler&#8221; <em>(fermer l&#8217;application)</em> &#8220;OK&#8221; <em>(lancer le traitement)</em>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Les traitements sont lancés en appuyant sur le bouton &#8220;OK&#8221; et si au moins une &#8220;check box&#8221; associée à chaque onglets et fonction est cochée. Si aucune &#8220;check box&#8221; n&#8217;est cochée, aucun traitement ne sera lancé.</p>
@@ -332,12 +261,13 @@ Input file size is 286, 467
 <div class="figure align-center">
 <img alt="API" src="_images/API.png" />
 </div>
-<p>Dans cet onglet il y a quatres traitements (quatres &#8220;check box&#8221;) qui peuvent être lancés :</p>
+<p>Dans cet onglet il y a cinq traitements qui peuvent être lancés :</p>
 <ol class="arabic simple">
-<li><strong>Images disponibles</strong> : Cherche le nombre d&#8217;images disponibles sur la plate-forme Theia et l&#8217;inscrit dans la ligne d&#8217;édition en face.</li>
-<li><strong>Télécharger</strong> : Télécharge les images à partir de la plate-forme Theia. Pour cela, il faut obligatoirement que la &#8220;check box&#8221; 1 soit également cochée et remplir dans les lignes d&#8217;édition en-dessous correspondant aux identifiants Theia (Utilisateur et mot de passe).</li>
-<li><strong>Traitement des images</strong> : Traitement des images satellites. Il faut obligatoirement que les &#8220;check box&#8221; 1 et 2 soient cochées car le traitement des images ne peut pas être éffectué si les images ne sont pas téléchargées.</li>
-<li><strong>Image THRS</strong> : Calcul des indices de textures. Cette &#8220;check box&#8221; peut-être lancée indépendamment des autres. Par contre il faut renseigner dans la ligne d&#8217;édition associée, le raster THRS.</li>
+<li><strong>Images disponibles</strong> : Cherche le nombre d&#8217;images disponibles sur la plate-forme Theia et l&#8217;inscrit à la palce du zéro en face.</li>
+<li><strong>Télécharger</strong> : Télécharge les images à partir de la plate-forme Theia. Pour cela, il faut obligatoirement remplir dans les lignes d&#8217;édition en-dessous correspondant aux identifiants Theia (Utilisateur et mot de passe).</li>
+<li><strong>Traitement des images</strong> : Traitement des images satellites (mosaïque des images, calculs des indices spectraux, ...)</li>
+<li><strong>MNT</strong> : Calcul des pentes (+PHYMOBAT 1.1) issues du MNT (renseigner la ligne d&#8217;édition associée au modèle numérique de terrain).</li>
+<li><strong>Image THRS</strong> : Calcul des indices de textures. Il faut renseigner dans la ligne d&#8217;édition associée, le raster THRS.</li>
 </ol>
 <p>Avant de lancer un traitement, il faut renseigner toutes les premières lignes d&#8217;édition et sélectionner un <em>capteur</em>.</p>
 <div class="figure align-center">
@@ -352,7 +282,7 @@ Input file size is 286, 467
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner dans le premier onglet &#8220;Traitement des images&#8221;, le <strong>chemin du dossier principal</strong> et l&#8217;<strong>emprise de la zone</strong>.</p>
+<p class="last">Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner dans le premier onglet &#8220;Traitement des images&#8221; l&#8217;<strong>emprise de la zone</strong>.</p>
 </div>
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_20.png" />
@@ -397,25 +327,34 @@ Input file size is 286, 467
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_class.png" />
 </div>
-<p>Le seul traitement qui sera lancé dans cet onglet est le processus de classification -&gt; &#8220;check box&#8221; <strong>Classifier</strong> <a class="reference internal" href="API.html#Processing.Processing.i_classifier" title="Processing.Processing.i_classifier"><tt class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_classifier()</span></tt></a>.</p>
+<p>Le seul traitement qui sera lancé dans cet onglet est le processus de classification <a class="reference internal" href="API.html#Processing.Processing.i_classifier" title="Processing.Processing.i_classifier"><tt class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_classifier()</span></tt></a>.</p>
 <p>Un fichier shapefile sera crée à l&#8217;emplacement indiqué par l&#8217;utilisateur, <strong>fichier de sortie</strong>. Il dépend du shapefile en entrée issue de la <strong>segmentation</strong> IGN.</p>
-<p>L&#8217;utilisateur doit personnaliser les champs des entités de sortie comme ceci :</p>
+<p>L&#8217;utilisateur doit personnaliser les champs des entités de sortie comme ceci (+PHYMOBAT 1.1) :</p>
+<p><em>Pour un niveau</em></p>
 <div class="figure align-center">
-<img alt="API 2" src="_images/API_class_1.png" />
+<img alt="API 2" src="_images/API_class_10.png" />
+</div>
+<p><em>OU pour 2 niveaux</em></p>
+<div class="figure align-center">
+<img alt="API 2" src="_images/API_class_11.png" />
+</div>
+<p><em>OU pour tous les niveaux</em></p>
+<div class="figure align-center">
+<img alt="API 2" src="_images/API_class_12.png" />
 </div>
 <p>Où :</p>
 <ul class="simple">
 <li>ID : Identifiant unique</li>
 <li>AREA : Superficie du polygone en ha</li>
-<li>NIVEAU_1 : Végétation non naturelle / Semi-naturelle</li>
-<li>NIVEAU_2 : Herbacés / Ligneux</li>
+<li>NIVEAU_1 : Non végétation semi-naturelle / Semi-naturelle</li>
+<li>NIVEAU_2 : Eboulis / Agriculture |&nbsp;Herbacés / Ligneux</li>
 <li>NIVEAU_3 : Lingeux denses / mixtes et Phytomasse faible / moyenne / forte</li>
 <li>POURC : Densité de ligneux et de phytomasse</li>
 </ul>
 <p>Les listes déroulantes indiquent la nature des champs, il y a deux choix :</p>
 <ul class="simple">
-<li>ogr.OFTString = Chaîne de caractères</li>
-<li>ogr.OFTReal = Chiffre réel</li>
+<li>String = Chaîne de caractères</li>
+<li>Real = Chiffre réel</li>
 </ul>
 </div>
 </div>

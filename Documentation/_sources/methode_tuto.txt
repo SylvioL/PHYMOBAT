@@ -10,11 +10,11 @@ physionomique est donné selon l’arbre de décision ci-dessous.
    :align: center
    :alt: Arbre de decision
 
-La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales. Pour ce faire, les données de télédétection multi-temporelles sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l'indice du minimum de NDVI sur la série temporelle équivalente à l'étape de labour (ie à une végétation non-naturelle).
+La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales et éboulis. Pour ce faire, les données de télédétection multi-temporelles sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l'indice du minimum de NDVI sur la série temporelle équivalente à l'étape de labour (ie à une végétation non-naturelle et aux éboulis).
 
-Dans la deuxième étape, la télédétection permet de caractériser la végétation naturelle en termes de structure et de densité c’est-à-dire du point de vue physionomique. Cette analyse se fait par l’utilisation d’images de très hautes résolutions (ici les orthophotographies BD ORTHO |copy| IRC). Il s’agit de distinguer les surfaces herbacées des végétations ligneuses basses à l'aide de l'indice de texture SFS'SD (Structural Feature Set Standard Deviation).
+Le deuxième niveau se décompose en deux parties. Dans un premier temps, le modèle numérique de terrain est utilisé pour distinguer les éboulis (>30% en pente) des surfaces agricoles (+PHYMOBAT 1.1). Dans la seconde partie de cette étape, la télédétection permet de caractériser la végétation naturelle en termes de structure et de densité c’est-à-dire du point de vue physionomique. Cette analyse se fait par l’utilisation d’images de très hautes résolutions (ici les orthophotographies BD ORTHO |copy| IRC). Il s’agit de distinguer les surfaces herbacées des végétations ligneuses basses à l'aide de l'indice de texture SFS'SD (Structural Feature Set Standard Deviation).
 
-Pour l'étape suivante, les végétations ligneuses basses sont déclinées en deux niveaux de densités : mixtes (ouverts) et denses. Ils sont également caractérisés par leur structure et leur densité. La distinction entre ces deux classes se fait en calculant cette fois-çi l'indice d'Haralick, IDM (inverse Inverse Difference).
+Pour le niveau suivante, les végétations ligneuses basses sont déclinées en deux niveaux de densités : mixtes (ouverts) et denses. Ils sont également caractérisés par leur structure et leur densité. La distinction entre ces deux classes se fait en calculant cette fois-çi l'indice d'Haralick, IDM (inverse Inverse Difference).
 
 Une dernière phase consiste à extraire de l’information sur la production chlorophyllienne des zones herbacées. Cette étape utilise les séries temporelles. Elle se base sur le calcul de l'indice du maximum de NDVI dans l'année.
 
@@ -61,106 +61,20 @@ Le listing des images disponibles se fait à travers une base de données GeoJSO
 
 La fonction :func:`Archive.Archive.listing` utilise cette base. Elle remplace dans l'exemple "2013" par l'année entrée par un utilisateur. Ensuite, à l'aide du shapefile de la zone d'étude, la fonction convertie les coordonnées des extrémités du fichier vecteur en degrés décimaux pour les inclure dans l'url ci-dessus (*box =*).
 
-A l'issue du listing, l'url des images est stocké dans une liste. A cause d'un protocole Oauth2.0 utilisé par le site Theia Land, on ne peut pas télécharger automatiquement les images avec un simple script. Il faut cliquer sur l'icône **télécharger** sur chaque page associé à une image.
-
-La solution *temporaire* trouvée à ce problème est d'utiliser un module de simulation d'utilisateur ``selenium``. A la base ``selenium`` est utilisé pour tester des sites internet expérimentaux. Dans cette chaîne de traitement il est utilisé pour automatiser le téléchargement c'est-a-dire qu'il simule l'action d'un utilisateur voulant télécharger des images (*méthode clique-bouton*).
-
-L'utilisation de ce module, découle de l'installation du navigateur internet ``Firefox``. C'est sur ce navigateur que la simulation sera effectuée.
-
-``selenium`` utilise le code source du site pour identifier les actions de l'utilisateur. Il est dépendant de toute modification de ce site. En 1 an (2015) le site a été modifié au moins 3 fois. Donc le code de la chaîne de traitement doit être modifié en conséquence régulièrement.
-
-Dans ce cas il est important de connaître les actions de l'utilisateur et les balises associées dans le code source de la page internet. Il y a neuf principales actions :func:`Archive.Archive.download`:
-
-1. **Définition** de la variable *"profile Firefox"* (dossier de téléchargement, type de fichier téléchargé automatiquement, ...)
-
-2. **Ouverture du site** via l'url https://theia.cnes.fr/rocket/#/home comme ceci :
-
-.. code-block:: python
-	
-	driver.get("https://theia.cnes.fr/rocket/#/home")
-
-3. **Connexion** :
+A l'issue du listing, le nom et l'identifiant des images sont stockés dans une liste. Le nom de l'image est utilisé pour nommer l'image après téléchargement et l'identifiant est utilisé pour le téléchargement :func:`Archive.Archive.download_auto` (+PHYMOBAT 1.1):
 
 .. code-block:: python
 
-	driver.find_element_by_xpath('//li[@class="link link--signin ng-binding ng-scope"]').click()
-
-.. figure:: /images_doc/theia_1.png
-   :align: center
-   :alt: Theia
-
-.. figure:: /images_doc/theia_2.png
-   :align: center
-   :alt: Theia
-
-4. **Changement de fenêtre pour l'authentification** :
-
-.. code-block:: python
-
-	driver.switch_to_window(driver.window_handles[1])
-
-5. Remplissage des champs d'**authentification**
-
-.. code-block:: python
-
-	driver.find_element_by_id('username').send_keys("sylvio.laventure@teledetection.fr")
-	driver.find_element_by_id('password').send_keys("********")
-	driver.find_element_by_id("loginBtn").click()
-
-.. figure:: /images_doc/theia_3.png
-   :align: center
-   :alt: Theia
-
-.. figure:: /images_doc/theia_4.png
-   :align: center
-   :alt: Theia
-
-.. figure:: /images_doc/theia_5.png
-   :align: center
-   :alt: Theia
-
-.. figure:: /images_doc/theia_6.png
-   :align: center
-   :alt: Theia
-
-.. figure:: /images_doc/theia_7.png
-   :align: center
-   :alt: Theia
-
-6. **Ouverture d'une page** d'après la **liste d'url** remplie plus haut :
-
-.. code-block:: python
-
-	driver.get(imgtodownloadL8[d])
-
-.. figure:: /images_doc/theia_8.png
-   :align: center
-   :alt: Theia
-
-7. **Téléchargement** de l'image :
-
-.. code-block:: python
-
-	driver.find_element_by_xpath("//a[@class=\'fa fa-3x fa-cloud-download padded-small ng-scope\']").click()
-
-8. Pour **accepter la licence** d'utilisation (si demander) :
-
-.. code-block:: python
-
-	driver.driver.find_element_by_xpath("//a[@class=\'button bconfirm ng-binding\']").click()
-
-9. Le fichier sera automatiquement téléchargé dans le dossier spécifié dans le *"profile"*. La partie du code suivant est une astuce qui permet à l'algorithme d'attendre que le téléchargement soit fini.
-
-.. code-block:: python
-
-	while WaitDownload == 0:
-	 if glob.glob(Dossier + '/' + RepertoryL8 + '/*.part') == []:
-	 	shutil.move(Dossier + '/' + os.path.split(OutImgL8[d])[1], OutImgL8[d])
-	 	WaitDownload = 1
-
-Quand un fichier compressé *.tar.gz* est en cours de téléchargement, un fichier *.part* est crée.
-
-Dès que le téléchargement est fini, le fichier .part disparaît. Par conséquent, pour l'algorithme le téléchargement sera terminé et il passera au suivant.
+	## Source : https://github.com/olivierhagolle/theia_download
+	# Authentification
+	get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(user_theia, password_theia)
+	os.system(get_token)
+	# .
+	# .
+	#.
+	# Téléchargement -> loop ... d in range(...)
+	get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(self.list_archive[d][1], token, self.list_archive[d][2])
+	os.system(get_product)
 
 A la fin du téléchargement des images, :func:`Archive.Archive.decompress` va décompresser les archives grâce au module ``tarfile``.
 
@@ -173,9 +87,9 @@ Toutes les images décompréssées (images spectrales à 9 bandes et masque de n
 
 	$ gdalwarp -dstnodata -10000 -q -cutline study_area.shp -crop_to_cutline -of GTiff raster.TIF Clip_raster.TIF
 
-Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d'étude. Pour cela, le processus regroupe :func:`Landsat8_by_date.Landsat8_by_date.group_by_date` et mosaïque d'abord les rasters par date :func:`Landsat8_by_date.Landsat8_by_date.mosaic_by_date`.
+Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d'étude. Pour cela, le processus regroupe :func:`RasterSat_by_date.RasterSat_by_date.group_by_date` et mosaïque d'abord les rasters par date :func:`RasterSat_by_date.RasterSat_by_date.mosaic_by_date`.
 
-Le mosaïquage est réalisé en ligne de commande :func:`Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal` en utilisant le format virtuel de `gdal`, *VRT (Virtual Dataset)* :
+Le mosaïquage est réalisé en ligne de commande :func:`RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal` en utilisant le format virtuel de `gdal`, *VRT (Virtual Dataset)* :
 
 .. code-block:: bash
 
@@ -187,7 +101,7 @@ Le mosaïquage est réalisé en ligne de commande :func:`Landsat8_by_date.Landsa
 	Input file size is 286, 467
 	0...10...20...30...40...50...60...70...80...90...100 - done.
 
-La selection est faite dans :func:`Landsat8_by_date.Landsat8_by_date.pourc_cloud`. Elle renvoie le pourcentage de couverture claire **cl** par mosaïque de la façon suivante :
+La selection est faite dans :func:`RasterSat_by_date.RasterSat_by_date.pourc_cloud`. Elle renvoie le pourcentage de couverture claire **cl** par mosaïque de la façon suivante :
 
 - Extrait l'étendue de l'image en matrice :
 
@@ -216,7 +130,7 @@ La selection est faite dans :func:`Landsat8_by_date.Landsat8_by_date.pourc_cloud
 
 Par défaut, le pourcentage de couverture nuageuse maximum accepté est de 40%.
 
-Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions :func:`Landsat8_by_date.Landsat8_by_date.calcul_ndvi` (calcul de NDVI), :func:`Toolbox.calc_serie_stats` (calcul de minimum, maximum de ndvi et temporalité nuageuse) et :func:`Landsat8_by_date.Landsat8_by_date.create_raster`. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d'image utilisé par pixel clair (exemple sur l'image ci-dessous).
+Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions :func:`RasterSat_by_date.RasterSat_by_date.calcul_ndvi` (calcul de NDVI), :func:`Toolbox.calc_serie_stats` (calcul de minimum, maximum de ndvi et temporalité nuageuse) et :func:`RasterSat_by_date.RasterSat_by_date.create_raster`. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d'image utilisé par pixel clair (exemple sur l'image ci-dessous).
 
 .. figure:: /images_doc/temporal_cloud.png
    :align: center
@@ -313,11 +227,13 @@ Elle est ouverte en tapant dans la console :
 
 .. code-block:: bash
 
-	$ python Interface_MOBA.py
+	$ python PHYMOBAT.py
 
 Cette interface est composé de trois onglets. Chaque onglet représente les parties du processus algorithmique décrit plus haut.
 
-Elle possède également tout en bas une "check box" pour lancer la chaîne de traitement en multi-processing *(cochée par défaut mais à décocher si la machine ne possède pas minimum 12Go de mémoire vive)* et des boutons obligatoires : "Annuler" *(fermer l'application)* "OK" *(lancer le traitement)*.
+Elle possède également en haut à droite une barre de menu : *Menu* et *Aide*. *Menu* permet de sauvegarder les informations entrées ou d'ouvrir une sauvegarde (fichier .xml). *Aide* ouvrir la documentation et une fenêtre d'information sur l'outil (+PHYMOBAT 1.1).
+
+A la dernière ligne de l'interface est indépendante des onglets. Il y a une "check box" pour lancer la chaîne de traitement en multi-processing *(cochée par défaut mais à décocher si la machine ne possède pas minimum 12Go de mémoire vive)* et des boutons : "Annuler" *(fermer l'application)* "OK" *(lancer le traitement)*.
 
 .. note:: Les traitements sont lancés en appuyant sur le bouton "OK" et si au moins une "check box" associée à chaque onglets et fonction est cochée. Si aucune "check box" n'est cochée, aucun traitement ne sera lancé.
 
@@ -332,15 +248,17 @@ Interface du traitement des images
    :align: center
    :alt: API
 
-Dans cet onglet il y a quatres traitements (quatres "check box") qui peuvent être lancés :
+Dans cet onglet il y a cinq traitements qui peuvent être lancés :
 
-1. **Images disponibles** : Cherche le nombre d'images disponibles sur la plate-forme Theia et l'inscrit dans la ligne d'édition en face.
+1. **Images disponibles** : Cherche le nombre d'images disponibles sur la plate-forme Theia et l'inscrit à la palce du zéro en face.
 
-2. **Télécharger** : Télécharge les images à partir de la plate-forme Theia. Pour cela, il faut obligatoirement que la "check box" 1 soit également cochée et remplir dans les lignes d'édition en-dessous correspondant aux identifiants Theia (Utilisateur et mot de passe).
+2. **Télécharger** : Télécharge les images à partir de la plate-forme Theia. Pour cela, il faut obligatoirement remplir dans les lignes d'édition en-dessous correspondant aux identifiants Theia (Utilisateur et mot de passe).
 
-3. **Traitement des images** : Traitement des images satellites. Il faut obligatoirement que les "check box" 1 et 2 soient cochées car le traitement des images ne peut pas être éffectué si les images ne sont pas téléchargées.
+3. **Traitement des images** : Traitement des images satellites (mosaïque des images, calculs des indices spectraux, ...)
 
-4. **Image THRS** : Calcul des indices de textures. Cette "check box" peut-être lancée indépendamment des autres. Par contre il faut renseigner dans la ligne d'édition associée, le raster THRS.
+4. **MNT** : Calcul des pentes (+PHYMOBAT 1.1) issues du MNT (renseigner la ligne d'édition associée au modèle numérique de terrain).
+
+5. **Image THRS** : Calcul des indices de textures. Il faut renseigner dans la ligne d'édition associée, le raster THRS.
 
 Avant de lancer un traitement, il faut renseigner toutes les premières lignes d'édition et sélectionner un *capteur*.
 
@@ -353,7 +271,7 @@ Interface du traitement des échantillons
 
 .. note:: Cet onglet peut être indépendant des autres onglets. Il faut cocher la "check box" **Image échantillonnée** pour signaler au processus que les traitements du premier onglet n'ont pas été lancés. Ainsi renseigner le raster associé aux échantillons dans la ligne d'édition en-dessous.
 
-.. note:: Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner dans le premier onglet "Traitement des images", le **chemin du dossier principal** et l'**emprise de la zone**.
+.. note:: Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner dans le premier onglet "Traitement des images" l'**emprise de la zone**.
 
 .. figure:: /images_doc/API_20.png
    :align: center
@@ -406,27 +324,42 @@ Interface du traitement de classification
    :align: center
    :alt: API 2
 
-Le seul traitement qui sera lancé dans cet onglet est le processus de classification -> "check box" **Classifier** :func:`Processing.Processing.i_classifier`.
+Le seul traitement qui sera lancé dans cet onglet est le processus de classification :func:`Processing.Processing.i_classifier`.
 
 Un fichier shapefile sera crée à l'emplacement indiqué par l'utilisateur, **fichier de sortie**. Il dépend du shapefile en entrée issue de la **segmentation** IGN.
 
-L'utilisateur doit personnaliser les champs des entités de sortie comme ceci :
+L'utilisateur doit personnaliser les champs des entités de sortie comme ceci (+PHYMOBAT 1.1) :
 
-.. figure:: /images_doc/API_class_1.png
+*Pour un niveau*
+
+.. figure:: /images_doc/API_class_10.png
    :align: center
    :alt: API 2
+
+*OU pour 2 niveaux*
+
+.. figure:: /images_doc/API_class_11.png
+   :align: center
+   :alt: API 2
+
+*OU pour tous les niveaux*
+
+.. figure:: /images_doc/API_class_12.png
+   :align: center
+   :alt: API 2
+
 
 Où :
 
 - ID : Identifiant unique
 - AREA : Superficie du polygone en ha
-- NIVEAU_1 : Végétation non naturelle / Semi-naturelle
-- NIVEAU_2 : Herbacés / Ligneux
+- NIVEAU_1 : Non végétation semi-naturelle / Semi-naturelle
+- NIVEAU_2 : Eboulis / Agriculture \| Herbacés / Ligneux
 - NIVEAU_3 : Lingeux denses / mixtes et Phytomasse faible / moyenne / forte
 - POURC : Densité de ligneux et de phytomasse
 
 Les listes déroulantes indiquent la nature des champs, il y a deux choix :
 
-* ogr.OFTString = Chaîne de caractères
-* ogr.OFTReal = Chiffre réel
+* String = Chaîne de caractères
+* Real = Chiffre réel
 

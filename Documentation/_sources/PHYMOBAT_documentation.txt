@@ -8,6 +8,8 @@ Documentation de PHYMOBAT
 
 Chaîne de traintement du Fond blanc PHYsionomique des Milieux Ouverts de Basse Altitude par Télédétection (PHYMOBAT).
 
+.. note:: Outil compatible pour l'instant que sur Ubuntu 14.04.
+
 Contents:
 
 .. toctree::

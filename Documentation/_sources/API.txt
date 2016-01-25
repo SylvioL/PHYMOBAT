@@ -7,16 +7,16 @@ The class diagram associated to the interface is this :
    :align: center
    :alt: Class diagram Interface
 
-Carhab processing MOBA main system
-----------------------------------
-
-.. automodule:: Processing
-	:members:
-
 Interface command
 -----------------
 
 .. automodule:: PHYMOBAT
+	:members:
+
+Control processing
+------------------
+
+.. automodule:: Processing
 	:members:
 
 Interface element
@@ -25,3 +25,14 @@ Interface element
 .. automodule:: ui_PHYMOBAT_tab
 	:members:
 
+Popup about and warming
+-----------------------
+
+.. automodule:: ui_A_propos_PHYMOBAT_window
+	:members:
+
+.. automodule:: ui_Warming_study_area
+	:members:
+
+.. automodule:: ui_Warming_forgetting
+	:members:

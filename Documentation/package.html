@@ -65,7 +65,7 @@
 <span id="archive"></span><h3>Archive<a class="headerlink" href="#module-Archive" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="Archive.Archive">
-<em class="property">class </em><tt class="descclassname">Archive.</tt><tt class="descname">Archive</tt><big>(</big><em>captor</em>, <em>list_year</em>, <em>box</em>, <em>folder</em>, <em>repertoryL8</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">Archive.</tt><tt class="descname">Archive</tt><big>(</big><em>captor</em>, <em>list_year</em>, <em>box</em>, <em>folder</em>, <em>repertory</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to list, upload and unpack Theia image archive because of a shapefile (box).
 This shapefile get extent of the area.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -79,7 +79,7 @@ This shapefile get extent of the area.</p>
 <li><strong>list_year</strong> (<em>list of str</em>) &#8211; Processing&#8217;s year (string for one year)</li>
 <li><strong>box</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path of the study area</li>
 <li><strong>folder</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Path of the source folder</li>
-<li><strong>repertoryL8</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the archive&#8217;s folder</li>
+<li><strong>repertory</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Name of the archive&#8217;s folder</li>
 </ul>
 </td>
 </tr>
@@ -101,7 +101,7 @@ This shapefile get extent of the area.</p>
 </tbody>
 </table>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Archive</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertoryL8</span><span class="p">)</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertory</span><span class="p">)</span> 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">coor_test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">coor_test</span>
 <span class="go">&#39;45.52, 2.25, 46.71, 3.27&#39;</span>
@@ -116,9 +116,10 @@ This shapefile get extent of the area.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Archive.Archive.download">
-<tt class="descname">download</tt><big>(</big><em>user_theia</em>, <em>password_theia</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.download" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to upload images archive with selenium module</p>
+<dt id="Archive.Archive.download_auto">
+<tt class="descname">download_auto</tt><big>(</big><em>user_theia</em>, <em>password_theia</em><big>)</big><a class="reference internal" href="_modules/Archive.html#Archive.download_auto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Archive.Archive.download_auto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to download images archive automatically on Theia land data center.
+Source : <a class="reference external" href="https://github.com/olivierhagolle/theia_download">https://github.com/olivierhagolle/theia_download</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -186,11 +187,11 @@ This shapefile get extent of the area.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-Landsat8_by_date">
-<span id="landsat-image-processing"></span><h3>Landsat image processing<a class="headerlink" href="#module-Landsat8_by_date" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-RasterSat_by_date">
+<span id="landsat-image-processing"></span><h3>Landsat image processing<a class="headerlink" href="#module-RasterSat_by_date" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
-<dt id="Landsat8_by_date.Landsat8_by_date">
-<em class="property">class </em><tt class="descclassname">Landsat8_by_date.</tt><tt class="descname">Landsat8_by_date</tt><big>(</big><em>class_archive</em>, <em>big_folder</em>, <em>one_date</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date">
+<em class="property">class </em><tt class="descclassname">RasterSat_by_date.</tt><tt class="descname">RasterSat_by_date</tt><big>(</big><em>class_archive</em>, <em>big_folder</em>, <em>one_date</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Satellite image  processing&#8217;s class. This class include several processes to group images by date, mosaic images by date,
 extract images information, compute ndvi, compute cloud pourcent and create new rasters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -201,7 +202,7 @@ extract images information, compute ndvi, compute cloud pourcent and create new 
 <li><strong>class_archive</strong> (<em>class</em>) &#8211; Archive class name with every information on downloaded images</li>
 <li><strong>big_folder</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Image processing folder</li>
 <li><strong>one_date</strong> (<em>list of str</em>) &#8211; [year, month, day] ...
-This variable is modified in the function <a class="reference internal" href="#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Landsat8_by_date.Landsat8_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">mosaic_by_date()</span></tt></a>. 
+This variable is modified in the function <a class="reference internal" href="#RasterSat_by_date.RasterSat_by_date.mosaic_by_date" title="RasterSat_by_date.RasterSat_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">mosaic_by_date()</span></tt></a>. 
 To append mosaic image path, mosaic cloud image path, cloud pixel value table, mosaic ndvi image path and ndvi pixel value table.</li>
 </ul>
 </td>
@@ -209,8 +210,8 @@ To append mosaic image path, mosaic cloud image path, cloud pixel value table, m
 </tbody>
 </table>
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.calcul_ndvi">
-<tt class="descname">calcul_ndvi</tt><big>(</big><em>img_spec</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.calcul_ndvi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.calcul_ndvi" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date.calcul_ndvi">
+<tt class="descname">calcul_ndvi</tt><big>(</big><em>img_spec</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.calcul_ndvi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.calcul_ndvi" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computer NDVI index for a Landsat image.</p>
 <p>NDVI = band4 - band3 / band4 + band3</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -224,8 +225,8 @@ To append mosaic image path, mosaic cloud image path, cloud pixel value table, m
 </dd></dl>
 
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.create_raster">
-<tt class="descname">create_raster</tt><big>(</big><em>out_raster</em>, <em>data</em>, <em>in_ds</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.create_raster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.create_raster" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date.create_raster">
+<tt class="descname">create_raster</tt><big>(</big><em>out_raster</em>, <em>data</em>, <em>in_ds</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.create_raster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.create_raster" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create raster</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -243,8 +244,8 @@ To append mosaic image path, mosaic cloud image path, cloud pixel value table, m
 </dd></dl>
 
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.group_by_date">
-<tt class="descname">group_by_date</tt><big>(</big><em>d_uni</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.group_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.group_by_date" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date.group_by_date">
+<tt class="descname">group_by_date</tt><big>(</big><em>d_uni</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.group_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.group_by_date" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to extract images on a single date</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -259,14 +260,14 @@ To append mosaic image path, mosaic cloud image path, cloud pixel value table, m
 </dd></dl>
 
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.mosaic_by_date">
-<tt class="descname">mosaic_by_date</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.mosaic_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to merge images of the same date in a image group <a class="reference internal" href="#Landsat8_by_date.Landsat8_by_date.group_by_date" title="Landsat8_by_date.Landsat8_by_date.group_by_date"><tt class="xref py py-func docutils literal"><span class="pre">group_by_date()</span></tt></a>.</p>
+<dt id="RasterSat_by_date.RasterSat_by_date.mosaic_by_date">
+<tt class="descname">mosaic_by_date</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.mosaic_by_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.mosaic_by_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to merge images of the same date in a image group <a class="reference internal" href="#RasterSat_by_date.RasterSat_by_date.group_by_date" title="RasterSat_by_date.RasterSat_by_date.group_by_date"><tt class="xref py py-func docutils literal"><span class="pre">group_by_date()</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.pourc_cloud">
-<tt class="descname">pourc_cloud</tt><big>(</big><em>img_spec</em>, <em>img_cloud</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.pourc_cloud"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.pourc_cloud" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date.pourc_cloud">
+<tt class="descname">pourc_cloud</tt><big>(</big><em>img_spec</em>, <em>img_cloud</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.pourc_cloud"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.pourc_cloud" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return clear pixel percentage on the image <strong>img_spec</strong> because of a cloud image <strong>img_cloud</strong>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -285,8 +286,8 @@ To append mosaic image path, mosaic cloud image path, cloud pixel value table, m
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">Landsat8_by_date</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">Landsat_test</span> <span class="o">=</span> <span class="n">Landsat8_by_date</span><span class="p">(</span><span class="n">class_archive</span><span class="p">,</span> <span class="n">big_folder</span><span class="p">,</span> <span class="n">one_date</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">RasterSat_by_date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Landsat_test</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="n">class_archive</span><span class="p">,</span> <span class="n">big_folder</span><span class="p">,</span> <span class="n">one_date</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nb0_test</span> <span class="o">=</span> <span class="n">Landsat_test</span><span class="o">.</span><span class="n">pourc_cloud</span><span class="p">(</span><span class="n">Landsat_test</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">Landsat_test</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nb0_test</span>
 <span class="go">98</span>
@@ -295,8 +296,8 @@ To append mosaic image path, mosaic cloud image path, cloud pixel value table, m
 </dd></dl>
 
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.raster_data">
-<tt class="descname">raster_data</tt><big>(</big><em>img</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.raster_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.raster_data" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date.raster_data">
+<tt class="descname">raster_data</tt><big>(</big><em>img</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.raster_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.raster_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to extract raster information.
 Return table of pixel values and raster information like line number, pixel size, ... (gdal pointer)</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -313,10 +314,10 @@ Return table of pixel values and raster information like line number, pixel size
 </dd></dl>
 
 <dl class="method">
-<dt id="Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal">
-<tt class="descname">vrt_translate_gdal</tt><big>(</big><em>vrt_translate</em>, <em>src_data</em>, <em>dst_data</em><big>)</big><a class="reference internal" href="_modules/Landsat8_by_date.html#Landsat8_by_date.vrt_translate_gdal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Landsat8_by_date.Landsat8_by_date.vrt_translate_gdal" title="Permalink to this definition">¶</a></dt>
+<dt id="RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal">
+<tt class="descname">vrt_translate_gdal</tt><big>(</big><em>vrt_translate</em>, <em>src_data</em>, <em>dst_data</em><big>)</big><a class="reference internal" href="_modules/RasterSat_by_date.html#RasterSat_by_date.vrt_translate_gdal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to launch gdal tools in command line. With <tt class="docutils literal"><span class="pre">gdalbuildvrt</span></tt> and <tt class="docutils literal"><span class="pre">gdal_translate</span></tt>.
-This function is used <a class="reference internal" href="#Landsat8_by_date.Landsat8_by_date.mosaic_by_date" title="Landsat8_by_date.Landsat8_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">mosaic_by_date()</span></tt></a> to mosaic image by date.</p>
+This function is used <a class="reference internal" href="#RasterSat_by_date.RasterSat_by_date.mosaic_by_date" title="RasterSat_by_date.RasterSat_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">mosaic_by_date()</span></tt></a> to mosaic image by date.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -470,6 +471,33 @@ This function is used <a class="reference internal" href="#Landsat8_by_date.Land
 <p class="last">Source : <a class="reference external" href="http://otbcb.readthedocs.org/en/latest/Applications/app_SFSTextureExtraction.html">http://otbcb.readthedocs.org/en/latest/Applications/app_SFSTextureExtraction.html</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Slope">
+<span id="slope-processing"></span><h3>Slope processing<a class="headerlink" href="#module-Slope" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="Slope.Slope">
+<em class="property">class </em><tt class="descclassname">Slope.</tt><tt class="descname">Slope</tt><big>(</big><em>mnt</em><big>)</big><a class="reference internal" href="_modules/Slope.html#Slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Slope.Slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to compute a slope raster</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>mnt</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Digital Elevation Model (DEM) path</li>
+<li><strong>out_mnt</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; slope raster path</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="Slope.Slope.extract_slope">
+<tt class="descname">extract_slope</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Slope.html#Slope.extract_slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Slope.Slope.extract_slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to compute slope in GDAL command line.</p>
 </dd></dl>
 
 </dd></dl>
@@ -794,7 +822,7 @@ the final shapefile.</p>
 <dt id="Segmentation.Segmentation.compute_biomass_density">
 <tt class="descname">compute_biomass_density</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Segmentation.html#Segmentation.compute_biomass_density"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Segmentation.Segmentation.compute_biomass_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to compute the biomass and density distribution.
-It returns biomass level threshold.</p>
+It returns threshold of biomass level.</p>
 </dd></dl>
 
 <dl class="method">
@@ -849,8 +877,9 @@ class name.</p>
 <li><a class="reference internal" href="#">CarHab Phy MOBA package</a><ul>
 <li><a class="reference internal" href="#image-processing">Image processing</a><ul>
 <li><a class="reference internal" href="#module-Archive">Archive</a></li>
-<li><a class="reference internal" href="#module-Landsat8_by_date">Landsat image processing</a></li>
+<li><a class="reference internal" href="#module-RasterSat_by_date">Landsat image processing</a></li>
 <li><a class="reference internal" href="#module-Vhrs">Texture index processing</a></li>
+<li><a class="reference internal" href="#module-Slope">Slope processing</a></li>
 <li><a class="reference internal" href="#module-Toolbox">Toolbox</a></li>
 </ul>
 </li>

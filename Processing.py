@@ -134,7 +134,7 @@ class Processing():
         self.list_band_outraster = []
         
         # Class name
-        self.in_class_name = ['Vegetation non naturelle', 'Vegetation semi-naturelle',\
+        self.in_class_name = ['Non Vegetation semi-naturelle', 'Vegetation semi-naturelle',\
                          'Herbacees', 'Ligneux', \
                          'Ligneux mixtes', 'Ligneux denses',\
                          'Agriculture', 'Eboulis', \
@@ -297,8 +297,7 @@ class Processing():
         Interface function to processing VHRS images. It create two OTB texture images :func:`Vhrs.Vhrs` : SFS Texture and Haralick Texture
 
         """
-        
-#         if vs == 1:   
+  
         # Create texture image
         # Clip orthography image 
         path_ortho = clip_raster(self.path_ortho, self.path_area)

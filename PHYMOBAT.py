@@ -15,21 +15,25 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
-from _collections import defaultdict
 
 """
 Interface main, PHYMOBAT (FB PHYsionomiquedes Milieux Ouverts de Basse Altitude par Télédétection)
 
 __name__ = "PHYMOBAT 1.1"
+
 __license__ = "GPL"
+
 __version__ = "1.1"
+
 __author__ = "LAVENTURE Sylvio - UMR TETIS / IRSTEA"
+
 __date__ = "Janvier 2016"
 """
 
 import os, sys, time
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+from _collections import defaultdict
 
 try :
     import ogr
@@ -45,9 +49,10 @@ except AttributeError:
 import webbrowser
 import lxml.etree as ET
 
-from ui_PHYMOBAT_tab import Ui_PHYMOBAT
+from ui_PHYMOBAT_tab import Ui_PHYMOBAT, _translate
 from ui_A_propos_PHYMOBAT_window import Ui_About
 from ui_Warming_study_area import Ui_Warming_study_area
+from ui_Warming_forgetting import Ui_Warming_forgetting
 from Processing import Processing
 
 class PHYMOBAT(QMainWindow, Processing):
@@ -61,18 +66,7 @@ class PHYMOBAT(QMainWindow, Processing):
         self.initUI()
         self.apropos = None # For the "About PHYMOBAT" window
         self.w_study_area = None # For the "Warming : forget study area" window
-        
-        self.loop_sample = 1
-        
-#         while self.loop_sample == 1:
-#             sample_path = "%s" % self.ui.lineEdit_area_path.text()
-#             if not self.ui.lineEdit_area_path.text().isEmpty() and sample_path[-4:] == '.shp':
-#                 ds = ogr.GetDriverByName('ESRI Shapefile').Open(sample_path, 0)
-#                 so = ds.GetLayer()
-#                 dso = so.GetLayerDefn()
-#                 field_names = [so.GetLayerDefn().GetFieldDefn(l).GetName() for l in range(dso.GetFieldCount())]
-#                 print(field_names)
-#                 self.loop_sample = 0
+        self.w_forget = None # For the "Warming : forgetting" window
         
     def initUI(self):
         
@@ -102,9 +96,7 @@ class PHYMOBAT(QMainWindow, Processing):
         # Initial interface
         self.ui = Ui_PHYMOBAT()
         self.ui.setupUi(self)
-        
-#         self.ui.menuMenu().addMenu('&menuMenu')
-#         self.ui.lineEdit_select_sample_fieldname_1.textChanged.connect(self.valueChanged(self.ui.lineEdit_select_sample_fieldname_2.text()))
+
         # Connect browser button to search a path
         ##########################################
         # Main folder path
@@ -159,15 +151,14 @@ class PHYMOBAT(QMainWindow, Processing):
         self.rpg_tchek = [] # To backup rpg mode
         self.img_sample = [] # To backup
         
-#         while self.loop_sample == 1:
-#             sample_path = "%s" % self.ui.lineEdit_area_path.text()
-#             if not self.ui.lineEdit_area_path.text().isEmpty() and sample_path[-4:] == '.shp':
-#                 ds = ogr.GetDriverByName('ESRI Shapefile').Open(sample_path, 0)
-#                 so = ds.GetLayer()
-#                 dso = so.GetLayerDefn()
-#                 field_names = [so.GetLayerDefn().GetFieldDefn(l).GetName() for l in range(dso.GetFieldCount())]
-#                 print(field_names)
-#                 self.loop_sample = 0
+        # Connect change line edit on sample path to extract fieldnames
+        self.ui.lineEdit_select_sample_fieldname_1.textChanged.connect(self.field_display_1)
+        self.ui.lineEdit_select_sample_fieldname_2.textChanged.connect(self.field_display_2)
+        
+        # Change connect for classification checkboxes
+        self.ui.checkBox_classifier_1.stateChanged.connect(self.display_one_level)
+        self.ui.checkBox_classifier_2.stateChanged.connect(self.display_two_levels)
+        self.ui.checkBox_classifier_3.stateChanged.connect(self.display_all_levels)
         
     def get_variable(self):
         
@@ -209,29 +200,40 @@ class PHYMOBAT(QMainWindow, Processing):
         self.path_mnt = "%s" % self.ui.lineEdit_MNT.text()        
         
         # Output shapefile field name by line edit and field type by combo box
-        if self.ui.lineEdit_fieldname_1.text() != '':
+        if self.ui.checkBox_classifier_1.isChecked() and self.ui.lineEdit_fieldname_1.text() != '':
             self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_1.text())
-            self.out_fieldtype_carto.append(eval("%s" % self.ui.comboBox_fieldname_1.currentText()))
-        
-        if self.ui.lineEdit_fieldname_2.text() != '':
-            self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_2.text())
-            self.out_fieldtype_carto.append(eval("%s" % self.ui.comboBox_fieldname_2.currentText()))
-         
-        if self.ui.lineEdit_fieldname_3.text() != '':   
-            self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_3.text())
-            self.out_fieldtype_carto.append(eval("%s" % self.ui.comboBox_fieldname_3.currentText()))
-        
-        if self.ui.lineEdit_fieldname_4.text() != '':    
-            self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_4.text())
-            self.out_fieldtype_carto.append(eval("%s" % self.ui.comboBox_fieldname_4.currentText()))
+            self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_1.currentText()))
             
+        if self.ui.checkBox_classifier_2.isChecked() and self.ui.lineEdit_fieldname_12.text() != '':
+            self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_12.text())
+            self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_12.currentText()))
+        
+            if self.ui.lineEdit_fieldname_2.text() != '':
+                self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_2.text())
+                self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_2.currentText()))
+            
+        if self.ui.checkBox_classifier_3.isChecked() and self.ui.lineEdit_fieldname_13.text() != '':
+            self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_13.text())
+            self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_13.currentText()))
+        
+            if self.ui.lineEdit_fieldname_23.text() != '':
+                self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_23.text())
+                self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_23.currentText()))
+         
+                if self.ui.lineEdit_fieldname_3.text() != '':   
+                    self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_3.text())
+                    self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_3.currentText()))
+        
+                    if self.ui.lineEdit_fieldname_4.text() != '':    
+                        self.out_fieldname_carto.append("%s" % self.ui.lineEdit_fieldname_4.text())
+                        self.out_fieldtype_carto.append(eval("ogr.OFT%s" % self.ui.comboBox_fieldname_4.currentText()))
+        
         # Segmentation shapefile path path by line edit
         self.path_segm = "%s" % self.ui.lineEdit_segmentation.text()
         
         # Output shapefile field name by line edit and field type by combo box
         self.output_name_moba = "%s" % self.ui.lineEdit_output.text()
         
- 
     def set_variable(self):
         """
         Print number of available image from Theia's GeoJSON .
@@ -300,13 +302,13 @@ class PHYMOBAT(QMainWindow, Processing):
         Add sample information and location to compute optimal threshold :
         
         - Append a sample name by line Edit. *This is a check box* ``RPG``, *if the sample is RPG file. It launch the Rpg class. And append a other sample from Rpg class*.
-        - Append two sample field names by line edit. It will be the same.
+        - Append two existent sample field names by combobox. It will be the same. 
         - Append sample class names by line edit. One or more for every sample.
         - Append number of polygons for every samples by line edit.
         - Print in a plain text edit : sample name, two sample field names, sample class names and number of polygons.
         - *This check box* ``Image echantillonee``, *image path for samples if the first processing image hasn't been launched*.
             .. note:: This is for a image with one spectral band
-        - Clear all line edit at the end.
+        - Clear all widget field at the end.
         """
         
         nb_sample = len(self.sample_name)# Compute number of samples added. Condition : max three. 
@@ -316,21 +318,22 @@ class PHYMOBAT(QMainWindow, Processing):
         if self.path_area == '':
             self.forget_study_area()
         
-        if not self.ui.lineEdit_sample_path.text().isEmpty() and not self.ui.lineEdit_select_sample_fieldname_1.text().isEmpty() and \
-                not self.ui.lineEdit_select_sample_fieldname_2.text().isEmpty() and not self.ui.lineEdit_select_sample_class_1.text().isEmpty() and \
-                not self.ui.lineEdit_select_sample_class_2.text().isEmpty() and not self.ui.lineEdit_select_sample_nb_poly.text().isEmpty() and \
-                nb_sample < 3 and not self.ui.lineEdit_area_path.text().isEmpty():
+        if nb_sample < 3 and not self.ui.lineEdit_sample_path.text().isEmpty() and  \
+                not self.ui.lineEdit_select_sample_fieldname_1.text().isEmpty() and not self.ui.lineEdit_select_sample_fieldname_2.text().isEmpty() and \
+                not self.ui.lineEdit_select_sample_class_1.text().isEmpty() and not self.ui.lineEdit_select_sample_class_2.text().isEmpty() and \
+                not self.ui.lineEdit_select_sample_nb_poly.text().isEmpty() and not self.ui.lineEdit_area_path.text().isEmpty():
             
             # Append a sample name by line Edit.
             if self.ui.checkBox_RPG.isChecked():
                 # Check box, if the sample is RPG file. It launch the Rpg class. And append a other sample from Rpg class 
                 self.sample_name.append(self.i_rpg("%s" % self.ui.lineEdit_sample_path.text()))
-                self.rpg_tchek.append(1) 
+                self.rpg_tchek.append(1) # To backup
+                self.ui.checkBox_RPG.setChecked(False)
             else:
                 self.sample_name.append("%s" % self.ui.lineEdit_sample_path.text())
                 self.rpg_tchek.append(0)
             
-            # Append two sample field names by line edit. It will be the same.
+            # Append two sample field names by line edit. It must be the same.
             self.fieldname_args.append("%s" % self.ui.lineEdit_select_sample_fieldname_1.text())
             self.fieldname_args.append("%s" % self.ui.lineEdit_select_sample_fieldname_2.text())
             # Append sample class names by line edit. One or more for every sample
@@ -372,7 +375,6 @@ class PHYMOBAT(QMainWindow, Processing):
             self.ui.lineEdit_select_sample_class_1.clear()
             self.ui.lineEdit_select_sample_class_2.clear()
             self.ui.lineEdit_select_sample_nb_poly.clear()
-            self.ui.checkBox_RPG.setChecked(False)
     
     def clear_sample(self):
         """
@@ -393,6 +395,7 @@ class PHYMOBAT(QMainWindow, Processing):
         self.ui.lineEdit_select_sample_nb_poly.clear()
         self.ui.checkBox_RPG.setChecked(False)
         self.ui.lineEdit_img_sample.clear()
+        self.ui.checkBox_img_sample.setChecked(False)
         self.ui.plainTextEdit_sample.clear()
         self.ui.plainTextEdit_sample.insertPlainText(_fromUtf8("1 - Végétation non naturelle / Semi-naturelle\n"))
         self.ui.plainTextEdit_sample.insertPlainText(_fromUtf8("2 - Herbacés / Ligneux\n"))
@@ -401,6 +404,195 @@ class PHYMOBAT(QMainWindow, Processing):
         self.ui.plainTextEdit_sample.insertPlainText("\n")
         self.ui.plainTextEdit_sample.insertPlainText("")
         
+    def field_display_1(self):
+        """
+        Function to display fieldname class 1 in the other fieldname class 2 when text changed.
+        """
+        
+        self.ui.lineEdit_select_sample_fieldname_2.setText("%s" % self.ui.lineEdit_select_sample_fieldname_1.text())
+            
+    def field_display_2(self):
+        """
+        Function to display fieldname class 2 in the other fieldname class 2 when text changed.
+        """
+        
+        self.ui.lineEdit_select_sample_fieldname_1.setText("%s" % self.ui.lineEdit_select_sample_fieldname_2.text())    
+        
+    def display_one_level(self):
+        """
+        Function to display fieldnames option to classifier one level
+        """
+        if self.ui.checkBox_classifier_1.isChecked():
+            
+            # Don't checked others checkboxes
+            self.ui.checkBox_classifier_2.setChecked(False)
+            self.ui.checkBox_classifier_3.setChecked(False)
+            
+            # Display options filednames
+            self.ui.label_chps_1 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_1.setObjectName(_fromUtf8("label_chps_1"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_1, 9, 0, 2, 2)
+            self.ui.label_chps_name_1 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_name_1.setObjectName(_fromUtf8("label_chps_name_1"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_name_1, 9, 2, 1, 1)
+            self.ui.label_chps_type_1 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_type_1.setObjectName(_fromUtf8("label_chps_type_1"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_type_1, 10, 2, 1, 1)
+            self.ui.lineEdit_fieldname_1 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_1.setObjectName(_fromUtf8("lineEdit_fieldname_1"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_1, 9, 3, 1, 1)
+            self.ui.comboBox_fieldname_1 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_1.setObjectName(_fromUtf8("comboBox_fieldname_1"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_1, 10, 3, 1, 1)
+    
+            self.ui.comboBox_fieldname_1.addItem("String")
+            self.ui.comboBox_fieldname_1.addItem("Real")
+    
+            self.ui.label_chps_1.setText(_translate("PHYMOBAT", "    Champs\n"+" des entités", None))
+            self.ui.label_chps_name_1.setText(_translate("PHYMOBAT", "Nom :", None))   
+            self.ui.label_chps_type_1.setText(_translate("PHYMOBAT", "Type :", None)) 
+         
+        if not self.ui.checkBox_classifier_1.isChecked(): 
+            # Clear options filednames
+            try:
+                self.ui.label_chps_1.deleteLater()
+                self.ui.label_chps_name_1.deleteLater()
+                self.ui.label_chps_type_1.deleteLater()  
+                self.ui.lineEdit_fieldname_1.deleteLater()
+                self.ui.comboBox_fieldname_1.deleteLater()
+            except AttributeError:      
+                pass
+    
+    def display_two_levels(self):
+        """
+        Function to display fieldnames option to classifier two first levels
+        """
+        
+        if self.ui.checkBox_classifier_2.isChecked():
+            
+            # Don't checked others checkboxes
+            self.ui.checkBox_classifier_1.setChecked(False)
+            self.ui.checkBox_classifier_3.setChecked(False)
+        
+            self.ui.label_chps_2 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_2.setObjectName(_fromUtf8("label_chps_2"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_2, 13, 0, 2, 2)
+            self.ui.lineEdit_fieldname_12 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_12.setObjectName(_fromUtf8("lineEdit_fieldname_12"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_12, 13, 3, 1, 1)
+            self.ui.lineEdit_fieldname_2 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_2.setObjectName(_fromUtf8("lineEdit_fieldname_2"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_2, 13, 4, 1, 1)    
+            self.ui.label_chps_type_2 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_type_2.setObjectName(_fromUtf8("label_chps_type_2"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_type_2, 14, 2, 1, 1)
+            self.ui.comboBox_fieldname_12 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_12.setObjectName(_fromUtf8("comboBox_fieldname_12"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_12, 14, 3, 1, 1)
+            self.ui.comboBox_fieldname_2 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_2.setObjectName(_fromUtf8("comboBox_fieldname_2"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_2, 14, 4, 1, 1)
+            self.ui.label_chps_name_2 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_name_2.setObjectName(_fromUtf8("label_chps_name_2"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_name_2, 13, 2, 1, 1)
+            
+            self.ui.comboBox_fieldname_12.addItem("String")
+            self.ui.comboBox_fieldname_12.addItem("Real")
+            self.ui.comboBox_fieldname_2.addItem("String")
+            self.ui.comboBox_fieldname_2.addItem("Real")
+            
+            self.ui.label_chps_type_2.setText(_translate("PHYMOBAT", "Type :", None))
+            self.ui.label_chps_2.setText(_translate("PHYMOBAT", "    Champs\n"+" des entités", None))
+            self.ui.label_chps_name_2.setText(_translate("PHYMOBAT", "Nom :", None))
+        
+        if not self.ui.checkBox_classifier_2.isChecked(): 
+            # Clear options filednames
+            try:
+                self.ui.label_chps_2.deleteLater()
+                self.ui.label_chps_name_2.deleteLater()
+                self.ui.label_chps_type_2.deleteLater()  
+                self.ui.lineEdit_fieldname_12.deleteLater()
+                self.ui.comboBox_fieldname_12.deleteLater()
+                self.ui.lineEdit_fieldname_2.deleteLater()
+                self.ui.comboBox_fieldname_2.deleteLater()
+            except AttributeError:      
+                pass
+        
+    def display_all_levels(self):
+        """
+        Function to display fieldnames option to launch complete classification
+        """
+        
+        if self.ui.checkBox_classifier_3.isChecked():
+            
+            # Don't checked others checkboxes
+            self.ui.checkBox_classifier_1.setChecked(False)
+            self.ui.checkBox_classifier_2.setChecked(False)
+        
+            self.ui.label_chps_name_3 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_name_3.setObjectName(_fromUtf8("label_chps_name_3"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_name_3, 17, 2, 1, 1)
+            self.ui.label_chps_3 = QLabel(self.ui.tab_3)    
+            self.ui.label_chps_3.setObjectName(_fromUtf8("label_chps_3"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_3, 17, 0, 2, 2)
+            self.ui.label_chps_type_3 = QLabel(self.ui.tab_3)
+            self.ui.label_chps_type_3.setObjectName(_fromUtf8("label_chps_type_3"))
+            self.ui.gridLayout_2.addWidget(self.ui.label_chps_type_3, 18, 2, 1, 1)
+            self.ui.lineEdit_fieldname_13 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_13.setObjectName(_fromUtf8("lineEdit_fieldname_13"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_13, 17, 3, 1, 1)
+            self.ui.lineEdit_fieldname_23 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_23.setObjectName(_fromUtf8("lineEdit_fieldname_23"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_23, 17, 4, 1, 1)
+            self.ui.lineEdit_fieldname_3 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_3.setObjectName(_fromUtf8("lineEdit_fieldname_3"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_3, 17, 5, 1, 2)
+            self.ui.lineEdit_fieldname_4 = QLineEdit(self.ui.tab_3)
+            self.ui.lineEdit_fieldname_4.setObjectName(_fromUtf8("lineEdit_fieldname_4"))
+            self.ui.gridLayout_2.addWidget(self.ui.lineEdit_fieldname_4, 17, 7, 1, 1)
+            self.ui.comboBox_fieldname_13 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_13.setObjectName(_fromUtf8("comboBox_fieldname_13"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_13, 18, 3, 1, 1)
+            self.ui.comboBox_fieldname_23 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_23.setObjectName(_fromUtf8("comboBox_fieldname_23"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_23, 18, 4, 1, 1)
+            self.ui.comboBox_fieldname_3 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_3.setObjectName(_fromUtf8("comboBox_fieldname_3"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_3, 18, 5, 1, 2)
+            self.ui.comboBox_fieldname_4 = QComboBox(self.ui.tab_3)
+            self.ui.comboBox_fieldname_4.setObjectName(_fromUtf8("comboBox_fieldname_4"))
+            self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_4, 18, 7, 1, 1)
+            
+            self.ui.comboBox_fieldname_13.addItem("String")
+            self.ui.comboBox_fieldname_13.addItem("Real")
+            self.ui.comboBox_fieldname_23.addItem("String")
+            self.ui.comboBox_fieldname_23.addItem("Real")
+            self.ui.comboBox_fieldname_3.addItem("String")
+            self.ui.comboBox_fieldname_3.addItem("Real")
+            self.ui.comboBox_fieldname_4.addItem("String")
+            self.ui.comboBox_fieldname_4.addItem("Real")  
+            
+            self.ui.label_chps_3.setText(_translate("PHYMOBAT", "    Champs\n"+" des entités", None))
+            self.ui.label_chps_type_3.setText(_translate("PHYMOBAT", "Type :", None))
+            self.ui.label_chps_name_3.setText(_translate("PHYMOBAT", "Nom :", None))
+        
+        if not self.ui.checkBox_classifier_3.isChecked(): 
+            # Clear options filednames
+            try:
+                self.ui.label_chps_3.deleteLater()
+                self.ui.label_chps_name_3.deleteLater()
+                self.ui.label_chps_type_3.deleteLater()  
+                self.ui.lineEdit_fieldname_13.deleteLater()
+                self.ui.comboBox_fieldname_13.deleteLater()
+                self.ui.lineEdit_fieldname_23.deleteLater()
+                self.ui.comboBox_fieldname_23.deleteLater()
+                self.ui.lineEdit_fieldname_3.deleteLater()
+                self.ui.comboBox_fieldname_3.deleteLater()
+                self.ui.lineEdit_fieldname_4.deleteLater()
+                self.ui.comboBox_fieldname_4.deleteLater()
+            except AttributeError:      
+                pass
+            
     def ok_button(self):
         
         """
@@ -428,11 +620,7 @@ class PHYMOBAT(QMainWindow, Processing):
         self.get_variable() # Append a few system value
         vs = 0 # Variable to launch VHRS texture processing
         dd = 0 # Variable to launch image downloading 
-        
-        # Compute a output slope raster 
-        if self.ui.checkBox_MNT.isChecked():
-        
-            self.i_slope()
+        ok = 1 # Variable to verify informations -> 0 not ok, 1 ok
         
         # if download check box is checked only
         if not self.ui.checkBox_listing.isChecked() and self.ui.checkBox_download.isChecked():
@@ -443,41 +631,81 @@ class PHYMOBAT(QMainWindow, Processing):
         if not self.ui.checkBox_listing.isChecked() and not self.ui.checkBox_download.isChecked() and self.ui.checkBox_processing.isChecked():
             
             self.ui.checkBox_listing.setChecked(True) 
-            self.ui.checkBox_download.setChecked(True)    
-               
-        # Downloading and processing on theia platform
-        # A check box to get number download available images
-        if self.ui.checkBox_listing.isChecked():
+            self.ui.checkBox_download.setChecked(True) 
             
-            if self.ui.checkBox_download.isChecked():
-                # To launch the downloading
-                dd = 1
-              
-            self.i_download(dd) # Launch image listing and downloading if dd = 1
-            self.set_variable() # to write in the line edit about number download available images
+        # Verify raster or sample to launch a good processing classification tab
+        # If not ok, there will appear a message windows to enter the miss information
+        if self.ui.checkBox_classifier_1.isChecked():
+            if not self.ui.checkBox_processing.isChecked() or (len(self.raster_path) < 1 and len(self.sample_name) > 0) or \
+            len(self.sample_name) < 1:
+                self.forget_raster_sample()
+                ok = 0
+        if self.ui.checkBox_classifier_2.isChecked():
+            if (not self.ui.checkBox_processing.isChecked() and not self.ui.checkBox_MNT.isChecked() and \
+            not self.ui.checkBox_VHRS.isChecked()) or (len(self.raster_path) < 2 and len(self.sample_name) > 0) or \
+            len(self.sample_name) < 2:
+                self.forget_raster_sample()
+                ok = 0
+        if self.ui.checkBox_classifier_3.isChecked():
+            if (not self.ui.checkBox_processing.isChecked() and not self.ui.checkBox_MNT.isChecked() and \
+            not self.ui.checkBox_VHRS.isChecked()) or (len(self.raster_path) != 6 and len(self.sample_name) > 0) or \
+            len(self.sample_name) != 3:
+                self.forget_raster_sample() 
+                ok = 0
+        
+        if ok == 1:       
+            # Compute a output slope raster 
+            if self.ui.checkBox_MNT.isChecked():
             
-            # Check box to launch the image processing
-            if self.ui.checkBox_processing.isChecked():
-                # Another check box to launch VHRS texture processing. If checked, vs = 1.
-                if self.ui.checkBox_VHRS.isChecked():
-                    vs = 1
-                self.i_images_processing(vs) # function to launch the image processing            
-        
-        # To launch texture processing only
-        if not self.ui.checkBox_listing.isChecked() and self.ui.checkBox_VHRS.isChecked():
+                self.i_slope()       
             
-            self.i_vhrs()
-        
-        # Compute optimal threshold  
-        if self.ui.checkBox_threshold.isChecked():
-              
-            self.i_sample()
-        
-        # Classification processing 
-        if self.ui.checkBox_classifier.isChecked():
-             
-            self.i_classifier()
-        
+            # Downloading and processing on theia platform
+            # A check box to get number download available images
+            if self.ui.checkBox_listing.isChecked():
+                
+                if self.ui.checkBox_download.isChecked():
+                    # To launch the downloading
+                    dd = 1
+                  
+                self.i_download(dd) # Launch image listing and downloading if dd = 1
+                self.set_variable() # to write in the line edit about number download available images
+                
+                # Check box to launch the image processing
+                if self.ui.checkBox_processing.isChecked():
+                    # Another check box to launch VHRS texture processing. If checked, vs = 1.
+                    if self.ui.checkBox_VHRS.isChecked():
+                        vs = 1
+                    self.i_images_processing(vs) # function to launch the image processing            
+            
+            # To launch texture processing only
+            if not self.ui.checkBox_listing.isChecked() and self.ui.checkBox_VHRS.isChecked():
+                
+                self.i_vhrs()
+            
+            # Compute optimal threshold  
+            if self.ui.checkBox_threshold.isChecked():
+                
+                self.i_sample()
+            
+            # Classification processing 
+            if self.ui.checkBox_classifier_1.isChecked() :         
+                
+                self.out_fieldname_carto = self.out_fieldname_carto[0]
+                self.out_fieldtype_carto = self.out_fieldtype_carto[0]
+                self.i_classifier()
+                
+            if self.ui.checkBox_classifier_2.isChecked() :
+                
+                self.out_fieldname_carto = self.out_fieldname_carto[:1]
+                self.out_fieldtype_carto = self.out_fieldtype_carto[:1]             
+                self.i_classifier()
+                
+            if self.ui.checkBox_classifier_3.isChecked():
+                
+                self.out_fieldname_carto = self.out_fieldname_carto[:3]
+                self.out_fieldtype_carto = self.out_fieldtype_carto[:3]             
+                self.i_classifier()
+            
 #         # Clear variables after processing
 #         self.clear_sample()
         self.out_fieldname_carto = ['ID', 'AREA']
@@ -534,18 +762,33 @@ class PHYMOBAT(QMainWindow, Processing):
         c = tree.find("Tab[@id='Classification']")
         self.ui.lineEdit_segmentation.setText(c.find("Segmentation_path").text)
         self.ui.lineEdit_output.setText(c.find("Output_path").text)
-        self.ui.lineEdit_fieldname_1.setText(c.find("Output_fieldname_1").text)
-        self.ui.lineEdit_fieldname_2.setText(c.find("Output_fieldname_2").text)
-        self.ui.lineEdit_fieldname_3.setText(c.find("Output_fieldname_3").text)
-        self.ui.lineEdit_fieldname_4.setText(c.find("Output_fieldname_4").text)
-        index_fieldname_1 = self.ui.comboBox_fieldname_1.findText(c.find("Output_type_1").text)        
-        self.ui.comboBox_fieldname_1.setCurrentIndex(index_fieldname_1)
-        index_fieldname_2 = self.ui.comboBox_fieldname_2.findText(c.find("Output_type_2").text)        
-        self.ui.comboBox_fieldname_2.setCurrentIndex(index_fieldname_2)
-        index_fieldname_3 = self.ui.comboBox_fieldname_3.findText(c.find("Output_type_3").text)        
-        self.ui.comboBox_fieldname_3.setCurrentIndex(index_fieldname_3)
-        index_fieldname_4 = self.ui.comboBox_fieldname_4.findText(c.find("Output_type_4").text)        
-        self.ui.comboBox_fieldname_4.setCurrentIndex(index_fieldname_4)
+        if len(c) == 4:
+            self.ui.checkBox_classifier_1.setChecked(True)
+            self.ui.lineEdit_fieldname_1.setText(c.find("Output_fieldname_1").text)
+            index_fieldname_1 = self.ui.comboBox_fieldname_1.findText(c.find("Output_type_1").text)        
+            self.ui.comboBox_fieldname_1.setCurrentIndex(index_fieldname_1)
+        elif len(c) == 6:
+            self.ui.checkBox_classifier_2.setChecked(True)
+            self.ui.lineEdit_fieldname_12.setText(c.find("Output_fieldname_1").text)
+            self.ui.lineEdit_fieldname_2.setText(c.find("Output_fieldname_2").text)
+            index_fieldname_12 = self.ui.comboBox_fieldname_12.findText(c.find("Output_type_1").text)        
+            self.ui.comboBox_fieldname_12.setCurrentIndex(index_fieldname_12)
+            index_fieldname_2 = self.ui.comboBox_fieldname_2.findText(c.find("Output_type_2").text)        
+            self.ui.comboBox_fieldname_2.setCurrentIndex(index_fieldname_2)
+        elif len(c) == 10:
+            self.ui.checkBox_classifier_3.setChecked(True)
+            self.ui.lineEdit_fieldname_13.setText(c.find("Output_fieldname_1").text)
+            self.ui.lineEdit_fieldname_23.setText(c.find("Output_fieldname_2").text)
+            self.ui.lineEdit_fieldname_3.setText(c.find("Output_fieldname_3").text)
+            self.ui.lineEdit_fieldname_4.setText(c.find("Output_fieldname_4").text)
+            index_fieldname_13 = self.ui.comboBox_fieldname_13.findText(c.find("Output_type_1").text)        
+            self.ui.comboBox_fieldname_13.setCurrentIndex(index_fieldname_13)
+            index_fieldname_23 = self.ui.comboBox_fieldname_23.findText(c.find("Output_type_2").text)        
+            self.ui.comboBox_fieldname_23.setCurrentIndex(index_fieldname_23)
+            index_fieldname_3 = self.ui.comboBox_fieldname_3.findText(c.find("Output_type_3").text)        
+            self.ui.comboBox_fieldname_3.setCurrentIndex(index_fieldname_3)
+            index_fieldname_4 = self.ui.comboBox_fieldname_4.findText(c.find("Output_type_4").text)        
+            self.ui.comboBox_fieldname_4.setCurrentIndex(index_fieldname_4)
         print("Load input text !")
         
     def save_backup(self):
@@ -570,32 +813,44 @@ class PHYMOBAT(QMainWindow, Processing):
         doc = ET.SubElement(root, "Tab", id="Processing_sample")
         for sa in range(len(self.sample_name)):
             sub_doc = ET.SubElement(doc, "Sample", id="Sample_" + str(sa))
-            ET.SubElement(sub_doc, "Sample_path", type = "list").text = self.sample_name[sa]
-            ET.SubElement(sub_doc, "Fieldname_1", type = "list").text = self.fieldname_args[2*sa]
-            ET.SubElement(sub_doc, "Fieldname_2", type = "list").text = self.fieldname_args[2*sa+1]
-            ET.SubElement(sub_doc, "Classname_1", type = "list").text = self.class_args[2*sa]
-            ET.SubElement(sub_doc, "Classname_2", type = "list").text = self.class_args[2*sa+1]
-            ET.SubElement(sub_doc, "Nb_polygones", type = "list").text = self.list_nb_sample[sa]
-            ET.SubElement(sub_doc, "RPG", type = "list").text = str(self.rpg_tchek[sa])
+            ET.SubElement(sub_doc, "Sample_path", type = "str").text = self.sample_name[sa]
+            ET.SubElement(sub_doc, "Fieldname_1", type = "str").text = self.fieldname_args[2*sa]
+            ET.SubElement(sub_doc, "Fieldname_2", type = "str").text = self.fieldname_args[2*sa+1]
+            ET.SubElement(sub_doc, "Classname_1", type = "str").text = self.class_args[2*sa]
+            ET.SubElement(sub_doc, "Classname_2", type = "str").text = self.class_args[2*sa+1]
+            ET.SubElement(sub_doc, "Nb_polygones", type = "str").text = self.list_nb_sample[sa]
+            ET.SubElement(sub_doc, "RPG", type = "int").text = str(self.rpg_tchek[sa])
             try:
                 # To enter a sample raster if the first tab doesn't launch before 
                 if self.img_sample[sa] == 1:
-                    ET.SubElement(sub_doc, "Img_sample", type = "list").text = self.raster_path[sa]
+                    ET.SubElement(sub_doc, "Img_sample", type = "str").text = self.raster_path[sa]
             except:
                 print('Not sample raster only !')
             
         doc = ET.SubElement(root, "Tab", id="Classification")
         ET.SubElement(doc, "Segmentation_path", type = "str").text = "%s" % self.ui.lineEdit_segmentation.text()
         ET.SubElement(doc, "Output_path", type = "str").text = "%s" % self.ui.lineEdit_output.text()
-        ET.SubElement(doc, "Output_fieldname_1", type = "str").text = "%s" % self.ui.lineEdit_fieldname_1.text()
-        ET.SubElement(doc, "Output_fieldname_2", type = "str").text = "%s" % self.ui.lineEdit_fieldname_2.text()
-        ET.SubElement(doc, "Output_fieldname_3", type = "str").text = "%s" % self.ui.lineEdit_fieldname_3.text()
-        ET.SubElement(doc, "Output_fieldname_4", type = "str").text = "%s" % self.ui.lineEdit_fieldname_4.text()
-        ET.SubElement(doc, "Output_type_1", type = "str").text = "%s" % self.ui.comboBox_fieldname_1.currentText()
-        ET.SubElement(doc, "Output_type_2", type = "str").text = "%s" % self.ui.comboBox_fieldname_2.currentText()
-        ET.SubElement(doc, "Output_type_3", type = "str").text = "%s" % self.ui.comboBox_fieldname_3.currentText()
-        ET.SubElement(doc, "Output_type_4", type = "str").text = "%s" % self.ui.comboBox_fieldname_4.currentText()
-#         
+        
+        if self.ui.checkBox_classifier_1.isChecked():
+            ET.SubElement(doc, "Output_fieldname_1", type = "str").text = "%s" % self.ui.lineEdit_fieldname_1.text()
+            ET.SubElement(doc, "Output_type_1", type = "str").text = "%s" % self.ui.comboBox_fieldname_1.currentText()
+         
+        if self.ui.checkBox_classifier_2.isChecked():
+            ET.SubElement(doc, "Output_fieldname_1", type = "str").text = "%s" % self.ui.lineEdit_fieldname_12.text()
+            ET.SubElement(doc, "Output_type_1", type = "str").text = "%s" % self.ui.comboBox_fieldname_12.currentText()    
+            ET.SubElement(doc, "Output_fieldname_2", type = "str").text = "%s" % self.ui.lineEdit_fieldname_2.text()
+            ET.SubElement(doc, "Output_type_2", type = "str").text = "%s" % self.ui.comboBox_fieldname_2.currentText()
+        
+        if self.ui.checkBox_classifier_3.isChecked():
+            ET.SubElement(doc, "Output_fieldname_1", type = "str").text = "%s" % self.ui.lineEdit_fieldname_13.text()
+            ET.SubElement(doc, "Output_type_1", type = "str").text = "%s" % self.ui.comboBox_fieldname_13.currentText()    
+            ET.SubElement(doc, "Output_fieldname_2", type = "str").text = "%s" % self.ui.lineEdit_fieldname_23.text()
+            ET.SubElement(doc, "Output_type_2", type = "str").text = "%s" % self.ui.comboBox_fieldname_23.currentText()
+            ET.SubElement(doc, "Output_fieldname_3", type = "str").text = "%s" % self.ui.lineEdit_fieldname_3.text()
+            ET.SubElement(doc, "Output_type_3", type = "str").text = "%s" % self.ui.comboBox_fieldname_3.currentText()
+            ET.SubElement(doc, "Output_fieldname_4", type = "str").text = "%s" % self.ui.lineEdit_fieldname_4.text()
+            ET.SubElement(doc, "Output_type_4", type = "str").text = "%s" % self.ui.comboBox_fieldname_4.currentText()
+            
         tree = ET.ElementTree(root)
         # Write in a xml file
         tree.write(str(out_backup), pretty_print=True)
@@ -624,6 +879,14 @@ class PHYMOBAT(QMainWindow, Processing):
             self.w_study_area = MyPopup_warming_study_area()
         self.w_study_area.show()
         
+    def forget_raster_sample(self):
+        """
+        Function to open a new window 'Alert' because user forgotten to declare rasters or samples.
+        """
+        if self.w_forget is None:
+            self.w_forget = MyPopup_warming_forgetting()
+        self.w_forget.show()
+                
     def close_button(self):
         """
         Function to close the interface.
@@ -663,6 +926,23 @@ class MyPopup_warming_study_area(QWidget):
         """
         Function to close the popup.
         """
+        self.close() 
+        
+class MyPopup_warming_forgetting(QWidget):
+    """
+    Popup to display a message to tell you if you fogotten to enter a raster or a sample.
+    """
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
+        self.w_forget = Ui_Warming_forgetting()
+        self.w_forget.setupUi(self)
+        
+        self.connect(self.w_forget.pushButton_ok_forget, SIGNAL('clicked()'), self.close_window)
+    
+    def close_window(self):
+        """
+        Function to close the popup.
+        """
         self.close()
         
 if __name__ == "__main__":
@@ -670,4 +950,4 @@ if __name__ == "__main__":
     myapp = PHYMOBAT()
     myapp.show()
     
-#     sys.exit(app.exec_())
+    sys.exit(app.exec_())

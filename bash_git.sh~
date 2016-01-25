@@ -1,8 +1,0 @@
-#!/bin/bash
-
-for FILE in "/Doc"*
-do 
-echo $FILE
-git add $FILE
-git commit -m "Modification de $FILE"
-done

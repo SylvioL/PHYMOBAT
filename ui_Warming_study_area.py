@@ -40,6 +40,10 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Warming_study_area(object):
+    """
+    Class to display a message to say there isn't declared study area file.
+    """
+    
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(318, 88)

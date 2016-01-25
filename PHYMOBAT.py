@@ -869,7 +869,7 @@ class PHYMOBAT(QMainWindow, Processing):
         Function to open html help
         """
 
-        webbrowser.open('file://' + os.getcwd() + '/Doc_Sphinx/sortie/methode_tuto.html#tutoriels-interface')
+        webbrowser.open('file://' + os.getcwd() + '/Documentation/methode_tuto.html#tutoriels-interface')
         
     def forget_study_area(self):
         """

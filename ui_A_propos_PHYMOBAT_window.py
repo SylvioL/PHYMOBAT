@@ -40,6 +40,11 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_About(object):
+    """
+    Class to display "About PHYMOBAT". In this windows, it prints informations on the processing, license
+    and version.
+    """
+    
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("A propos de PHYMOBAT"))
         Form.resize(507, 578)

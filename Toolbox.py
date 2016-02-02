@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.1.
+# This file is part of PHYMOBAT 1.2.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, subprocess
 import numpy as np
@@ -54,22 +54,24 @@ def calc_serie_stats(table):
     """ 
     
     # Compute stats on these indexes
-    ind = ['np.min(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', 'np.std(tab_ndvi_masked, axis=2)', \
+    ind = ['np.min(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', \
            'np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)'] # [Min, Max, Std, Max-Min]
-    
+           
     # For the cloud map 
     # In the input table the cloud floor is the 5th
     tab_cloud = np.dstack(table[5]) # Stack cloud table (dimension : 12*X*Y to X*Y*12)
     
-    cloud_true = np.greater(tab_cloud, 0) # if tab_cloud != 0 then True else False / Mask cloud
-    account_cloud = np.sum(cloud_true, axis=2) # Account to tab_cloud if != 0 => Sum of True. (Dimension X*Y)
+    cloud_true = (tab_cloud == 0) # if tab_cloud = 0 then True else False / Mask cloud
+    account_cloud = np.sum(cloud_true, axis=2) # Account to tab_cloud if != 0 => Sum of True. (Dimension X*Y)
     
     # For the ndvi stats
     # In the input table the ndvi floor is the 7th
-    stack_ndvi = np.dstack(table[7]) # Like cloud table, stack ndvi table
-#     mask_ndvi = np.ma.masked_equal(stack_ndvi, -10000, copy=True) # Mask values -10000
-    mask_cloud = np.ma.masked_where((tab_cloud == -10000) | (tab_cloud > 0), tab_cloud)# Mask values -10000 and > 0(Not cloud)
-    tab_ndvi_masked = np.ma.array(stack_ndvi, mask=mask_cloud.mask) # Ndvi table with clear values 
+    stack_ndvi = np.dstack(table[7]) # Like cloud table, stack ndvi table
+#     mask_ndvi = np.ma.masked_equal(stack_ndvi, -10000, copy=True) # Mask values -10000
+    mask_cloud = np.ma.masked_where((stack_ndvi == -10000) | (tab_cloud != 0), tab_cloud)# Mask values -10000 and > 0(Not cloud)
+#    mask_cloud = (tab_cloud != 0) | (stack_ndvi == -10000)
+    tab_ndvi_masked = np.ma.array(stack_ndvi, mask=mask_cloud.mask)#mask_cloud.mask) # Ndvi table with clear values 
+             
     # Stats on the indexes defined above
     account_stats = []
     for i in ind:

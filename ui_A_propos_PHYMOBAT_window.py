@@ -7,21 +7,21 @@
 #
 # WARNING! All changes made in this file will be lost!
 #
-# This file is part of PHYMOBAT 1.1.
+# This file is part of PHYMOBAT 1.2.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 
@@ -77,25 +77,25 @@ class Ui_About(object):
 "altitude (MOBA) un “fond blanc physionomique”, c’est-à-dire d’une carte \n"
 "physionomique de ces milieux à l’aide des techniques de télédétection.\n"
 "\n"
-"__name__ = \"PHYMOBAT 1.1\"\n"
-"__version__ = \"1.1\"\n"
+"__name__ = \"PHYMOBAT 1.2\"\n"
+"__version__ = \"1.2\"\n"
 "__author__ = \"LAVENTURE Sylvio - UMR TETIS / IRSTEA\"\n"
 "__date__ = \"Janvier 2016\"\n"
 "__license__ = \"GPL\"\n"
 "\n"
 "Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)\n"
 "\n"
-"PHYMOBAT 1.1 is free software: you can redistribute it and/or modify\n"
+"PHYMOBAT 1.2 is free software: you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
 "the Free Software Foundation, either version 3 of the License, or\n"
 "(at your option) any later version.\n"
 " \n"
-"PHYMOBAT 1.1 is distributed in the hope that it will be useful,\n"
+"PHYMOBAT 1.2 is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
 "GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License\n"
-"along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.", None))
+"along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.", None))
         self.close_newWindow.setText(_translate("Form", "Fermer", None))
 

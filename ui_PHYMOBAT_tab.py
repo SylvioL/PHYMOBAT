@@ -9,21 +9,21 @@
 #
 # WARNING! All changes made in this file will be lost!
 #
-# This file is part of PHYMOBAT 1.1.
+# This file is part of PHYMOBAT 1.2.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
 from PyQt4 import QtCore, QtGui
 
@@ -317,7 +317,7 @@ class Ui_PHYMOBAT(object):
         QtCore.QMetaObject.connectSlotsByName(PHYMOBAT)
 
     def retranslateUi(self, PHYMOBAT):
-        PHYMOBAT.setWindowTitle(_translate("PHYMOBAT", "PHYMOBAT 1.1", None))
+        PHYMOBAT.setWindowTitle(_translate("PHYMOBAT", "PHYMOBAT 1.2", None))
         self.checkBox_multiprocess.setText(_translate("PHYMOBAT", "Multi-processing", None))
         self.pushButton_browser_area_path.setText(_translate("PHYMOBAT", "...", None))
         self.pushButton_browser_principal_folder.setText(_translate("PHYMOBAT", "...", None))

@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.1.
+# This file is part of PHYMOBAT 1.2.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 #
-# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
 import os, sys, glob, re, shutil, time
 import math, subprocess, json, urllib2
@@ -60,7 +60,7 @@ class Archive():
         self._folder = folder
         self._repertory = repertory
         
-        # Archive's list (two dimensions) :
+        # Archive's list (two dimensions) :
         # 1. List of the website path archives
         # 2. List of the local path archives
         self.list_archive = []
@@ -225,13 +225,16 @@ class Archive():
         for year in self._list_year:
             
             print "=============== " + str(year) + " ==============="
-            # Initialisation variable for a next page 
+            # Initialisation variable for a next page 
             # There is a next page, next = 1
             # There isn't next page, next = 0
             next_ = 1
             
             # Link to connect in the database JSON of the Theia plateform
             self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
+            
+            if not os.path.exists(self._folder + '/' + self._repertory):
+                os.mkdir(self._folder + '/' + self._repertory)           
             
             listing_repertory = self._repertory + '/' + str(year)
             if not os.path.exists(self._folder + '/' + listing_repertory):
@@ -241,8 +244,8 @@ class Archive():
             while next_ == 1:
                 
                 try :
-                    req = urllib2.Request(str(self.url)) # Connexion in the database
-                    data = urllib2.urlopen(req).read() # Read in the database
+                    req = urllib2.Request(str(self.url)) # Connexion in the database
+                    data = urllib2.urlopen(req).read() # Read in the database
                     
                     new_data = re.sub("null", "'null'", data) # Remove "null" because Python don't like
                     
@@ -299,7 +302,7 @@ class Archive():
         #====================
         # Download
         #====================  
-        # Loop on list archive to download images  
+        # Loop on list archive to download images  
         for d in range(len(self.list_archive)):
             # Download if not exist
             if not os.path.exists(self.list_archive[d][1]):
@@ -337,7 +340,7 @@ class Archive():
                 
                 if os.path.isdir(folder_unpack):
                     print('The folder already exists')
-            #        shutil.rmtree(FolderOut) # Remove the folder that it contains if exists ...
+            #        shutil.rmtree(FolderOut) # Remove the folder that it contains if exists ...
                 else:
                     process_tocall = ['mkdir', folder_unpack]
                     subprocess.call(process_tocall)
@@ -363,11 +366,11 @@ class Archive():
                     # Cloud's path not exists in xmlfile, then replace 'SAT' by 'NUA'
                     ci = out_folder_unpack + '/' + xmlfile.xpath("/METADATA/FILES/MASK_SATURATION")[0].text.replace('_SAT', '_NUA')
                                             
-                    self.list_img.append([di[0], di[1], di[2], hi, ci])
+                    self.list_img.append([di[0], di[1], di[2], str(hi), str(ci)])
                     
                     # Create a list with dates without duplicates
                     if not di in self.single_date:
                         self.single_date.append(di)
-                    
+    
         print "End of unpack archives"
     

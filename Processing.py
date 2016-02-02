@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.1.
+# This file is part of PHYMOBAT 1.2.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import numpy as np
@@ -144,7 +144,7 @@ class Processing():
 #                                'CODE_GROUP', 'CODE_GROUP',\
 #                           'echant', 'echant',\
 #                           'echant', 'echant']
-        # Sample class names 2 by 2
+        # Sample class names 2 by 2
         self.class_args = []
 #                            '1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 15, 20, 21, 22, 23, 24, 26, 28', '18',\
 #                       'H','LF, LO',\
@@ -176,7 +176,7 @@ class Processing():
         # Multi-processing variable
         self.mp = 1
         
-        # Function followed
+        # Function followed
         self.check_download = ''
         self.decis = {}
         # Images after processing images
@@ -187,7 +187,7 @@ class Processing():
         """
         Interface function to can extract one level or two levels of the final classification 
         """
-    
+
         if len(self.out_fieldname_carto) == 3:
             self.tree_direction = [[0], [1]]
             
@@ -248,7 +248,7 @@ class Processing():
             self.check_download.list_img[clip_index][3] = clip_raster(clip[3], self.path_area) # Multispectral images
             self.check_download.list_img[clip_index][4] = clip_raster(clip[4], self.path_area) # Cloud images
            
-        # Images pre-processing
+        # Images pre-processing
         spectral_out = []
         for date in self.check_download.single_date:
                
@@ -260,15 +260,15 @@ class Processing():
             if cl > 0.60:
                 check_L8.calcul_ndvi(check_L8._one_date[3])
                 spectral_out.append(check_L8._one_date)
-           
+        
         # Compute temporal stats on ndvi index [min, max, std, min-max]
         spectral_trans = np.transpose(np.array(spectral_out, dtype=object))
         stats_name = ['Min', 'Max', 'Std', 'MaxMin']
         stats_ndvi, stats_cloud = calc_serie_stats(spectral_trans)
-           
+
         # Create stats ndvi raster and stats cloud raster
         stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
-        # Stats cloud raster
+        # Stats cloud raster
         out_cloud_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
                            '/Cloud_number_' + self.classif_year + '.TIF'
         stats_L8.create_raster(out_cloud_folder, stats_cloud, stats_L8.raster_data(self.check_download.list_img[0][4])[1])
@@ -289,7 +289,7 @@ class Processing():
         
         path_mnt = clip_raster(self.path_mnt, self.path_area)
         study_slope = Slope(path_mnt)
-        study_slope.extract_slope()# Call this function to compute slope raster
+        study_slope.extract_slope()# Call this function to compute slope raster
         self.path_mnt = study_slope.out_mnt
     
     def i_vhrs(self):#, vs):  
@@ -338,7 +338,7 @@ class Processing():
         
         # List of output raster path
         self.raster_path.append(self.out_ndvistats_folder_tab[0])
-        # List of output raster band
+        # List of output raster band
         self.list_band_outraster.append(1)
         
         if vs == 1:
@@ -359,7 +359,7 @@ class Processing():
         #                os.path.dirname(path_ortho) + '/Clip_buffer_surface_dep_18_IRCOrtho65_2m_haralick.TIF',\
         #                path_folder_dpt + '/' + folder_processing + '/' + classif_year + '/Max_2014.TIF']
         
-        # List of output raster band
+        # List of output raster band
         self.list_band_outraster.append(1) #[1, 4, 2, 1]
         
         print("End of images processing !")
@@ -449,18 +449,21 @@ class Processing():
         #     out_carto.zonal_stats((raster_path[ind_th], list_band_outraster[ind_th]))
             multi_process_var.append([self.raster_path[ind_th], self.list_band_outraster[ind_th]])
          
-        # Compute zonal stats on slope raster
+        # Compute zonal stats on slope raster
         multi_process_var.append([self.raster_path[ind_th+1], self.list_band_outraster[ind_th+1]])
         out_carto.out_threshold.append('<'+str(self.slope_degree)) # To agriculture
         out_carto.out_threshold.append('>='+str(self.slope_degree)) # To scree
-        # Compute zonal stats on Max NDVI raster    
-        # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
-        multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
-        # Compute stats twice, because there is 3 classes and not 2
-        # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
-        multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
+        # Compute zonal stats on Max NDVI raster  
+        try:  
+            # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
+            multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
+            # Compute stats twice, because there is 3 classes and not 2
+            # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
+            multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
+        except:
+            print('Not max ndvi on the 3rd floor')
 
-        # Compute zonal stats with multi processing
+        # Compute zonal stats with multi processing
         out_carto.stats_dict = mgr.defaultdict(list)
         p = []
         kwargs = {}
@@ -477,16 +480,16 @@ class Processing():
             for i in range(len(multi_process_var)):
                 p[i].join()
 
-        # If there is more one fieldnames line edit fulled in classification tab
+        # If there is more one fieldnames line edit fulled in classification tab
         if len(self.sample_name) > 2:
-            # Compute the biomass and density distribution
+            # Compute the biomass and density distribution
             out_carto.compute_biomass_density()
             
         out_carto.class_tab_final = defaultdict(list)
         self.i_tree_direction()
         out_carto.decision_tree(self.tree_direction)
         
-        # If there is more one fieldnames line edit fulled in classification tab
+        # If there is more one fieldnames line edit fulled in classification tab
         if len(self.sample_name) > 2:     
             # Compute biomass and density scale
             out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
@@ -494,4 +497,4 @@ class Processing():
           
         # Final cartography
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
-    
+        

@@ -3,27 +3,27 @@
 # 
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 #
-# PHYMOBAT 1.1 is free software: you can redistribute it and/or modify
+# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.1 is distributed in the hope that it will be useful,
+# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.1.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 Interface main, PHYMOBAT (FB PHYsionomiquedes Milieux Ouverts de Basse Altitude par Télédétection)
 
-__name__ = "PHYMOBAT 1.1"
+__name__ = "PHYMOBAT 1.2"
 
 __license__ = "GPL"
 
-__version__ = "1.1"
+__version__ = "1.2"
 
 __author__ = "LAVENTURE Sylvio - UMR TETIS / IRSTEA"
 
@@ -635,23 +635,23 @@ class PHYMOBAT(QMainWindow, Processing):
             
         # Verify raster or sample to launch a good processing classification tab
         # If not ok, there will appear a message windows to enter the miss information
-        if self.ui.checkBox_classifier_1.isChecked():
-            if not self.ui.checkBox_processing.isChecked() or (len(self.raster_path) < 1 and len(self.sample_name) > 0) or \
-            len(self.sample_name) < 1:
-                self.forget_raster_sample()
-                ok = 0
-        if self.ui.checkBox_classifier_2.isChecked():
-            if (not self.ui.checkBox_processing.isChecked() and not self.ui.checkBox_MNT.isChecked() and \
-            not self.ui.checkBox_VHRS.isChecked()) or (len(self.raster_path) < 2 and len(self.sample_name) > 0) or \
-            len(self.sample_name) < 2:
-                self.forget_raster_sample()
-                ok = 0
-        if self.ui.checkBox_classifier_3.isChecked():
-            if (not self.ui.checkBox_processing.isChecked() and not self.ui.checkBox_MNT.isChecked() and \
-            not self.ui.checkBox_VHRS.isChecked()) or (len(self.raster_path) != 6 and len(self.sample_name) > 0) or \
-            len(self.sample_name) != 3:
-                self.forget_raster_sample() 
-                ok = 0
+#         if self.ui.checkBox_classifier_1.isChecked():
+#             if not self.ui.checkBox_processing.isChecked() or (len(self.raster_path) < 1 and len(self.sample_name) > 0) or \
+#             len(self.sample_name) < 1:
+#                 self.forget_raster_sample()
+#                 ok = 0
+#         if self.ui.checkBox_classifier_2.isChecked():
+#             if (not self.ui.checkBox_processing.isChecked() and not self.ui.checkBox_MNT.isChecked() and \
+#             not self.ui.checkBox_VHRS.isChecked()) or (len(self.raster_path) < 2 and len(self.sample_name) > 0) or \
+#             len(self.sample_name) < 2:
+#                 self.forget_raster_sample()
+#                 ok = 0
+#         if self.ui.checkBox_classifier_3.isChecked():
+#             if (not self.ui.checkBox_processing.isChecked() and not self.ui.checkBox_MNT.isChecked() and \
+#             not self.ui.checkBox_VHRS.isChecked()) or (len(self.raster_path) != 6 and len(self.sample_name) > 0) or \
+#             len(self.sample_name) != 3:
+#                 self.forget_raster_sample() 
+#                 ok = 0
         
         if ok == 1:       
             # Compute a output slope raster 
@@ -690,20 +690,20 @@ class PHYMOBAT(QMainWindow, Processing):
             # Classification processing 
             if self.ui.checkBox_classifier_1.isChecked() :         
                 
-                self.out_fieldname_carto = self.out_fieldname_carto[0]
-                self.out_fieldtype_carto = self.out_fieldtype_carto[0]
+                self.out_fieldname_carto = self.out_fieldname_carto[:3]
+                self.out_fieldtype_carto = self.out_fieldtype_carto[:3]
                 self.i_classifier()
                 
             if self.ui.checkBox_classifier_2.isChecked() :
                 
-                self.out_fieldname_carto = self.out_fieldname_carto[:1]
-                self.out_fieldtype_carto = self.out_fieldtype_carto[:1]             
+                self.out_fieldname_carto = self.out_fieldname_carto[:4]
+                self.out_fieldtype_carto = self.out_fieldtype_carto[:4]             
                 self.i_classifier()
                 
             if self.ui.checkBox_classifier_3.isChecked():
                 
-                self.out_fieldname_carto = self.out_fieldname_carto[:3]
-                self.out_fieldtype_carto = self.out_fieldtype_carto[:3]             
+                self.out_fieldname_carto = self.out_fieldname_carto
+                self.out_fieldtype_carto = self.out_fieldtype_carto             
                 self.i_classifier()
             
 #         # Clear variables after processing
@@ -730,38 +730,62 @@ class PHYMOBAT(QMainWindow, Processing):
         tree = ET.parse(str(in_backup))
                
         pr = tree.find("Tab[@id='Processing_raster']")
-        self.ui.lineEdit_principal_folder.setText(pr.find("Principal_folder").text)
+        try:
+            self.ui.lineEdit_principal_folder.setText(pr.find("Principal_folder").text)
+        except:
+            print('Not principal folder')
         index_captor = self.ui.comboBox_captor.findText(pr.find("Captor").text) # To find combo box index
         self.ui.comboBox_captor.setCurrentIndex(index_captor)
-        self.ui.lineEdit_year_images.setText(pr.find("Year_images").text)
+        try:
+            self.ui.lineEdit_year_images.setText(pr.find("Year_images").text)
+        except:
+            print('Not year images')
         self.ui.lineEdit_area_path.setText(pr.find("Area_path").text)
-        self.ui.lineEdit_user.setText(pr.find("Username").text)
-        self.ui.lineEdit_password.setText(pr.find("Password").text)
-        self.ui.lineEdit_VHRS.setText(pr.find("VHRS").text)
-        self.ui.lineEdit_MNT.setText(pr.find("MNT").text)
-        
+        try:
+            self.ui.lineEdit_user.setText(pr.find("Username").text)
+            self.ui.lineEdit_password.setText(pr.find("Password").text)
+        except:
+            print('Not username or password Theia')
+        try:
+            self.ui.lineEdit_VHRS.setText(pr.find("VHRS").text)
+        except:
+            print('Not VHRS image')
+        try:
+            self.ui.lineEdit_MNT.setText(pr.find("MNT").text)
+        except:
+            print('Not MNT')
+            
         ps = tree.find("Tab[@id='Processing_sample']")  
-        for sple_n in ps.iter("Sample"):
-            self.ui.lineEdit_sample_path.setText(sple_n.find("Sample_path").text)
-            self.ui.lineEdit_select_sample_fieldname_1.setText(sple_n.find("Fieldname_1").text)
-            self.ui.lineEdit_select_sample_fieldname_2.setText(sple_n.find("Fieldname_2").text)
-            self.ui.lineEdit_select_sample_class_1.setText(sple_n.find("Classname_1").text)
-            self.ui.lineEdit_select_sample_class_2.setText(sple_n.find("Classname_2").text)
-            self.ui.lineEdit_select_sample_nb_poly.setText(sple_n.find("Nb_polygones").text)
-            # Launch rpg method if the box is checked and if the shapefile hasn't go through rpg method (with prefix MONO_)
-            if sple_n.find("RPG").text == '1' and os.path.split(sple_n.find("Sample_path").text)[1][:5] != 'MONO_':
-                self.ui.checkBox_RPG.setChecked(True)
-            try:
-                if sple_n.find("Img_sample").text != "":
-                    self.ui.lineEdit_img_sample.setText(sple_n.find("img_sample").text)
-                    self.ui.checkBox_img_sample.setChecked(True)
-            except:
-                print('Not sample raster only !')
-            self.add_sample()
+        try:
+            for sple_n in ps.iter("Sample"):
+                self.ui.lineEdit_sample_path.setText(sple_n.find("Sample_path").text)
+                self.ui.lineEdit_select_sample_fieldname_1.setText(sple_n.find("Fieldname_1").text)
+                self.ui.lineEdit_select_sample_fieldname_2.setText(sple_n.find("Fieldname_2").text)
+                self.ui.lineEdit_select_sample_class_1.setText(sple_n.find("Classname_1").text)
+                self.ui.lineEdit_select_sample_class_2.setText(sple_n.find("Classname_2").text)
+                self.ui.lineEdit_select_sample_nb_poly.setText(sple_n.find("Nb_polygones").text)
+                # Launch rpg method if the box is checked and if the shapefile hasn't go through rpg method (with prefix MONO_)
+                if sple_n.find("RPG").text == '1' and os.path.split(sple_n.find("Sample_path").text)[1][:5] != 'MONO_':
+                    self.ui.checkBox_RPG.setChecked(True)
+                try:
+                    if sple_n.find("Img_sample").text != "":
+                        self.ui.lineEdit_img_sample.setText(sple_n.find("img_sample").text)
+                        self.ui.checkBox_img_sample.setChecked(True)
+                except:
+                    print('Not sample raster only !')
+                self.add_sample()
+        except:
+            print('Not sample')
          
         c = tree.find("Tab[@id='Classification']")
-        self.ui.lineEdit_segmentation.setText(c.find("Segmentation_path").text)
-        self.ui.lineEdit_output.setText(c.find("Output_path").text)
+        try:
+            self.ui.lineEdit_segmentation.setText(c.find("Segmentation_path").text)
+        except:
+            print('Not segmentation')
+        try:
+            self.ui.lineEdit_output.setText(c.find("Output_path").text)
+        except:
+            print('Not output file')
         if len(c) == 4:
             self.ui.checkBox_classifier_1.setChecked(True)
             self.ui.lineEdit_fieldname_1.setText(c.find("Output_fieldname_1").text)

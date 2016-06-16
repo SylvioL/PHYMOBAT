@@ -877,7 +877,7 @@ class PHYMOBAT(QMainWindow, Processing):
             
         tree = ET.ElementTree(root)
         # Write in a xml file
-        tree.write(str(out_backup), pretty_print=True)
+        tree.write(str(out_backup), encoding="UTF-8",xml_declaration=True, pretty_print=True)
         print("Save input text !")
         
     def about_PHYMOBA(self):

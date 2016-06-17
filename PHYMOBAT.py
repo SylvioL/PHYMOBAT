@@ -364,6 +364,7 @@ class PHYMOBAT(QMainWindow, Processing):
                 self.raster_path.append("%s" % self.ui.lineEdit_img_sample.text())
                 self.list_band_outraster.append(1)
                 self.ui.lineEdit_img_sample.clear()
+                self.ui.checkBox_img_sample.setChecked(False)
                 self.img_sample.append(1)
             else: # To backup
                 self.img_sample.append(0)

@@ -37,6 +37,8 @@ class Sample(Vector):
     :type vector_cut: str
     :param nb_sample: Number of polygons for every sample
     :type nb_sample: int
+    :param vector_val: Output shapefile to validate the futur classification
+    :type vector_val: str
     """
     
     def __init__(self, used, cut, nb_sample):
@@ -46,6 +48,7 @@ class Sample(Vector):
         Vector.__init__(self, used, cut)
         
         self._nb_sample = nb_sample
+        self.vector_val = ''
     
     def create_sample(self, **kwargs):
         """
@@ -67,64 +70,15 @@ class Sample(Vector):
         else:
             # The random sample without class name selected
             random_sample = np.array(random.sample(range(self.data_source.GetLayer().GetFeatureCount()), self._nb_sample))
-        
-        shp_ogr = self.data_source.GetLayer()
-        
-        # Projection
-        # Import input shapefile projection
-        srsObj = shp_ogr.GetSpatialRef()
-        # Conversion to syntax ESRI
-        srsObj.MorphToESRI()
             
-        ## Remove the output shapefile if it exists
+        # Output shapefile of the sample's polygons (path)
         self.vector_used = self.vector_used[:-4] + '_' + kw_classes.replace(',','').replace(' ','') + 'rd.shp'
-        if os.path.exists(self.vector_used):
-            self.data_source.GetDriver().DeleteDataSource(self.vector_used)
-        out_ds = self.data_source.GetDriver().CreateDataSource(self.vector_used)
-        
-        if out_ds is None:
-            print('Could not create file')
-            sys.exit(1)
-            
-        #  Specific output layer
-        out_layer = out_ds.CreateLayer(str(self.vector_used), srsObj, geom_type=ogr.wkbMultiPolygon)
-        
-        # Add existing fields 
-        for i in range(0, len(self.field_names)):
-            # use the input FieldDefn to add a field to the output
-            fieldDefn = shp_ogr.GetFeature(0).GetFieldDefnRef(self.field_names[i])
-            out_layer.CreateField(fieldDefn)
-        
-        # Feature for the ouput shapefile
-        featureDefn = out_layer.GetLayerDefn()
-        
-        # Loop on the input elements
-        # Create a existing polygons in random list    
-        for cnt in random_sample:
-            
-            # Select input polygon by id
-            in_feature = shp_ogr.SetNextByIndex(cnt)
-            in_feature = shp_ogr.GetNextFeature()
-            
-            geom = in_feature.GetGeometryRef() # Extract input geometry
-
-            # Create a new polygon
-            out_feature = ogr.Feature(featureDefn)
-
-            # Set the polygon geometry and attribute
-            out_feature.SetGeometry(geom)
-            for i in range(0, len(self.field_names)):
-                out_feature.SetField(self.field_names[i], in_feature.GetField(self.field_names[i]))
-                
-            # Append polygon to the output shapefile
-            out_layer.CreateFeature(out_feature)
-    
-            # Destroy polygons
-            out_feature.Destroy()    
-            in_feature.Destroy()
-            
-        # Close data
-        out_ds.Destroy()  
+        # Fill and create the sample shapefile
+        self.fill_sample(self.vector_used, random_sample[:len(random_sample)/2])
+        # Output shapefile of the validate polygon (path)
+        self.vector_val = self.vector_used[:-6] + 'val.shp'
+        # Fill and create the validate polygons shapefile
+        self.fill_sample(self.vector_val, random_sample[len(random_sample)/2:])
        
     def select_random_sample(self, kw_field, kw_classes):        
         """
@@ -163,3 +117,71 @@ class Sample(Vector):
             in_feature = shp_ogr.GetNextFeature()
         return select_id
     
+    def fill_sample(self, output_sample, polygon):
+        
+        """
+        Function to fill and create the output sample shapefile. This function is used in :func:`create_sample`
+        to create samples polygons and validated polygons (to the take out the precision of the classification)
+
+        :param output_sample: Path of the output shapefile
+        :type output_sample: str
+        :param polygon: Identity of the selected random polygons 
+        :type polygon: list        
+        """
+        
+        shp_ogr = self.data_source.GetLayer()
+        
+        # Projection
+        # Import input shapefile projection
+        srsObj = shp_ogr.GetSpatialRef()
+        # Conversion to syntax ESRI
+        srsObj.MorphToESRI() 
+               
+        ## Remove the output shapefile if it exists
+        if os.path.exists(output_sample):
+            self.data_source.GetDriver().DeleteDataSource(output_sample)
+        out_ds = self.data_source.GetDriver().CreateDataSource(output_sample)
+        
+        if out_ds is None:
+            print('Could not create file')
+            sys.exit(1)
+            
+        #  Specific output layer
+        out_layer = out_ds.CreateLayer(str(output_sample), srsObj, geom_type=ogr.wkbMultiPolygon)
+        
+        # Add existing fields 
+        for i in range(0, len(self.field_names)):
+            # use the input FieldDefn to add a field to the output
+            fieldDefn = shp_ogr.GetFeature(0).GetFieldDefnRef(self.field_names[i])
+            out_layer.CreateField(fieldDefn)
+        
+        # Feature for the ouput shapefile
+        featureDefn = out_layer.GetLayerDefn()
+        
+        # Loop on the input elements
+        # Create a existing polygons in random list    
+        for cnt in polygon:
+            
+            # Select input polygon by id
+            in_feature = shp_ogr.SetNextByIndex(cnt)
+            in_feature = shp_ogr.GetNextFeature()
+            
+            geom = in_feature.GetGeometryRef() # Extract input geometry
+
+            # Create a new polygon
+            out_feature = ogr.Feature(featureDefn)
+
+            # Set the polygon geometry and attribute
+            out_feature.SetGeometry(geom)
+            for i in range(0, len(self.field_names)):
+                out_feature.SetField(self.field_names[i], in_feature.GetField(self.field_names[i]))
+                
+            # Append polygon to the output shapefile
+            out_layer.CreateFeature(out_feature)
+    
+            # Destroy polygons
+            out_feature.Destroy()    
+            in_feature.Destroy()
+            
+        # Close data
+        out_ds.Destroy()        

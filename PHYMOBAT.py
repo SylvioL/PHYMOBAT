@@ -718,7 +718,7 @@ class PHYMOBAT(QMainWindow, Processing):
         print '...........' + ' Outputted to File in ' + str(endTime - startTime) + ' secondes'
         nb_day_processing = int(time.strftime('%d', time.gmtime(endTime - startTime))) - 1
         print "That is, " + str(nb_day_processing) + ' day(s) ' + time.strftime('%Hh %Mmin%S', time.gmtime(endTime - startTime))
-    
+        
     def open_backup(self):
         """
         Function to load input text in every fields. The input file must be a XML file.
@@ -769,7 +769,7 @@ class PHYMOBAT(QMainWindow, Processing):
                     self.ui.checkBox_RPG.setChecked(True)
                 try:
                     if sple_n.find("Img_sample").text != "":
-                        self.ui.lineEdit_img_sample.setText(sple_n.find("img_sample").text)
+                        self.ui.lineEdit_img_sample.setText(sple_n.find("Img_sample").text)
                         self.ui.checkBox_img_sample.setChecked(True)
                 except:
                     print('Not sample raster only !')

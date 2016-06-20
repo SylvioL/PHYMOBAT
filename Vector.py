@@ -20,9 +20,9 @@
 import os, sys
 import subprocess
 try :
-    import ogr
+    import ogr, gdal
 except :
-    from osgeo import ogr
+    from osgeo import ogr, gdal
 from rasterstats import *
 from collections import *
 
@@ -131,5 +131,19 @@ class Vector():
             
             
         print('End of stats on ' + os.path.split(inraster)[1])
-    
+
+    def rasterize_vector(self, raster_dout, attribute_r):
+        """
+        Function to rasterize a vector.
+        
+        :param raster_out: Raster path to take those informations
+        :type raster_out: str
+        :param attribute_r: Value field pixels for the raster out 
+        :type attribute_r: str
+        
+        """
+        
+        pt_rast = gdal.RasterizeLayer(raster_dout, [1], self.data_source.GetLayer(), options=["ATTRIBUTE=" + str(attribute_r)])
+        if pt_rast != 0:
+            raise Exception("error rasterizing layer: %s" % pt_rast)
 

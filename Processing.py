@@ -20,9 +20,9 @@
 import os
 import numpy as np
 try :
-    import ogr
+    import ogr, gdal
 except :
-    from osgeo import ogr
+    from osgeo import ogr, gdal
 
 from Toolbox import *
 from Seath import Seath
@@ -33,6 +33,7 @@ from Vhrs import Vhrs
 from Slope import Slope
 
 # Class group vector
+from Vector import Vector
 from Sample import Sample
 from Segmentation import Segmentation
 from Rpg import Rpg
@@ -182,6 +183,9 @@ class Processing():
         # Images after processing images
         self.out_ndvistats_folder_tab = defaultdict(list)
         
+        # Validation shapefiles information
+        self.valid_shp = []
+        
     def i_tree_direction(self):
         
         """
@@ -239,7 +243,7 @@ class Processing():
             
             >>> import RasterSat_by_date
             >>> stats_test = RasterSat_by_date(class_archive, big_folder, one_date)
-            >>> stats_test.create_raster(in_raster, stats_data, in_ds)
+            >>> stats_test.complete_raster(stats_test.create_raster(in_raster, stats_data, in_ds), stats_data)
         """
 
         # Clip archive images and modify Archive class to integrate clip image path
@@ -271,14 +275,18 @@ class Processing():
         # Stats cloud raster
         out_cloud_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
                            '/Cloud_number_' + self.classif_year + '.TIF'
-        stats_L8.create_raster(out_cloud_folder, stats_cloud, stats_L8.raster_data(self.check_download.list_img[0][4])[1])
+        stats_L8.complete_raster(stats_L8.create_raster(out_cloud_folder, stats_cloud, \
+                                                         stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
+                                 stats_cloud)
            
         # Stats ndvi rasters        
         for stats_index in range(len(stats_ndvi)):
             out_ndvistats_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
                            '/' + stats_name[stats_index] + '_' + self.classif_year + '.TIF'
             self.out_ndvistats_folder_tab[stats_index] = out_ndvistats_folder
-            stats_L8.create_raster(out_ndvistats_folder, stats_ndvi[stats_index], stats_L8.raster_data(self.check_download.list_img[0][4])[1])
+            stats_L8.complete_raster(stats_L8.create_raster(out_ndvistats_folder, stats_ndvi[stats_index], \
+                                                            stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
+                                     stats_ndvi[stats_index])
         
     def i_slope(self):
         """
@@ -386,7 +394,8 @@ class Processing():
         
     def i_sample(self):
         """
-        Interface function to compute threshold with various sample.
+        Interface function to compute threshold with various sample. It also extract a validation layer (raster) to compute
+        the precision of the next classification :func:`layer_rasterization`. 
         
         It create samples 2 by 2 with kwargs field names and class :func:`Sample.Sample.create_sample`. 
         Then, it compute zonal statistics by polygons :func:`Vector.Sample.zonal_stats`.
@@ -400,25 +409,32 @@ class Processing():
         # Compute threshold with various sample
         i_s = 0
         while i_s < 10:
-            try :
-                sample_rd = {}
-                for sple in range(len(self.sample_name) * 2):
-                    kwargs = {}
-                    kwargs['fieldname'] = self.fieldname_args[sple]
-                    kwargs['class'] = self.class_args[sple]
-                    sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
-                    sample_rd[sple].create_sample(**kwargs)
-                    sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
-                   
-                for th_seath in range(len(self.sample_name)):
-                    self.decis[th_seath] = Seath()
-                    self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
-                    self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
-                    self.decis[th_seath].separability_and_threshold()
+#             try :
+            sample_rd = {}
+            for sple in range(len(self.sample_name) * 2):
+                kwargs = {}
+                kwargs['fieldname'] = self.fieldname_args[sple]
+                kwargs['class'] = self.class_args[sple]
+                sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
+                sample_rd[sple].create_sample(**kwargs)
+                sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+                
+                # Create a raster to valide the classification
+                # Define the validation's vector
+                sample_val = Vector(sample_rd[sple].vector_val, self.path_area)
+                # Add in a shapefile the validation output rasters path
+                self.valid_shp.append(sample_val.layer_rasterization(self.raster_path[0], kwargs['fieldname'])) 
+            
+            # Search the optimal threshold by class  
+            for th_seath in range(len(self.sample_name)):
+                self.decis[th_seath] = Seath()
+                self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
+                self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
+                self.decis[th_seath].separability_and_threshold()
                 
                 i_s = 10
-            except:
-                i_s = i_s + 1
+#             except:
+#                 i_s = i_s + 1
 
     def i_classifier(self): 
         """
@@ -497,4 +513,9 @@ class Processing():
           
         # Final cartography
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
+       
+    def i_validate(self):
+        
+        A = 0 
+        
         

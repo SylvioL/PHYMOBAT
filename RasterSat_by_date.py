@@ -56,7 +56,7 @@ class RasterSat_by_date():
         else:
             self._one_date = one_date
         
-        self.out_ds = ''
+        self.out_ds = None
            
     def group_by_date(self, d_uni):
         """

@@ -289,7 +289,7 @@ class RasterSat_by_date():
         
     def create_raster(self, out_raster, data, in_ds):
         """
-        Create raster 
+        Create a raster empty with the input raster property
         
         :param out_raster: Output image path
         :type out_raster: str
@@ -298,46 +298,76 @@ class RasterSat_by_date():
         :param in_ds: Raster information
         :type in_ds: gdal pointer
         
+        :returns: gdal pointer -- variable **out_ds**, Raster out information.
+                  
+                  int -- variable **nbband**, Band number of the out layer. 
+                  
+                  int -- variable **e**, Index to know if the raster exists. If it doesn't exists e = 0 else e = 1 (by default).
         """
         
 #         if os.path.exists(str(out_raster)):
 #             os.remove(str(out_raster))
-        
+        e = 1 # Raster out exists by default 
         # Verify if the processing take input band or one spectral band    
         if data.ndim == 2:
             nbband = 1
         else:
             nbband = in_ds.RasterCount 
-            
-        if not os.path.exists(str(out_raster)):    
+           
+        if not os.path.exists(str(out_raster)):
+            e = 0    
             # Create outfile
             driver = gdal.GetDriverByName('GTiff')
             out_ds = driver.Create(str(out_raster), in_ds.RasterXSize, in_ds.RasterYSize, nbband, gdal.GDT_Float32)
             if out_ds is None:
                 print 'Could not create ' + os.path.split(str(out_raster))[1]
                 sys.exit(1)
-              
+                
+            # Get extent coordinates and raster resolution
+            transform = in_ds.GetGeoTransform()
+            # print transform
+            
+            minX = transform[0]
+            maxY = transform[3]
+            pixelWidth = transform[1]
+            pixelHeight = transform[5]
+            
+            geotransform = [minX, pixelWidth, 0, maxY, 0, pixelHeight]
+            
+            # Record projection
+            def_projection = in_ds.GetProjection() 
+
+            # Set the geo-traking and outfile projection
+            out_ds.SetGeoTransform(geotransform)
+            out_ds.SetProjection(def_projection)
+            
+            return out_ds, nbband, e
+    
+    def complete_raster(self, out_ds, nbband, e, data): 
+        """
+        This function complete the function above :func:`create_raster()`. It 
+        fills the raster table and close the layer.
+        
+        :param out_ds: Raster out information
+        :type out_ds: gdal pointer
+        :param nbband: Band number of the out layer
+        :type nbband: int
+        :param e: Index to know if the raster existed. If it didn't exist e = 0.
+        :type e: int
+        :param data: Pixel value matrix. Matrix size equal to that of a raster.
+        :type data: matrix
+        """
+        
+        # The e index to verify if the layer existed already because of the 
+        # function :func:`create_raster()`
+        if e == 0 :   
             p = 0 # Increment for the number band
             while p < nbband:
                 #Incrementation
                 p = p + 1
-                
+            
                 print "Copie sur la bande ", p
-          
-                # Get extent coordinates and raster resolution
-                transform = in_ds.GetGeoTransform()
-                # print transform
-                
-                minX = transform[0]
-                maxY = transform[3]
-                pixelWidth = transform[1]
-                pixelHeight = transform[5]
-                
-                geotransform = [minX, pixelWidth, 0, maxY, 0, pixelHeight]
-                
-                # Record projection
-                def_projection = in_ds.GetProjection()
-                
+      
                 # Loading spectral band of outfile
                 out_band = out_ds.GetRasterBand(p) 
                 # write the data
@@ -351,10 +381,6 @@ class RasterSat_by_date():
                 out_band.SetNoDataValue(-10000)
                 out_band.GetStatistics(-1, 1) 
                 out_band = None    
-
-            # Set the geo-traking and outfile projection
-            out_ds.SetGeoTransform(geotransform)
-            out_ds.SetProjection(def_projection)
             
             # Close les données ouvertes
             out_ds = None

@@ -409,32 +409,32 @@ class Processing():
         # Compute threshold with various sample
         i_s = 0
         while i_s < 10:
-#             try :
-            sample_rd = {}
-            for sple in range(len(self.sample_name) * 2):
-                kwargs = {}
-                kwargs['fieldname'] = self.fieldname_args[sple]
-                kwargs['class'] = self.class_args[sple]
-                sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
-                sample_rd[sple].create_sample(**kwargs)
-                sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+            try :
+                sample_rd = {}
+                for sple in range(len(self.sample_name) * 2):
+                    kwargs = {}
+                    kwargs['fieldname'] = self.fieldname_args[sple]
+                    kwargs['class'] = self.class_args[sple]
+                    sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
+                    sample_rd[sple].create_sample(**kwargs)
+                    sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+                    
+                    # Create a raster to valide the classification
+                    # Define the validation's vector
+                    sample_val = Vector(sample_rd[sple].vector_val, self.path_area)
+                    # Add in a shapefile the validation output rasters path
+                    self.valid_shp.append(sample_val.layer_rasterization(self.raster_path[0], kwargs['fieldname'])) 
                 
-                # Create a raster to valide the classification
-                # Define the validation's vector
-                sample_val = Vector(sample_rd[sple].vector_val, self.path_area)
-                # Add in a shapefile the validation output rasters path
-                self.valid_shp.append(sample_val.layer_rasterization(self.raster_path[0], kwargs['fieldname'])) 
-            
-            # Search the optimal threshold by class  
-            for th_seath in range(len(self.sample_name)):
-                self.decis[th_seath] = Seath()
-                self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
-                self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
-                self.decis[th_seath].separability_and_threshold()
-                
-                i_s = 10
-#             except:
-#                 i_s = i_s + 1
+                # Search the optimal threshold by class  
+                for th_seath in range(len(self.sample_name)):
+                    self.decis[th_seath] = Seath()
+                    self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
+                    self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
+                    self.decis[th_seath].separability_and_threshold()
+                    
+                    i_s = 10
+            except:
+                i_s = i_s + 1
 
     def i_classifier(self): 
         """

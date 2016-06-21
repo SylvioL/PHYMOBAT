@@ -343,7 +343,7 @@ class RasterSat_by_date():
             
             return out_ds, nbband, e
     
-    def complete_raster(self, out_ds, nbband, e, data): 
+    def complete_raster(self, (out_ds, nbband, e), data): 
         """
         This function complete the function above :func:`create_raster()`. It 
         fills the raster table and close the layer.

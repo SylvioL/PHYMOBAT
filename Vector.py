@@ -26,6 +26,8 @@ except :
 from rasterstats import *
 from collections import *
 
+from RasterSat_by_date import RasterSat_by_date
+
 class Vector():
     """
     Vector class to extract a area, vector data and zonal statistic (``rasterstats 0.3.2 package``)
@@ -38,6 +40,8 @@ class Vector():
     :type data_source: ogr pointer
     :param stats_dict: ``Rasterstats`` results
     :type stats_dict: dict
+    :param raster_ds: Raster information for a probably rasterization
+    :type raster_ds: gdal pointer
     """
       
     def __init__(self, used, cut):
@@ -57,6 +61,7 @@ class Vector():
                        for l in range(self.data_source.GetLayer().GetLayerDefn().GetFieldCount())]
             
         self.stats_dict = defaultdict(list)
+        self.raster_ds = None
     
     def clip_vector(self):
         """
@@ -132,18 +137,44 @@ class Vector():
             
         print('End of stats on ' + os.path.split(inraster)[1])
 
-    def rasterize_vector(self, raster_dout, attribute_r):
+    def layer_rasterization(self, raster_head, attribute_r):
         """
-        Function to rasterize a vector.
+        Function to rasterize a vector. Complete the gdal pointer empty properties with the layer's information
+        of the vector and a defined field.
         
-        :param raster_out: Raster path to take those informations
-        :type raster_out: str
+        :param raster_head: Raster path that will look like the final raster of the rasterization
+        :type raster_head: str
         :param attribute_r: Value field pixels for the raster out 
         :type attribute_r: str
-        
         """
         
-        pt_rast = gdal.RasterizeLayer(raster_dout, [1], self.data_source.GetLayer(), options=["ATTRIBUTE=" + str(attribute_r)])
+        # Export a example of a raster out information
+        # for the validation shapefile
+        example_raster = RasterSat_by_date('', '', [0]) # Call the raster class
+        raster_info = example_raster.raster_data(raster_head)# Extract data info
+        
+        # Define the validation's vector
+        valid_raster = self.vector_used[:-3]+'TIF' # Name of the output raster
+        if os.path.exists(str(valid_raster)):
+            os.remove(valid_raster)
+            
+        # Create the empty raster with the same properties
+        info_out = example_raster.create_raster(valid_raster, raster_info[0], raster_info[1])
+        self.raster_ds = example_raster.out_ds
+        
+        # Virtual rasterize the vector 
+        pt_rast = gdal.RasterizeLayer(self.raster_ds, [1], self.data_source.GetLayer(), options=["ATTRIBUTE=" + str(attribute_r)])
         if pt_rast != 0:
             raise Exception("error rasterizing layer: %s" % pt_rast)
+        
+        new_data = self.raster_ds.ReadAsArray()
+        self.raster_ds = None
+        # Complete the raster creation
+        example_raster.complete_raster(info_out, new_data)
+        
+        return valid_raster
+        
+        
+        
+        
 

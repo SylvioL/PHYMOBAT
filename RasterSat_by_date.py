@@ -55,6 +55,8 @@ class RasterSat_by_date():
             sys.exit(1)
         else:
             self._one_date = one_date
+        
+        self.out_ds = ''
            
     def group_by_date(self, d_uni):
         """
@@ -313,13 +315,13 @@ class RasterSat_by_date():
             nbband = 1
         else:
             nbband = in_ds.RasterCount 
-           
+            
+        driver = gdal.GetDriverByName('GTiff')  
         if not os.path.exists(str(out_raster)):
             e = 0    
             # Create outfile
-            driver = gdal.GetDriverByName('GTiff')
-            out_ds = driver.Create(str(out_raster), in_ds.RasterXSize, in_ds.RasterYSize, nbband, gdal.GDT_Float32)
-            if out_ds is None:
+            self.out_ds = driver.Create(str(out_raster), in_ds.RasterXSize, in_ds.RasterYSize, nbband, gdal.GDT_Float32)
+            if self.out_ds is None:
                 print 'Could not create ' + os.path.split(str(out_raster))[1]
                 sys.exit(1)
                 
@@ -338,12 +340,16 @@ class RasterSat_by_date():
             def_projection = in_ds.GetProjection() 
 
             # Set the geo-traking and outfile projection
-            out_ds.SetGeoTransform(geotransform)
-            out_ds.SetProjection(def_projection)
+            self.out_ds.SetGeoTransform(geotransform)
+            self.out_ds.SetProjection(def_projection)
+        
+        else:
             
-            return out_ds, nbband, e
+            self.out_ds = gdal.Open(str(out_raster), gdal.GA_ReadOnly)
+            
+        return nbband, e
     
-    def complete_raster(self, (out_ds, nbband, e), data): 
+    def complete_raster(self, (nbband, e), data): 
         """
         This function complete the function above :func:`create_raster()`. It 
         fills the raster table and close the layer.
@@ -369,7 +375,7 @@ class RasterSat_by_date():
                 print "Copie sur la bande ", p
       
                 # Loading spectral band of outfile
-                out_band = out_ds.GetRasterBand(p) 
+                out_band = self.out_ds.GetRasterBand(p) 
                 # write the data
                 if data.ndim == 2:
                     out_band.WriteArray(data, 0, 0)
@@ -382,7 +388,7 @@ class RasterSat_by_date():
                 out_band.GetStatistics(-1, 1) 
                 out_band = None    
             
-            # Close les données ouvertes
-            out_ds = None
-    
+        # Close les données ouvertes
+        self.out_ds = None
+
             

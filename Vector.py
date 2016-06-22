@@ -42,14 +42,20 @@ class Vector():
     :type stats_dict: dict
     :param raster_ds: Raster information for a probably rasterization
     :type raster_ds: gdal pointer
+    :param remove_shp: Remove shapefile or not. 0 : don't remove, 1 : remove
+    :type remove_shp: int
+    :opt: **Remove** (int) - For the remove_shp variable
+    
     """
       
-    def __init__(self, used, cut):
+    def __init__(self, used, cut, **opt):
         """Create a new 'Vector' instance
                
         """
         self.vector_cut = cut
         self.vector_used = used
+        self.remove_shp = opt['Remove'] if opt.get('Remove') else 0
+
         self.clip_vector()
         
         self.data_source = ''
@@ -62,6 +68,8 @@ class Vector():
             
         self.stats_dict = defaultdict(list)
         self.raster_ds = None
+        
+        
     
     def clip_vector(self):
         """
@@ -70,10 +78,11 @@ class Vector():
         """    
         
         outclip = os.path.split(self.vector_used)[0] + '/Clip_' + os.path.split(self.vector_used)[1]
-        if not os.path.exists(outclip):
+        if not os.path.exists(outclip) or self.remove_shp == 1:
             print 'Clip of ' + os.path.split(self.vector_used)[1]
             # Command to clip a vector with a shapefile by OGR
-            process_tocall_clip =  ['ogr2ogr', outclip, self.vector_used, '-clipsrc', self.vector_cut]
+            process_tocall_clip =  ['ogr2ogr', '-overwrite', outclip, self.vector_used, '-clipsrc', self.vector_cut]
+            print process_tocall_clip
             subprocess.call(process_tocall_clip)
         
         # Replace input filename by output filename
@@ -133,7 +142,6 @@ class Vector():
                     pass
             temp[0][ranking] = stats[i].values()[1]
             self.stats_dict[i] = temp[0]
-            
             
         print('End of stats on ' + os.path.split(inraster)[1])
 

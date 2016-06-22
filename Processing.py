@@ -421,7 +421,9 @@ class Processing():
                     
                     # Create a raster to valide the classification
                     # Define the validation's vector
-                    sample_val = Vector(sample_rd[sple].vector_val, self.path_area)
+                    opt = {}
+                    opt['Remove'] = 1
+                    sample_val = Vector(sample_rd[sple].vector_val, self.path_area, **opt)
                     # Add in a shapefile the validation output rasters path
                     self.valid_shp.append(sample_val.layer_rasterization(self.raster_path[0], kwargs['fieldname'])) 
                 

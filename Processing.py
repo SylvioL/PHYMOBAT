@@ -530,7 +530,7 @@ class Processing():
             opt = {}
             opt['Remove'] = 1 # To overwrite 
             class_validate.append(val[0])
-
+            print val
             # Create a raster to valide the classification
             try:
                 test_int = int(val[2][0].replace(' ','').replace(',',''))
@@ -540,11 +540,12 @@ class Processing():
                 sample_val = Sample(val[0], self.path_area, 1, **opt)
                 opt['add_fieldname'] = 1 
                 opt['fieldname'] = 'CLASS_CODE'
-                opt['class'] = self.valid_shp.index(val) + 1
+                opt['class'] = str(self.valid_shp.index(val) + 1)
                 val[0] = val[0][:-4] + '_.shp'
                 val[1] = opt['fieldname']
                 val[2] = opt['class']
-                sample_val.fill_sample(val[0][:-4] + '_.shp', 0, **opt)
+                print val
+                sample_val.fill_sample(val[0], 0, **opt)
             # Define the validation's vector
             sample_val = Vector(val[0], self.path_area, **opt)
             # Add in a shapefile the validation output rasters path

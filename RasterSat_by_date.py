@@ -372,7 +372,7 @@ class RasterSat_by_date():
                 #Incrementation
                 p = p + 1
             
-                print "Copie sur la bande ", p
+                print "Copy on the band ", p
       
                 # Loading spectral band of outfile
                 out_band = self.out_ds.GetRasterBand(p) 

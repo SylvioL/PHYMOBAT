@@ -19,6 +19,7 @@
 
 import os, sys
 import subprocess
+import numpy as np
 try :
     import ogr, gdal
 except :
@@ -82,7 +83,6 @@ class Vector():
             print 'Clip of ' + os.path.split(self.vector_used)[1]
             # Command to clip a vector with a shapefile by OGR
             process_tocall_clip =  ['ogr2ogr', '-overwrite', outclip, self.vector_used, '-clipsrc', self.vector_cut]
-            print process_tocall_clip
             subprocess.call(process_tocall_clip)
         
         # Replace input filename by output filename
@@ -145,7 +145,7 @@ class Vector():
             
         print('End of stats on ' + os.path.split(inraster)[1])
 
-    def layer_rasterization(self, raster_head, attribute_r):
+    def layer_rasterization(self, raster_head, attribute_r, class_r, class_out):
         """
         Function to rasterize a vector. Complete the gdal pointer empty properties with the layer's information
         of the vector and a defined field.
@@ -154,6 +154,10 @@ class Vector():
         :type raster_head: str
         :param attribute_r: Value field pixels for the raster out 
         :type attribute_r: str
+        :param class_r: Field name corresponding to class name 
+        :type class_r: str
+        :param class_out: Class name in integer
+        :type class_out: int
         """
         
         # Export a example of a raster out information
@@ -171,11 +175,27 @@ class Vector():
         self.raster_ds = example_raster.out_ds
         
         # Virtual rasterize the vector 
-        pt_rast = gdal.RasterizeLayer(self.raster_ds, [1], self.data_source.GetLayer(), options=["ATTRIBUTE=" + str(attribute_r)])
+        pt_rast = gdal.RasterizeLayer(self.raster_ds, [1], self.data_source.GetLayer(), \
+                                      options=["ATTRIBUTE=" + str(attribute_r)])
         if pt_rast != 0:
             raise Exception("error rasterizing layer: %s" % pt_rast)
         
         new_data = self.raster_ds.ReadAsArray()
+        # Expression to find classes in numpy's mask
+        np_mask = ''
+        # Convert string in a list. For that, it remove
+        # space and clip this string with comma (Add everywhere if the script modified
+        # because the process work with a input string)
+        class_r = class_r.replace(' ','').split(',')
+        for nm in class_r:
+            np_mask = np_mask + '(new_data == ' + str(nm) + ') | '
+        np_mask = np_mask[:-3]
+        # Replace value data by our own value
+        new_data=np.ma.masked_where(eval(np_mask), new_data)
+        new_data.fill_value = class_out
+        
+        new_data = new_data.filled()
+               
         self.raster_ds = None
         # Complete the raster creation
         example_raster.complete_raster(info_out, new_data)

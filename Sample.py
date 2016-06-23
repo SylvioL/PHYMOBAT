@@ -39,13 +39,15 @@ class Sample(Vector):
     :type nb_sample: int
     :param vector_val: Output shapefile to validate the futur classification
     :type vector_val: str
+    
+    :opt: Refer to the Vector class
     """
     
-    def __init__(self, used, cut, nb_sample):
+    def __init__(self, used, cut, nb_sample, **opt):
         """Create a new 'Sample' instance
                
         """
-        Vector.__init__(self, used, cut)
+        Vector.__init__(self, used, cut, **opt)
         
         self._nb_sample = nb_sample
         self.vector_val = ''
@@ -92,7 +94,8 @@ class Sample(Vector):
         """
         
         # Convert string in a list. For that, it remove
-        # space and clip this string with comma
+        # space and clip this string with comma (Add everywhere if the script modified
+        # because the process work with a input string)
         kw_classes = kw_classes.replace(' ','').split(',')
         
         # List of class name id
@@ -117,7 +120,7 @@ class Sample(Vector):
             in_feature = shp_ogr.GetNextFeature()
         return select_id
     
-    def fill_sample(self, output_sample, polygon):
+    def fill_sample(self, output_sample, polygon, **opt):
         
         """
         Function to fill and create the output sample shapefile. This function is used in :func:`create_sample`
@@ -125,11 +128,26 @@ class Sample(Vector):
 
         :param output_sample: Path of the output shapefile
         :type output_sample: str
-        :param polygon: Identity of the selected random polygons 
-        :type polygon: list        
+        :param polygon: Identity of the selected random polygons. If this variable = 0, the processing will take all polygons 
+        :type polygon: list or int      
+        
+        :opt: **add_fieldname** (int) - Variable to kown if add a field. By default non (0), if it have to add (1)
+        
+                **fieldname** (str) - Fieldname to add in the input shapefile
+                
+                **class** (int) - class names in integer to add in the input shapefile
         """
         
+        # In option to add a integer field
+        add_field = opt['add_fieldname'] if opt.get('add_fieldname') else 0
+        opt_field = opt['fieldname'] if opt.get('fieldname') else ''
+        opt_class = opt['class'] if opt.get('class') else 0
+        
         shp_ogr = self.data_source.GetLayer()
+        
+        # To take all polygon
+        if type(polygon) == int:
+            polygon = range(shp_ogr.GetFeatureCount())
         
         # Projection
         # Import input shapefile projection
@@ -154,6 +172,11 @@ class Sample(Vector):
             # use the input FieldDefn to add a field to the output
             fieldDefn = shp_ogr.GetFeature(0).GetFieldDefnRef(self.field_names[i])
             out_layer.CreateField(fieldDefn)
+            
+        # In Option : Add a integer field
+        if add_field == 1:
+            new_field = ogr.FieldDefn(opt_field, 0)
+            shp_ogr.CreateField(new_field)
         
         # Feature for the ouput shapefile
         featureDefn = out_layer.GetLayerDefn()
@@ -175,6 +198,9 @@ class Sample(Vector):
             out_feature.SetGeometry(geom)
             for i in range(0, len(self.field_names)):
                 out_feature.SetField(self.field_names[i], in_feature.GetField(self.field_names[i]))
+            # In Option : Add a integer field
+            if add_field == 1:
+                out_feature.SetField(opt_field, opt_class)
                 
             # Append polygon to the output shapefile
             out_layer.CreateFeature(out_feature)

@@ -185,6 +185,7 @@ class Processing():
         
         # Validation shapefiles information
         self.valid_shp = []
+        self.valid_img = [] # Validation raster path
         
     def i_tree_direction(self):
         
@@ -394,8 +395,8 @@ class Processing():
         
     def i_sample(self):
         """
-        Interface function to compute threshold with various sample. It also extract a validation layer (raster) to compute
-        the precision of the next classification :func:`layer_rasterization`. 
+        Interface function to compute threshold with various sample. It also extract a validation layer (shapefile) to compute
+        the precision of the next classification :func:`i_validate`. 
         
         It create samples 2 by 2 with kwargs field names and class :func:`Sample.Sample.create_sample`. 
         Then, it compute zonal statistics by polygons :func:`Vector.Sample.zonal_stats`.
@@ -409,34 +410,29 @@ class Processing():
         # Compute threshold with various sample
         i_s = 0
         while i_s < 10:
-            try :
-                sample_rd = {}
-                for sple in range(len(self.sample_name) * 2):
-                    kwargs = {}
-                    kwargs['fieldname'] = self.fieldname_args[sple]
-                    kwargs['class'] = self.class_args[sple]
-                    sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
-                    sample_rd[sple].create_sample(**kwargs)
-                    sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
-                    
-                    # Create a raster to valide the classification
-                    # Define the validation's vector
-                    opt = {}
-                    opt['Remove'] = 1
-                    sample_val = Vector(sample_rd[sple].vector_val, self.path_area, **opt)
-                    # Add in a shapefile the validation output rasters path
-                    self.valid_shp.append(sample_val.layer_rasterization(self.raster_path[0], kwargs['fieldname'])) 
+#             try :
+            sample_rd = {}
+            for sple in range(len(self.sample_name) * 2):
+                kwargs = {}
+                kwargs['fieldname'] = self.fieldname_args[sple]
+                kwargs['class'] = self.class_args[sple]
+                sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
+                sample_rd[sple].create_sample(**kwargs)
+                sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
                 
-                # Search the optimal threshold by class  
-                for th_seath in range(len(self.sample_name)):
-                    self.decis[th_seath] = Seath()
-                    self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
-                    self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
-                    self.decis[th_seath].separability_and_threshold()
-                    
-                    i_s = 10
-            except:
-                i_s = i_s + 1
+                # Add the validation shapefile
+                self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
+            self.i_validate()
+            # Search the optimal threshold by class  
+            for th_seath in range(len(self.sample_name)):
+                self.decis[th_seath] = Seath()
+                self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
+                self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
+                self.decis[th_seath].separability_and_threshold()
+                
+                i_s = 10
+#             except:
+#                 i_s = i_s + 1
 
     def i_classifier(self): 
         """
@@ -517,7 +513,41 @@ class Processing():
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
        
     def i_validate(self):
+        """
+        Interface to validate a classification. It going to rasterize the validation shapefile and the 
+        classification shapefile with :func:`layer_rasterization`. Next, to compare pixel by pixel, the classification
+        quality to built a confusion matrix in a csv file.
         
-        A = 0 
         
+        """
+        # Variable to convert the input classname to an individual interger
+        # Only for the validate sample
+        class_validate = []
         
+        for val in self.valid_shp:
+            # Self.valid_shp is a list of list. In this variable there is :
+            # [Shapefile path, fieldname classes, classnames]
+            opt = {}
+            opt['Remove'] = 1 # To overwrite 
+            class_validate.append(val[0])
+
+            # Create a raster to valide the classification
+            try:
+                test_int = int(val[2][0].replace(' ','').replace(',',''))
+                
+            except ValueError:
+                print('A string in the input shapefile for the classname')
+                sample_val = Sample(val[0], self.path_area, 1, **opt)
+                opt['add_fieldname'] = 1 
+                opt['fieldname'] = 'CLASS_CODE'
+                opt['class'] = self.valid_shp.index(val) + 1
+                val[0] = val[0][:-4] + '_.shp'
+                val[1] = opt['fieldname']
+                val[2] = opt['class']
+                sample_val.fill_sample(val[0][:-4] + '_.shp', 0, **opt)
+            # Define the validation's vector
+            sample_val = Vector(val[0], self.path_area, **opt)
+            # Add in a shapefile the validation output rasters path
+            self.valid_img.append(sample_val.layer_rasterization(self.raster_path[0], val[1], val[2], self.valid_shp.index(val) + 1))
+
+            

@@ -152,11 +152,11 @@ class Vector():
         
         :param raster_head: Raster path that will look like the final raster of the rasterization
         :type raster_head: str
-        :param attribute_r: Value field pixels for the raster out 
+        :param attribute_r: Field name of the shapefile that contains class names
         :type attribute_r: str
-        :param class_r: Field name corresponding to class name 
-        :type class_r: str
-        :param class_out: Class name in integer
+        :param class_r: Class name corresponding to integer class name
+        :type class_r: list of str
+        :param class_out: Value field pixels for the output raster
         :type class_out: int
         """
         
@@ -185,7 +185,7 @@ class Vector():
         np_mask = ''
         # Convert string in a list. For that, it remove
         # space and clip this string with comma (Add everywhere if the script modified
-        # because the process work with a input string)
+        # because the process work with a input string chain)
         class_r = class_r.replace(' ','').split(',')
         for nm in class_r:
             np_mask = np_mask + '(new_data == ' + str(nm) + ') | '

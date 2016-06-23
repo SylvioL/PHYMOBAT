@@ -95,7 +95,7 @@ class Sample(Vector):
         
         # Convert string in a list. For that, it remove
         # space and clip this string with comma (Add everywhere if the script modified
-        # because the process work with a input string)
+        # because the process work with a input string chain)
         kw_classes = kw_classes.replace(' ','').split(',')
         
         # List of class name id
@@ -176,7 +176,7 @@ class Sample(Vector):
         # In Option : Add a integer field
         if add_field == 1:
             new_field = ogr.FieldDefn(opt_field, 0)
-            shp_ogr.CreateField(new_field)
+            out_layer.CreateField(new_field)
         
         # Feature for the ouput shapefile
         featureDefn = out_layer.GetLayerDefn()
@@ -200,7 +200,7 @@ class Sample(Vector):
                 out_feature.SetField(self.field_names[i], in_feature.GetField(self.field_names[i]))
             # In Option : Add a integer field
             if add_field == 1:
-                out_feature.SetField(opt_field, opt_class)
+                out_feature.SetField(opt_field, opt_class[0])
                 
             # Append polygon to the output shapefile
             out_layer.CreateFeature(out_feature)

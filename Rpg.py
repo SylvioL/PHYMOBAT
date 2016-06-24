@@ -99,7 +99,8 @@ class Rpg(Vector):
                 # Create a existing polygons in modified rpg list  
                 # with minimum size greater than or equal to 1 ha
                 try:
-                    if self.rm_dupli[id_rpg] and float(self.rm_dupli[id_rpg][2]) >= self.min_size:
+                    if self.rm_dupli[id_rpg] and float(self.rm_dupli[id_rpg][2].replace(',','.')) >= self.min_size:
+                        # Add .replace(',','.') if the input RPG contains comma instead of point
                     
                         geom = in_feature.GetGeometryRef() # Extract input geometry
             

@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, sys
 import numpy as np
 try :
     import ogr, gdal
@@ -423,38 +423,42 @@ class Processing():
         # Compute threshold with various sample
         i_s = 0
         while i_s < 10:
-#             try :
-            sample_rd = {}
-            for sple in range(len(self.sample_name) * 2):
-                kwargs = {}
-                kwargs['fieldname'] = self.fieldname_args[sple]
-                kwargs['class'] = self.class_args[sple]
-                sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
-                sample_rd[sple].create_sample(**kwargs)
-                sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
-                
-                # Add the validation shapefile
-                self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-#             self.i_validate()
-            # Search the optimal threshold by class 
-            # Open a text file to print stats of Seath method
-            file_J = self.path_folder_dpt + '/log_J.lg'
-            f = open(file_J, "wb")
-            for th_seath in range(len(self.sample_name)):
-                self.decis[th_seath] = Seath()
-                self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
-                self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
-                self.decis[th_seath].separability_and_threshold()
-                
-                # Print the J value in the text file .lg
-                f.write('For ' + str(self.sample_name[th_seath]) + ' :\n')
-                f.write('J = ' + str(self.decis[th_seath].J[0]) +'\n')
-                f.write('The class 1 ' + str(self.decis[th_seath].threshold[0]) +'\n')
-                
-            f.close()    
-            i_s = 10
-#             except:
-#                 i_s = i_s + 1
+            try :
+                sample_rd = {}
+                for sple in range(len(self.sample_name) * 2):
+                    kwargs = {}
+                    kwargs['fieldname'] = self.fieldname_args[sple]
+                    kwargs['class'] = self.class_args[sple]
+                    sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
+                    sample_rd[sple].create_sample(**kwargs)
+                    sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+                    
+                    # Add the validation shapefile
+                    self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
+    #             self.i_validate()
+                # Search the optimal threshold by class 
+                # Open a text file to print stats of Seath method
+                file_J = self.path_folder_dpt + '/log_J.lg'
+                f = open(file_J, "wb")
+                for th_seath in range(len(self.sample_name)):
+                    self.decis[th_seath] = Seath()
+                    self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
+                    self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
+                    self.decis[th_seath].separability_and_threshold()
+                    
+                    # Print the J value in the text file .lg
+                    f.write('For ' + str(self.sample_name[th_seath]) + ' :\n')
+                    f.write('J = ' + str(self.decis[th_seath].J[0]) +'\n')
+                    f.write('The class 1 ' + str(self.decis[th_seath].threshold[0]) +'\n')
+                    
+                f.close()    
+                i_s = 20
+            except:
+                i_s = i_s + 1
+        # Method to stop the processus if there is not found a valid threshold
+        if i_s != 20:
+            print 'Problem in the sample processing !!!'
+            sys.exit(1) 
 
     def i_classifier(self): 
         """

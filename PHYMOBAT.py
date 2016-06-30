@@ -628,11 +628,11 @@ class PHYMOBAT(QMainWindow, Processing):
             
             self.ui.checkBox_listing.setChecked(True)     
             
-        # if processing check box is checked only
-        if not self.ui.checkBox_listing.isChecked() and not self.ui.checkBox_download.isChecked() and self.ui.checkBox_processing.isChecked():
-            
-            self.ui.checkBox_listing.setChecked(True) 
-            self.ui.checkBox_download.setChecked(True) 
+#         # if processing check box is checked only
+#         if not self.ui.checkBox_listing.isChecked() and not self.ui.checkBox_download.isChecked() and self.ui.checkBox_processing.isChecked():
+#             
+#             self.ui.checkBox_listing.setChecked(True) 
+#             self.ui.checkBox_download.setChecked(True) 
             
         # Verify raster or sample to launch a good processing classification tab
         # If not ok, there will appear a message windows to enter the miss information
@@ -678,8 +678,19 @@ class PHYMOBAT(QMainWindow, Processing):
                         vs = 1
                     self.i_images_processing(vs) # function to launch the image processing            
             
+            # To launch the image processing without dowloading but with the images in a main folder
+            # Without internet connection
+            if not self.ui.checkBox_download.isChecked() and self.ui.checkBox_processing.isChecked():
+                
+                # Launch pre-processing without downloading
+                self.i_glob()
+                # Another check box to launch VHRS texture processing. If checked, vs = 1.
+                if self.ui.checkBox_VHRS.isChecked():
+                    vs = 1
+                self.i_images_processing(vs) # function to launch the image processing            
+            
             # To launch texture processing only
-            if not self.ui.checkBox_listing.isChecked() and self.ui.checkBox_VHRS.isChecked():
+            if not self.ui.checkBox_listing.isChecked() and not self.ui.checkBox_processing.isChecked() and self.ui.checkBox_VHRS.isChecked():
                 
                 self.i_vhrs()
             

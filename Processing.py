@@ -51,7 +51,8 @@ class Processing():
     This way is broken down into 3 parts :
         - Image Processing (Search, download and processing)
         - Vector Processing (Optimal threshold, Sample processing)
-        - Classification  
+        - Classification 
+        - Validation 
     
     **Main parameters**
     
@@ -422,7 +423,7 @@ class Processing():
                 
                 # Add the validation shapefile
                 self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-            self.i_validate()
+#             self.i_validate()
             # Search the optimal threshold by class  
             for th_seath in range(len(self.sample_name)):
                 self.decis[th_seath] = Seath()
@@ -522,33 +523,41 @@ class Processing():
         """
         # Variable to convert the input classname to an individual interger
         # Only for the validate sample
-        class_validate = []
+        class_validate = 0
         
         for val in self.valid_shp:
             # Self.valid_shp is a list of list. In this variable there is :
             # [Shapefile path, fieldname classes, classnames]
             opt = {}
             opt['Remove'] = 1 # To overwrite 
-            class_validate.append(val[0])
-            print val
+            class_validate = self.valid_shp.index(val) + 1
+
             # Create a raster to valide the classification
             try:
+                # Testing if there are characters or number
                 test_int = int(val[2][0].replace(' ','').replace(',',''))
                 
             except ValueError:
                 print('A string in the input shapefile for the classname')
+                # Create a new shapefile with a new field integer
                 sample_val = Sample(val[0], self.path_area, 1, **opt)
                 opt['add_fieldname'] = 1 
                 opt['fieldname'] = 'CLASS_CODE'
-                opt['class'] = str(self.valid_shp.index(val) + 1)
+                opt['class'] = str(class_validate) # Add integer classes
+                # Set the new shapefile
                 val[0] = val[0][:-4] + '_.shp'
                 val[1] = opt['fieldname']
                 val[2] = opt['class']
-                print val
+                # Complete the new shapefile
                 sample_val.fill_sample(val[0], 0, **opt)
+                
             # Define the validation's vector
             sample_val = Vector(val[0], self.path_area, **opt)
             # Add in a shapefile the validation output rasters path
-            self.valid_img.append(sample_val.layer_rasterization(self.raster_path[0], val[1], val[2], self.valid_shp.index(val) + 1))
-
+            self.valid_img.append(sample_val.layer_rasterization(self.raster_path[0], val[1], val[2], class_validate))
+            
+            # Create a classification raster
+#             moba_shp = Vector(self.output_name_moba, self.path_area, **opt)
+#             moba_img = moba_shp.layer_rasterization(self.raster_path[0], val[1], val[2], class_validate))
+            #self.output_name_moba
             

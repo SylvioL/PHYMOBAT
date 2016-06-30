@@ -413,7 +413,8 @@ class Processing():
         It create samples 2 by 2 with kwargs field names and class :func:`Sample.Sample.create_sample`. 
         Then, it compute zonal statistics by polygons :func:`Vector.Sample.zonal_stats`.
         
-        With zonal statistics computed, a optimal threshold is determined :func:`Seath.Seath.separability_and_threshold`.
+        With zonal statistics computed, a optimal threshold is determined :func:`Seath.Seath.separability_and_threshold` that
+        will print in a text file .lg in the main folder.
         
         .. warning:: :func:`Seath.Seath.separability_and_threshold` does not always allow to discriminate optimal threshold. 
                     Then, this function will be launch at least ten time until it reaches a optimal threshold.
@@ -435,14 +436,23 @@ class Processing():
                 # Add the validation shapefile
                 self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
 #             self.i_validate()
-            # Search the optimal threshold by class  
+            # Search the optimal threshold by class 
+            # Open a text file to print stats of Seath method
+            file_J = self.path_folder_dpt + '/log_J.lg'
+            f = open(file_J, "wb")
             for th_seath in range(len(self.sample_name)):
                 self.decis[th_seath] = Seath()
                 self.decis[th_seath].value_1 = sample_rd[th_seath*2].stats_dict
                 self.decis[th_seath].value_2 = sample_rd[th_seath*2 + 1].stats_dict
                 self.decis[th_seath].separability_and_threshold()
                 
-                i_s = 10
+                # Print the J value in the text file .lg
+                f.write('For ' + str(self.sample_name[th_seath]) + ' :\n')
+                f.write('J = ' + str(self.decis[th_seath].J[0]) +'\n')
+                f.write('The class 1 ' + str(self.decis[th_seath].threshold[0]) +'\n')
+                
+            f.close()    
+            i_s = 10
 #             except:
 #                 i_s = i_s + 1
 

@@ -225,6 +225,17 @@ class Processing():
 #             self.check_download.download_auto(self.user, self.password)
             self.check_download.download_auto(self.user, self.password)
             self.check_download.decompress()
+    
+    def i_glob(self):
+        """
+        Function to load existing images to launch the processing. 
+        It need to archives. Then, to select processing images, select archives 
+        
+        """
+        
+        self.folder_archive = self.captor_project + '_PoleTheia'
+        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive)
+        self.check_download.decompress()
      
     def i_img_sat(self):
         

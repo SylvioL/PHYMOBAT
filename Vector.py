@@ -82,7 +82,7 @@ class Vector():
         if not os.path.exists(outclip) or self.remove_shp == 1:
             print 'Clip of ' + os.path.split(self.vector_used)[1]
             # Command to clip a vector with a shapefile by OGR
-            process_tocall_clip =  ['ogr2ogr', '-overwrite', outclip, self.vector_used, '-clipsrc', self.vector_cut]
+            process_tocall_clip =  ['ogr2ogr', '-overwrite', '-skipfailures', outclip, self.vector_used, '-clipsrc', self.vector_cut]
             subprocess.call(process_tocall_clip)
         
         # Replace input filename by output filename

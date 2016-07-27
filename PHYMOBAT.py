@@ -705,18 +705,21 @@ class PHYMOBAT(QMainWindow, Processing):
                 self.out_fieldname_carto = self.out_fieldname_carto[:3]
                 self.out_fieldtype_carto = self.out_fieldtype_carto[:3]
                 self.i_classifier()
+                self.i_validate()
                 
             if self.ui.checkBox_classifier_2.isChecked() :
                 
                 self.out_fieldname_carto = self.out_fieldname_carto[:4]
                 self.out_fieldtype_carto = self.out_fieldtype_carto[:4]             
                 self.i_classifier()
+                self.i_validate()
                 
             if self.ui.checkBox_classifier_3.isChecked():
                 
                 self.out_fieldname_carto = self.out_fieldname_carto
                 self.out_fieldtype_carto = self.out_fieldtype_carto             
                 self.i_classifier()
+                self.i_validate()
             
 #         # Clear variables after processing
 #         self.clear_sample()

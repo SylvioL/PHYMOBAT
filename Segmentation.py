@@ -113,6 +113,9 @@ class Segmentation(Vector):
         for i in range(0, len(out_fieldnames)):
             fieldDefn = ogr.FieldDefn(str(out_fieldnames[i]), out_fieldtype[i])
             out_layer.CreateField(fieldDefn)
+        # Add a field to convert class string in code
+        fieldDefn = ogr.FieldDefn('FBPHY_CODE', ogr.OFTInteger)
+        out_layer.CreateField(fieldDefn)
         
         # Feature for the ouput shapefile
         featureDefn = out_layer.GetLayerDefn()
@@ -135,10 +138,14 @@ class Segmentation(Vector):
             out_feature.SetField(out_fieldnames[1], geom.GetArea()/10000)
             # Set the others polygons fields with the decision tree dictionnary
             for i in range(2, len(out_fieldnames)):
+
                 try:
                     out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-2])
+                    out_feature.SetField('FBPHY_CODE', self.class_tab_final[in_feature.GetFID()][i-1])
                 except:
-                    pass
+#                     pass
+                    out_feature.SetField(str(out_fieldnames[i]), 'Undefined')
+                    out_feature.SetField('FBPHY_CODE', 255)
                 
             # Append polygon to the output shapefile
             out_layer.CreateFeature(out_feature)
@@ -190,12 +197,14 @@ class Segmentation(Vector):
                 try:
                     if eval(cond):
                         self.class_tab_final[ind_stats] = [self.out_class_name[s] \
-                                                           for s in combin_tree[cond_tab.index(cond)]]
+                                                           for s in combin_tree[cond_tab.index(cond)]] + \
+                                                           [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]]
                 except NameError:
                     # If there is 'nan' in the table statistics
                     if eval(cond.replace('nan','-10000')):# If there is 'nan' in the table statistics
                         self.class_tab_final[ind_stats] = [self.out_class_name[s] \
-                                                           for s in combin_tree[cond_tab.index(cond)]]
+                                                           for s in combin_tree[cond_tab.index(cond)]] + \
+                                                           [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]]
     
     def compute_biomass_density(self):
         """

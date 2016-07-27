@@ -19,6 +19,7 @@
 
 import os, sys
 import numpy as np
+import subprocess
 try :
     import ogr, gdal
 except :
@@ -291,7 +292,7 @@ class Processing():
         stats_L8.complete_raster(stats_L8.create_raster(out_cloud_folder, stats_cloud, \
                                                          stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
                                  stats_cloud)
-           
+        
         # Stats ndvi rasters        
         for stats_index in range(len(stats_ndvi)):
             out_ndvistats_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
@@ -435,7 +436,7 @@ class Processing():
                     
                     # Add the validation shapefile
                     self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-    #             self.i_validate()
+                
                 # Search the optimal threshold by class 
                 # Open a text file to print stats of Seath method
                 file_J = self.path_folder_dpt + '/log_J.lg'
@@ -458,7 +459,21 @@ class Processing():
         # Method to stop the processus if there is not found a valid threshold
         if i_s != 20:
             print 'Problem in the sample processing !!!'
-            sys.exit(1) 
+            sys.exit(1)
+    
+    def i_sample_rf(self):
+        """
+        
+        """
+        
+        sample_rd = {}
+        for sple in range(len(self.sample_name) * 2):
+            kwargs = {}
+            kwargs['fieldname'] = self.fieldname_args[sple]
+            kwargs['class'] = self.class_args[sple]
+            sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
+            sample_rd[sple].create_sample(**kwargs)
+            sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
 
     def i_classifier(self): 
         """
@@ -544,45 +559,50 @@ class Processing():
         classification shapefile with :func:`layer_rasterization`. Next, to compare pixel by pixel, the classification
         quality to built a confusion matrix in a csv file.
         
-        
         """
         # Variable to convert the input classname to an individual interger
         # Only for the validate sample
         class_validate = 0
+        complete_validate_shp = os.path.dirname(self.valid_shp[0][0]) + '/validate.shp'
         
+        # Processing to rasterize the validate shapefile. 1) Merge sahpefiles 2) Rasterization
         for val in self.valid_shp:
             # Self.valid_shp is a list of list. In this variable there is :
             # [Shapefile path, fieldname classes, classnames]
             opt = {}
             opt['Remove'] = 1 # To overwrite 
-            class_validate = self.valid_shp.index(val) + 1
 
             # Create a raster to valide the classification
-            try:
-                # Testing if there are characters or number
-                test_int = int(val[2][0].replace(' ','').replace(',',''))
+            # First time, create a new shapefile with a new field integer
+            sample_val = Sample(val[0], self.path_area, 1, **opt)
+            opt['add_fieldname'] = 1 
+            opt['fieldname'] = 'CLASS_CODE'
+            opt['class'] = str(class_validate) # Add integer classes
+            # Set the new shapefile
+            val[0] = val[0][:-4] + '_.shp'
+            val[1] = opt['fieldname']
+            val[2] = opt['class']
+            # Complete the new shapefile
+            sample_val.fill_sample(val[0], 0, **opt)
+            # Second time, merge the validate shapefile
+            if class_validate == 0:
+                process_tocall_merge =  ['ogr2ogr', '-overwrite', complete_validate_shp, val[0]]
+            elif class_validate > 0:
+                process_tocall_merge =  ['ogr2ogr', '-update', '-append', complete_validate_shp, \
+                                         val[0], '-nln', os.path.basename(complete_validate_shp[:-4])]
+            print process_tocall_merge
+            subprocess.call(process_tocall_merge)
+            # Increrment variable
+            class_validate = self.valid_shp.index(val) + 1
                 
-            except ValueError:
-                print('A string in the input shapefile for the classname')
-                # Create a new shapefile with a new field integer
-                sample_val = Sample(val[0], self.path_area, 1, **opt)
-                opt['add_fieldname'] = 1 
-                opt['fieldname'] = 'CLASS_CODE'
-                opt['class'] = str(class_validate) # Add integer classes
-                # Set the new shapefile
-                val[0] = val[0][:-4] + '_.shp'
-                val[1] = opt['fieldname']
-                val[2] = opt['class']
-                # Complete the new shapefile
-                sample_val.fill_sample(val[0], 0, **opt)
-                
-            # Define the validation's vector
-            sample_val = Vector(val[0], self.path_area, **opt)
-            # Add in a shapefile the validation output rasters path
-            self.valid_img.append(sample_val.layer_rasterization(self.raster_path[0], val[1], val[2], class_validate))
+        # Define the validation's vector
+        sample_val = Vector(complete_validate_shp, self.path_area, **opt)
+        # Add in a shapefile the validation output rasters path
+        self.valid_img.append(sample_val.layer_rasterization(self.raster_path[0], val[1]))
             
-            # Create a classification raster
-#             moba_shp = Vector(self.output_name_moba, self.path_area, **opt)
-#             moba_img = moba_shp.layer_rasterization(self.raster_path[0], val[1], val[2], class_validate))
-            #self.output_name_moba
-            
+        # Create a classification raster
+        moba_shp = Vector(self.output_name_moba, self.path_area, **opt)
+        moba_img = moba_shp.layer_rasterization(self.raster_path[0], 'FBPHY_CODE')
+        
+        
+        

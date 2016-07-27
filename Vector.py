@@ -145,7 +145,7 @@ class Vector():
             
         print('End of stats on ' + os.path.split(inraster)[1])
 
-    def layer_rasterization(self, raster_head, attribute_r, class_r, class_out):
+    def layer_rasterization(self, raster_head, attribute_r):
         """
         Function to rasterize a vector. Complete the gdal pointer empty properties with the layer's information
         of the vector and a defined field.
@@ -181,20 +181,20 @@ class Vector():
             raise Exception("error rasterizing layer: %s" % pt_rast)
         
         new_data = self.raster_ds.ReadAsArray()
-        # Expression to find classes in numpy's mask
-        np_mask = ''
-        # Convert string in a list. For that, it remove
-        # space and clip this string with comma (Add everywhere if the script modified
-        # because the process work with a input string chain)
-        class_r = class_r.replace(' ','').split(',')
-        for nm in class_r:
-            np_mask = np_mask + '(new_data == ' + str(nm) + ') | '
-        np_mask = np_mask[:-3]
-        # Replace value data by our own value
-        new_data=np.ma.masked_where(eval(np_mask), new_data)
-        new_data.fill_value = class_out
-        
-        new_data = new_data.filled()
+#         # Expression to find classes in numpy's mask
+#         np_mask = ''
+#         # Convert string in a list. For that, it remove
+#         # space and clip this string with comma (Add everywhere if the script modified
+#         # because the process work with a input string chain)
+#         class_r = class_r.replace(' ','').split(',')
+#         for nm in class_r:
+#             np_mask = np_mask + '(new_data == ' + str(nm) + ') | '
+#         np_mask = np_mask[:-3]
+#         # Replace value data by our own value
+#         new_data=np.ma.masked_where(eval(np_mask), new_data)
+#         new_data.fill_value = class_out
+#         
+#         new_data = new_data.filled()
                
         self.raster_ds = None
         # Complete the raster creation

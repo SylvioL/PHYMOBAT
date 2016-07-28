@@ -187,7 +187,6 @@ class Processing():
         
         # Validation shapefiles information
         self.valid_shp = []
-        self.valid_img = [] # Validation raster path
         
     def i_tree_direction(self):
         
@@ -590,19 +589,25 @@ class Processing():
             elif class_validate > 0:
                 process_tocall_merge =  ['ogr2ogr', '-update', '-append', complete_validate_shp, \
                                          val[0], '-nln', os.path.basename(complete_validate_shp[:-4])]
-            print process_tocall_merge
             subprocess.call(process_tocall_merge)
             # Increrment variable
             class_validate = self.valid_shp.index(val) + 1
                 
         # Define the validation's vector
         sample_val = Vector(complete_validate_shp, self.path_area, **opt)
-        # Add in a shapefile the validation output rasters path
-        self.valid_img.append(sample_val.layer_rasterization(self.raster_path[0], val[1]))
+        # Create the validation rasters output path
+        valid_img = sample_val.layer_rasterization(self.raster_path[0], val[1])
+        valid_img = clip_raster(valid_img, complete_validate_shp)
             
         # Create a classification raster
         moba_shp = Vector(self.output_name_moba, self.path_area, **opt)
         moba_img = moba_shp.layer_rasterization(self.raster_path[0], 'FBPHY_CODE')
+        moba_img = clip_raster(moba_img, complete_validate_shp)
         
+        # Call the raster class to extract the image data
+        valid = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
+        moba = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
         
+        # Compute precision on the output classification
+        confus_matrix(moba.raster_data(moba_img)[0], valid.raster_data(valid_img)[0])
         

@@ -593,16 +593,18 @@ class Processing():
             # Increrment variable
             class_validate = self.valid_shp.index(val) + 1
                 
+        kwargs = {}
+        kwargs['rm_rast'] = 1 # To remove existing raster in the clip_raster function
         # Define the validation's vector
         sample_val = Vector(complete_validate_shp, self.path_area, **opt)
         # Create the validation rasters output path
         valid_img = sample_val.layer_rasterization(self.raster_path[0], val[1])
-        valid_img = clip_raster(valid_img, complete_validate_shp)
+        valid_img = clip_raster(valid_img, complete_validate_shp, **kwargs)
             
         # Create a classification raster
         moba_shp = Vector(self.output_name_moba, self.path_area, **opt)
         moba_img = moba_shp.layer_rasterization(self.raster_path[0], 'FBPHY_CODE')
-        moba_img = clip_raster(moba_img, complete_validate_shp)
+        moba_img = clip_raster(moba_img, complete_validate_shp, **kwargs)
         
         # Call the raster class to extract the image data
         valid = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])

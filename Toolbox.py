@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, subprocess
+import os, sys, subprocess, glob
 import numpy as np
 
 def clip_raster(imag, vect, **kwargs):
@@ -40,8 +40,24 @@ def clip_raster(imag, vect, **kwargs):
         print 'Raster clip of ' + os.path.split(str(imag))[1]
         # Command to clip a raster with a shapefile by Gdal
         process_tocall_clip = ['gdalwarp', '-overwrite', '-dstnodata', '-10000', '-q', '-cutline', vect, '-crop_to_cutline', '-of', 'GTiff', imag, outclip]
-        subprocess.call(process_tocall_clip)
-    
+        # This is a trick to remove warning with the polygons that touch
+        try:
+            r = subprocess.call(process_tocall_clip)
+            if r == 1:
+                sys.exit(1)
+                
+        except SystemExit:
+            print("Dissolve vector cut of the validation !!!")
+            vect_2 = vect[:-4] + '_v2.shp'
+            preprocess_tocall = 'ogr2ogr -overwrite ' + vect_2 + ' ' + vect + ' -dialect sqlite -sql "SELECT ST_Union(geometry), * FROM ' + \
+                                    os.path.basename(vect)[:-4] +'"'
+            os.system(preprocess_tocall)
+            print 'Raster clip of ' + os.path.split(str(imag))[1]
+            process_tocall_clip = ['gdalwarp', '-overwrite', '-dstnodata', '-10000', '-q', '-cutline', vect_2, '-crop_to_cutline', '-of', 'GTiff', imag, outclip]
+            subprocess.call(process_tocall_clip)
+            for rem in glob.glob(vect_2[:-4] + '*'):
+                os.remove(rem)
+                
     return outclip
 
 def calc_serie_stats(table):

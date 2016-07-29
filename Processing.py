@@ -27,6 +27,7 @@ except :
 
 from Toolbox import *
 from Seath import Seath
+from Precision_moba import Precision_moba
 # Class group image
 from Archive import Archive
 from RasterSat_by_date import RasterSat_by_date
@@ -592,24 +593,17 @@ class Processing():
             subprocess.call(process_tocall_merge)
             # Increrment variable
             class_validate = self.valid_shp.index(val) + 1
-                
-        kwargs = {}
-        kwargs['rm_rast'] = 1 # To remove existing raster in the clip_raster function
-        # Define the validation's vector
-        sample_val = Vector(complete_validate_shp, self.path_area, **opt)
-        # Create the validation rasters output path
-        valid_img = sample_val.layer_rasterization(self.raster_path[0], val[1])
-        valid_img = clip_raster(valid_img, complete_validate_shp, **kwargs)
-            
-        # Create a classification raster
-        moba_shp = Vector(self.output_name_moba, self.path_area, **opt)
-        moba_img = moba_shp.layer_rasterization(self.raster_path[0], 'FBPHY_CODE')
-        moba_img = clip_raster(moba_img, complete_validate_shp, **kwargs)
         
-        # Call the raster class to extract the image data
-        valid = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
-        moba = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
+        # Compute precision of the classification
+        valid = Precision_moba(self.path_area, self.path_folder_dpt)     
+        valid.complete_validation_shp = complete_validate_shp
+        valid.ex_raster = self.raster_path[0]
+        
+        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_CODE') # To the classification's data
+        valid.preprocess_to_raster_precision(complete_validate_shp, val[1]) # To the validation's data
         
         # Compute precision on the output classification
-        confus_matrix(moba.raster_data(moba_img)[0], valid.raster_data(valid_img)[0])
+        valid.confus_matrix(valid.complete_img[0].raster_data(valid.img_pr[0])[0], \
+                            valid.complete_img[1].raster_data(valid.img_pr[1])[0])
+        
         

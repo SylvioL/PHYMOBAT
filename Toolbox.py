@@ -32,7 +32,7 @@ from sklearn.metrics import precision_score
 # The F1 score can be interpreted as a weighted average of the precision and recall F1 = 2 * (precision * recall) / (precision + recall)
 from sklearn.metrics import f1_score 
 
-def clip_raster(imag, vect):
+def clip_raster(imag, vect, **kwargs):
     """
     Function to clip a raster with a vector. The raster created will be in the same folder than the input raster.
     With a prefix *Clip_*.
@@ -41,14 +41,17 @@ def clip_raster(imag, vect):
     :type imag: str
     :param vect: Extent shapefile (path)
     :type vect: str
+    :kwargs: **rm_rast** (int) - 0 (by default) or 1. Variable to remove the output raster. 0 to keep and 1 to remove.
+    
     :returns: str -- variable **outclip**, output raster clip (path).
     """    
     
+    rm_rast = kwargs['rm_rast'] if kwargs.get('rm_rast') else 0
     outclip = os.path.split(str(imag))[0] + '/Clip_' + os.path.split(str(imag))[1]
-    if not os.path.exists(outclip):
+    if not os.path.exists(outclip) or rm_rast == 1:
         print 'Raster clip of ' + os.path.split(str(imag))[1]
         # Command to clip a raster with a shapefile by Gdal
-        process_tocall_clip = ['gdalwarp', '-dstnodata', '-10000', '-q', '-cutline', vect, '-crop_to_cutline', '-of', 'GTiff', imag, outclip]
+        process_tocall_clip = ['gdalwarp', '-overwrite', '-dstnodata', '-10000', '-q', '-cutline', vect, '-crop_to_cutline', '-of', 'GTiff', imag, outclip]
         subprocess.call(process_tocall_clip)
     
     return outclip

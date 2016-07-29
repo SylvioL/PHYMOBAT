@@ -145,7 +145,7 @@ class Precision_moba():
         f.write("\n")
         f.write("F_score : " + str(f_scor) + "\n")
         
-        kappa = cohen_kappa_score(fb_stats_val, fb_stats_in)
+        kappa = self.cohen_kappa_score(fb_stats_val, fb_stats_in)
         f.write("\n")
         f.write("Kappa : " + str(kappa) + "\n")
         print('')

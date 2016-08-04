@@ -116,6 +116,7 @@ class Segmentation(Vector):
         # Add a field to convert class string in code
         fieldDefn = ogr.FieldDefn('FBPHY_CODE', ogr.OFTInteger)
         out_layer.CreateField(fieldDefn)
+        out_fieldnames.append('FBPHY_CODE')
         
         # Feature for the ouput shapefile
         featureDefn = out_layer.GetLayerDefn()
@@ -138,15 +139,20 @@ class Segmentation(Vector):
             out_feature.SetField(out_fieldnames[1], geom.GetArea()/10000)
             # Set the others polygons fields with the decision tree dictionnary
             for i in range(2, len(out_fieldnames)):
-
+                # If list stopped it on the second level, complete by empty case
+                if len(self.class_tab_final[in_feature.GetFID()]) < len(out_fieldnames)-2 and \
+                                                    self.class_tab_final[in_feature.GetFID()] != []:
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-1,'') # To 3rd level
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-1,0) # To degree
+                 
                 try:
                     out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-2])
-                    out_feature.SetField('FBPHY_CODE', self.class_tab_final[in_feature.GetFID()][i-1])
                 except:
 #                     pass
-                    out_feature.SetField(str(out_fieldnames[i]), 'Undefined')
+                    for i in range(2, len(out_fieldnames)-1):
+                        out_feature.SetField(str(out_fieldnames[i]), 'Undefined')
                     out_feature.SetField('FBPHY_CODE', 255)
-                
+#                     sys.exit(1)
             # Append polygon to the output shapefile
             out_layer.CreateFeature(out_feature)
     
@@ -172,21 +178,10 @@ class Segmentation(Vector):
         
         # Combination tree on a sentence. Every sentence will be in a table.
         cond_tab = []
-        print combin_tree
-        print self.out_threshold
         for ct in combin_tree:
             cond_a = '' # Condition Term
             c = 0
-            while c < len(ct):
-                
-                # Verify an "Index Error" on the level 2
-                # to extract Agriculture and Eboulis in the same time that
-                # Ligneux / herbacées
-                if ct[c] == 6:
-                    ct[c] = len(self.out_threshold) - 2
-                elif ct[c] == 7:
-                    ct[c] = len(self.out_threshold) - 1
-                    
+            while c < len(ct):  
                 # Loop on tree combinaison                    
                 if self.out_threshold[ct[c]] =='':
                     # For interval condition
@@ -199,7 +194,7 @@ class Segmentation(Vector):
                             self.out_threshold[ct[c]] + ' and '
                 c = c + 1
             cond_tab.append(cond_a[:-5]) # Remove the last 'and'
-        
+
         # Loop on every value 
         for ind_stats in range(len(self.stats_dict)):
             # Loop on decision tree combination.
@@ -265,7 +260,8 @@ class Segmentation(Vector):
             # Only valid on the second level
             try:
                 if self.class_tab_final[ind_stats][1] == select_class:
-                    self.class_tab_final[ind_stats].append(eval(form))
+                    self.class_tab_final[ind_stats].insert(len(self.class_tab_final[ind_stats])-1,eval(form))
             except IndexError:
                 pass
-            
+                
+                

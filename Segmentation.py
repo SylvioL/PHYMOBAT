@@ -172,10 +172,21 @@ class Segmentation(Vector):
         
         # Combination tree on a sentence. Every sentence will be in a table.
         cond_tab = []
+        print combin_tree
+        print self.out_threshold
         for ct in combin_tree:
             cond_a = '' # Condition Term
             c = 0
             while c < len(ct):
+                
+                # Verify an "Index Error" on the level 2
+                # to extract Agriculture and Eboulis in the same time that
+                # Ligneux / herbacées
+                if ct[c] == 6:
+                    ct[c] = len(self.out_threshold) - 2
+                elif ct[c] == 7:
+                    ct[c] = len(self.out_threshold) - 1
+                    
                 # Loop on tree combinaison                    
                 if self.out_threshold[ct[c]] =='':
                     # For interval condition

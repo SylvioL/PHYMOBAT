@@ -158,8 +158,8 @@ class Processing():
 #                       'LF', 'LO']
         
         # Decision tree combination
-        self.tree_direction = [[0, 6],\
-                          [0, 7],\
+        self.tree_direction = [[0],\
+                          [0],\
                           [1, 3, 4],\
                           [1, 3, 5],\
                           [1, 2, 8],\
@@ -202,7 +202,7 @@ class Processing():
             self.tree_direction = [[0], [1]]
             
         if len(self.out_fieldname_carto) == 4:
-            self.tree_direction = [[0, 6], [0, 7], [1, 2], [1, 3]]
+            self.tree_direction = [[0], [0], [1, 2], [1, 3]]
         
     def i_download(self, dd):
         
@@ -511,6 +511,11 @@ class Processing():
         multi_process_var.append([self.raster_path[ind_th+1], self.list_band_outraster[ind_th+1]])
         out_carto.out_threshold.append('<'+str(self.slope_degree)) # To agriculture
         out_carto.out_threshold.append('>='+str(self.slope_degree)) # To scree
+        if self.path_mnt != '':
+            # Add class indexes
+            self.tree_direction[0].append(6)
+            self.tree_direction[0].append(7)
+            
         # Compute zonal stats on Max NDVI raster  
         try:  
             # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
@@ -519,7 +524,9 @@ class Processing():
             # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
             multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
         except:
-            print('Not max ndvi on the 3rd floor')
+            print('Not MNT on the 3rd step')
+            multi_process_var.append([self.raster_path[ind_th+1], self.list_band_outraster[ind_th+1]])
+            multi_process_var.append([self.raster_path[ind_th+1], self.list_band_outraster[ind_th+1]])
 
         # Compute zonal stats with multi processing
         out_carto.stats_dict = mgr.defaultdict(list)

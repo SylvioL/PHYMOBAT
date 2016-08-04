@@ -138,6 +138,9 @@ class Processing():
         self.list_band_outraster = []
         
         # Class name
+        
+        # TODO : Change index of the classes -> Harbacées 6 / Ligneux 7 by Agriculuture 4 / Eboulis 5
+        
         self.in_class_name = ['Non Vegetation semi-naturelle', 'Vegetation semi-naturelle',\
                          'Herbacees', 'Ligneux', \
                          'Ligneux mixtes', 'Ligneux denses',\
@@ -605,5 +608,4 @@ class Processing():
         # Compute precision on the output classification
         valid.confus_matrix(valid.complete_img[0].raster_data(valid.img_pr[0])[0], \
                             valid.complete_img[1].raster_data(valid.img_pr[1])[0])
-        
         

@@ -40,7 +40,7 @@ def clip_raster(imag, vect, **kwargs):
         print 'Raster clip of ' + os.path.split(str(imag))[1]
         # Command to clip a raster with a shapefile by Gdal
         process_tocall_clip = ['gdalwarp', '-overwrite', '-dstnodata', '-10000', '-q', '-cutline', vect, '-crop_to_cutline', '-of', 'GTiff', imag, outclip]
-        # This is a trick to remove warning with the polygons that touch
+        # This is a trick to remove warning with the polygons that touch themselves
         try:
             r = subprocess.call(process_tocall_clip)
             if r == 1:

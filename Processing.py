@@ -428,6 +428,7 @@ class Processing():
         i_s = 0
         while i_s < 10:
             try :
+                self.valid_shp = []
                 sample_rd = {}
                 for sple in range(len(self.sample_name) * 2):
                     kwargs = {}
@@ -439,7 +440,7 @@ class Processing():
                     
                     # Add the validation shapefile
                     self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-                
+
                 # Search the optimal threshold by class 
                 # Open a text file to print stats of Seath method
                 file_J = self.path_folder_dpt + '/log_J.lg'
@@ -577,30 +578,35 @@ class Processing():
         
         # Processing to rasterize the validate shapefile. 1) Merge sahpefiles 2) Rasterization
         for val in self.valid_shp:
-            # Self.valid_shp is a list of list. In this variable there is :
-            # [Shapefile path, fieldname classes, classnames]
-            opt = {}
-            opt['Remove'] = 1 # To overwrite 
-
-            # Create a raster to valide the classification
-            # First time, create a new shapefile with a new field integer
-            sample_val = Sample(val[0], self.path_area, 1, **opt)
-            opt['add_fieldname'] = 1 
-            opt['fieldname'] = 'CLASS_CODE'
-            opt['class'] = str(class_validate) # Add integer classes
-            # Set the new shapefile
-            val[0] = val[0][:-4] + '_.shp'
-            val[1] = opt['fieldname']
-            val[2] = opt['class']
-            # Complete the new shapefile
-            sample_val.fill_sample(val[0], 0, **opt)
-            # Second time, merge the validate shapefile
-            if class_validate == 0:
-                process_tocall_merge =  ['ogr2ogr', '-overwrite', complete_validate_shp, val[0]]
-            elif class_validate > 0:
-                process_tocall_merge =  ['ogr2ogr', '-update', '-append', complete_validate_shp, \
-                                         val[0], '-nln', os.path.basename(complete_validate_shp[:-4])]
-            subprocess.call(process_tocall_merge)
+            if class_validate != 2: 
+                # Grassland to 1
+                if (class_validate !=3 and len(self.out_fieldname_carto) != 4+2) or len(self.out_fieldname_carto) == 4+2:
+                    # To the level 3 with woodeen to 4 and 5
+                    #
+                    # Self.valid_shp is a list of list. In this variable there is :
+                    # [Shapefile path, fieldname classes, classnames]
+                    opt = {}
+                    opt['Remove'] = 1 # To overwrite 
+        
+                    # Create a raster to valide the classification
+                    # First time, create a new shapefile with a new field integer
+                    sample_val = Sample(val[0], self.path_area, 1, **opt)
+                    opt['add_fieldname'] = 1 
+                    opt['fieldname'] = 'CLASS_CODE'
+                    opt['class'] = str(class_validate) # Add integer classes
+                    # Set the new shapefile
+                    val[0] = val[0][:-4] + '_.shp'
+                    val[1] = opt['fieldname']
+                    val[2] = opt['class']
+                    # Complete the new shapefile
+                    sample_val.fill_sample(val[0], 0, **opt)
+                    # Second time, merge the validate shapefile
+                    if class_validate == 0:
+                        process_tocall_merge =  ['ogr2ogr', '-overwrite', complete_validate_shp, val[0]]
+                    elif class_validate > 0:
+                        process_tocall_merge =  ['ogr2ogr', '-update', '-append', complete_validate_shp, \
+                                                 val[0], '-nln', os.path.basename(complete_validate_shp[:-4])]
+                    subprocess.call(process_tocall_merge)
             # Increrment variable
             class_validate = self.valid_shp.index(val) + 1
         
@@ -609,7 +615,7 @@ class Processing():
         valid.complete_validation_shp = complete_validate_shp
         valid.ex_raster = self.raster_path[0]
         
-        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_CODE') # To the classification's data
+        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_SUB') # To the classification's data
         valid.preprocess_to_raster_precision(complete_validate_shp, val[1]) # To the validation's data
         
         # Compute precision on the output classification

@@ -446,6 +446,7 @@ class PHYMOBAT(QMainWindow, Processing):
             self.ui.comboBox_fieldname_1.setObjectName(_fromUtf8("comboBox_fieldname_1"))
             self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_1, 10, 3, 1, 1)
     
+            self.ui.lineEdit_fieldname_1.setText(_translate("PHYMOBAT", "NIVEAU_1", None))
             self.ui.comboBox_fieldname_1.addItem("String")
             self.ui.comboBox_fieldname_1.addItem("Real")
     
@@ -497,8 +498,10 @@ class PHYMOBAT(QMainWindow, Processing):
             self.ui.label_chps_name_2.setObjectName(_fromUtf8("label_chps_name_2"))
             self.ui.gridLayout_2.addWidget(self.ui.label_chps_name_2, 13, 2, 1, 1)
             
+            self.ui.lineEdit_fieldname_12.setText(_translate("PHYMOBAT", "NIVEAU_1", None))
             self.ui.comboBox_fieldname_12.addItem("String")
             self.ui.comboBox_fieldname_12.addItem("Real")
+            self.ui.lineEdit_fieldname_2.setText(_translate("PHYMOBAT", "NIVEAU_2", None))
             self.ui.comboBox_fieldname_2.addItem("String")
             self.ui.comboBox_fieldname_2.addItem("Real")
             
@@ -564,14 +567,18 @@ class PHYMOBAT(QMainWindow, Processing):
             self.ui.comboBox_fieldname_4.setObjectName(_fromUtf8("comboBox_fieldname_4"))
             self.ui.gridLayout_2.addWidget(self.ui.comboBox_fieldname_4, 18, 7, 1, 1)
             
+            self.ui.lineEdit_fieldname_13.setText(_translate("PHYMOBAT", "NIVEAU_1", None))
             self.ui.comboBox_fieldname_13.addItem("String")
             self.ui.comboBox_fieldname_13.addItem("Real")
+            self.ui.lineEdit_fieldname_23.setText(_translate("PHYMOBAT", "NIVEAU_2", None))
             self.ui.comboBox_fieldname_23.addItem("String")
             self.ui.comboBox_fieldname_23.addItem("Real")
+            self.ui.lineEdit_fieldname_3.setText(_translate("PHYMOBAT", "NIVEAU_3", None))
             self.ui.comboBox_fieldname_3.addItem("String")
             self.ui.comboBox_fieldname_3.addItem("Real")
-            self.ui.comboBox_fieldname_4.addItem("String")
+            self.ui.lineEdit_fieldname_4.setText(_translate("PHYMOBAT", "POURC", None))
             self.ui.comboBox_fieldname_4.addItem("Real")  
+            self.ui.comboBox_fieldname_4.addItem("String")
             
             self.ui.label_chps_3.setText(_translate("PHYMOBAT", "    Champs\n"+" des entités", None))
             self.ui.label_chps_type_3.setText(_translate("PHYMOBAT", "Type :", None))

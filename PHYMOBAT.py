@@ -750,7 +750,12 @@ class PHYMOBAT(QMainWindow, Processing):
         
         # Parse the xml file
         tree = ET.parse(str(in_backup))
-               
+        
+        if tree.find("Multi_process").text == '1':
+            self.ui.checkBox_multiprocess.setChecked(True)
+        else:
+            self.ui.checkBox_multiprocess.setChecked(False)
+        
         pr = tree.find("Tab[@id='Processing_raster']")
         try:
             self.ui.lineEdit_principal_folder.setText(pr.find("Principal_folder").text)
@@ -763,15 +768,41 @@ class PHYMOBAT(QMainWindow, Processing):
         except:
             print('Not year images')
         self.ui.lineEdit_area_path.setText(pr.find("Area_path").text)
+        
+        if pr.find("Images_available").text == '1':
+            self.ui.checkBox_listing.setChecked(True)
+        else:
+            self.ui.checkBox_listing.setChecked(False)
+        if pr.find("Download").text == '1':
+            self.ui.checkBox_download.setChecked(True)
+        else:
+            self.ui.checkBox_download.setChecked(False)
+            
         try:
             self.ui.lineEdit_user.setText(pr.find("Username").text)
             self.ui.lineEdit_password.setText(pr.find("Password").text)
         except:
             print('Not username or password Theia')
+        
+        if pr.find("Img_processing").text == '1':
+            self.ui.checkBox_processing.setChecked(True)
+        else:
+            self.ui.checkBox_processing.setChecked(False)
+        if pr.find("VHRS_checked").text == '1':
+            self.ui.checkBox_VHRS.setChecked(True)
+        else:
+            self.ui.checkBox_VHRS.setChecked(False)    
+            
         try:
             self.ui.lineEdit_VHRS.setText(pr.find("VHRS").text)
         except:
             print('Not VHRS image')
+            
+        if pr.find("MNT_checked").text == '1':
+            self.ui.checkBox_MNT.setChecked(True)
+        else:
+            self.ui.checkBox_MNT.setChecked(False)    
+            
         try:
             self.ui.lineEdit_MNT.setText(pr.find("MNT").text)
         except:
@@ -798,6 +829,11 @@ class PHYMOBAT(QMainWindow, Processing):
                 self.add_sample()
         except:
             print('Not sample')
+        
+        if ps.find("Threshold_checked").text == '1':
+            self.ui.checkBox_threshold.setChecked(True)
+        else:
+            self.ui.checkBox_threshold.setChecked(False) 
          
         c = tree.find("Tab[@id='Classification']")
         try:
@@ -846,14 +882,44 @@ class PHYMOBAT(QMainWindow, Processing):
         
         root = ET.Element("Data_filled")
         
+        if self.ui.checkBox_multiprocess.isChecked():
+            ET.SubElement(root, "Multi_process", type = "int").text = str(1)
+        else:
+            ET.SubElement(root, "Multi_process", type = "int").text = str(0)
+        
         doc = ET.SubElement(root, "Tab", id="Processing_raster")
         ET.SubElement(doc, "Principal_folder", type = "str").text = "%s" % self.ui.lineEdit_principal_folder.text()
         ET.SubElement(doc, "Captor", type = "str").text = "%s" % self.ui.comboBox_captor.currentText()
         ET.SubElement(doc, "Year_images", type = "str").text = "%s" % self.ui.lineEdit_year_images.text()
         ET.SubElement(doc, "Area_path", type = "str").text = "%s" % self.ui.lineEdit_area_path.text()
+        
+        if self.ui.checkBox_listing.isChecked():
+            ET.SubElement(doc, "Images_available", type = "int").text = str(1)
+        else:
+            ET.SubElement(doc, "Images_available", type = "int").text = str(0)
+        if self.ui.checkBox_download.isChecked():
+            ET.SubElement(doc, "Download", type = "int").text = str(1)
+        else:
+            ET.SubElement(doc, "Download", type = "int").text = str(0)
+        
         ET.SubElement(doc, "Username", type = "str").text = "%s" % self.ui.lineEdit_user.text()
         ET.SubElement(doc, "Password", type = "str").text = "%s" % self.ui.lineEdit_password.text()
+        
+        if self.ui.checkBox_processing.isChecked():
+            ET.SubElement(doc, "Img_processing", type = "int").text = str(1)
+        else:
+            ET.SubElement(doc, "Img_processing", type = "int").text = str(0)
+        
+        if self.ui.checkBox_VHRS.isChecked():
+            ET.SubElement(doc, "VHRS_checked", type = "int").text = str(1)
+        else:
+            ET.SubElement(doc, "VHRS_checked", type = "int").text = str(0)
         ET.SubElement(doc, "VHRS", type = "str").text = "%s" % self.ui.lineEdit_VHRS.text()
+        
+        if self.ui.checkBox_MNT.isChecked():
+            ET.SubElement(doc, "MNT_checked", type = "int").text = str(1)
+        else:
+            ET.SubElement(doc, "MNT_checked", type = "int").text = str(0)
         ET.SubElement(doc, "MNT", type = "str").text = "%s" % self.ui.lineEdit_MNT.text()
         
         doc = ET.SubElement(root, "Tab", id="Processing_sample")
@@ -872,6 +938,11 @@ class PHYMOBAT(QMainWindow, Processing):
                     ET.SubElement(sub_doc, "Img_sample", type = "str").text = self.raster_path[sa]
             except:
                 print('Not sample raster only !')
+        
+        if self.ui.checkBox_threshold.isChecked():
+            ET.SubElement(doc, "Threshold_checked", type = "int").text = str(1)
+        else:
+            ET.SubElement(doc, "Threshold_checked", type = "int").text = str(0)
             
         doc = ET.SubElement(root, "Tab", id="Classification")
         ET.SubElement(doc, "Segmentation_path", type = "str").text = "%s" % self.ui.lineEdit_segmentation.text()

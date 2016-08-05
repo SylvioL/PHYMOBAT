@@ -113,10 +113,13 @@ class Segmentation(Vector):
         for i in range(0, len(out_fieldnames)):
             fieldDefn = ogr.FieldDefn(str(out_fieldnames[i]), out_fieldtype[i])
             out_layer.CreateField(fieldDefn)
-        # Add a field to convert class string in code
+        # Add 2 fields to convert class string in code to confusion matrix
         fieldDefn = ogr.FieldDefn('FBPHY_CODE', ogr.OFTInteger)
         out_layer.CreateField(fieldDefn)
         out_fieldnames.append('FBPHY_CODE')
+        fieldDefn = ogr.FieldDefn('FBPHY_SUB', ogr.OFTInteger)
+        out_layer.CreateField(fieldDefn)
+        out_fieldnames.append('FBPHY_SUB')
         
         # Feature for the ouput shapefile
         featureDefn = out_layer.GetLayerDefn()
@@ -142,16 +145,29 @@ class Segmentation(Vector):
                 # If list stopped it on the second level, complete by empty case
                 if len(self.class_tab_final[in_feature.GetFID()]) < len(out_fieldnames)-2 and \
                                                     self.class_tab_final[in_feature.GetFID()] != []:
-                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-1,'') # To 3rd level
-                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-1,0) # To degree
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-2,'') # To 3rd level
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-2,0) # To degree
                  
                 try:
+                    # To the confusion matrix, replace level ++ by level --
+                    if i == len(out_fieldnames)-1:
+                        if self.class_tab_final[in_feature.GetFID()][i-2] == 6:
+                            # Crops to artificial vegetation
+                            self.class_tab_final[in_feature.GetFID()][i-2] = 0
+                        if self.class_tab_final[in_feature.GetFID()][i-2] == 2:
+                            # Grassland to natural vegetation
+                            self.class_tab_final[in_feature.GetFID()][i-2] = 1
+                        if self.class_tab_final[in_feature.GetFID()][i-2] > 7:
+                            # Phytomass to natural vegetation
+                            self.class_tab_final[in_feature.GetFID()][i-2] = 1
+                            
                     out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-2])
                 except:
 #                     pass
-                    for i in range(2, len(out_fieldnames)-1):
+                    for i in range(2, len(out_fieldnames)-2):
                         out_feature.SetField(str(out_fieldnames[i]), 'Undefined')
                     out_feature.SetField('FBPHY_CODE', 255)
+                    out_feature.SetField('FBPHY_SUB', 255)
 #                     sys.exit(1)
             # Append polygon to the output shapefile
             out_layer.CreateFeature(out_feature)
@@ -204,12 +220,14 @@ class Segmentation(Vector):
                     if eval(cond):
                         self.class_tab_final[ind_stats] = [self.out_class_name[s] \
                                                            for s in combin_tree[cond_tab.index(cond)]] + \
+                                                           [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]] + \
                                                            [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]]
                 except NameError:
                     # If there is 'nan' in the table statistics
                     if eval(cond.replace('nan','-10000')):# If there is 'nan' in the table statistics
                         self.class_tab_final[ind_stats] = [self.out_class_name[s] \
                                                            for s in combin_tree[cond_tab.index(cond)]] + \
+                                                           [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]] + \
                                                            [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]]
     
     def compute_biomass_density(self):
@@ -260,7 +278,7 @@ class Segmentation(Vector):
             # Only valid on the second level
             try:
                 if self.class_tab_final[ind_stats][1] == select_class:
-                    self.class_tab_final[ind_stats].insert(len(self.class_tab_final[ind_stats])-1,eval(form))
+                    self.class_tab_final[ind_stats].insert(len(self.class_tab_final[ind_stats])-2,eval(form))
             except IndexError:
                 pass
                 

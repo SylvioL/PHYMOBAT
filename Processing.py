@@ -20,6 +20,7 @@
 import os, sys
 import numpy as np
 import subprocess
+from sklearn.ensemble import RandomForestClassifier
 try :
     import ogr, gdal
 except :
@@ -191,6 +192,12 @@ class Processing():
         
         # Validation shapefiles information
         self.valid_shp = []
+        
+        # Radom Forest Model
+        # Set the parameters of this random forest from the estimator 
+        self.rf = RandomForestClassifier(n_estimators=500, criterion='gini', max_depth=None, min_samples_split=2, \
+                                        min_samples_leaf=1, max_features='auto', \
+                                        bootstrap=True, oob_score=True)
         
     def i_tree_direction(self):
         
@@ -411,8 +418,8 @@ class Processing():
         
     def i_sample(self):
         """
-        Interface function to compute threshold with various sample. It also extract a validation layer (shapefile) to compute
-        the precision of the next classification :func:`i_validate`. 
+        Interface function to compute threshold with various sample. It also extract a list of validation layer (shapefile) 
+        to compute the precision of the next classification :func:`i_validate`. 
         
         It create samples 2 by 2 with kwargs field names and class :func:`Sample.Sample.create_sample`. 
         Then, it compute zonal statistics by polygons :func:`Vector.Sample.zonal_stats`.
@@ -440,7 +447,7 @@ class Processing():
                     
                     # Add the validation shapefile
                     self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-
+                
                 # Search the optimal threshold by class 
                 # Open a text file to print stats of Seath method
                 file_J = self.path_folder_dpt + '/log_J.lg'
@@ -467,17 +474,33 @@ class Processing():
     
     def i_sample_rf(self):
         """
-        
+        This function build a random forest trees like model to create a final classification.
+        All of This using the method described in the :func:`i_validate` function and because
+        of sklearn module.
         """
         
+        X_rf = []
+        y_rf = []
         sample_rd = {}
+        # Extract value mean from polygons
         for sple in range(len(self.sample_name) * 2):
             kwargs = {}
             kwargs['fieldname'] = self.fieldname_args[sple]
             kwargs['class'] = self.class_args[sple]
             sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
             sample_rd[sple].create_sample(**kwargs)
-            sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+            for lbo in range(len(self.raster_path)):
+                kwargs['rank'] = lbo
+                kwargs['nb_img'] = len(self.raster_path)
+                sample_rd[sple].zonal_stats((self.raster_path[lbo/2], self.list_band_outraster[lbo/2]), **kwargs)
+            
+            # To convert the dictionnary in a list
+            for key, value in sample_rd[sple].stats_dict.iteritems():
+                X_rf.append(value)
+                y_rf.append(self.class_args[sple])
+        
+        # Build a forest of trees from the samples                 
+        self.rf = self.rf.fit(X_rf, y_rf)
 
     def i_classifier(self): 
         """

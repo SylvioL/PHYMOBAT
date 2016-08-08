@@ -704,7 +704,7 @@ class PHYMOBAT(QMainWindow, Processing):
             # Compute optimal threshold  
             if self.ui.checkBox_threshold.isChecked():
                 
-                self.i_sample()
+                self.i_sample_rf()
             
             # Classification processing 
             if self.ui.checkBox_classifier_1.isChecked() :         

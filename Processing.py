@@ -576,6 +576,8 @@ class Processing():
         class_validate = 0
         complete_validate_shp = os.path.dirname(self.valid_shp[0][0]) + '/validate.shp'
         
+        # TODO : Set this method in the Precision_moba class
+        
         # Processing to rasterize the validate shapefile. 1) Merge sahpefiles 2) Rasterization
         for val in self.valid_shp:
             if class_validate != 2: 
@@ -614,6 +616,8 @@ class Processing():
         valid = Precision_moba(self.path_area, self.path_folder_dpt)     
         valid.complete_validation_shp = complete_validate_shp
         valid.ex_raster = self.raster_path[0]
+        
+        # TODO : Call the RasterSat_by_Date here instead of the Precision_moba class
         
         valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_SUB') # To the classification's data
         valid.preprocess_to_raster_precision(complete_validate_shp, val[1]) # To the validation's data

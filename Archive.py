@@ -25,7 +25,7 @@ try :
     import ogr
 except :
     from osgeo import ogr
-    
+
 import UserDict
 import numpy as np
 from lxml import etree
@@ -206,7 +206,7 @@ class Archive():
         
         # Coordinates min in decimal degrees
         LL_min = self.utm_to_latlng(31, extent_[0],  extent_[2], northernHemisphere=True)
-
+        
         # Coordinates max in decimal degrees
         LL_max = self.utm_to_latlng(31, extent_[1],  extent_[3], northernHemisphere=True)
                                             

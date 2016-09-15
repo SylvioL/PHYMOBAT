@@ -1,23 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.2.
+# This file is part of PHYMOBAT 2.0.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
+# PHYMOBAT 2.0 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
+# PHYMOBAT 2.0 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 2.0.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, sys
+import os, sys, math
 import numpy as np
 import subprocess
 from sklearn.ensemble import RandomForestClassifier
@@ -324,12 +324,12 @@ class Processing():
         study_slope.extract_slope()# Call this function to compute slope raster
         self.path_mnt = study_slope.out_mnt
     
-    def i_vhrs(self):#, vs):  
+    def i_vhrs(self):#, vs):
         """
         Interface function to processing VHRS images. It create two OTB texture images :func:`Vhrs.Vhrs` : SFS Texture and Haralick Texture
-
+        
         """
-  
+
         # Create texture image
         # Clip orthography image 
         path_ortho = clip_raster(self.path_ortho, self.path_area)
@@ -343,7 +343,7 @@ class Processing():
         Interface function to launch processing VHRS images :func:`i_vhrs` and satellite images :func:`i_img_sat` in multi-processing.
         
         :param vs: Boolean variable to launch processing because of interface checkbox -> 0 or 1.
-    
+        
             - 0 means, not texture processing
             - 1 means, launch texture processing
         :type vs: int
@@ -395,8 +395,7 @@ class Processing():
         self.list_band_outraster.append(1) #[1, 4, 2, 1]
         
         print("End of images processing !")
-
-
+        
     def i_rpg(self, path_rpg): 
         """
         Interface function to extract mono rpg crops.
@@ -415,7 +414,6 @@ class Processing():
         
         return mono_sample.vector_used
          
-        
     def i_sample(self):
         """
         Interface function to compute threshold with various sample. It also extract a list of validation layer (shapefile) 
@@ -489,20 +487,115 @@ class Processing():
             kwargs['class'] = self.class_args[sple]
             sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
             sample_rd[sple].create_sample(**kwargs)
+            
+            # Add the validation shapefile
+            self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
+            
             for lbo in range(len(self.raster_path)):
                 kwargs['rank'] = lbo
                 kwargs['nb_img'] = len(self.raster_path)
-                sample_rd[sple].zonal_stats((self.raster_path[lbo/2], self.list_band_outraster[lbo/2]), **kwargs)
+                sample_rd[sple].zonal_stats((self.raster_path[lbo], self.list_band_outraster[lbo]), **kwargs)
             
             # To convert the dictionnary in a list
             for key, value in sample_rd[sple].stats_dict.iteritems():
-                X_rf.append(value)
-                y_rf.append(self.class_args[sple])
+                X_rf.append([-10000 if math.isnan(x) else x for x in value])
+                # To set the grassland class of the RPG and PIAO (same class)
+                if sple == 2:
+                    y_rf.append(1) 
+                elif sple == 3:
+                    y_rf.append(4)
+                else:
+                    y_rf.append(sple)
         
         # Build a forest of trees from the samples                 
         self.rf = self.rf.fit(X_rf, y_rf)
 
-    def i_classifier(self): 
+    def i_classifier_rf(self): 
+        """
+        Interface function to launch random forest classification with a input segmentation :func:`Segmentation.Segmentation`.
+        
+        This function use the sklearn module to build the best of decision tree to extract classes.
+        
+        """ 
+        
+        # Multiprocessing
+        mgr = BaseManager()
+        mgr.register('defaultdict', defaultdict, DictProxy)
+        mgr.start()
+        multi_process_var = [] # Multi processing variable
+          
+        # Extract final cartography
+        out_carto = Segmentation(self.path_segm, self.path_area) 
+        out_carto.output_file = self.output_name_moba
+        out_carto.out_class_name = self.in_class_name
+#         out_carto.out_threshold = []
+        for ind_th in range(len(self.raster_path)):
+            multi_process_var.append([self.raster_path[ind_th], self.list_band_outraster[ind_th]])
+
+        # Compute zonal stats with multi processing
+        out_carto.stats_dict = mgr.defaultdict(list)
+        p = []
+        kwargs = {}
+        for i in range(len(multi_process_var)):
+            kwargs['rank'] = i
+            kwargs['nb_img'] = len(multi_process_var)
+            p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
+            p[i].start()
+            
+            if self.mp == 0:
+                p[i].join()
+        
+        if self.mp == 1:       
+            for i in range(len(multi_process_var)):
+                p[i].join()
+                
+        X_out_rf = []
+        for key, value_seg in out_carto.stats_dict.items():
+            X_out_rf.append([-10000 if math.isnan(x) else x for x in value_seg])
+
+        predicted_rf = self.rf.predict(X_out_rf)
+        
+        # For the higher than level 1
+        if len(self.sample_name) > 2:
+            # Compute the biomass and density distribution
+            # Use 'out_carto.out_threshold' to konw predicted in the segmentation class
+            out_carto.out_threshold = predicted_rf
+            # In the compute_biomass_density function, this variable used normally to define 
+            # threshold of the classification with SEATH method is initialized
+            out_carto.compute_biomass_density('RF')        
+        
+        out_carto.class_tab_final = defaultdict(list)
+        for i_polyg in range(len(predicted_rf)):
+            i_final = 0
+            class_final = []
+            # Initialize the predicted output format
+            # For example : predicted => 4, formatted => [1,3,4]
+            while i_final < len(self.tree_direction):
+                if self.tree_direction[i_final][len(self.tree_direction[i_final])-1] == predicted_rf[i_polyg]:
+                    class_final = self.tree_direction[i_final]
+                    i_final = len(self.tree_direction)
+                i_final = i_final + 1
+            
+            if class_final == []:
+                class_final = [1, 2]
+            # Set the class name because of predicted output formatted         
+            out_carto.class_tab_final[i_polyg] = [self.in_class_name[f] for f in class_final] + \
+                                                [predicted_rf[i_polyg]] + [predicted_rf[i_polyg]]
+            # For the output line with one level, add a phantom level
+            # TODO : Replace constant by a variable in the condition 'while'
+            while len(out_carto.class_tab_final[i_polyg]) < 5:
+                out_carto.class_tab_final[i_polyg].insert(len(out_carto.class_tab_final[i_polyg])-2,'')
+        
+        # If there is more one fieldnames line edit fulled in classification tab
+        if len(self.sample_name) > 2:     
+            # Compute biomass and density scale
+            out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
+            out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
+          
+        # Final cartography
+        out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
+
+    def i_classifier_s(self): 
         """
         Interface function to launch decision tree classification with a input segmentation :func:`Segmentation.Segmentation`.
         
@@ -541,7 +634,7 @@ class Processing():
             self.tree_direction[0].append(7)
             
         # Compute zonal stats on Max NDVI raster  
-        try:  
+        try:
             # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
             multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
             # Compute stats twice, because there is 3 classes and not 2
@@ -569,7 +662,7 @@ class Processing():
             for i in range(len(multi_process_var)):
                 p[i].join()
 
-        # If there is more one fieldnames line edit fulled in classification tab
+        # For the higher than level 1 
         if len(self.sample_name) > 2:
             # Compute the biomass and density distribution
             out_carto.compute_biomass_density()

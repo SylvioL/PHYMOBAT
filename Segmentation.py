@@ -230,23 +230,39 @@ class Segmentation(Vector):
                                                            [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]] + \
                                                            [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]]
     
-    def compute_biomass_density(self):
+    def compute_biomass_density(self, method='SEATH'):
         """
         Function to compute the biomass and density distribution.
         It returns threshold of biomass level.
         
+        :param method: Classification method used. It can set 'SEATH' (by default) or 'RF'
+        :type method: str
         """
         
-        distri = [v[1:] for k, v in self.stats_dict.items() if eval('v[0]' + self.out_threshold[1])]
-        
-        distri_bio = []
-        distri_den = []
-        for b in distri:
-            if eval('b[0]' + self.out_threshold[2]) and b[len(b)-1] != float('inf') and b[len(b)-1] != float('nan') and b[len(b)-1] < 1:
-                distri_bio.append(b)
-            else:
-                distri_den.append(b)
-        # Tranpose table        
+        if method == 'SEATH':
+            distri = [v[1:] for k, v in self.stats_dict.items() if eval('v[0]' + self.out_threshold[1])]
+            
+            distri_bio = []
+            distri_den = []
+            for b in distri:
+                if eval('b[0]' + self.out_threshold[2]) and b[len(b)-1] != float('inf') and b[len(b)-1] != float('nan') and b[len(b)-1] < 1:
+                    distri_bio.append(b)
+                else:
+                    distri_den.append(b)
+        elif method == 'RF':
+            distri = [v[1:] for k, v in self.stats_dict.items() if not self.out_threshold[k] in [0,6,7]]
+            
+            distri_bio = []
+            distri_den = []
+            for b in distri:
+                if self.out_threshold[distri.index(b)] in [1,2,8,9,10] and b[len(b)-1] != -10000 and b[len(b)-1] < 1:
+                    distri_bio.append(b)
+                else:
+                    distri_den.append(b)
+
+            # Set this variable used normally to define threshold of the classification with SEATH method
+            self.out_threshold = []
+        # Transpose table        
         t_distri_bio = list(map(list, zip(*distri_bio)))
         t_distri_den = list(map(list, zip(*distri_den)))
         

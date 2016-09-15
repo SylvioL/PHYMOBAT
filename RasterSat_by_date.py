@@ -388,7 +388,7 @@ class RasterSat_by_date():
                 out_band.GetStatistics(-1, 1) 
                 out_band = None    
             
-        # Close les données ouvertes
+        # Close open data
         self.out_ds = None
 
             

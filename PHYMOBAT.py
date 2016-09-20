@@ -103,18 +103,11 @@ class PHYMOBAT(QMainWindow, Processing):
         - Connect button to add sample in the memory list
         - Connect button to clear sample record. Clear in the interface and in the memory list
         - Connect close|ok button
-        - Connect menu bar tab (Open backup, save in a xml file, close, help, About PHYMOBAT)
+        - Connect menu bar tab (Open backup, save in a xml file, close, help, About PHYMOBAT, mode)
         - Initialize backup variable
         
         """
-#         # To select interface's parameters        
-#         if self.mode == 1:
-#             print "Expert"
-#             from ui_PHYMOBATe_tab import Ui_PHYMOBAT, _translate
-#         elif self.mode == 0:
-#             print "Simple"
-#             from ui_PHYMOBATs_tab import Ui_PHYMOBAT, _translate
-            
+                    
         # Initial interface
         self.ui = Ui_PHYMOBAT()
         self.ui.setupUi(self)
@@ -394,6 +387,7 @@ class PHYMOBAT(QMainWindow, Processing):
         """
         Add sample information and location to compute optimal threshold :
         
+        For the expert mode (mode=1) :
         - Append a sample name by line Edit. *This is a check box* ``RPG``, *if the sample is RPG file. It launch the Rpg class. And append a other sample from Rpg class*.
         - Append two existent sample field names by combobox. It will be the same. 
         - Append sample class names by line edit. One or more for every sample.
@@ -402,6 +396,9 @@ class PHYMOBAT(QMainWindow, Processing):
         - *This check box* ``Image echantillonee``, *image path for samples if the first processing image hasn't been launched*.
             .. note:: This is for a image with one spectral band
         - Clear all widget field at the end.
+        For the simply mode (mode=0):
+        - Append a sample name by a different line Edit (a line Edit for each sample)
+        - Append sample class names, existing sample fields and number of polygons (a different line Edit for each sample)
         """
         
         nb_sample = len(self.sample_name)# Compute number of samples added. Condition : max three. 

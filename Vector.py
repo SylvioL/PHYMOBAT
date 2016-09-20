@@ -30,7 +30,7 @@ from collections import *
 from RasterSat_by_date import RasterSat_by_date
 
 class Vector():
-    """
+    """    
     Vector class to extract a area, vector data and zonal statistic (``rasterstats 0.3.2 package``)
     
     :param vector_used: Input/Output shapefile to clip (path)
@@ -154,10 +154,6 @@ class Vector():
         :type raster_head: str
         :param attribute_r: Field name of the shapefile that contains class names
         :type attribute_r: str
-        :param class_r: Class name corresponding to integer class name
-        :type class_r: list of str
-        :param class_out: Value field pixels for the output raster
-        :type class_out: int
         """
         
         # Export a example of a raster out information
@@ -181,20 +177,6 @@ class Vector():
             raise Exception("error rasterizing layer: %s" % pt_rast)
         
         new_data = self.raster_ds.ReadAsArray()
-#         # Expression to find classes in numpy's mask
-#         np_mask = ''
-#         # Convert string in a list. For that, it remove
-#         # space and clip this string with comma (Add everywhere if the script modified
-#         # because the process work with a input string chain)
-#         class_r = class_r.replace(' ','').split(',')
-#         for nm in class_r:
-#             np_mask = np_mask + '(new_data == ' + str(nm) + ') | '
-#         np_mask = np_mask[:-3]
-#         # Replace value data by our own value
-#         new_data=np.ma.masked_where(eval(np_mask), new_data)
-#         new_data.fill_value = class_out
-#         
-#         new_data = new_data.filled()
                
         self.raster_ds = None
         # Complete the raster creation

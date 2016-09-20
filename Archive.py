@@ -231,7 +231,9 @@ class Archive():
             next_ = 1
             
             # Link to connect in the database JSON of the Theia plateform
-            self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
+#             self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
+            # Temporary link
+            self.url = r'https://theia-landsat.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
             
             if not os.path.exists(self._folder + '/' + self._repertory):
                 os.mkdir(self._folder + '/' + self._repertory)           

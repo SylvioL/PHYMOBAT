@@ -20,10 +20,9 @@
 import numpy, math, sys
 import numpy as np # sort, ...
 from collections import * # defaultdict
-from sklearn.ensemble import RandomForestClassifier
 
 class Seath():
-    """
+    """    
     Get the optimal threshold and Bhattacharyya distance for a separability between two classes
     
     Source article : SEaTH–A new tool for automated feature extraction in the context of object-based image analysis S. Nussbaum et al.
@@ -61,25 +60,6 @@ class Seath():
         
         self.threshold = []
         self.J = []
-     
-    def rf_estimator(self, data, class_training):
-        """
-        """
-        
-        rf = RandomForestClassifier(n_estimators=500, criterion='gini', max_depth=None, \
-                                    min_samples_split=2, min_samples_leaf=1, max_features='auto', \
-                                    bootstrap=True, oob_score=True)
-        
-        rf = rf.fit(data, class_training)
-        
-        return rf
-    
-    def rf_predited(self, rf, data_classification):
-        """
-        """
-        predicted = rf.predict(data_classification)
-        
-        return predicted
         
     def separability_and_threshold(self, **kwargs):
         """

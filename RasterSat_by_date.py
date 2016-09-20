@@ -180,7 +180,7 @@ class RasterSat_by_date():
         :param img: Raster path
         :type img: str
 
-        :returns: matrix -- variable **data**, Pixel value matrix of a raster.
+        :returns: numpy.array -- variable **data**, Pixel value matrix of a raster.
                   
                   gdal pointer -- variable **_in_ds**, Raster information.
         """
@@ -296,7 +296,7 @@ class RasterSat_by_date():
         :param out_raster: Output image path
         :type out_raster: str
         :param data: Pixel value matrix. Matrix size equal to that of a raster.
-        :type data: matrix
+        :type data: numpy.array
         :param in_ds: Raster information
         :type in_ds: gdal pointer
         
@@ -361,7 +361,7 @@ class RasterSat_by_date():
         :param e: Index to know if the raster existed. If it didn't exist e = 0.
         :type e: int
         :param data: Pixel value matrix. Matrix size equal to that of a raster.
-        :type data: matrix
+        :type data: numpy.array
         """
         
         # The e index to verify if the layer existed already because of the 

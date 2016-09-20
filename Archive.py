@@ -167,7 +167,7 @@ class Archive():
         """
         Function to get area's coordinates of shapefile
 
-        :returns: str -- Area coordinates corner 
+        :returns: str -- **area_coord_corner** : Area coordinates corner
         
                     --> Left bottom on x, Left bottom on y, Right top on x, Right top on y
         :Example:
@@ -211,8 +211,8 @@ class Archive():
         LL_max = self.utm_to_latlng(31, extent_[1],  extent_[3], northernHemisphere=True)
                                             
         # AdressUrl = 'http://spirit.cnes.fr/resto/Landsat/?format=html&lang=fr&q=2013&box=' + str(LL_Min[0]) + ',' + str(LL_Min[1]) + ',' + str(LL_Max[0]) + ',' + str(LL_Max[1])
-        
-        return str(LL_min[0]) + ',' + str(LL_min[1]) + ',' + str(LL_max[0]) + ',' + str(LL_max[1])
+        area_coord_corner = str(LL_min[0]) + ',' + str(LL_min[1]) + ',' + str(LL_max[0]) + ',' + str(LL_max[1])
+        return area_coord_corner
     
     def listing(self):
         """

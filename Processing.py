@@ -26,7 +26,7 @@ try :
 except :
     from osgeo import ogr, gdal
 
-from Toolbox import *
+from Toolbox import Toolbox
 from Seath import Seath
 from Precision_moba import Precision_moba
 # Class group image
@@ -273,8 +273,14 @@ class Processing():
         # Clip archive images and modify Archive class to integrate clip image path
         for clip in self.check_download.list_img:
             clip_index = self.check_download.list_img.index(clip)
-            self.check_download.list_img[clip_index][3] = clip_raster(clip[3], self.path_area) # Multispectral images
-            self.check_download.list_img[clip_index][4] = clip_raster(clip[4], self.path_area) # Cloud images
+            
+            current_list = Toolbox()
+            current_list.imag = clip[3]
+            current_list.vect = self.path_area
+            self.check_download.list_img[clip_index][3] = current_list.clip_raster() # Multispectral images
+            
+            current_list.imag = clip[4]
+            self.check_download.list_img[clip_index][4] = current_list.clip_raster() # Cloud images
            
         # Images pre-processing
         spectral_out = []
@@ -292,7 +298,7 @@ class Processing():
         # Compute temporal stats on ndvi index [min, max, std, min-max]
         spectral_trans = np.transpose(np.array(spectral_out, dtype=object))
         stats_name = ['Min', 'Max', 'Std', 'MaxMin']
-        stats_ndvi, stats_cloud = calc_serie_stats(spectral_trans)
+        stats_ndvi, stats_cloud = current_list.calc_serie_stats(spectral_trans)
 
         # Create stats ndvi raster and stats cloud raster
         stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
@@ -319,7 +325,11 @@ class Processing():
  
         """
         
-        path_mnt = clip_raster(self.path_mnt, self.path_area)
+        current_path_mnt = Toolbox()
+        current_path_mnt.imag = self.path_mnt
+        current_path_mnt.vect = self.path_area
+        path_mnt = current_path_mnt.clip_raster()
+        
         study_slope = Slope(path_mnt)
         study_slope.extract_slope()# Call this function to compute slope raster
         self.path_mnt = study_slope.out_mnt
@@ -332,7 +342,11 @@ class Processing():
 
         # Create texture image
         # Clip orthography image 
-        path_ortho = clip_raster(self.path_ortho, self.path_area)
+        current_path_ortho = Toolbox()
+        current_path_ortho.imag = self.path_ortho
+        current_path_ortho.vect = self.path_area
+        path_ortho = current_path_ortho.clip_raster()
+        
         texture_irc = Vhrs(path_ortho, self.mp)
         self.out_ndvistats_folder_tab['sfs'] = texture_irc.out_sfs
         self.out_ndvistats_folder_tab['haralick'] = texture_irc.out_haralick
@@ -515,7 +529,8 @@ class Processing():
         Interface function to launch random forest classification with a input segmentation :func:`Segmentation.Segmentation`.
         
         This function use the sklearn module to build the best of decision tree to extract classes.
-        
+        The optimal threshold are stored by class **rf** variable in :func:`Processing.i_sample_rf`. Then it computes zonal statistics by polygons
+        for every images in multi-processing (if **mp** = 1).
         """ 
         
         # Multiprocessing
@@ -599,7 +614,7 @@ class Processing():
         """
         Interface function to launch decision tree classification with a input segmentation :func:`Segmentation.Segmentation`.
         
-        This function store optimal threshold by class **Segmentation.out_threshold**. Then compute zonal statistics by polygons
+        This function store optimal threshold by class **Segmentation.out_threshold**. Then it computes zonal statistics by polygons
         for every images in multi-processing (if **mp** = 1).
 
         """ 

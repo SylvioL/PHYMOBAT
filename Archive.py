@@ -294,7 +294,8 @@ class Archive():
         #=============================================================
         if os.path.exists('token.json'):
             os.remove('token.json')
-        get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(user_theia, password_theia)
+#         get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(user_theia, password_theia)
+        get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia-landsat.cnes.fr/services/authenticate/>token.json'%(user_theia, password_theia)
         os.system(get_token)
         
         with open('token.json') as data_file:    

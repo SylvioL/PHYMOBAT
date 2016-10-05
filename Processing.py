@@ -512,15 +512,15 @@ class Processing():
             
             # To convert the dictionnary in a list
             for key, value in sample_rd[sple].stats_dict.iteritems():
-                X_rf.append([-10000 if math.isnan(x) else x for x in value])
-                # To set the grassland class of the RPG and PIAO (same class)
+                X_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value])
+                # To set the grassland class of the RPG and PIAO (same class)            
                 if sple == 2:
-                    y_rf.append(1) 
+                    y_rf.append(1)
                 elif sple == 3:
                     y_rf.append(4)
                 else:
                     y_rf.append(sple)
-        
+                    
         # Build a forest of trees from the samples                 
         self.rf = self.rf.fit(X_rf, y_rf)
 
@@ -566,7 +566,7 @@ class Processing():
                 
         X_out_rf = []
         for key, value_seg in out_carto.stats_dict.items():
-            X_out_rf.append([-10000 if math.isnan(x) else x for x in value_seg])
+            X_out_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value_seg])
 
         predicted_rf = self.rf.predict(X_out_rf)
         

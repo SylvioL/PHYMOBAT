@@ -1121,7 +1121,7 @@ class PHYMOBAT(QMainWindow, Processing):
                 self.ui.comboBox_fieldname_4.setCurrentIndex(index_fieldname_4)
             
             # Classification mode
-            if c.find("Classification_mode").text == '1':
+            if c.find("Classification_method").text == '1':
                 self.ui.radioButton_rf.setChecked(True)
             else:
                 self.ui.radioButton_s.setChecked(True)

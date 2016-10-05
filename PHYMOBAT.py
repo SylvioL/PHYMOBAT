@@ -351,6 +351,9 @@ class PHYMOBAT(QMainWindow, Processing):
         Set the output classification shapefile path by line edit.
         """
         outfilename = QFileDialog.getSaveFileName(self, "FB file", os.getcwd(), '*.shp')
+        # if the user has forgotten to put .shp at the end of the output shapefile
+        if outfilename[-4:] != '.shp':
+            outfilename = outfilename + '.shp'
         self.ui.lineEdit_output.setText(outfilename)
         
     def enter_sample_name(self):
@@ -1131,6 +1134,9 @@ class PHYMOBAT(QMainWindow, Processing):
         """
         
         out_backup = QFileDialog.getSaveFileName(self, "Save backup", os.getcwd(), '*.xml')
+        # if the user has forgotten to put .shp at the end of the output xml
+        if out_backup[-4:] != '.xml':
+            out_backup = out_backup + '.xml'
         
         root = ET.Element("Data_filled")
         

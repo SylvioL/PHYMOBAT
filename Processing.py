@@ -422,8 +422,12 @@ class Processing():
                
         # Extract mono rpg crops
         mono_sample = Rpg(path_rpg, self.path_area)
-        mono_sample.mono_rpg()
-        mono_sample.create_new_rpg_files()
+        # If exists, do not create a mono rpg file
+        if os.path.basename(path_rpg)[:5]!='MONO_':
+            mono_sample.mono_rpg()
+            mono_sample.create_new_rpg_files()
+        else:
+            print('MONO RPG file exists already !!!')
         print('End of RPG processing')
         
         return mono_sample.vector_used

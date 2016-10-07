@@ -497,7 +497,22 @@ class Processing():
         
         X_rf = []
         y_rf = []
-        sample_rd = {}
+        sample_rd = {}            
+        # Tricks to add all textural indexes
+        rm_index = 1
+        self.raster_path.remove(self.raster_path[rm_index]) # Remove SFS layer
+        self.raster_path.remove(self.raster_path[rm_index]) # Remove Haralick layer
+        self.list_band_outraster.remove(self.list_band_outraster[rm_index]) # Remove band of the layer
+        self.list_band_outraster.remove(self.list_band_outraster[rm_index]) # Remove band of the layer
+        # Add all layers in the simple index haralick
+        for add_layer in range(8):
+            self.raster_path.insert(add_layer+1, self.out_ndvistats_folder_tab['haralick'])
+            self.list_band_outraster.insert(add_layer+1, add_layer+1)
+        # Add all layers in the SFS index
+        for add_layer in range(6):
+            self.raster_path.insert(add_layer+1, self.out_ndvistats_folder_tab['sfs'])
+            self.list_band_outraster.insert(add_layer+1, add_layer+1)
+            
         # Extract value mean from polygons
         for sple in range(len(self.sample_name) * 2):
             kwargs = {}
@@ -508,7 +523,10 @@ class Processing():
             
             # Add the validation shapefile
             self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-            
+         
+            print self.raster_path
+            print self.list_band_outraster
+            print range(len(self.raster_path))
             for lbo in range(len(self.raster_path)):
                 kwargs['rank'] = lbo
                 kwargs['nb_img'] = len(self.raster_path)
@@ -516,6 +534,7 @@ class Processing():
             
             # To convert the dictionnary in a list
             for key, value in sample_rd[sple].stats_dict.iteritems():
+                print value
                 X_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value])
                 # To set the grassland class of the RPG and PIAO (same class)            
                 if sple == 2:
@@ -524,7 +543,8 @@ class Processing():
                     y_rf.append(4)
                 else:
                     y_rf.append(sple)
-                    
+        
+        print y_rf, X_rf         
         # Build a forest of trees from the samples                 
         self.rf = self.rf.fit(X_rf, y_rf)
 

@@ -87,7 +87,7 @@ class Toolbox():
         """ 
         
         # Compute stats on these indexes
-        ind = ['np.min(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', \
+        ind = ['np.min(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', 'np.std(tab_ndvi_masked, axis=2)', \
                'np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)'] # [Min, Max, Std, Max-Min]
                
         # For the cloud map 
@@ -101,9 +101,9 @@ class Toolbox():
         # In the input table the ndvi floor is the 7th
         stack_ndvi = np.dstack(table[7]) # Like cloud table, stack ndvi table
     #     mask_ndvi = np.ma.masked_equal(stack_ndvi, -10000, copy=True) # Mask values -10000
-        mask_cloud = np.ma.masked_where((stack_ndvi == -10000) | (tab_cloud != 0), tab_cloud)# Mask values -10000 and > 0(Not cloud)
+        mask_cloud = np.ma.masked_where((stack_ndvi == -10000) | (tab_cloud != 0), tab_cloud) # Mask values -10000 and > 0(Not cloud)
     #    mask_cloud = (tab_cloud != 0) | (stack_ndvi == -10000)
-        tab_ndvi_masked = np.ma.array(stack_ndvi, mask=mask_cloud.mask)#mask_cloud.mask) # Ndvi table with clear values 
+        tab_ndvi_masked = np.ma.array(stack_ndvi, mask=mask_cloud.mask) # mask_cloud.mask) # Ndvi table with clear values 
                  
         # Stats on the indexes defined above
         account_stats = []

@@ -19,6 +19,7 @@
 
 import os, sys, subprocess, glob
 import numpy as np
+from datetime import date
 
 class Toolbox():
     """
@@ -89,7 +90,7 @@ class Toolbox():
         # Compute stats on these indexes
         ind = ['np.min(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', 'np.std(tab_ndvi_masked, axis=2)', \
                'np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)'] # [Min, Max, Std, Max-Min]
-               
+        print table       
         # For the cloud map 
         # In the input table the cloud floor is the 5th
         tab_cloud = np.dstack(table[5]) # Stack cloud table (dimension : 12*X*Y to X*Y*12)
@@ -104,12 +105,25 @@ class Toolbox():
         mask_cloud = np.ma.masked_where((stack_ndvi == -10000) | (tab_cloud != 0), tab_cloud) # Mask values -10000 and > 0(Not cloud)
     #    mask_cloud = (tab_cloud != 0) | (stack_ndvi == -10000)
         tab_ndvi_masked = np.ma.array(stack_ndvi, mask=mask_cloud.mask) # mask_cloud.mask) # Ndvi table with clear values 
-                 
+        
         # Stats on the indexes defined above
         account_stats = []
         for i in ind:
             i_stats = eval(i) # Compute stats
             i_stats.fill_value = -10000 # Substitute default fill value by -10000 
             account_stats.append(i_stats.filled()) # Add stats table with true fill value
-    
+            # To extract index of the minimum ndvi to find the date
+            if ind.index(i) == 0:
+                i_date = eval(i.replace('np.min','np.argmin'))
+                print i_date
+        
+        # To create a matrix with the date of pxl with a ndvi min 
+        tab_date = np.transpose(np.array(table[:3], dtype=object))
+        # Loop on the temporal sequency
+        for d in range(len(tab_date)):
+            mask_data = np.ma.masked_values(i_date, d)
+            i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day since year =1 day = 1 and month = 1
+        
+        # TODO : Extract the raster of date
+        
         return account_stats, account_cloud

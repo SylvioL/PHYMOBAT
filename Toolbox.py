@@ -89,8 +89,7 @@ class Toolbox():
         
         # Compute stats on these indexes
         ind = ['np.min(tab_ndvi_masked, axis=2)', 'np.max(tab_ndvi_masked, axis=2)', 'np.std(tab_ndvi_masked, axis=2)', \
-               'np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)'] # [Min, Max, Std, Max-Min]
-        print table       
+               'np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)'] # [Min, Max, Std, Max-Min]     
         # For the cloud map 
         # In the input table the cloud floor is the 5th
         tab_cloud = np.dstack(table[5]) # Stack cloud table (dimension : 12*X*Y to X*Y*12)
@@ -125,5 +124,5 @@ class Toolbox():
             i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day since year =1 day = 1 and month = 1
         
         # TODO : Extract the raster of date
-        
+         
         return account_stats, account_cloud

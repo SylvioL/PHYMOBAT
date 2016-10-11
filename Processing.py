@@ -297,10 +297,8 @@ class Processing():
 
         # Compute temporal stats on ndvi index [min, max, std, min-max]
         spectral_trans = np.transpose(np.array(spectral_out, dtype=object))
-        stats_name = ['Min', 'Max', 'Std', 'MaxMin']
+        stats_name = ['Min', 'Date', 'Max', 'Std', 'MaxMin']
         stats_ndvi, stats_cloud = current_list.calc_serie_stats(spectral_trans)
-        
-        # TODO : Extract the raster of date
         
         # Create stats ndvi raster and stats cloud raster
         stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])

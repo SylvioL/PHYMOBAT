@@ -114,15 +114,15 @@ class Toolbox():
             # To extract index of the minimum ndvi to find the date
             if ind.index(i) == 0:
                 i_date = eval(i.replace('np.min','np.argmin'))
-                print i_date
         
-        # To create a matrix with the date of pxl with a ndvi min 
-        tab_date = np.transpose(np.array(table[:3], dtype=object))
-        # Loop on the temporal sequency
-        for d in range(len(tab_date)):
-            mask_data = np.ma.masked_values(i_date, d)
-            i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day since year =1 day = 1 and month = 1
-        
+                # To create a matrix with the date of pxl with a ndvi min 
+                tab_date = np.transpose(np.array(table[:3], dtype=object))
+                # Loop on the temporal sequency
+                for d in range(len(tab_date)):
+                    mask_data = np.ma.masked_values(i_date, d)
+                    i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day since year =1 day = 1 and month = 1
+                    
+                account_stats.append(i_date) # Add the date table
         # TODO : Extract the raster of date
-         
+        
         return account_stats, account_cloud

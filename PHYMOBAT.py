@@ -322,35 +322,35 @@ class PHYMOBAT(QMainWindow, Processing):
         """
         Open a input browser box to select the VHRS image path by line edit.
         """
-        orthofilename = QFileDialog.getOpenFileName(self, "THRS image", os.getcwd(), '*.TIF *.tif')
+        orthofilename = QFileDialog.getOpenFileName(self, "THRS image", self.ui.lineEdit_principal_folder.text(), '*.TIF *.tif')
         self.ui.lineEdit_VHRS.setText(str(orthofilename).replace('[','').replace(']','').replace(' ',''))   
     
     def f_path_mnt(self):
         """
         Open a input browser box to select the MNT image path by line edit.
         """
-        mntfilename = QFileDialog.getOpenFileName(self, "MNT image", os.getcwd(), '*.TIF *.tif')
+        mntfilename = QFileDialog.getOpenFileName(self, "MNT image", self.ui.lineEdit_principal_folder.text(), '*.TIF *.tif')
         self.ui.lineEdit_MNT.setText(str(mntfilename).replace('[','').replace(']','').replace(' ',''))  
         
     def f_path_area(self):
         """
         Open a input browser box to select the study area shapefile path by line edit.
         """        
-        areafilename = QFileDialog.getOpenFileName(self, "Area shapefile", os.getcwd(), '*.shp')
+        areafilename = QFileDialog.getOpenFileName(self, "Area shapefile", self.ui.lineEdit_principal_folder.text(), '*.shp')
         self.ui.lineEdit_area_path.setText(str(areafilename).replace('[','').replace(']','').replace(' ',''))
         
     def f_path_segm(self):
         """
         Open a input browser box to select segmentation shapefile path path by line edit.
         """
-        segmfilename = QFileDialog.getOpenFileName(self, "Segmentation shapefile", os.getcwd(), '*.shp')
+        segmfilename = QFileDialog.getOpenFileName(self, "Segmentation shapefile", self.ui.lineEdit_principal_folder.text(), '*.shp')
         self.ui.lineEdit_segmentation.setText(str(segmfilename).replace('[','').replace(']','').replace(' ',''))
     
     def f_output_name_moba(self):
         """
         Set the output classification shapefile path by line edit.
         """
-        outfilename = QFileDialog.getSaveFileName(self, "FB file", os.getcwd(), '*.shp')
+        outfilename = QFileDialog.getSaveFileName(self, "FB file", self.ui.lineEdit_principal_folder.text(), '*.shp')
         # if the user has forgotten to put .shp at the end of the output shapefile
         if outfilename[-4:] != '.shp':
             outfilename = outfilename + '.shp'
@@ -361,7 +361,7 @@ class PHYMOBAT(QMainWindow, Processing):
         Open a input browser box to select the sample shapefile path by line edit. With :func:`add_sample` conditions for the expert mode.
         For the simply mode, this function is used for the RPG shapefile.
         """
-        samplefilename = QFileDialog.getOpenFileName(self, "Sample shapefile", os.getcwd(), '*.shp')
+        samplefilename = QFileDialog.getOpenFileName(self, "Sample shapefile", self.ui.lineEdit_principal_folder.text(), '*.shp')
         self.ui.lineEdit_sample_path.setText(str(samplefilename).replace('[','').replace(']','').replace(' ',''))
     
     def enter_sample_name_hl(self):
@@ -369,21 +369,21 @@ class PHYMOBAT(QMainWindow, Processing):
         Open a input browser box to select the grass and wooden sample shapefile path by line edit. With :func:`add_sample` conditions 
         for the simply mode.
         """
-        samplefilename_hl = QFileDialog.getOpenFileName(self, "Grass/Wooden sample shapefile", os.getcwd(), '*.shp')
+        samplefilename_hl = QFileDialog.getOpenFileName(self, "Grass/Wooden sample shapefile", self.ui.lineEdit_principal_folder.text(), '*.shp')
         self.ui.lineEdit_sample_path_2.setText(str(samplefilename_hl).replace('[','').replace(']','').replace(' ',''))
         
     def enter_sample_name_ll(self):
         """
         Open a input browser box to select the wooden sample shapefile path by line edit. With :func:`add_sample` conditions for the simply mode.
         """
-        samplefilename_ll = QFileDialog.getOpenFileName(self, "Wooden sample shapefile", os.getcwd(), '*.shp')
+        samplefilename_ll = QFileDialog.getOpenFileName(self, "Wooden sample shapefile", self.ui.lineEdit_principal_folder.text(), '*.shp')
         self.ui.lineEdit_sample_path_3.setText(str(samplefilename_ll).replace('[','').replace(']','').replace(' ',''))
         
     def img_sample_name(self):
         """
         Open a input browser box to select the image for samples path by line edit. With :func:`add_sample` conditions.
         """
-        imgsamplefilename = QFileDialog.getOpenFileName(self, "Sample image", os.getcwd(), '*.TIF')
+        imgsamplefilename = QFileDialog.getOpenFileName(self, "Sample image", self.ui.lineEdit_principal_folder.text(), '*.TIF')
         self.ui.lineEdit_img_sample.setText(str(imgsamplefilename).replace('[','').replace(']','').replace(' ',''))
         
     def add_sample(self):

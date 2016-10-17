@@ -234,7 +234,7 @@ class Archive():
 #             self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
             # Temporary link
             self.url = r'https://theia-landsat.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
-            
+            print self.url
             if not os.path.exists(self._folder + '/' + self._repertory):
                 os.mkdir(self._folder + '/' + self._repertory)           
             
@@ -313,7 +313,8 @@ class Archive():
                 print str(round(100*float(d)/len(self.list_archive),2)) + "%" # Print loading bar
                 print os.path.split(str(self.list_archive[d][1]))[1]
                 
-                get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(self.list_archive[d][1], token, self.list_archive[d][2])
+#                 get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(self.list_archive[d][1], token, self.list_archive[d][2])
+                get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia-landsat.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(self.list_archive[d][1], token, self.list_archive[d][2])
                 print get_product
                 os.system(get_product)
                 

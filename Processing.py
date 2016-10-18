@@ -568,7 +568,7 @@ class Processing():
 
         # Compute zonal stats with multi processing
         exist_stats = 1 # By default, the stats file exists already
-        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.lg' # Stats backup file
+        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.stats' # Stats backup file
         if not os.path.exists(file_stats):
             exist_stats = 0 # The sats file doesn't exist
             # Open a stats backup to avoid computing again (Gain of time)
@@ -706,7 +706,7 @@ class Processing():
 
         # Compute zonal stats with multi processing
         exist_stats = 1 # By default, the stats file exists already
-        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.lg' # Stats backup file
+        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.stats' # Stats backup file
         if not os.path.exists(file_stats):
             exist_stats = 0 # The sats file doesn't exist
             # Open a stats backup to avoid computing again (Gain of time)

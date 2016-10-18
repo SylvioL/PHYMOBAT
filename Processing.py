@@ -398,7 +398,7 @@ class Processing():
             self.raster_path.append(self.path_mnt)
             self.list_band_outraster.append(1)
             
-        self.raster_path.append(self.out_ndvistats_folder_tab[1])
+        self.raster_path.append(self.out_ndvistats_folder_tab[2])
         # example raster path tab :
         #                [path_folder_dpt + '/' + folder_processing + '/' + classif_year + '/Min_2014.TIF',\
         #                os.path.dirname(path_ortho) + '/Clip_buffer_surface_dep_18_IRCOrtho65_2m_sfs.TIF',\
@@ -567,26 +567,51 @@ class Processing():
             multi_process_var.append([self.raster_path[ind_th], self.list_band_outraster[ind_th]])
 
         # Compute zonal stats with multi processing
-        out_carto.stats_dict = mgr.defaultdict(list)
+        exist_stats = 1 # By default, the stats file exists already
+        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.lg' # Stats backup file
+        if not os.path.exists(file_stats):
+            exist_stats = 0 # The sats file doesn't exist
+            # Open a stats backup to avoid computing again (Gain of time)
+            f_out = open(file_stats, "wb")
+        
         p = []
         kwargs = {}
-        for i in range(len(multi_process_var)):
-            kwargs['rank'] = i
-            kwargs['nb_img'] = len(multi_process_var)
-            p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
-            p[i].start()
-            
-            if self.mp == 0:
-                p[i].join()
-        
-        if self.mp == 1:       
+        X_out_rf = [] # Variable list to compute decision tree with random forest method
+        if exist_stats == 0:
+            out_carto.stats_dict = mgr.defaultdict(list)
             for i in range(len(multi_process_var)):
-                p[i].join()
+                kwargs['rank'] = i
+                kwargs['nb_img'] = len(multi_process_var)
+                p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
+                p[i].start()
                 
-        X_out_rf = []
-        for key, value_seg in out_carto.stats_dict.items():
-            X_out_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value_seg])
-
+                if self.mp == 0:
+                    p[i].join()
+            
+            if self.mp == 1:       
+                for i in range(len(multi_process_var)):
+                    p[i].join()
+                    
+            for key, value_seg in out_carto.stats_dict.items():
+                true_value = [-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value_seg]
+                X_out_rf.append(true_value)
+                
+                # Print rasters stats value in the text file .lg
+                f_out.write(str(true_value) + '\n')
+            
+            # Close the output file
+            f_out.close()
+            
+        else:
+            # If the stats file exists already, open this file and append in the stats_dict variable
+            out_carto.stats_dict = defaultdict(list)
+            with open(file_stats, "r") as f_in:
+                index_in_stats=-1
+                for x_in in f_in.readlines():
+                    index_in_stats = index_in_stats + 1
+                    out_carto.stats_dict[index_in_stats] = eval(x_in.strip('\n'))
+                    X_out_rf.append(eval(x_in.strip('\n')))
+        
         predicted_rf = self.rf.predict(X_out_rf)
         
         # For the higher than level 1
@@ -680,22 +705,50 @@ class Processing():
             multi_process_var.append([self.raster_path[ind_th+1], self.list_band_outraster[ind_th+1]])
 
         # Compute zonal stats with multi processing
-        out_carto.stats_dict = mgr.defaultdict(list)
+        exist_stats = 1 # By default, the stats file exists already
+        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.lg' # Stats backup file
+        if not os.path.exists(file_stats):
+            exist_stats = 0 # The sats file doesn't exist
+            # Open a stats backup to avoid computing again (Gain of time)
+            f_out = open(file_stats, "wb")
+            
         p = []
         kwargs = {}
-        for i in range(len(multi_process_var)):
-            kwargs['rank'] = i
-            kwargs['nb_img'] = len(multi_process_var)
-            p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
-            p[i].start()
-            
-            if self.mp == 0:
-                p[i].join()
-        
-        if self.mp == 1:       
+        X_out_rf = [] # Variable list to compute decision tree with random forest method
+        if exist_stats == 0:
+            out_carto.stats_dict = mgr.defaultdict(list)
             for i in range(len(multi_process_var)):
-                p[i].join()
-
+                kwargs['rank'] = i
+                kwargs['nb_img'] = len(multi_process_var)
+                p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
+                p[i].start()
+                
+                if self.mp == 0:
+                    p[i].join()
+            
+            if self.mp == 1:       
+                for i in range(len(multi_process_var)):
+                    p[i].join()
+                    
+            for key, value_seg in out_carto.stats_dict.items():
+                
+                true_value = [-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value_seg]
+                # Print rasters stats value in the text file .lg
+                f_out.write(str(true_value) + '\n')
+            
+            # Close the output file
+            f_out.close()
+            
+        else:
+            # If the stats file exists already, open this file and append in the stats_dict variable
+            out_carto.stats_dict = defaultdict(list)
+            with open(file_stats, "r") as f_in:
+                index_in_stats=-1
+                for x_in in f_in.readlines():
+                    index_in_stats = index_in_stats + 1
+                    out_carto.stats_dict[index_in_stats] = eval(x_in.strip('\n'))
+                    X_out_rf.append(eval(x_in.strip('\n')))
+        
         # For the higher than level 1 
         if len(self.sample_name) > 2:
             # Compute the biomass and density distribution

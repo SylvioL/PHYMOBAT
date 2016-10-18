@@ -338,6 +338,7 @@ class Archive():
             
             if img_in_glob == []:
                 print "There isn't tgzfile in the folder"
+                sys.exit()
             else:
                 # Create a folder "Unpack"
                 folder_unpack = self._folder + '/' + self._repertory +'/'+ str(annee) + '/Unpack'

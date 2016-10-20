@@ -120,7 +120,7 @@ class Toolbox():
                 # Loop on the temporal sequency
                 for d in range(len(tab_date)):
                     mask_data = np.ma.masked_values(i_date, d)
-                    i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day since year =1 day = 1 and month = 1
+                    i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day for year =1 day = 1 and month = 1
                     
                 account_stats.append(i_date) # Add the date table
         

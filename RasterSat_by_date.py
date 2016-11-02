@@ -258,7 +258,7 @@ class RasterSat_by_date():
         # Computer cloud's percentage with dist (sum of cloud) by sum of the image's extent
         try :
             nb0 = float(dist)/(np.sum(mask_spec))
-            print('For ' + os.path.split(str(img_spec))[1][:-4] + ', cloud cover ' + str(100 - round(nb0*100, 2)) + "%")
+            print('For ' + os.path.split(str(img_spec))[1][:-4] + ', cloudy cover ' + str(100 - round(nb0*100, 2)) + "%")
         except ZeroDivisionError:
             nb0 = 0
             print("The raster isn\'t in the area !")

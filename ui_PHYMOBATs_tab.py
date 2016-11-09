@@ -444,5 +444,5 @@ class Ui_PHYMOBAT(object):
         self.actionAide_de_PHYMOBAT.setText(_translate("PHYMOBAT", "Aide de PHYMOBAT", None))
         self.actionA_propos_de_PHYMOBAT.setText(_translate("PHYMOBAT", "A propos de PHYMOBAT", None))
         self.actionMode_Simplifi.setText(_translate("PHYMOBAT", "Mode Simplifié", None))
-        self.actionMode_expert.setText(_translate("PHYMOBAT", "Mode expert", None))
+        self.actionMode_expert.setText(_translate("PHYMOBAT", "Mode Expert", None))
 

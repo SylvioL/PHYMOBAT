@@ -205,10 +205,6 @@ class Segmentation(Vector):
                 
                 pourc_inter = (area_intersect / float(area_segm)) * 100
                 if pourc_inter >= 85:
-#                     print feature1.GetField("ID_global")
-#                     print area_intersect
-#                     print area_segm
-#                     print "Plus de 90% de recouvrement : " + str(pourc_inter)
                     recouv_crops_RPG = maj_class
                     
             out_feature.SetField('RPG_CODE', recouv_crops_RPG)
@@ -340,8 +336,8 @@ class Segmentation(Vector):
         t_distri_den = list(map(list, zip(*distri_den)))
         
         # Biomass threshold
-        stdmore =  np.mean(t_distri_bio[2]) + np.std(t_distri_bio[2])
-        stdless =  np.mean(t_distri_bio[2]) - np.std(t_distri_bio[2])
+        stdmore =  (np.mean(t_distri_bio[2]) + np.std(t_distri_bio[2]))/np.max(t_distri_bio[2])
+        stdless =  (np.mean(t_distri_bio[2]) - np.std(t_distri_bio[2]))/np.max(t_distri_bio[2])
         self.out_threshold.append('>'+str(stdmore))
         self.out_threshold.append('')
         self.out_threshold.append('<'+str(stdless))
@@ -368,6 +364,24 @@ class Segmentation(Vector):
             try:
                 if self.class_tab_final[ind_stats][1] == select_class:
                     self.class_tab_final[ind_stats].insert(len(self.class_tab_final[ind_stats])-2,eval(form))
+                    # To add phytomasse
+                    print ind_stats
+                    print self.class_tab_final[ind_stats]
+                    print self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1]
+                    if self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] == '' and \
+                        self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-2] != '':
+                        # dict[][A.index(real_pourcent)-1] == '' and dict[][A.index(real_pourcent)-2] != ''
+                        # Print phytomasse class in the tab because of self.in_class_name in the Processing class
+                        if not eval(form + self.out_threshold[0]) and not eval(form + self.out_threshold[2]):
+                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[9]
+                            self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 9
+                        elif eval(form + self.out_threshold[0]):
+                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[8]
+                            self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 8
+                        elif eval(form + self.out_threshold[2]):
+                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[10]
+                            self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 10
+                        
             except IndexError:
                 pass
                 

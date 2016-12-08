@@ -650,8 +650,15 @@ class Processing():
             # Compute biomass and density scale
             out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
             out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
-          
+        
+        # Rasterize RPG shapefile to complete the final shapefile
+        opt = {}
+        opt['Remove'] = 1
+        rpg_tif = Vector(self.sample_name[0], self.path_area, **opt)
+        out_carto.mono_rpg_tif = rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP')
+        
         # Final cartography
+#         out_carto.mono_rpg_tif = self.sample_name[0][:-4] + '.TIF'
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
 
     def i_classifier_s(self): 
@@ -763,8 +770,15 @@ class Processing():
             # Compute biomass and density scale
             out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
             out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
+        
+        # Rasterize RPG shapefile to complete the final shapefile
+        opt = {}
+        opt['Remove'] = 1
+        rpg_tif = Vector(self.sample_name[0], self.path_area, **opt)
+        rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP')
           
         # Final cartography
+        out_carto.mono_rpg_tif = self.sample_name[0][:-4] + '.TIF'
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
        
     def i_validate(self):

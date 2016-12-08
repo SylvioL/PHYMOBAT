@@ -640,17 +640,18 @@ class Processing():
             # Set the class name because of predicted output formatted         
             out_carto.class_tab_final[i_polyg] = [self.in_class_name[f] for f in class_final] + \
                                                 [predicted_rf[i_polyg]] + [predicted_rf[i_polyg]]
+            
             # For the output line with one level, add a phantom level
             # TODO : Replace constant by a variable in the condition 'while'
             while len(out_carto.class_tab_final[i_polyg]) < 5:
                 out_carto.class_tab_final[i_polyg].insert(len(out_carto.class_tab_final[i_polyg])-2,'')
         
         # If there is more one fieldnames line edit fulled in classification tab
-        if len(self.sample_name) > 2:     
+        if len(self.sample_name) > 2:
             # Compute biomass and density scale
             out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
             out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
-        
+            
         # Rasterize RPG shapefile to complete the final shapefile
         opt = {}
         opt['Remove'] = 1

@@ -21,9 +21,9 @@ import sys, os, math
 import numpy as np
 from Vector import Vector
 try :
-    import ogr
+    import ogr, gdal
 except :
-    from osgeo import ogr
+    from osgeo import ogr, gdal
 from collections import *
 
 class Segmentation(Vector):
@@ -65,6 +65,7 @@ class Segmentation(Vector):
         """
         Vector.__init__(self, used, cut)
         
+        self.mono_rpg_tif = ''
         self.output_file =  'Final_classification.shp'
         
         self.out_class_name = []
@@ -88,15 +89,16 @@ class Segmentation(Vector):
         :type out_fieldtype: list of str
         """
         
+        shp_ogr_ds = self.data_source
         shp_ogr = self.data_source.GetLayer()
-        
+                        
         # Projection
         # Import input shapefile projection
         srsObj = shp_ogr.GetSpatialRef()
         # Conversion to syntax ESRI
         srsObj.MorphToESRI()
-            
-        ## Remove the output shapefile if it exists
+        
+        ## Remove the output final shapefile if it exists
         self.vector_used = self.output_file
         if os.path.exists(self.vector_used):
             self.data_source.GetDriver().DeleteDataSource(self.vector_used)
@@ -110,9 +112,15 @@ class Segmentation(Vector):
         out_layer = out_ds.CreateLayer(str(self.vector_used), srsObj, geom_type=ogr.wkbMultiPolygon)
         
         # Add new fields
+        out_fieldnames.insert(2,'RPG_CODE')
+        out_fieldtype.insert(2,ogr.OFTInteger)
         for i in range(0, len(out_fieldnames)):
             fieldDefn = ogr.FieldDefn(str(out_fieldnames[i]), out_fieldtype[i])
             out_layer.CreateField(fieldDefn)
+#         # Add the RPG column
+#         fieldDefn = ogr.FieldDefn('RPG_CODE', ogr.OFTInteger)
+#         out_layer.CreateField(fieldDefn)
+#         out_fieldnames.append('RPG_CODE')
         # Add 2 fields to convert class string in code to confusion matrix
         fieldDefn = ogr.FieldDefn('FBPHY_CODE', ogr.OFTInteger)
         out_layer.CreateField(fieldDefn)
@@ -126,6 +134,23 @@ class Segmentation(Vector):
         
         in_feature = shp_ogr.SetNextByIndex(0) # Polygons initialisation
         in_feature = shp_ogr.GetNextFeature()
+        
+        # Extract RPG tif data and information
+        self.raster_ds = gdal.Open(str(self.mono_rpg_tif), gdal.GA_ReadOnly)
+        rows = self.raster_ds.RasterYSize # Rows number
+        cols = self.raster_ds.RasterXSize # Columns number
+        geotransform = self.raster_ds.GetGeoTransform()
+        prj_wkt = self.raster_ds.GetProjectionRef()
+        # Table's declaration
+        data_rpg = []
+        canal_rpg = self.raster_ds.GetRasterBand(1) # Select a band
+        data_rpg = canal_rpg.ReadAsArray(0, 0, cols, rows).astype(np.int32)
+        # Create a fictif shapefile
+        out_rast = shp_ogr_ds.GetDriver().CreateDataSource(self.output_file[:-4] + '_.shp')
+        out_fictif = out_rast.CreateLayer(str(self.output_file[:-4] + '_.shp'), srsObj, geom_type=ogr.wkbMultiPolygon)
+        fieldDefn = ogr.FieldDefn('ID', ogr.OFTInteger)
+        out_fictif.CreateField(fieldDefn)
+        
         # Loop on input polygons
         while in_feature:
             
@@ -140,31 +165,79 @@ class Segmentation(Vector):
             out_feature.SetField(out_fieldnames[0], in_feature.GetField(self.field_names[2]))
             # Set the area
             out_feature.SetField(out_fieldnames[1], geom.GetArea()/10000)
+            
+            # Set the RPG column
+            # Create a fictif polygon in the shapefile
+            feature_fictif = ogr.Feature(out_fictif.GetLayerDefn())
+            feature_fictif.SetGeometry(geom)
+            feature_fictif.SetField("ID",1)
+            out_fictif.CreateFeature(feature_fictif)
+            
+            # Create a fictif raster from a segementation polygon
+            out_raster_ds = gdal.GetDriverByName('GTiff').Create(self.mono_rpg_tif[:-4] + '_.TIF', cols, rows, 1, gdal.GDT_Int32)
+            out_raster_ds.SetGeoTransform(geotransform)
+            out_raster_ds.SetProjection(prj_wkt)
+            # Virtual rasterize the vector 
+            pt_rast = gdal.RasterizeLayer(out_raster_ds, [1], out_fictif, options=["ATTRIBUTE=ID"])
+            data_polygon = out_raster_ds.ReadAsArray()
+            
+            # Remove the feature after useful
+            out_fictif.DeleteFeature(feature_fictif.GetFID())
+            feature_fictif.Destroy()
+            
+            # Mask data value with data polygon
+            poly_pxl = np.ma.masked_where(data_polygon == 0, data_rpg)
+            poly_pxl.fill_value = 0
+            poly_pxl.filled()
+            poly_on_line = np.hstack(poly_pxl.filled())
+            # Search majority and count the number of majority class
+            counts = np.bincount(poly_on_line)
+            
+            recouv_crops_RPG = 0
+            # To avoid zero's values
+            if len(counts) > 1:   
+                counts[0] = 0 # It need to keep zero value in the tab then it necessary to replace by 0 in count
+                maj_class = np.argmax(counts)
+                nbpxl_maj = counts[maj_class]
+                
+                area_intersect = (nbpxl_maj * geotransform[1] * geotransform[1]) / float(10000)
+                area_segm = geom.GetArea() / float(10000)
+                
+                pourc_inter = (area_intersect / float(area_segm)) * 100
+                if pourc_inter >= 85:
+#                     print feature1.GetField("ID_global")
+#                     print area_intersect
+#                     print area_segm
+#                     print "Plus de 90% de recouvrement : " + str(pourc_inter)
+                    recouv_crops_RPG = maj_class
+                    
+            out_feature.SetField('RPG_CODE', recouv_crops_RPG)
+            
             # Set the others polygons fields with the decision tree dictionnary
-            for i in range(2, len(out_fieldnames)):
+            for i in range(3, len(out_fieldnames)):
                 # If list stopped it on the second level, complete by empty case
-                if len(self.class_tab_final[in_feature.GetFID()]) < len(out_fieldnames)-2 and \
+                if len(self.class_tab_final[in_feature.GetFID()]) < len(out_fieldnames)-3 and \
                                                     self.class_tab_final[in_feature.GetFID()] != []:
-                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-2,'') # To 3rd level
-                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-2,0) # To degree
-                 
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-3,'') # To 3rd level
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-3,0) # To degree
+                    
                 try:
                     # To the confusion matrix, replace level ++ by level --
                     if i == len(out_fieldnames)-1:
-                        if self.class_tab_final[in_feature.GetFID()][i-2] == 6:
+                        if self.class_tab_final[in_feature.GetFID()][i-3] == 6:
                             # Crops to artificial vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-2] = 0
-                        if self.class_tab_final[in_feature.GetFID()][i-2] == 2:
+                            self.class_tab_final[in_feature.GetFID()][i-3] = 0
+                        if self.class_tab_final[in_feature.GetFID()][i-3] == 2:
                             # Grassland to natural vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-2] = 1
-                        if self.class_tab_final[in_feature.GetFID()][i-2] > 7:
+                            self.class_tab_final[in_feature.GetFID()][i-3] = 1
+                        if self.class_tab_final[in_feature.GetFID()][i-3] > 7:
                             # Phytomass to natural vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-2] = 1
+                            self.class_tab_final[in_feature.GetFID()][i-3] = 1
                             
-                    out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-2])
+                    out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-3])
                 except:
 #                     pass
-                    for i in range(2, len(out_fieldnames)-2):
+                    for i in range(3, len(out_fieldnames)-3):
                         out_feature.SetField(str(out_fieldnames[i]), 'Undefined')
                     out_feature.SetField('FBPHY_CODE', 255)
                     out_feature.SetField('FBPHY_SUB', 255)

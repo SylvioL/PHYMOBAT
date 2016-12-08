@@ -74,7 +74,7 @@ class Toolbox():
                     os.remove(rem)
                     
         return outclip
-    
+        
     def calc_serie_stats(self, table):
         """
         Function to compute stats on temporal cloud and ndvi spectral table
@@ -114,7 +114,7 @@ class Toolbox():
             # To extract index of the minimum ndvi to find the date
             if ind.index(i) == 0:
                 i_date = eval(i.replace('np.min','np.argmin'))
-        
+                
                 # To create a matrix with the date of pxl with a ndvi min 
                 tab_date = np.transpose(np.array(table[:3], dtype=object))
                 # Loop on the temporal sequency
@@ -123,5 +123,5 @@ class Toolbox():
                     i_date = mask_data.filled(date(int(tab_date[d][0]), int(tab_date[d][1]), int(tab_date[d][2])).toordinal()) # Date = day for year =1 day = 1 and month = 1
                     
                 account_stats.append(i_date) # Add the date table
-        
+                
         return account_stats, account_cloud

@@ -167,7 +167,12 @@ class Vector():
             os.remove(valid_raster)
             
         # Create the empty raster with the same properties
-        info_out = example_raster.create_raster(valid_raster, raster_info[0], raster_info[1])
+        # Condition for the rasters with several bands
+        if raster_info[1].RasterCount > 1:
+            data_raster = raster_info[0][0]
+        else:
+            data_raster = raster_info[0]
+        info_out = example_raster.create_raster(valid_raster, data_raster, raster_info[1])
         self.raster_ds = example_raster.out_ds
         
         # Virtual rasterize the vector 

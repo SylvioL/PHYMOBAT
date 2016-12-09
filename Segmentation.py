@@ -112,15 +112,13 @@ class Segmentation(Vector):
         out_layer = out_ds.CreateLayer(str(self.vector_used), srsObj, geom_type=ogr.wkbMultiPolygon)
         
         # Add new fields
+        # To add RPG_CODE field
         out_fieldnames.insert(2,'RPG_CODE')
         out_fieldtype.insert(2,ogr.OFTInteger)
+        # To add the others
         for i in range(0, len(out_fieldnames)):
             fieldDefn = ogr.FieldDefn(str(out_fieldnames[i]), out_fieldtype[i])
             out_layer.CreateField(fieldDefn)
-#         # Add the RPG column
-#         fieldDefn = ogr.FieldDefn('RPG_CODE', ogr.OFTInteger)
-#         out_layer.CreateField(fieldDefn)
-#         out_fieldnames.append('RPG_CODE')
         # Add 2 fields to convert class string in code to confusion matrix
         fieldDefn = ogr.FieldDefn('FBPHY_CODE', ogr.OFTInteger)
         out_layer.CreateField(fieldDefn)
@@ -222,13 +220,13 @@ class Segmentation(Vector):
                     if i == len(out_fieldnames)-1:
                         if self.class_tab_final[in_feature.GetFID()][i-3] == 6:
                             # Crops to artificial vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-3] = 0
-                        if self.class_tab_final[in_feature.GetFID()][i-3] == 2:
-                            # Grassland to natural vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-3] = 1
+                            self.class_tab_final[in_feature.GetFID()][i-4] = 0
+#                         if self.class_tab_final[in_feature.GetFID()][i-3] == 2:
+#                             # Grassland to natural vegetation
+#                             self.class_tab_final[in_feature.GetFID()][i-3] = 1
                         if self.class_tab_final[in_feature.GetFID()][i-3] > 7:
                             # Phytomass to natural vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-3] = 1
+                            self.class_tab_final[in_feature.GetFID()][i-4] = 1
                             
                     out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-3])
                 except:
@@ -365,22 +363,22 @@ class Segmentation(Vector):
                 if self.class_tab_final[ind_stats][1] == select_class:
                     self.class_tab_final[ind_stats].insert(len(self.class_tab_final[ind_stats])-2,eval(form))
                     # To add phytomasse
-                    print ind_stats
-                    print self.class_tab_final[ind_stats]
-                    print self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1]
-                    if self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] == '' and \
-                        self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-2] != '':
-                        # dict[][A.index(real_pourcent)-1] == '' and dict[][A.index(real_pourcent)-2] != ''
-                        # Print phytomasse class in the tab because of self.in_class_name in the Processing class
-                        if not eval(form + self.out_threshold[0]) and not eval(form + self.out_threshold[2]):
-                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[9]
-                            self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 9
-                        elif eval(form + self.out_threshold[0]):
-                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[8]
-                            self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 8
-                        elif eval(form + self.out_threshold[2]):
-                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[10]
-                            self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 10
+                    try :
+                        if self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] == '' and \
+                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-2] != '':
+                            # dict[][A.index(real_pourcent)-1] == '' and dict[][A.index(real_pourcent)-2] != ''
+                            # Print phytomasse class in the tab because of self.in_class_name in the Processing class
+                            if not eval(form + self.out_threshold[0]) and not eval(form + self.out_threshold[2]):
+                                self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[9]
+                                self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 9
+                            elif eval(form + self.out_threshold[0]):
+                                self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[8]
+                                self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 8
+                            elif eval(form + self.out_threshold[2]):
+                                self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[10]
+                                self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 10
+                    except ValueError:
+                        pass
                         
             except IndexError:
                 pass

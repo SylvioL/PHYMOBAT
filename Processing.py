@@ -21,6 +21,7 @@ import os, sys, math
 import numpy as np
 import subprocess
 from sklearn.ensemble import RandomForestClassifier
+from sklearn import tree
 try :
     import ogr, gdal
 except :
@@ -542,6 +543,28 @@ class Processing():
                     
         # Build a forest of trees from the samples                 
         self.rf = self.rf.fit(X_rf, y_rf)
+        
+        # Print in a file feature important
+        importance = self.rf.feature_importances_
+        importance = [(importance[x],x+1) for x in range(len(importance))]
+        importance.sort()
+        
+        file_feat_import = os.path.dirname(self.raster_path[0]) + '/Feature_important_RF.ft'
+        if os.path.exists(file_feat_import):
+            os.remove(file_feat_import)
+        f_out = open(file_feat_import, "wb")
+        f_out.write(str(importance))
+        # Close the output file
+        f_out.close()
+        
+        # Print in a file decision tree
+        file_decisiontree = os.path.dirname(self.raster_path[0]) + '/Decision_tree.dot'
+        if os.path.exists(file_decisiontree):
+            os.remove(file_decisiontree)
+        
+        tree_in_forest = self.rf.estimators_[499]
+        with open(file_decisiontree, 'w') as my_file:
+            my_file = tree.export_graphviz(tree_in_forest, out_file = my_file)
 
     def i_classifier_rf(self): 
         """

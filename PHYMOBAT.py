@@ -792,6 +792,7 @@ class PHYMOBAT(QMainWindow, Processing):
         
         # Start the processus
         startTime = time.time()
+        Processing.__init__(self)# Initialize variable without to close and launch again the application
         
         # To know if the processing must be launch on several thread
         if self.ui.checkBox_multiprocess.isChecked():
@@ -803,7 +804,7 @@ class PHYMOBAT(QMainWindow, Processing):
         vs = 0 # Variable to launch VHRS texture processing
         dd = 0 # Variable to launch image downloading 
         ok = 1 # Variable to verify informations -> 0 not ok, 1 ok
-        print self.out_fieldname_carto
+        
         if self.mode == 1:
             # if download check box is checked only
             if not self.ui.checkBox_listing.isChecked() and self.ui.checkBox_download.isChecked():

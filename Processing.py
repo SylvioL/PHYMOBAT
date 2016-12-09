@@ -539,7 +539,7 @@ class Processing():
                     y_rf.append(4)
                 else:
                     y_rf.append(sple)
- 
+                    
         # Build a forest of trees from the samples                 
         self.rf = self.rf.fit(X_rf, y_rf)
 
@@ -568,7 +568,7 @@ class Processing():
 
         # Compute zonal stats with multi processing
         exist_stats = 1 # By default, the stats file exists already
-        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.stats' # Stats backup file
+        file_stats = os.path.dirname(self.raster_path[0]) + '/Stats_raster_spectral_texture.stats' # Stats backup file
         if not os.path.exists(file_stats):
             exist_stats = 0 # The sats file doesn't exist
             # Open a stats backup to avoid computing again (Gain of time)
@@ -613,7 +613,7 @@ class Processing():
                     X_out_rf.append(eval(x_in.strip('\n')))
         
         predicted_rf = self.rf.predict(X_out_rf)
-        
+             
         # For the higher than level 1
         if len(self.sample_name) > 2:
             # Compute the biomass and density distribution
@@ -621,7 +621,7 @@ class Processing():
             out_carto.out_threshold = predicted_rf
             # In the compute_biomass_density function, this variable used normally to define 
             # threshold of the classification with SEATH method is initialized
-            out_carto.compute_biomass_density('RF')        
+            out_carto.compute_biomass_density('RF')
         
         out_carto.class_tab_final = defaultdict(list)
         for i_polyg in range(len(predicted_rf)):
@@ -651,7 +651,7 @@ class Processing():
             # Compute biomass and density scale
             out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
             out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
-            
+        
         # Rasterize RPG shapefile to complete the final shapefile
         opt = {}
         opt['Remove'] = 1
@@ -661,7 +661,7 @@ class Processing():
         # Final cartography
 #         out_carto.mono_rpg_tif = self.sample_name[0][:-4] + '.TIF'
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
-
+        
     def i_classifier_s(self): 
         """
         Interface function to launch decision tree classification with a input segmentation :func:`Segmentation.Segmentation`.
@@ -714,7 +714,7 @@ class Processing():
 
         # Compute zonal stats with multi processing
         exist_stats = 1 # By default, the stats file exists already
-        file_stats = os.path.dirname(self.raster_path[0]) + '/Stat_raster_spectral_texture.stats' # Stats backup file
+        file_stats = os.path.dirname(self.raster_path[0]) + '/Stats_raster_spectral_texture.stats' # Stats backup file
         if not os.path.exists(file_stats):
             exist_stats = 0 # The sats file doesn't exist
             # Open a stats backup to avoid computing again (Gain of time)
@@ -837,7 +837,7 @@ class Processing():
         
         # TODO: Call the RasterSat_by_Date class here instead of the Precision_moba class
         
-        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_SUB') # To the classification's data
+        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_CODE') # To the classification's data
         valid.preprocess_to_raster_precision(complete_validate_shp, val[1]) # To the validation's data
         
         # Compute precision on the output classification

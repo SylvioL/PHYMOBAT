@@ -573,7 +573,7 @@ class Processing():
         This function use the sklearn module to build the best of decision tree to extract classes.
         The optimal threshold are stored by class **rf** variable in :func:`Processing.i_sample_rf`. Then it computes zonal statistics by polygons
         for every images in multi-processing (if **mp** = 1).
-        """ 
+        """
         
         # Multiprocessing
         mgr = BaseManager()
@@ -679,10 +679,11 @@ class Processing():
         opt = {}
         opt['Remove'] = 1
         rpg_tif = Vector(self.sample_name[0], self.path_area, **opt)
-        out_carto.mono_rpg_tif = rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP')
+#         if not os.path.exists(str(rpg_tif.vector_used[:-3]+'TIF')): 
+        kwargs['choice_nb_b'] = 1
+        out_carto.mono_rpg_tif = rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP', **kwargs)
         
         # Final cartography
-#         out_carto.mono_rpg_tif = self.sample_name[0][:-4] + '.TIF'
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
         
     def i_classifier_s(self): 

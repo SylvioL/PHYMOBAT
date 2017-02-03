@@ -681,8 +681,8 @@ class Processing():
         rpg_tif = Vector(self.sample_name[0], self.path_area, **opt)
 #         if not os.path.exists(str(rpg_tif.vector_used[:-3]+'TIF')): 
         kwargs['choice_nb_b'] = 1
-        out_carto.mono_rpg_tif = rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP', **kwargs)
-        
+        out_carto.stats_rpg_tif = out_carto.zonal_stats_pp(rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP', **kwargs))
+
         # Final cartography
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
         

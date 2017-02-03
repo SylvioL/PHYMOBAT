@@ -39,6 +39,8 @@ class RasterSat_by_date():
             This variable is modified in the function :func:`mosaic_by_date()`. 
             To append mosaic image path, mosaic cloud image path, cloud pixel value table, mosaic ndvi image path and ndvi pixel value table.
     :type one_date: list of str
+    :param choice_nb_b: A option to choice output image number of band :func:`layer_rasterization` in Vector's class. If this option is 0, it take input band. By default 0.
+    :type choice_nb_b: int
     
     """  
     def __init__(self, class_archive, big_folder, one_date):
@@ -57,6 +59,7 @@ class RasterSat_by_date():
             self._one_date = one_date
         
         self.out_ds = None
+        self.choice_nb_b = 0
            
     def group_by_date(self, d_uni):
         """
@@ -197,13 +200,16 @@ class RasterSat_by_date():
             print('could not open ')
             sys.exit(1)
         
-        # Information on the input raster    
-        nbband = in_ds.RasterCount # Spectral band number
+        # Information on the input raster 
+        if self.choice_nb_b == 0:
+            nbband = in_ds.RasterCount # Spectral band number
+        else:
+            nbband = self.choice_nb_b
         rows = in_ds.RasterYSize # Rows number
         cols = in_ds.RasterXSize # Columns number
         
         # Table's declaration 
-        data = [] #np.float32([[0]*cols for i in xrange(rows)])
+        data = [] # np.float32([[0]*cols for i in xrange(rows)])
         for band in range(nbband):
             
             canal = in_ds.GetRasterBand(band + 1) # Select a band
@@ -252,7 +258,7 @@ class RasterSat_by_date():
         
         # Cloud mask
         mask_cloud = np.in1d(data_cloud, 0) # This is the same opposite False where there is 0
-        cloud = np.choose(mask_cloud, (False, mask_spec)) #  If True in cloud mask, it take spectral image else False
+        cloud = np.choose(mask_cloud, (False, mask_spec)) # If True in cloud mask, it take spectral image else False
         dist = np.sum(cloud) # Sum of True. True is cloud
         
         # Computer cloud's percentage with dist (sum of cloud) by sum of the image's extent
@@ -311,7 +317,7 @@ class RasterSat_by_date():
 #             os.remove(str(out_raster))
         e = 1 # Raster out exists by default 
         # Verify if the processing take input band or one spectral band    
-        if data.ndim == 2:
+        if data.ndim == 2 or self.choice_nb_b == 1:
             nbband = 1
         else:
             nbband = in_ds.RasterCount 

@@ -920,6 +920,10 @@ class PHYMOBAT(QMainWindow, Processing):
                     
         if self.mode == 0:
             
+            # Compute a output slope raster 
+            if self.path_mnt != '':
+                self.i_slope()
+            
             # Save the sample features
             self.add_sample()
             try:
@@ -1193,7 +1197,10 @@ class PHYMOBAT(QMainWindow, Processing):
             else:
                 ET.SubElement(doc, "MNT_checked", type = "int").text = str(0)
         else:
-            ET.SubElement(doc, "MNT_checked", type = "int").text = str(0)
+            if "%s" % self.ui.lineEdit_MNT.text() != '':
+                ET.SubElement(doc, "MNT_checked", type = "int").text = str(1)
+            else:
+                ET.SubElement(doc, "MNT_checked", type = "int").text = str(0)
             
         ET.SubElement(doc, "MNT", type = "str").text = "%s" % self.ui.lineEdit_MNT.text()
         

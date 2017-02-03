@@ -57,6 +57,8 @@ class Segmentation(Vector):
     :type max_...: float
     :param class_tab_final: Final decision tree table
     :type class_tab_final: dict
+    :param stats_rpg_tif: Dictionnary with pxl percent in every polygon of class RPG. Mainly 'Maj_count' (Majority Value) and 'Maj_count_perc' (Majority Percent)
+    :type stats_rpg_tif: dict
     """
     
     def __init__(self, used, cut):
@@ -133,33 +135,6 @@ class Segmentation(Vector):
         in_feature = shp_ogr.SetNextByIndex(0) # Polygons initialisation
         in_feature = shp_ogr.GetNextFeature()
         
-#         # Extract RPG tif data and information
-#         self.raster_ds = gdal.Open(str(self.mono_rpg_tif), gdal.GA_ReadOnly)
-#         rows = self.raster_ds.RasterYSize # Rows number
-#         cols = self.raster_ds.RasterXSize # Columns number
-#         geotransform = self.raster_ds.GetGeoTransform()
-#         prj_wkt = self.raster_ds.GetProjectionRef()
-#         
-#         # Create a empty fictif raster from a segementation polygon
-#         temp_tif_rpg = self.mono_rpg_tif[:-4] + '_.TIF'
-#         if os.path.exists(temp_tif_rpg):
-#             os.remove(temp_tif_rpg)
-#         out_raster_ds = gdal.GetDriverByName('GTiff').Create(temp_tif_rpg, cols, rows, 1, gdal.GDT_Int32)
-#         out_raster_ds.SetGeoTransform(geotransform)
-#         out_raster_ds.SetProjection(prj_wkt)
-#         
-#         # Table's declaration
-#         data_rpg = []
-#         canal_rpg = self.raster_ds.GetRasterBand(1) # Select a band
-#         data_rpg = canal_rpg.ReadAsArray(0, 0, cols, rows).astype(np.int32)
-# #         data_rpg_int = data_rpg.astype(int) # convert dtype in type to avoid the memory fu
-#         canal_rpg = None
-#         # Create a fictif shapefile
-#         out_rast = shp_ogr_ds.GetDriver().CreateDataSource(self.output_file[:-4] + '_.shp')
-#         out_fictif = out_rast.CreateLayer(str(self.output_file[:-4] + '_.shp'), srsObj, geom_type=ogr.wkbMultiPolygon)
-#         fieldDefn = ogr.FieldDefn('ID', ogr.OFTInteger)
-#         out_fictif.CreateField(fieldDefn)
-        
         # Loop on input polygons
         while in_feature:
             
@@ -176,39 +151,7 @@ class Segmentation(Vector):
             out_feature.SetField(out_fieldnames[1], geom.GetArea()/10000)
             
             # Set the RPG column
-#             # Create a fictif polygon in the shapefile
-#             feature_fictif = ogr.Feature(out_fictif.GetLayerDefn())
-#             feature_fictif.SetGeometry(geom)
-#             feature_fictif.SetField("ID",1)
-#             out_fictif.CreateFeature(feature_fictif)
-#             
-#             # Virtual rasterize the vector 
-#             out_poly_tif = out_raster_ds
-#             pt_rast = gdal.RasterizeLayer(out_poly_tif, [1], out_fictif, options=["ATTRIBUTE=ID"])
-#             data_polygon = out_poly_tif.ReadAsArray()
-# #             data_polygon_int = data_polygon.astype(int) # convert dtype in type to avoid the memory full
-#             
-#             # Remove the feature after useful
-#             out_fictif.DeleteFeature(feature_fictif.GetFID())
-#             feature_fictif.Destroy()
-#             
-#             # Mask data value with data polygon
-#             poly_pxl = np.ma.masked_where(data_polygon == 0, data_rpg.astype(int))
-#             poly_pxl.fill_value = 0
-#             poly_pxl.filled()
-#             poly_on_line = np.hstack(poly_pxl.filled())
-#             # Search majority and count the number of majority class
-#             counts = np.bincount(poly_on_line)
-#             
             recouv_crops_RPG = 0
-#             # To avoid zero's values
-#             if len(counts) > 1:   
-#                 counts[0] = 0 # It need to keep zero value in the tab then it necessary to replace by 0 in count
-#                 maj_class = np.argmax(counts)
-#                 nbpxl_maj = counts[maj_class]
-#                 
-#                 area_intersect = (nbpxl_maj * geotransform[1] * geotransform[1]) / float(10000)
-#                 area_segm = geom.GetArea() / float(10000)
             pourc_inter = self.stats_rpg_tif[in_feature.GetFID()]['Maj_count_perc']
             if pourc_inter >= 85:
                 recouv_crops_RPG = self.stats_rpg_tif[in_feature.GetFID()]['Maj_count']

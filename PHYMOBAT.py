@@ -792,7 +792,6 @@ class PHYMOBAT(QMainWindow, Processing):
         
         # Start the processus
         startTime = time.time()
-        Processing.__init__(self)# Initialize variable without to close and launch again the application
         
         # To know if the processing must be launch on several thread
         if self.ui.checkBox_multiprocess.isChecked():
@@ -953,6 +952,8 @@ class PHYMOBAT(QMainWindow, Processing):
         self.out_fieldtype_carto = [ogr.OFTString, ogr.OFTReal]
         # Images after processing images
         self.out_ndvistats_folder_tab = defaultdict(list)
+        
+        Processing.__init__(self)# Initialize variable without to close and launch again the application
             
         # End of the processus
         endTime = time.time() # Tps : Terminé

@@ -351,8 +351,6 @@ class PHYMOBAT(QMainWindow, Processing):
             self.w_proxy = MyPopup_proxy_window()
         self.w_proxy.show()
         
-        print self.w_proxy.proxy
-        
     def f_path_segm(self):
         """
         Open a input browser box to select segmentation shapefile path path by line edit.

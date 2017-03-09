@@ -50,7 +50,7 @@ class Archive():
     :type repertory: str
     """
     
-    def __init__(self, captor, list_year, box, folder, repertory):
+    def __init__(self, captor, list_year, box, folder, repertory, proxy_enabled):
         """Create a new 'Archive' instance
         
         """
@@ -59,6 +59,7 @@ class Archive():
         self._box = box
         self._folder = folder
         self._repertory = repertory
+        self._proxy_enabled = proxy_enabled
         
         # Archive's list (two dimensions) :
         # 1. List of the website path archives
@@ -287,6 +288,12 @@ class Archive():
         :type password_theia: str
         
         """
+        #=====================
+        # proxy
+        #=====================
+#         if self.proxy_enabled :
+#             curl_proxy = str("-x %s --proxy-user %s:%s" % (config["proxy"],config["login_proxy"],config["password_proxy"]))
+        
         #============================================================
         # get a token to be allowed to bypass the authentification.
         # The token is only valid for two hours. If your connection is slow

@@ -1441,9 +1441,9 @@ class MyPopup_proxy_window(QWidget):
         self.w_proxy.setupUi(self)
         
         # Proxy ID
-        self.proxy = None
-        self.login_proxy = None
-        self.password_proxy = None
+        self.proxy = ""
+        self.login_proxy = ""
+        self.password_proxy = ""
         
         # Connect Apply|Close button
         self.w_proxy.buttonBox_proxy.button(QDialogButtonBox.Close).clicked.connect(self.close_window)
@@ -1453,13 +1453,9 @@ class MyPopup_proxy_window(QWidget):
         """
         Function to use input proxy id
         """
-        
         self.login_proxy = "%s" % self.w_proxy.lineEdit_login_proxy.text()
         self.password_proxy = "%s" % self.w_proxy.lineEdit_password_proxy.text()
         self.proxy = "%s" % self.w_proxy.lineEdit_proxy.text()
-        
-        if self.proxy == '':
-            self.proxy = None
     
     def close_window(self):
         """

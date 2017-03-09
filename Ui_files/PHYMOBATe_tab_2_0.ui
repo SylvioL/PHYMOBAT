@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>607</height>
+    <width>626</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -51,20 +51,6 @@
         <string>Traitement images</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="5" column="5">
-         <widget class="QPushButton" name="pushButton_browser_area_path">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="5">
-         <widget class="QPushButton" name="pushButton_browser_principal_folder">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0" colspan="2">
          <widget class="QLabel" name="label_principal_folder">
           <property name="text">
@@ -86,16 +72,6 @@
           </property>
          </widget>
         </item>
-        <item row="9" column="4" colspan="2">
-         <widget class="QLineEdit" name="lineEdit_password">
-          <property name="toolTip">
-           <string>Mot de passe masqué</string>
-          </property>
-          <property name="echoMode">
-           <enum>QLineEdit::Password</enum>
-          </property>
-         </widget>
-        </item>
         <item row="3" column="2">
          <spacer name="horizontalSpacer_6">
           <property name="orientation">
@@ -108,13 +84,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="14" column="5">
-         <widget class="QPushButton" name="pushButton_browser_VHRS">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
         </item>
         <item row="8" column="0" colspan="2">
          <widget class="QLabel" name="label_id_theia">
@@ -154,31 +123,11 @@
           </property>
          </widget>
         </item>
-        <item row="14" column="0" colspan="5">
-         <widget class="QLineEdit" name="lineEdit_VHRS"/>
-        </item>
-        <item row="3" column="3">
-         <widget class="QLineEdit" name="lineEdit_year_images"/>
-        </item>
         <item row="6" column="0" colspan="2">
          <widget class="QCheckBox" name="checkBox_listing">
           <property name="text">
            <string>Images disponibles :</string>
           </property>
-         </widget>
-        </item>
-        <item row="2" column="3">
-         <widget class="QComboBox" name="comboBox_captor">
-          <item>
-           <property name="text">
-            <string>Landsat</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>SpotWorldHeritage</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item row="9" column="2">
@@ -194,18 +143,12 @@
           </property>
          </spacer>
         </item>
-        <item row="5" column="0" colspan="5">
-         <widget class="QLineEdit" name="lineEdit_area_path"/>
-        </item>
         <item row="2" column="0" colspan="3">
          <widget class="QLabel" name="label_captor">
           <property name="text">
            <string>Capteur des images à télécharger</string>
           </property>
          </widget>
-        </item>
-        <item row="1" column="0" colspan="5">
-         <widget class="QLineEdit" name="lineEdit_principal_folder"/>
         </item>
         <item row="11" column="0">
          <widget class="QCheckBox" name="checkBox_MNT">
@@ -221,22 +164,86 @@
           </property>
          </widget>
         </item>
-        <item row="12" column="5">
-         <widget class="QPushButton" name="pushButton_browser_MNT">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="0" colspan="5">
-         <widget class="QLineEdit" name="lineEdit_MNT"/>
-        </item>
         <item row="10" column="0" colspan="4">
          <widget class="QCheckBox" name="checkBox_processing">
           <property name="text">
            <string>Traitement des images téléchargées</string>
           </property>
          </widget>
+        </item>
+        <item row="9" column="6">
+         <widget class="QPushButton" name="proxy">
+          <property name="text">
+           <string>Proxy</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="QPushButton" name="pushButton_browser_principal_folder">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="6">
+         <widget class="QLineEdit" name="lineEdit_principal_folder"/>
+        </item>
+        <item row="5" column="6">
+         <widget class="QPushButton" name="pushButton_browser_area_path">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="6">
+         <widget class="QLineEdit" name="lineEdit_area_path"/>
+        </item>
+        <item row="2" column="5">
+         <widget class="QComboBox" name="comboBox_captor">
+          <item>
+           <property name="text">
+            <string>Landsat</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>SpotWorldHeritage</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="5">
+         <widget class="QLineEdit" name="lineEdit_year_images"/>
+        </item>
+        <item row="9" column="5">
+         <widget class="QLineEdit" name="lineEdit_password">
+          <property name="toolTip">
+           <string>Mot de passe masqué</string>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="6">
+         <widget class="QPushButton" name="pushButton_browser_MNT">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="14" column="6">
+         <widget class="QPushButton" name="pushButton_browser_VHRS">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0" colspan="6">
+         <widget class="QLineEdit" name="lineEdit_MNT"/>
+        </item>
+        <item row="14" column="0" colspan="6">
+         <widget class="QLineEdit" name="lineEdit_VHRS"/>
         </item>
        </layout>
       </widget>
@@ -713,7 +720,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>550</width>
+     <width>626</width>
      <height>25</height>
     </rect>
    </property>
@@ -789,11 +796,7 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>lineEdit_principal_folder</tabstop>
-  <tabstop>pushButton_browser_principal_folder</tabstop>
-  <tabstop>comboBox_captor</tabstop>
-  <tabstop>lineEdit_year_images</tabstop>
   <tabstop>lineEdit_area_path</tabstop>
-  <tabstop>pushButton_browser_area_path</tabstop>
   <tabstop>checkBox_listing</tabstop>
   <tabstop>checkBox_download</tabstop>
   <tabstop>lineEdit_user</tabstop>
@@ -801,10 +804,8 @@
   <tabstop>checkBox_processing</tabstop>
   <tabstop>checkBox_MNT</tabstop>
   <tabstop>lineEdit_MNT</tabstop>
-  <tabstop>pushButton_browser_MNT</tabstop>
   <tabstop>checkBox_VHRS</tabstop>
   <tabstop>lineEdit_VHRS</tabstop>
-  <tabstop>pushButton_browser_VHRS</tabstop>
   <tabstop>lineEdit_sample_path</tabstop>
   <tabstop>pushButton_browser_sample_path</tabstop>
   <tabstop>lineEdit_select_sample_fieldname_1</tabstop>

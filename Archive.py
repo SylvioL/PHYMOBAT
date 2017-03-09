@@ -291,10 +291,14 @@ class Archive():
         #=====================
         # proxy
         #=====================
-        if self.proxy_enabled.proxy :
-            curl_proxy = str("-x %s --proxy-user %s:%s" % (self.proxy_enabled.proxy,self.proxy_enabled.login_proxy,self.proxy_enabled.password_proxy))
-        else:
-            curl_proxy = ""
+        curl_proxy = ""
+        try:
+            if self._proxy_enabled.proxy != '':
+                curl_proxy = str("-x %s" % (self._proxy_enabled.proxy))
+                if self._proxy_enabled.login_proxy != '' and self._proxy_enabled.password_proxy != '':
+                    curl_proxy = curl_proxy + str(" --proxy-user %s:%s" % (self._proxy_enabled.login_proxy, self._proxy_enabled.password_proxy))
+        except AttributeError:
+            pass
         
         #============================================================
         # get a token to be allowed to bypass the authentification.
@@ -304,7 +308,7 @@ class Archive():
         if os.path.exists('token.json'):
             os.remove('token.json')
 #         get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(curl_proxy,user_theia, password_theia)
-        get_token='curl -k -s -X POST %s --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia-landsat.cnes.fr/services/authenticate/>token.json'%(curl_proxy,user_theia, password_theia)
+        get_token='curl -k -s -X POST %s --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia-landsat.cnes.fr/services/authenticate/>token.json'%(curl_proxy, user_theia, password_theia)
         os.system(get_token)
         
         with open('token.json') as data_file:    
@@ -323,7 +327,7 @@ class Archive():
                 print os.path.split(str(self.list_archive[d][1]))[1]
                 
 #                 get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(curl_proxy,self.list_archive[d][1], token, self.list_archive[d][2])
-                get_product='curl %s -o %s -k -H "Authorization: Bearer %s" https://theia-landsat.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(curl_proxy,self.list_archive[d][1], token, self.list_archive[d][2])
+                get_product='curl %s -o %s -k -H "Authorization: Bearer %s" https://theia-landsat.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(curl_proxy, self.list_archive[d][1], token, self.list_archive[d][2])
                 print get_product
                 os.system(get_product)
                 

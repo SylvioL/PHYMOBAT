@@ -131,6 +131,8 @@ class Processing():
         self.path_segm = ''
         self.output_name_moba = ''
         
+        self.w_proxy = None # For the "Proxy window"
+        
         # Id information to download on theia platform
         self.user = ''
         self.password = ''
@@ -229,7 +231,7 @@ class Processing():
         """
         
         self.folder_archive = self.captor_project + '_PoleTheia'
-        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive)
+        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive, self.w_proxy)
         self.check_download.listing()
         self.nb_avalaible_images = len(self.check_download.list_archive)
         # check_download.set_list_archive_to_try(check_download.list_archive[:3])

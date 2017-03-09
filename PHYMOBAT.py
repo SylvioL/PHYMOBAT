@@ -52,6 +52,7 @@ import lxml.etree as ET
 from ui_A_propos_PHYMOBAT_window import Ui_About
 from ui_Warming_study_area import Ui_Warming_study_area
 from ui_Warming_forgetting import Ui_Warming_forgetting
+from ui_Proxy_window import Ui_Proxy_window
 from Processing import Processing
 
 class PHYMOBAT(QMainWindow, Processing):
@@ -69,7 +70,7 @@ class PHYMOBAT(QMainWindow, Processing):
         
         self.simpli = None # For the "PHYMOBATs" window
         self.expert = None # For the "PHYMOBATe" window
-        self.mode = mode # For the mode simple (0 by default) or expert (1) 
+        self.mode = mode # For the mode simple (0 by default) or expert (1)
         
         # To select interface's parameters        
         if self.mode == 1:
@@ -125,6 +126,9 @@ class PHYMOBAT(QMainWindow, Processing):
         # Study area shapefile path
         self.ui.lineEdit_area_path.clear()
         self.connect(self.ui.pushButton_browser_area_path, SIGNAL('clicked()'), self.f_path_area)
+        
+        # Proxy
+        self.connect(self.ui.proxy, SIGNAL('clicked()'), self.f_proxy)
         
         # Segmentation shapefile path
         self.ui.lineEdit_segmentation.clear()
@@ -338,6 +342,16 @@ class PHYMOBAT(QMainWindow, Processing):
         """        
         areafilename = QFileDialog.getOpenFileName(self, "Area shapefile", self.ui.lineEdit_principal_folder.text(), '*.shp')
         self.ui.lineEdit_area_path.setText(str(areafilename).replace('[','').replace(']','').replace(' ',''))
+        
+    def f_proxy(self):   
+        """
+        Function to open a popup in order to enter proxy ID
+        """ 
+        if self.w_proxy is None:
+            self.w_proxy = MyPopup_proxy_window()
+        self.w_proxy.show()
+        
+        print self.w_proxy.proxy
         
     def f_path_segm(self):
         """
@@ -1412,6 +1426,42 @@ class MyPopup_warming_forgetting(QWidget):
         self.w_forget.setupUi(self)
         
         self.connect(self.w_forget.pushButton_ok_forget, SIGNAL('clicked()'), self.close_window)
+    
+    def close_window(self):
+        """
+        Function to close the popup.
+        """
+        self.close() 
+        
+class MyPopup_proxy_window(QWidget):
+    """
+    Popup to display a message to tell you if you fogotten to enter a raster or a sample.
+    """
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
+        self.w_proxy = Ui_Proxy_window()
+        self.w_proxy.setupUi(self)
+        
+        # Proxy ID
+        self.proxy = None
+        self.login_proxy = None
+        self.password_proxy = None
+        
+        # Connect Apply|Close button
+        self.w_proxy.buttonBox_proxy.button(QDialogButtonBox.Close).clicked.connect(self.close_window)
+        self.w_proxy.buttonBox_proxy.button(QDialogButtonBox.Apply).clicked.connect(self.id_proxy)
+    
+    def id_proxy(self):
+        """
+        Function to use input proxy id
+        """
+        
+        self.login_proxy = "%s" % self.w_proxy.lineEdit_login_proxy.text()
+        self.password_proxy = "%s" % self.w_proxy.lineEdit_password_proxy.text()
+        self.proxy = "%s" % self.w_proxy.lineEdit_proxy.text()
+        
+        if self.proxy == '':
+            self.proxy = None
     
     def close_window(self):
         """

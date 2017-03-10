@@ -65,7 +65,16 @@ class Archive():
         # 1. List of the website path archives
         # 2. List of the local path archives
         self.list_archive = []
-        self.url = '' # str : website JSON database
+        self.server = '' # Host
+        self.resto =''
+        # Info from Theia-land website or Olivier Hagolle blog
+        if self._captor == 'SENTINEL2':
+            self.server = 'https://theia.cnes.fr/atdistrib'
+            self.resto = 'resto2'
+        else:
+            self.server = 'https://theia-landsat.cnes.fr'
+            self.resto = 'resto'
+        self.url = '' # str : complete website JSON database
         
         self.list_img = [] # List (dim 5) to get year, month, day, path of multispectral's images and path of cloud's images
         self.single_date = [] # date list without duplication
@@ -234,7 +243,12 @@ class Archive():
             # Link to connect in the database JSON of the Theia plateform
 #             self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
             # Temporary link
-            self.url = r'https://theia-landsat.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
+#             if self._captor == 'SENTINEL2':
+#                 self.url = r'https://theia.cnes.fr/atdistrib/resto2/api/collections/'
+#             else:
+#                 self.url = r'https://theia-landsat.cnes.fr/resto/api/collections/'
+            
+            self.url = self.server + '/' + self.resto + '/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
             print self.url
             if not os.path.exists(self._folder + '/' + self._repertory):
                 os.mkdir(self._folder + '/' + self._repertory)           
@@ -261,7 +275,7 @@ class Archive():
                         name_archive = data_Dict['features'][d]['properties']['productIdentifier']    
                         feature_id = data_Dict["features"][d]['id']
                         link_archive = data_Dict['features'][d]['properties']['services']['download']['url'].replace("\\", "")
-                        url_archive = link_archive.replace("resto", "rocket/#")
+                        url_archive = link_archive.replace(self.resto, "rocket/#")
                         archive_download = url_archive.replace("/download", "") # Path to upload
                         out_archive = self._folder + '/' + listing_repertory + '/' + name_archive + '.tgz' # Name after download
                         self.list_archive.append([archive_download, out_archive, feature_id])  
@@ -308,7 +322,7 @@ class Archive():
         if os.path.exists('token.json'):
             os.remove('token.json')
 #         get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(curl_proxy,user_theia, password_theia)
-        get_token='curl -k -s -X POST %s --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia-landsat.cnes.fr/services/authenticate/>token.json'%(curl_proxy, user_theia, password_theia)
+        get_token='curl -k -s -X POST %s --data-urlencode "ident=%s" --data-urlencode "pass=%s" %s/services/authenticate/>token.json'%(curl_proxy, user_theia, password_theia, self.adress)
         os.system(get_token)
         
         with open('token.json') as data_file:    
@@ -327,7 +341,7 @@ class Archive():
                 print os.path.split(str(self.list_archive[d][1]))[1]
                 
 #                 get_product='curl -o %s -k -H "Authorization: Bearer %s" https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(curl_proxy,self.list_archive[d][1], token, self.list_archive[d][2])
-                get_product='curl %s -o %s -k -H "Authorization: Bearer %s" https://theia-landsat.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia'%(curl_proxy, self.list_archive[d][1], token, self.list_archive[d][2])
+                get_product='curl %s -o %s -k -H "Authorization: Bearer %s" %s/%s/collections/%s/%s/download/?issuerId=theia'%(curl_proxy, self.list_archive[d][1], token, self.server, self.resto, self._captor, self.list_archive[d][2])
                 print get_product
                 os.system(get_product)
                 

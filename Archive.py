@@ -71,9 +71,11 @@ class Archive():
         if self._captor == 'SENTINEL2':
             self.server = 'https://theia.cnes.fr/atdistrib'
             self.resto = 'resto2'
+            self.token_type = 'text'
         else:
             self.server = 'https://theia-landsat.cnes.fr'
             self.resto = 'resto'
+            self.token_type = 'json'
         self.url = '' # str : complete website JSON database
         
         self.list_img = [] # List (dim 5) to get year, month, day, path of multispectral's images and path of cloud's images
@@ -261,10 +263,12 @@ class Archive():
             while next_ == 1:
                 
                 try :
-                    req = urllib2.Request(str(self.url)) # Connexion in the database
+                    request_headers = {"User-Agent": "Firefox/48.0"}
+                    req = urllib2.Request(str(self.url), headers = request_headers) # Connexion in the database
                     data = urllib2.urlopen(req).read() # Read in the database
                     
                     new_data = re.sub("null", "'null'", data) # Remove "null" because Python don't like
+                    new_data = re.sub("false", "False", new_data) # Remove "false" and replace by False (Python know False with a capital letter F)
                     
                     # Transform the data in dictionary
                     data_Dict = defaultdict(list)
@@ -303,7 +307,7 @@ class Archive():
         
         """
         #=====================
-        # proxy
+        # Proxy
         #=====================
         curl_proxy = ""
         try:
@@ -317,18 +321,25 @@ class Archive():
         #============================================================
         # get a token to be allowed to bypass the authentification.
         # The token is only valid for two hours. If your connection is slow
-        # or if you are downloading lots of products, it might be an issue
+        # or if you are downloading lots of products
         #=============================================================
         if os.path.exists('token.json'):
             os.remove('token.json')
 #         get_token='curl -k -s -X POST --data-urlencode "ident=%s" --data-urlencode "pass=%s" https://theia.cnes.fr/services/authenticate/>token.json'%(curl_proxy,user_theia, password_theia)
-        get_token='curl -k -s -X POST %s --data-urlencode "ident=%s" --data-urlencode "pass=%s" %s/services/authenticate/>token.json'%(curl_proxy, user_theia, password_theia, self.adress)
+        get_token='curl -k -s -X POST %s --data-urlencode "ident=%s" --data-urlencode "pass=%s" %s/services/authenticate/>token.json'%(curl_proxy, user_theia, password_theia, self.server)
         os.system(get_token)
         
-        with open('token.json') as data_file:    
-            token_json = json.load(data_file)
-            token = token_json["access_token"]
-            
+        with open('token.json') as data_file: 
+            try:
+                if self.token_type == "json":
+                    token_json = json.load(data_file)
+                    token = token_json["access_token"]
+                elif self.token_type=="text":
+                    token=data_file.readline()
+            except :
+                print "Authentification is probably wrong"
+                sys.exit(-1)
+
         #====================
         # Download
         #====================  

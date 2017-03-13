@@ -60,7 +60,7 @@ class PHYMOBAT(QMainWindow, Processing):
     Interface main class. It makes to link ``ui_PHYMOBAT_tab`` and ``Processing``.
     """
     
-    def __init__(self, mode = 0, parent=None):
+    def __init__(self, mode = 1, parent=None):
         super(PHYMOBAT, self).__init__(parent)
         Processing.__init__(self)
 
@@ -118,6 +118,9 @@ class PHYMOBAT(QMainWindow, Processing):
         # Main folder path
         self.ui.lineEdit_principal_folder.clear()
         self.connect(self.ui.pushButton_browser_principal_folder, SIGNAL('clicked()'), self.f_path_folder_dpt)
+        
+        # Block other function if SpotWorldHeritage is chose
+        self.ui.comboBox_captor.currentIndexChanged.connect(self.block_for_swh)
         
         # VHRS image path
         self.ui.lineEdit_VHRS.clear()
@@ -321,6 +324,33 @@ class PHYMOBAT(QMainWindow, Processing):
         """
         infoldername = QFileDialog.getExistingDirectory(self, "Principal folder path", os.getcwd(), QFileDialog.ShowDirsOnly)
         self.ui.lineEdit_principal_folder.setText(str(infoldername).replace('[','').replace(']','').replace(' ',''))
+    
+    def block_for_swh(self):
+        """
+        Function to block others function when SportWorldHeritage is selected int the comboxbox captor.
+        """
+        ind_captor = int(self.ui.comboBox_captor.currentIndex())
+        if ind_captor == 2:
+            self.ui.checkBox_processing.setEnabled(False)
+            self.ui.checkBox_MNT.setEnabled(False)
+            self.ui.lineEdit_MNT.setEnabled(False)
+            self.ui.pushButton_browser_MNT.setEnabled(False)
+            self.ui.checkBox_VHRS.setEnabled(False)
+            self.ui.lineEdit_VHRS.setEnabled(False)
+            self.ui.pushButton_browser_VHRS.setEnabled(False)
+            self.ui.tabWidget.setTabEnabled(1, False)
+            self.ui.tabWidget.setTabEnabled(2, False)
+        # If the user want, on the same moment, come back on other captor that SWH.
+        else:
+            self.ui.checkBox_processing.setEnabled(True)
+            self.ui.checkBox_MNT.setEnabled(True)
+            self.ui.lineEdit_MNT.setEnabled(True)
+            self.ui.pushButton_browser_MNT.setEnabled(True)
+            self.ui.checkBox_VHRS.setEnabled(True)
+            self.ui.lineEdit_VHRS.setEnabled(True)
+            self.ui.pushButton_browser_VHRS.setEnabled(True)
+            self.ui.tabWidget.setTabEnabled(1, True)
+            self.ui.tabWidget.setTabEnabled(2, True)
     
     def f_path_ortho(self):
         """

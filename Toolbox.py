@@ -20,6 +20,7 @@
 import os, sys, subprocess, glob
 import numpy as np
 from datetime import date
+import json
 
 class Toolbox():
     """
@@ -125,3 +126,25 @@ class Toolbox():
                 account_stats.append(i_date) # Add the date table
                 
         return account_stats, account_cloud
+    
+    def check_proj(self):
+        """
+        Function to check if raster's projection is RFG93. 
+        For the moment, PHYMOBAT works with one projection only Lambert 93 EPSG:2154 
+        """
+
+        # Projection for PHYMOBAT
+        epsg_phymobat = '2154'
+        proj_phymobat = 'AUTHORITY["EPSG","' + epsg_phymobat + '"]'
+
+        info_gdal = 'gdalinfo -json ' + self.imag
+        info_json = json.loads(subprocess.check_output(info_gdal, shell=True))
+        # Check if projection is in Lambert 93
+        if not proj_phymobat in info_json['coordinateSystem']['wkt']:
+            output_proj = self.imag[:-4] + '_L93.tif'
+            reproj = 'gdalwarp -t_srs EPSG:' + epsg_phymobat + ' ' + self.imag + ' ' + output_proj
+            os.system(reproj)
+            # Remove old file and rename new file like the old file
+            os.remove(self.imag)
+            os.rename(output_proj, self.imag)
+        

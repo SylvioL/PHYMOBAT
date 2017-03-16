@@ -473,7 +473,7 @@ class Ui_PHYMOBAT(object):
         self.label_year_images.setText(_translate("PHYMOBAT", "Année des images", None))
         self.checkBox_listing.setText(_translate("PHYMOBAT", "Images disponibles :", None))
         self.comboBox_captor.setItemText(0, _translate("PHYMOBAT", "Landsat", None))
-#         self.comboBox_captor.setItemText(1, _translate("PHYMOBAT", "SENTINEL2", None))
+        self.comboBox_captor.setItemText(1, _translate("PHYMOBAT", "SENTINEL2", None))
         self.comboBox_captor.setItemText(2, _translate("PHYMOBAT", "SpotWorldHeritage", None))
         self.label_captor.setText(_translate("PHYMOBAT", "Capteur des images à télécharger", None))
         self.checkBox_MNT.setText(_translate("PHYMOBAT", "MNT", None))

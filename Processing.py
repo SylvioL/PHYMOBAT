@@ -280,9 +280,11 @@ class Processing():
             current_list = Toolbox()
             current_list.imag = clip[3]
             current_list.vect = self.path_area
+            current_list.check_proj() # Check if projection is RFG93 
             self.check_download.list_img[clip_index][3] = current_list.clip_raster() # Multispectral images
             
             current_list.imag = clip[4]
+            current_list.check_proj() # Check if projection is RFG93 
             self.check_download.list_img[clip_index][4] = current_list.clip_raster() # Cloud images
            
         # Images pre-processing

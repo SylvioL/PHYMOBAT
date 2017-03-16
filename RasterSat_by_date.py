@@ -100,7 +100,7 @@ class RasterSat_by_date():
         # Select process
         if vrt_translate == 'vrt':
             # Verify input data
-            if type(src_data) is not np.ndarray:
+            if type(src_data) is not np.ndarray and type(src_data) is not list:
                 print 'VRT file ! The data source should be composed of several data. A list minimal of 2 dimensions'
                 sys.exit(1)
                 

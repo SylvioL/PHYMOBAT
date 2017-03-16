@@ -19,7 +19,7 @@
 
 import os, sys, glob, re, shutil, time
 import math, subprocess, json, urllib2
-import tarfile
+import tarfile, zipfile
 
 try :
     import ogr
@@ -31,9 +31,11 @@ import numpy as np
 from lxml import etree
 from collections import defaultdict
 
+from RasterSat_by_date import RasterSat_by_date
+
 class Archive():
     """
-    Class to list, upload and unpack Theia image archive because of a shapefile (box).
+    Class to list, download and unpack Theia image archive because of a shapefile (box).
     This shapefile get extent of the area.
             
     :param captor: Name of the satellite (ex: Landsat or SpotWorldHeritage ...). 
@@ -86,7 +88,7 @@ class Archive():
     
     def set_list_archive_to_try(self, few_list_archive):
         """
-        Test function to upload a few archives
+        Test function to download a few archives
         
         :param few_list_archive: [archive_download, out_archive]
                     
@@ -259,7 +261,7 @@ class Archive():
             if not os.path.exists(self._folder + '/' + listing_repertory):
                 os.mkdir(self._folder + '/' + listing_repertory)
                 
-            # To know path to upload images
+            # To know path to download images
             while next_ == 1:
                 
                 try :
@@ -274,13 +276,13 @@ class Archive():
                     data_Dict = defaultdict(list)
                     data_Dict = UserDict.UserDict(eval(new_data))    
                     
-                    # Select archives to upload
+                    # Select archives to download
                     for d in range(len(data_Dict['features'])):
                         name_archive = data_Dict['features'][d]['properties']['productIdentifier']    
                         feature_id = data_Dict["features"][d]['id']
                         link_archive = data_Dict['features'][d]['properties']['services']['download']['url'].replace("\\", "")
                         url_archive = link_archive.replace(self.resto, "rocket/#")
-                        archive_download = url_archive.replace("/download", "") # Path to upload
+                        archive_download = url_archive.replace("/download", "") # Path to download
                         out_archive = self._folder + '/' + listing_repertory + '/' + name_archive + '.tgz' # Name after download
                         self.list_archive.append([archive_download, out_archive, feature_id])  
                     
@@ -293,7 +295,7 @@ class Archive():
                     print "Error connexion or error variable !"
                     sys.exit(1)
 
-        print "There is " + str(len(self.list_archive)) + " images to upload !"
+        print "There is " + str(len(self.list_archive)) + " images to download !"
 
     def download_auto(self, user_theia, password_theia):
         """
@@ -389,26 +391,63 @@ class Archive():
                     subprocess.call(process_tocall)
                 
                 for img in img_in_glob:
-                    out_folder_unpack = folder_unpack + '/' + os.path.split(img)[1][:len(os.path.split(img)[1])-4]
+                    
                     # Unpack the archives if they aren't again!
-                    if not os.path.exists(out_folder_unpack):
-                        print 'Unpack :'+os.path.split(img)[1]
-                        tfile = tarfile.open(img, 'r:gz')
-                        tfile.extractall(str(folder_unpack))
+                    if self._captor == 'Landsat':
+                        out_folder_unpack = folder_unpack + '/' + os.path.split(img)[1][:len(os.path.split(img)[1])-4]
+                        if not os.path.exists(out_folder_unpack):
+                            print 'Unpack :'+os.path.split(img)[1]   
+                            tfile = tarfile.open(img, 'r:gz')
+                            tfile.extractall(str(folder_unpack))
                     
-                    # On xmlfile, extract dates, path of images, cloud's images
-                    xmlfile = etree.parse(str(out_folder_unpack) + '/' + os.path.split(img)[1][:len(os.path.split(img)[1])-4] + '.xml')
+                        # On xmlfile, extract dates, path of images, cloud's images
+                        xmlfile = etree.parse(str(out_folder_unpack) + '/' + os.path.split(img)[1][:len(os.path.split(img)[1])-4] + '.xml')
+                        
+                        # Date images
+                        # Exemple : '2015-09-27 10:41:25.956749'
+                        # To get year, month and day ---> .split(' ')[0].split('-')
+                        di = xmlfile.xpath("/METADATA/HEADER/DATE_PDV")[0].text.split(' ')[0].split('-')
+                        # Multispectral images
+                        hi = out_folder_unpack + '/' + xmlfile.xpath("/METADATA/FILES/ORTHO_SURF_CORR_ENV")[0].text
+                        # Cloud images
+                        # Cloud's path not exists in xmlfile, then replace 'SAT' by 'NUA'
+                        ci = out_folder_unpack + '/' + xmlfile.xpath("/METADATA/FILES/MASK_SATURATION")[0].text.replace('_SAT', '_NUA')
                     
-                    # Date images
-                    # Exemple : '2015-09-27 10:41:25.956749'
-                    # To get year, month and day ---> .split(' ')[0].split('-')
-                    di = xmlfile.xpath("/METADATA/HEADER/DATE_PDV")[0].text.split(' ')[0].split('-')
-                    # Multispectral images
-                    hi = out_folder_unpack + '/' + xmlfile.xpath("/METADATA/FILES/ORTHO_SURF_CORR_ENV")[0].text
-                    # Cloud images
-                    # Cloud's path not exists in xmlfile, then replace 'SAT' by 'NUA'
-                    ci = out_folder_unpack + '/' + xmlfile.xpath("/METADATA/FILES/MASK_SATURATION")[0].text.replace('_SAT', '_NUA')
-                                            
+                    elif self._captor == 'SENTINEL2':
+                        
+                        tzip = zipfile.ZipFile(img)
+                        # Extract band 2 (Blue), 3 (Green), 4 (Red), and 8 (NIR) at surface reflectance 10m, XML file, Cloud mask at 10m
+                        extent_img = ['_SRE_B2.tif', '_SRE_B3.tif', '_SRE_B4.tif', '_SRE_B8.tif', '_MTD_ALL.xml', '_CLM_R1.tif']
+                        zip_img = tzip.namelist() # Images list in the archive 
+                        zip_folder = zip_img[0].split('/')[0]
+                        out_folder_unpack = folder_unpack + '/' + zip_folder
+                        
+                        print 'Unpack :' + os.path.split(zip_folder)[1]
+                        extraction_img = []
+                        for e in extent_img:
+                            z_out = [f for f in zip_img if e in f][0]
+                            extraction_img.append(folder_unpack + '/' + str(z_out))
+                            if not os.path.exists(folder_unpack + '/' + str(z_out)):
+                                print('Extract :%s' %(z_out))
+                                tzip.extract(str(z_out), str(folder_unpack))
+                                                 
+                        # On xmlfile, extract dates, path of images, cloud's images
+                        xmlfile = etree.parse(str(extraction_img[4]))
+                        # Date images
+                        di = xmlfile.xpath("/Muscate_Metadata_Document/Product_Characteristics/ACQUISITION_DATE")[0].text.split('T')[0].split('-')
+                        # Multispectral images
+                        hi = out_folder_unpack + '/' + xmlfile.xpath("/Muscate_Metadata_Document/Product_Characteristics/PRODUCT_ID")[0].text + '.tif'
+                        if not os.path.exists(hi):
+                            # For Sentinel2 from Theia plateform, we need to make a stack layer for rasters
+                            # There is a function that make this in RasterSat_by_date class
+                            stack_img = RasterSat_by_date('', '', [0])
+                            input_stack = extraction_img[:4]
+                            input_stack.insert(0,'-separate')
+                            stack_img.vrt_translate_gdal('vrt', input_stack, hi[:-4] + '.VRT')
+                            stack_img.vrt_translate_gdal('translate', hi[:-4] + '.VRT', hi)
+                        # Cloud images
+                        ci = out_folder_unpack + '/' + xmlfile.xpath("/Muscate_Metadata_Document/Product_Organisation/Muscate_Product/Mask_List/Mask/Mask_File_List/MASK_FILE")[2].text
+                       
                     self.list_img.append([di[0], di[1], di[2], str(hi), str(ci)])
                     
                     # Create a list with dates without duplicates

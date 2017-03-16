@@ -120,7 +120,10 @@ class PHYMOBAT(QMainWindow, Processing):
         self.connect(self.ui.pushButton_browser_principal_folder, SIGNAL('clicked()'), self.f_path_folder_dpt)
         
         # Block other function if SpotWorldHeritage is chose
-        self.ui.comboBox_captor.currentIndexChanged.connect(self.block_for_swh)
+        try :
+            self.ui.comboBox_captor.currentIndexChanged.connect(self.block_for_swh)
+        except AttributeError:
+            pass
         
         # VHRS image path
         self.ui.lineEdit_VHRS.clear()

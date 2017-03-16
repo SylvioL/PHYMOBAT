@@ -327,7 +327,7 @@ class PHYMOBAT(QMainWindow, Processing):
     
     def block_for_swh(self):
         """
-        Function to block others function when SportWorldHeritage is selected int the comboxbox captor.
+        Function to block others function when SportWorldHeritage is selected in the comboxbox captor.
         """
         ind_captor = int(self.ui.comboBox_captor.currentIndex())
         if ind_captor == 2:

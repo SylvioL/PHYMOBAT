@@ -306,18 +306,18 @@ class Processing():
         stats_ndvi, stats_cloud = current_list.calc_serie_stats(spectral_trans)
         
         # Create stats ndvi raster and stats cloud raster
-        stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
+        stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [0])
         # Stats cloud raster
-        out_cloud_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
-                           '/Cloud_number_' + self.classif_year + '.TIF'
+        out_cloud_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.captor_project + \
+                           '/Cloud_number_' + self.captor_project + '.TIF'
         stats_L8.complete_raster(stats_L8.create_raster(out_cloud_folder, stats_cloud, \
                                                          stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
                                  stats_cloud)
         
         # Stats ndvi rasters        
         for stats_index in range(len(stats_ndvi)):
-            out_ndvistats_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
-                           '/' + stats_name[stats_index] + '_' + self.classif_year + '.TIF'
+            out_ndvistats_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.captor_project + \
+                           '/' + stats_name[stats_index] + '_' + self.captor_project + '.TIF'
             self.out_ndvistats_folder_tab[stats_index] = out_ndvistats_folder
             stats_L8.complete_raster(stats_L8.create_raster(out_ndvistats_folder, stats_ndvi[stats_index], \
                                                             stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
@@ -428,7 +428,7 @@ class Processing():
         # Extract mono rpg crops
         mono_sample = Rpg(path_rpg, self.path_area)
         # If exists, do not create a mono rpg file
-        if os.path.basename(path_rpg)[:5]!='MONO_':
+        if os.path.basename(str(path_rpg))[:5]!='MONO_':
             mono_sample.mono_rpg()
             mono_sample.create_new_rpg_files()
         else:
@@ -553,7 +553,7 @@ class Processing():
         importance = [(importance[x],x+1) for x in range(len(importance))]
         importance.sort()
         
-        file_feat_import = os.path.dirname(self.raster_path[0]) + '/Feature_important_RF.ft'
+        file_feat_import = os.path.dirname(str(self.raster_path[0])) + '/Feature_important_RF.ft'
         if os.path.exists(file_feat_import):
             os.remove(file_feat_import)
         f_out = open(file_feat_import, "wb")
@@ -562,7 +562,7 @@ class Processing():
         f_out.close()
         
         # Print in a file decision tree
-        file_decisiontree = os.path.dirname(self.raster_path[0]) + '/Decision_tree.dot'
+        file_decisiontree = os.path.dirname(str(self.raster_path[0])) + '/Decision_tree.dot'
         if os.path.exists(file_decisiontree):
             os.remove(file_decisiontree)
         
@@ -595,7 +595,7 @@ class Processing():
 
         # Compute zonal stats with multi processing
         exist_stats = 1 # By default, the stats file exists already
-        file_stats = os.path.dirname(self.raster_path[0]) + '/Stats_raster_spectral_texture.stats' # Stats backup file
+        file_stats = os.path.dirname(str(self.raster_path[0])) + '/Stats_raster_spectral_texture.stats' # Stats backup file
         if not os.path.exists(file_stats):
             exist_stats = 0 # The sats file doesn't exist
             # Open a stats backup to avoid computing again (Gain of time)
@@ -742,7 +742,7 @@ class Processing():
 
         # Compute zonal stats with multi processing
         exist_stats = 1 # By default, the stats file exists already
-        file_stats = os.path.dirname(self.raster_path[0]) + '/Stats_raster_spectral_texture.stats' # Stats backup file
+        file_stats = os.path.dirname(str(self.raster_path[0])) + '/Stats_raster_spectral_texture.stats' # Stats backup file
         if not os.path.exists(file_stats):
             exist_stats = 0 # The sats file doesn't exist
             # Open a stats backup to avoid computing again (Gain of time)
@@ -820,7 +820,7 @@ class Processing():
         # Variable to convert the input classname to an individual interger
         # Only for the validate sample
         class_validate = 0
-        complete_validate_shp = os.path.dirname(self.valid_shp[0][0]) + '/validate.shp'
+        complete_validate_shp = os.path.dirname(str(self.valid_shp[0][0])) + '/validate.shp'
         
         # TODO: Set this method in the Precision_moba class
         
@@ -853,7 +853,7 @@ class Processing():
                         process_tocall_merge =  ['ogr2ogr', '-overwrite', complete_validate_shp, val[0]]
                     elif class_validate > 0:
                         process_tocall_merge =  ['ogr2ogr', '-update', '-append', complete_validate_shp, \
-                                                 val[0], '-nln', os.path.basename(complete_validate_shp[:-4])]
+                                                 val[0], '-nln', os.path.basename(str(complete_validate_shp[:-4]))]
                     subprocess.call(process_tocall_merge)
             # Increrment variable
             class_validate = self.valid_shp.index(val) + 1

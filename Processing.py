@@ -248,7 +248,7 @@ class Processing():
         """
         
         self.folder_archive = self.captor_project + '_PoleTheia'
-        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive)
+        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive, self.w_proxy)
         self.check_download.decompress()
      
     def i_img_sat(self):

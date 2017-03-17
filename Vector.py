@@ -129,8 +129,7 @@ class Vector():
         ranking = kwargs['rank'] if kwargs.get('rank') else 0
         nb_img = kwargs['nb_img'] if kwargs.get('nb_img') else 1
 
-        
-        print(os.path.split(self.vector_used)[1] + ' stats on ' + os.path.split(inraster)[1])
+        print('Compute ' + os.path.split(str(self.vector_used))[1] + ' stats on ' + os.path.split(str(inraster))[1])
         stats = raster_stats(str(self.vector_used), str(inraster),  stats =['mean'], band_num=band)
         
         for i in range(len(stats)):
@@ -143,7 +142,7 @@ class Vector():
             temp[0][ranking] = stats[i].values()[1]
             self.stats_dict[i] = temp[0]
             
-        print('End of stats on ' + os.path.split(inraster)[1])
+        print('End of stats on ' + os.path.split(str(inraster))[1])
 
     def zonal_stats_pp(self, inraster):
         """

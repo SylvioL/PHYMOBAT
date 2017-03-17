@@ -275,19 +275,27 @@ class RasterSat_by_date():
         """
         Computer NDVI index for a Landsat image.
         
-        NDVI = band4 - band3 / band4 + band3
+        NDVI = band4 - band3 / band4 + band3 with nb_captor = 0
+        
+        or for Sentinel 2 image (2A) : NDVI = band3 - band2 / band3 + band2 with nb_captor = -1
         
         :param img_spec: Spectral image path
         :type img_spec: str
 
         """
         
+        # NDVI formula index for 2 captor (L8 or S2A Theia)
+        if self._class_archive._captor == 'SENTINEL2':
+            n_captor = -1
+        else :
+            n_captor = 0
+        
         # Extract raster's information
         data, in_ds = self.raster_data(img_spec)
         
         # Computer NDVI
         mask = np.greater(data[0], -10000)
-        ndvi = np.choose(mask, (-10000, eval('(data[4]-data[3])') / eval('(data[4]+data[3])'))) # If True, -10000 (NaN) else compute mathematical operation
+        ndvi = np.choose(mask, (-10000, eval('(data[4+n_captor]-data[3+n_captor])') / eval('(data[4+n_captor]+data[3+n_captor])'))) # If True, -10000 (NaN) else compute mathematical operation
         
         # Outfile name
         img_ndvi = img_spec[:-4] + '_ndvi.TIF'

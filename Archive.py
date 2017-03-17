@@ -57,7 +57,7 @@ class Archive():
         
         """
         self._captor = captor
-        self._list_year = [int(list_year)]
+        self._list_year = list_year.split(";")
         self._box = box
         self._folder = folder
         self._repertory = repertory
@@ -187,7 +187,7 @@ class Archive():
         :Example:
         
         >>> import Archive
-        >>> test = Archive(captor, list_year, box, folder, repertory) 
+        >>> test = Archive(captor, list_year, box, folder, repertory, proxy_enabled) 
         >>> coor_test = test.coord_box_dd()
         >>> coor_test
         '45.52, 2.25, 46.71, 3.27'
@@ -238,12 +238,18 @@ class Archive():
         print "Images availables"
         for year in self._list_year:
             
-            print "=============== " + str(year) + " ==============="
-            # Initialisation variable for a next page 
-            # There is a next page, next = 1
-            # There isn't next page, next = 0
-            next_ = 1
-            
+            first_date = year.split(',')[0]
+            # Tricks to put whether a year or a date (year-month-day)
+            try:
+                end_date = year.split(',')[1]
+                print "=============== " + str(first_date) + " to " + str(end_date) + " ==============="
+                self.url = self.server + '/' + self.resto + '/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&completionDate=' + str(end_date) + '&box=' + self.coord_box_dd() + '&maxRecord=500&startDate=' + str(first_date)
+
+            except IndexError:
+                print "=============== " + str(first_date) + " ==============="
+                self.url = self.server + '/' + self.resto + '/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
+
+            print self.url
             # Link to connect in the database JSON of the Theia plateform
 #             self.url = r'https://theia.cnes.fr/resto/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
             # Temporary link
@@ -252,14 +258,12 @@ class Archive():
 #             else:
 #                 self.url = r'https://theia-landsat.cnes.fr/resto/api/collections/'
             
-            self.url = self.server + '/' + self.resto + '/api/collections/' + self._captor + '/search.json?lang=fr&_pretty=true&q=' + str(year) + '&box=' + self.coord_box_dd() + '&maxRecord=500'
-            print self.url
+            # Initialisation variable for a next page 
+            # There is a next page, next = 1
+            # There isn't next page, next = 0
+            next_ = 1
             if not os.path.exists(self._folder + '/' + self._repertory):
-                os.mkdir(self._folder + '/' + self._repertory)           
-            
-            listing_repertory = self._repertory + '/' + str(year)
-            if not os.path.exists(self._folder + '/' + listing_repertory):
-                os.mkdir(self._folder + '/' + listing_repertory)
+                os.mkdir(self._folder + '/' + self._repertory)
                 
             # To know path to download images
             while next_ == 1:
@@ -283,7 +287,7 @@ class Archive():
                         link_archive = data_Dict['features'][d]['properties']['services']['download']['url'].replace("\\", "")
                         url_archive = link_archive.replace(self.resto, "rocket/#")
                         archive_download = url_archive.replace("/download", "") # Path to download
-                        out_archive = self._folder + '/' + listing_repertory + '/' + name_archive + '.tgz' # Name after download
+                        out_archive = self._folder + '/' + self._repertory + '/' + name_archive + '.tgz' # Name after download
                         self.list_archive.append([archive_download, out_archive, feature_id])  
                     
                     # Verify if there is another page (next)
@@ -371,17 +375,23 @@ class Archive():
         
         for annee in self._list_year:
             
-            print "=============== " + str(annee) + " ==============="
+            first_date = annee.split(',')[0]
+            # Tricks to put whether a year or a date (year-month-day)
+            try:
+                end_date = annee.split(',')[1]
+                print "=============== " + str(first_date) + " to " + str(end_date) + " ==============="
+            except IndexError:
+                print "=============== " + str(first_date) + " ==============="
             
             img_in_glob = []
-            img_in_glob = glob.glob(str(self._folder) + '/'+ str(self._repertory) +'/'+ str(annee) + '/*gz')
+            img_in_glob = glob.glob(str(self._folder) + '/'+ str(self._repertory) + '/*gz')
             
             if img_in_glob == []:
                 print "There isn't tgzfile in the folder"
                 sys.exit()
             else:
                 # Create a folder "Unpack"
-                folder_unpack = self._folder + '/' + self._repertory +'/'+ str(annee) + '/Unpack'
+                folder_unpack = self._folder + '/' + self._repertory + '/Unpack'
                 
                 if os.path.isdir(folder_unpack):
                     print('The folder already exists')

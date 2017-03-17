@@ -141,7 +141,7 @@ class RasterSat_by_date():
         group_ = np.transpose(np.array(group)) # Transpose matrix to extract path of images
         
         # Create a folder with images year if it doesn't exist
-        index_repertory_img = self._one_date[0]
+        index_repertory_img = self._class_archive._captor
         if not os.path.exists(self._class_archive._folder + '/' + self._big_folder + '/' + index_repertory_img):
             os.mkdir(self._class_archive._folder + '/' + self._big_folder + '/' + index_repertory_img)
         

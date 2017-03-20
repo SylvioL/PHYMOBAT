@@ -60,7 +60,7 @@ class PHYMOBAT(QMainWindow, Processing):
     Interface main class. It makes to link ``ui_PHYMOBAT_tab`` and ``Processing``.
     """
     
-    def __init__(self, mode = 1, parent=None):
+    def __init__(self, mode = 0, parent=None):
         super(PHYMOBAT, self).__init__(parent)
         Processing.__init__(self)
 

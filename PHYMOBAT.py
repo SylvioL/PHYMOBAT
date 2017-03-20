@@ -578,7 +578,7 @@ class PHYMOBAT(QMainWindow, Processing):
         self.ui.plainTextEdit_sample.insertPlainText("3 - Lingeux mixtes / denses\n")
         self.ui.plainTextEdit_sample.insertPlainText("\n")
         self.ui.plainTextEdit_sample.insertPlainText("\n")
-        self.ui.plainTextEdit_sample.insertPlainText("")
+        self.ui.plainTextEdit_sample.insertPlainText("")            
         
     def field_display_1(self):
         """
@@ -999,7 +999,7 @@ class PHYMOBAT(QMainWindow, Processing):
         self.out_ndvistats_folder_tab = defaultdict(list)
         
         Processing.__init__(self)# Initialize variable without to close and launch again the application
-            
+        
         # End of the processus
         endTime = time.time() # Tps : Terminé
         print '...........' + ' Outputted to File in ' + str(endTime - startTime) + ' secondes'
@@ -1051,6 +1051,23 @@ class PHYMOBAT(QMainWindow, Processing):
         except:
             print('Not username or password Theia')
         
+        self.f_proxy()
+        try:
+            pp = pr.find("Proxy[@id='Proxy']")
+            self.w_proxy.w_proxy.lineEdit_proxy.setText(pp.find("Proxy_adress").text)
+            try:
+                self.w_proxy.w_proxy.lineEdit_password_proxy.setText(pp.find("Proxy_login").text)
+            except TypeError:
+                pass
+            try:
+                self.w_proxy.w_proxy.lineEdit_login_proxy.setText(pp.find("Proxy_password").text)
+            except TypeError:
+                pass
+            self.w_proxy.id_proxy()
+        except AttributeError:
+            print('Not proxy')
+        self.w_proxy.close_window()
+            
         if self.mode == 1:
             if pr.find("Img_processing").text == '1':
                 self.ui.checkBox_processing.setChecked(True)
@@ -1220,6 +1237,21 @@ class PHYMOBAT(QMainWindow, Processing):
             
         ET.SubElement(doc, "Username", type = "str").text = "%s" % self.ui.lineEdit_user.text()
         ET.SubElement(doc, "Password", type = "str").text = "%s" % self.ui.lineEdit_password.text()
+        if self.w_proxy is None:
+            sub_proxy = ET.SubElement(doc, "Proxy", id="No_proxy")
+            ET.SubElement(sub_proxy, "Proxy_adress", type = "str").text = ""
+            ET.SubElement(sub_proxy, "Proxy_login", type = "str").text = ""
+            ET.SubElement(sub_proxy, "Proxy_password", type = "str").text = ""
+        elif self.w_proxy.proxy == "":
+            sub_proxy = ET.SubElement(doc, "Proxy", id="No_proxy")
+            ET.SubElement(sub_proxy, "Proxy_adress", type = "str").text = ""
+            ET.SubElement(sub_proxy, "Proxy_login", type = "str").text = ""
+            ET.SubElement(sub_proxy, "Proxy_password", type = "str").text = ""
+        else:
+            sub_proxy = ET.SubElement(doc, "Proxy", id="Proxy")
+            ET.SubElement(sub_proxy, "Proxy_adress", type = "str").text = "%s" % self.w_proxy.proxy
+            ET.SubElement(sub_proxy, "Proxy_login", type = "str").text = "%s" % self.w_proxy.login_proxy
+            ET.SubElement(sub_proxy, "Proxy_password", type = "str").text = "%s" % self.w_proxy.password_proxy
         
         if self.mode == 1:
             if self.ui.checkBox_processing.isChecked():

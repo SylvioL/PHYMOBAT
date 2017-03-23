@@ -3,31 +3,31 @@
 # 
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 #
-# PHYMOBAT 2.0 is free software: you can redistribute it and/or modify
+# PHYMOBAT 3.0 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 2.0 is distributed in the hope that it will be useful,
+# PHYMOBAT 3.0 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 2.0.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 3.0.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 Interface main, PHYMOBAT (FB PHYsionomiquedes Milieux Ouverts de Basse Altitude par Télédétection)
 
-__name__ = "PHYMOBAT 2.0"
+__name__ = "PHYMOBAT 3.0"
 
 __license__ = "GPL"
 
-__version__ = "2.0"
+__version__ = "3.0"
 
 __author__ = "LAVENTURE Sylvio - UMR TETIS / IRSTEA"
 
-__date__ = "Janvier 2016"
+__date__ = "Mars 2016"
 """
 
 import os, sys, time
@@ -1013,188 +1013,189 @@ class PHYMOBAT(QMainWindow, Processing):
         
         in_backup = QFileDialog.getOpenFileName(self, "Open backup", os.getcwd(), '*.xml')
         
-        # Parse the xml file
-        tree = ET.parse(str(in_backup))
-        
-        if tree.find("Multi_process").text == '1':
-            self.ui.checkBox_multiprocess.setChecked(True)
-        else:
-            self.ui.checkBox_multiprocess.setChecked(False)
-        
-        pr = tree.find("Tab[@id='Processing_raster']")
-        try:
-            self.ui.lineEdit_principal_folder.setText(pr.find("Principal_folder").text)
-        except:
-            print('Not principal folder')
-        if self.mode == 1:
-            index_captor = self.ui.comboBox_captor.findText(pr.find("Captor").text) # To find combo box index
-            self.ui.comboBox_captor.setCurrentIndex(index_captor)
-        try:
-            self.ui.lineEdit_year_images.setText(pr.find("Year_images").text)
-        except:
-            print('Not year images')
-        self.ui.lineEdit_area_path.setText(pr.find("Area_path").text)
-        
-        if self.mode == 1:
-            if pr.find("Images_available").text == '1':
-                self.ui.checkBox_listing.setChecked(True)
-            else:
-                self.ui.checkBox_listing.setChecked(False)
-            if pr.find("Download").text == '1':
-                self.ui.checkBox_download.setChecked(True)
-            else:
-                self.ui.checkBox_download.setChecked(False)
+        if in_backup != None and len(in_backup) > 0:
+            # Parse the xml file if the user choose a file
+            tree = ET.parse(str(in_backup))
             
-        try:
-            self.ui.lineEdit_user.setText(pr.find("Username").text)
-            self.ui.lineEdit_password.setText(pr.find("Password").text)
-        except:
-            print('Not username or password Theia')
-        
-        self.f_proxy()
-        try:
-            pp = pr.find("Proxy[@id='Proxy']")
-            self.w_proxy.w_proxy.lineEdit_proxy.setText(pp.find("Proxy_adress").text)
+            if tree.find("Multi_process").text == '1':
+                self.ui.checkBox_multiprocess.setChecked(True)
+            else:
+                self.ui.checkBox_multiprocess.setChecked(False)
+            
+            pr = tree.find("Tab[@id='Processing_raster']")
             try:
-                self.w_proxy.w_proxy.lineEdit_password_proxy.setText(pp.find("Proxy_login").text)
-            except TypeError:
-                pass
-            try:
-                self.w_proxy.w_proxy.lineEdit_login_proxy.setText(pp.find("Proxy_password").text)
-            except TypeError:
-                pass
-            self.w_proxy.id_proxy()
-        except AttributeError:
-            print('Not proxy')
-        self.w_proxy.close_window()
-            
-        if self.mode == 1:
-            if pr.find("Img_processing").text == '1':
-                self.ui.checkBox_processing.setChecked(True)
-            else:
-                self.ui.checkBox_processing.setChecked(False)
-            if pr.find("VHRS_checked").text == '1':
-                self.ui.checkBox_VHRS.setChecked(True)
-            else:
-                self.ui.checkBox_VHRS.setChecked(False)    
-            
-        try:
-            self.ui.lineEdit_VHRS.setText(pr.find("VHRS").text)
-        except:
-            print('Not VHRS image')
-            
-        if self.mode == 1:
-            if pr.find("MNT_checked").text == '1':
-                self.ui.checkBox_MNT.setChecked(True)
-            else:
-                self.ui.checkBox_MNT.setChecked(False)    
-            
-        try:
-            self.ui.lineEdit_MNT.setText(pr.find("MNT").text)
-        except:
-            print('Not MNT')
-            
-        ps = tree.find("Tab[@id='Processing_sample']")  
-        if self.mode == 1:
-            try:
-                for sple_n in ps.iter("Sample"):
-                    self.ui.lineEdit_sample_path.setText(sple_n.find("Sample_path").text)
-                    self.ui.lineEdit_select_sample_fieldname_1.setText(sple_n.find("Fieldname_1").text)
-                    self.ui.lineEdit_select_sample_fieldname_2.setText(sple_n.find("Fieldname_2").text)
-                    self.ui.lineEdit_select_sample_class_1.setText(sple_n.find("Classname_1").text)
-                    self.ui.lineEdit_select_sample_class_2.setText(sple_n.find("Classname_2").text)
-                    self.ui.lineEdit_select_sample_nb_poly.setText(sple_n.find("Nb_polygones").text)
-                    # Launch rpg method if the box is checked and if the shapefile hasn't go through rpg method (with prefix MONO_)
-                    if sple_n.find("RPG").text == '1' and os.path.split(sple_n.find("Sample_path").text)[1][:5] != 'MONO_':
-                        self.ui.checkBox_RPG.setChecked(True)
-                    try:
-                        if sple_n.find("Img_sample").text != "":
-                            self.ui.lineEdit_img_sample.setText(sple_n.find("Img_sample").text)
-                            self.ui.checkBox_img_sample.setChecked(True)
-                    except:
-                        print('Not sample raster only !')
-                    self.add_sample()
+                self.ui.lineEdit_principal_folder.setText(pr.find("Principal_folder").text)
             except:
-                print('Not sample')
-        elif self.mode ==0:
-            # RPG
-            sple_n = ps[0]
-            self.ui.lineEdit_sample_path.setText(sple_n.find("Sample_path").text)
-            self.ui.lineEdit_select_sample_fieldname_1.setText(sple_n.find("Fieldname_1").text)
-            self.ui.lineEdit_select_sample_fieldname_2.setText(sple_n.find("Fieldname_2").text)
-            self.ui.lineEdit_select_sample_class_1.setText(sple_n.find("Classname_1").text)
-            self.ui.lineEdit_select_sample_class_2.setText(sple_n.find("Classname_2").text)
-            self.ui.lineEdit_select_sample_nb_poly.setText(sple_n.find("Nb_polygones").text)
+                print('Not principal folder')
+            if self.mode == 1:
+                index_captor = self.ui.comboBox_captor.findText(pr.find("Captor").text) # To find combo box index
+                self.ui.comboBox_captor.setCurrentIndex(index_captor)
+            try:
+                self.ui.lineEdit_year_images.setText(pr.find("Year_images").text)
+            except:
+                print('Not year images')
+            self.ui.lineEdit_area_path.setText(pr.find("Area_path").text)
             
-            # To Grass/wooden
-            sple_n = ps[1]
-            self.ui.lineEdit_sample_path_2.setText(sple_n.find("Sample_path").text)
-            self.ui.lineEdit_select_sample_fieldname_3.setText(sple_n.find("Fieldname_1").text)
-            self.ui.lineEdit_select_sample_fieldname_4.setText(sple_n.find("Fieldname_2").text)
-            self.ui.lineEdit_select_sample_class_3.setText(sple_n.find("Classname_1").text)
-            self.ui.lineEdit_select_sample_class_4.setText(sple_n.find("Classname_2").text)
-            self.ui.lineEdit_select_sample_nb_poly_2.setText(sple_n.find("Nb_polygones").text)        
-            
-            # To wooden
-            sple_n = ps[2]
-            self.ui.lineEdit_sample_path_3.setText(sple_n.find("Sample_path").text)
-            self.ui.lineEdit_select_sample_fieldname_5.setText(sple_n.find("Fieldname_1").text)
-            self.ui.lineEdit_select_sample_fieldname_6.setText(sple_n.find("Fieldname_2").text)
-            self.ui.lineEdit_select_sample_class_5.setText(sple_n.find("Classname_1").text)
-            self.ui.lineEdit_select_sample_class_6.setText(sple_n.find("Classname_2").text)
-            self.ui.lineEdit_select_sample_nb_poly_3.setText(sple_n.find("Nb_polygones").text)
+            if self.mode == 1:
+                if pr.find("Images_available").text == '1':
+                    self.ui.checkBox_listing.setChecked(True)
+                else:
+                    self.ui.checkBox_listing.setChecked(False)
+                if pr.find("Download").text == '1':
+                    self.ui.checkBox_download.setChecked(True)
+                else:
+                    self.ui.checkBox_download.setChecked(False)
                 
-        if self.mode == 1:
-            if ps.find("Threshold_checked").text == '1':
-                self.ui.checkBox_threshold.setChecked(True)
-            else:
-                self.ui.checkBox_threshold.setChecked(False) 
-         
-        c = tree.find("Tab[@id='Classification']")
-        try:
-            self.ui.lineEdit_segmentation.setText(c.find("Segmentation_path").text)
-        except:
-            print('Not segmentation')
-        try:
-            self.ui.lineEdit_output.setText(c.find("Output_path").text)
-        except:
-            print('Not output file')
-        if self.mode == 1:
-            if len(c) == 5:
-                self.ui.checkBox_classifier_1.setChecked(True)
-                self.ui.lineEdit_fieldname_1.setText(c.find("Output_fieldname_1").text)
-                index_fieldname_1 = self.ui.comboBox_fieldname_1.findText(c.find("Output_type_1").text)        
-                self.ui.comboBox_fieldname_1.setCurrentIndex(index_fieldname_1)
-            elif len(c) == 7:
-                self.ui.checkBox_classifier_2.setChecked(True)
-                self.ui.lineEdit_fieldname_12.setText(c.find("Output_fieldname_1").text)
-                self.ui.lineEdit_fieldname_2.setText(c.find("Output_fieldname_2").text)
-                index_fieldname_12 = self.ui.comboBox_fieldname_12.findText(c.find("Output_type_1").text)        
-                self.ui.comboBox_fieldname_12.setCurrentIndex(index_fieldname_12)
-                index_fieldname_2 = self.ui.comboBox_fieldname_2.findText(c.find("Output_type_2").text)        
-                self.ui.comboBox_fieldname_2.setCurrentIndex(index_fieldname_2)
-            elif len(c) == 11:
-                self.ui.checkBox_classifier_3.setChecked(True)
-                self.ui.lineEdit_fieldname_13.setText(c.find("Output_fieldname_1").text)
-                self.ui.lineEdit_fieldname_23.setText(c.find("Output_fieldname_2").text)
-                self.ui.lineEdit_fieldname_3.setText(c.find("Output_fieldname_3").text)
-                self.ui.lineEdit_fieldname_4.setText(c.find("Output_fieldname_4").text)
-                index_fieldname_13 = self.ui.comboBox_fieldname_13.findText(c.find("Output_type_1").text)        
-                self.ui.comboBox_fieldname_13.setCurrentIndex(index_fieldname_13)
-                index_fieldname_23 = self.ui.comboBox_fieldname_23.findText(c.find("Output_type_2").text)        
-                self.ui.comboBox_fieldname_23.setCurrentIndex(index_fieldname_23)
-                index_fieldname_3 = self.ui.comboBox_fieldname_3.findText(c.find("Output_type_3").text)        
-                self.ui.comboBox_fieldname_3.setCurrentIndex(index_fieldname_3)
-                index_fieldname_4 = self.ui.comboBox_fieldname_4.findText(c.find("Output_type_4").text)        
-                self.ui.comboBox_fieldname_4.setCurrentIndex(index_fieldname_4)
+            try:
+                self.ui.lineEdit_user.setText(pr.find("Username").text)
+                self.ui.lineEdit_password.setText(pr.find("Password").text)
+            except:
+                print('Not username or password Theia')
             
-            # Classification mode
-            if c.find("Classification_method").text == '1':
-                self.ui.radioButton_rf.setChecked(True)
-            else:
-                self.ui.radioButton_s.setChecked(True)
-            
-        print("Load input text !")
+            self.f_proxy()
+            try:
+                pp = pr.find("Proxy[@id='Proxy']")
+                self.w_proxy.w_proxy.lineEdit_proxy.setText(pp.find("Proxy_adress").text)
+                try:
+                    self.w_proxy.w_proxy.lineEdit_password_proxy.setText(pp.find("Proxy_login").text)
+                except TypeError:
+                    pass
+                try:
+                    self.w_proxy.w_proxy.lineEdit_login_proxy.setText(pp.find("Proxy_password").text)
+                except TypeError:
+                    pass
+                self.w_proxy.id_proxy()
+            except AttributeError:
+                print('Not proxy')
+            self.w_proxy.close_window()
+                
+            if self.mode == 1:
+                if pr.find("Img_processing").text == '1':
+                    self.ui.checkBox_processing.setChecked(True)
+                else:
+                    self.ui.checkBox_processing.setChecked(False)
+                if pr.find("VHRS_checked").text == '1':
+                    self.ui.checkBox_VHRS.setChecked(True)
+                else:
+                    self.ui.checkBox_VHRS.setChecked(False)    
+                
+            try:
+                self.ui.lineEdit_VHRS.setText(pr.find("VHRS").text)
+            except:
+                print('Not VHRS image')
+                
+            if self.mode == 1:
+                if pr.find("MNT_checked").text == '1':
+                    self.ui.checkBox_MNT.setChecked(True)
+                else:
+                    self.ui.checkBox_MNT.setChecked(False)    
+                
+            try:
+                self.ui.lineEdit_MNT.setText(pr.find("MNT").text)
+            except:
+                print('Not MNT')
+                
+            ps = tree.find("Tab[@id='Processing_sample']")  
+            if self.mode == 1:
+                try:
+                    for sple_n in ps.iter("Sample"):
+                        self.ui.lineEdit_sample_path.setText(sple_n.find("Sample_path").text)
+                        self.ui.lineEdit_select_sample_fieldname_1.setText(sple_n.find("Fieldname_1").text)
+                        self.ui.lineEdit_select_sample_fieldname_2.setText(sple_n.find("Fieldname_2").text)
+                        self.ui.lineEdit_select_sample_class_1.setText(sple_n.find("Classname_1").text)
+                        self.ui.lineEdit_select_sample_class_2.setText(sple_n.find("Classname_2").text)
+                        self.ui.lineEdit_select_sample_nb_poly.setText(sple_n.find("Nb_polygones").text)
+                        # Launch rpg method if the box is checked and if the shapefile hasn't go through rpg method (with prefix MONO_)
+                        if sple_n.find("RPG").text == '1' and os.path.split(sple_n.find("Sample_path").text)[1][:5] != 'MONO_':
+                            self.ui.checkBox_RPG.setChecked(True)
+                        try:
+                            if sple_n.find("Img_sample").text != "":
+                                self.ui.lineEdit_img_sample.setText(sple_n.find("Img_sample").text)
+                                self.ui.checkBox_img_sample.setChecked(True)
+                        except:
+                            print('Not sample raster only !')
+                        self.add_sample()
+                except:
+                    print('Not sample')
+            elif self.mode ==0:
+                # RPG
+                sple_n = ps[0]
+                self.ui.lineEdit_sample_path.setText(sple_n.find("Sample_path").text)
+                self.ui.lineEdit_select_sample_fieldname_1.setText(sple_n.find("Fieldname_1").text)
+                self.ui.lineEdit_select_sample_fieldname_2.setText(sple_n.find("Fieldname_2").text)
+                self.ui.lineEdit_select_sample_class_1.setText(sple_n.find("Classname_1").text)
+                self.ui.lineEdit_select_sample_class_2.setText(sple_n.find("Classname_2").text)
+                self.ui.lineEdit_select_sample_nb_poly.setText(sple_n.find("Nb_polygones").text)
+                
+                # To Grass/wooden
+                sple_n = ps[1]
+                self.ui.lineEdit_sample_path_2.setText(sple_n.find("Sample_path").text)
+                self.ui.lineEdit_select_sample_fieldname_3.setText(sple_n.find("Fieldname_1").text)
+                self.ui.lineEdit_select_sample_fieldname_4.setText(sple_n.find("Fieldname_2").text)
+                self.ui.lineEdit_select_sample_class_3.setText(sple_n.find("Classname_1").text)
+                self.ui.lineEdit_select_sample_class_4.setText(sple_n.find("Classname_2").text)
+                self.ui.lineEdit_select_sample_nb_poly_2.setText(sple_n.find("Nb_polygones").text)        
+                
+                # To wooden
+                sple_n = ps[2]
+                self.ui.lineEdit_sample_path_3.setText(sple_n.find("Sample_path").text)
+                self.ui.lineEdit_select_sample_fieldname_5.setText(sple_n.find("Fieldname_1").text)
+                self.ui.lineEdit_select_sample_fieldname_6.setText(sple_n.find("Fieldname_2").text)
+                self.ui.lineEdit_select_sample_class_5.setText(sple_n.find("Classname_1").text)
+                self.ui.lineEdit_select_sample_class_6.setText(sple_n.find("Classname_2").text)
+                self.ui.lineEdit_select_sample_nb_poly_3.setText(sple_n.find("Nb_polygones").text)
+                    
+            if self.mode == 1:
+                if ps.find("Threshold_checked").text == '1':
+                    self.ui.checkBox_threshold.setChecked(True)
+                else:
+                    self.ui.checkBox_threshold.setChecked(False) 
+             
+            c = tree.find("Tab[@id='Classification']")
+            try:
+                self.ui.lineEdit_segmentation.setText(c.find("Segmentation_path").text)
+            except:
+                print('Not segmentation')
+            try:
+                self.ui.lineEdit_output.setText(c.find("Output_path").text)
+            except:
+                print('Not output file')
+            if self.mode == 1:
+                if len(c) == 5:
+                    self.ui.checkBox_classifier_1.setChecked(True)
+                    self.ui.lineEdit_fieldname_1.setText(c.find("Output_fieldname_1").text)
+                    index_fieldname_1 = self.ui.comboBox_fieldname_1.findText(c.find("Output_type_1").text)        
+                    self.ui.comboBox_fieldname_1.setCurrentIndex(index_fieldname_1)
+                elif len(c) == 7:
+                    self.ui.checkBox_classifier_2.setChecked(True)
+                    self.ui.lineEdit_fieldname_12.setText(c.find("Output_fieldname_1").text)
+                    self.ui.lineEdit_fieldname_2.setText(c.find("Output_fieldname_2").text)
+                    index_fieldname_12 = self.ui.comboBox_fieldname_12.findText(c.find("Output_type_1").text)        
+                    self.ui.comboBox_fieldname_12.setCurrentIndex(index_fieldname_12)
+                    index_fieldname_2 = self.ui.comboBox_fieldname_2.findText(c.find("Output_type_2").text)        
+                    self.ui.comboBox_fieldname_2.setCurrentIndex(index_fieldname_2)
+                elif len(c) == 11:
+                    self.ui.checkBox_classifier_3.setChecked(True)
+                    self.ui.lineEdit_fieldname_13.setText(c.find("Output_fieldname_1").text)
+                    self.ui.lineEdit_fieldname_23.setText(c.find("Output_fieldname_2").text)
+                    self.ui.lineEdit_fieldname_3.setText(c.find("Output_fieldname_3").text)
+                    self.ui.lineEdit_fieldname_4.setText(c.find("Output_fieldname_4").text)
+                    index_fieldname_13 = self.ui.comboBox_fieldname_13.findText(c.find("Output_type_1").text)        
+                    self.ui.comboBox_fieldname_13.setCurrentIndex(index_fieldname_13)
+                    index_fieldname_23 = self.ui.comboBox_fieldname_23.findText(c.find("Output_type_2").text)        
+                    self.ui.comboBox_fieldname_23.setCurrentIndex(index_fieldname_23)
+                    index_fieldname_3 = self.ui.comboBox_fieldname_3.findText(c.find("Output_type_3").text)        
+                    self.ui.comboBox_fieldname_3.setCurrentIndex(index_fieldname_3)
+                    index_fieldname_4 = self.ui.comboBox_fieldname_4.findText(c.find("Output_type_4").text)        
+                    self.ui.comboBox_fieldname_4.setCurrentIndex(index_fieldname_4)
+                
+                # Classification mode
+                if c.find("Classification_method").text == '1':
+                    self.ui.radioButton_rf.setChecked(True)
+                else:
+                    self.ui.radioButton_s.setChecked(True)
+                
+            print("Load input text !")
         
     def save_backup(self):
         """

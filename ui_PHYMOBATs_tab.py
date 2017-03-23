@@ -383,7 +383,7 @@ class Ui_PHYMOBAT(object):
         PHYMOBAT.setTabOrder(self.lineEdit_output, self.pushButton_browser_output)
 
     def retranslateUi(self, PHYMOBAT):
-        PHYMOBAT.setWindowTitle(_translate("PHYMOBAT", "PHYMOBATs 2.0", None))
+        PHYMOBAT.setWindowTitle(_translate("PHYMOBAT", "PHYMOBATs 3.0", None))
         self.checkBox_multiprocess.setText(_translate("PHYMOBAT", "Multi-processing", None))
         self.label_select_sample_nb_poly_3.setText(_translate("PHYMOBAT", "<html><head/><body><p>Nbre de polygones</p></body></html>", None))
         self.label_select_sample_class_6.setText(_translate("PHYMOBAT", "Classes", None))

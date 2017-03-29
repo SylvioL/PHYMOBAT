@@ -21,9 +21,9 @@ import sys, os, math
 import numpy as np
 from Vector import Vector
 try :
-    import ogr
+    import ogr, gdal
 except :
-    from osgeo import ogr
+    from osgeo import ogr, gdal
 from collections import *
 
 class Segmentation(Vector):
@@ -57,6 +57,8 @@ class Segmentation(Vector):
     :type max_...: float
     :param class_tab_final: Final decision tree table
     :type class_tab_final: dict
+    :param stats_rpg_tif: Dictionnary with pxl percent in every polygon of class RPG. Mainly 'Maj_count' (Majority Value) and 'Maj_count_perc' (Majority Percent)
+    :type stats_rpg_tif: dict
     """
     
     def __init__(self, used, cut):
@@ -65,6 +67,7 @@ class Segmentation(Vector):
         """
         Vector.__init__(self, used, cut)
         
+        self.stats_rpg_tif = {}
         self.output_file =  'Final_classification.shp'
         
         self.out_class_name = []
@@ -88,15 +91,16 @@ class Segmentation(Vector):
         :type out_fieldtype: list of str
         """
         
+        shp_ogr_ds = self.data_source
         shp_ogr = self.data_source.GetLayer()
-        
+                        
         # Projection
         # Import input shapefile projection
         srsObj = shp_ogr.GetSpatialRef()
         # Conversion to syntax ESRI
         srsObj.MorphToESRI()
-            
-        ## Remove the output shapefile if it exists
+        
+        ## Remove the output final shapefile if it exists
         self.vector_used = self.output_file
         if os.path.exists(self.vector_used):
             self.data_source.GetDriver().DeleteDataSource(self.vector_used)
@@ -110,6 +114,10 @@ class Segmentation(Vector):
         out_layer = out_ds.CreateLayer(str(self.vector_used), srsObj, geom_type=ogr.wkbMultiPolygon)
         
         # Add new fields
+        # To add RPG_CODE field
+        out_fieldnames.insert(2,'RPG_CODE')
+        out_fieldtype.insert(2,ogr.OFTInteger)
+        # To add the others
         for i in range(0, len(out_fieldnames)):
             fieldDefn = ogr.FieldDefn(str(out_fieldnames[i]), out_fieldtype[i])
             out_layer.CreateField(fieldDefn)
@@ -126,6 +134,7 @@ class Segmentation(Vector):
         
         in_feature = shp_ogr.SetNextByIndex(0) # Polygons initialisation
         in_feature = shp_ogr.GetNextFeature()
+        
         # Loop on input polygons
         while in_feature:
             
@@ -140,31 +149,40 @@ class Segmentation(Vector):
             out_feature.SetField(out_fieldnames[0], in_feature.GetField(self.field_names[2]))
             # Set the area
             out_feature.SetField(out_fieldnames[1], geom.GetArea()/10000)
+            
+            # Set the RPG column
+            recouv_crops_RPG = 0
+            pourc_inter = self.stats_rpg_tif[in_feature.GetFID()]['Maj_count_perc']
+            if pourc_inter >= 85:
+                recouv_crops_RPG = self.stats_rpg_tif[in_feature.GetFID()]['Maj_count']
+               
+            out_feature.SetField('RPG_CODE', int(recouv_crops_RPG))
+            
             # Set the others polygons fields with the decision tree dictionnary
-            for i in range(2, len(out_fieldnames)):
+            for i in range(3, len(out_fieldnames)):
                 # If list stopped it on the second level, complete by empty case
-                if len(self.class_tab_final[in_feature.GetFID()]) < len(out_fieldnames)-2 and \
+                if len(self.class_tab_final[in_feature.GetFID()]) < len(out_fieldnames)-3 and \
                                                     self.class_tab_final[in_feature.GetFID()] != []:
-                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-2,'') # To 3rd level
-                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-2,0) # To degree
-                 
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-3,'') # To 3rd level
+                    self.class_tab_final[in_feature.GetFID()].insert(len(self.class_tab_final[in_feature.GetFID()])-3,0) # To degree
+                    
                 try:
                     # To the confusion matrix, replace level ++ by level --
                     if i == len(out_fieldnames)-1:
-                        if self.class_tab_final[in_feature.GetFID()][i-2] == 6:
+                        if self.class_tab_final[in_feature.GetFID()][i-3] == 6:
                             # Crops to artificial vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-2] = 0
-                        if self.class_tab_final[in_feature.GetFID()][i-2] == 2:
-                            # Grassland to natural vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-2] = 1
-                        if self.class_tab_final[in_feature.GetFID()][i-2] > 7:
+                            self.class_tab_final[in_feature.GetFID()][i-4] = 0
+#                         if self.class_tab_final[in_feature.GetFID()][i-3] == 2:
+#                             # Grassland to natural vegetation
+#                             self.class_tab_final[in_feature.GetFID()][i-3] = 1
+                        if self.class_tab_final[in_feature.GetFID()][i-3] > 7:
                             # Phytomass to natural vegetation
-                            self.class_tab_final[in_feature.GetFID()][i-2] = 1
+                            self.class_tab_final[in_feature.GetFID()][i-4] = 1
                             
-                    out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-2])
+                    out_feature.SetField(str(out_fieldnames[i]), self.class_tab_final[in_feature.GetFID()][i-3])
                 except:
 #                     pass
-                    for i in range(2, len(out_fieldnames)-2):
+                    for i in range(3, len(out_fieldnames)-3):
                         out_feature.SetField(str(out_fieldnames[i]), 'Undefined')
                     out_feature.SetField('FBPHY_CODE', 255)
                     out_feature.SetField('FBPHY_SUB', 255)
@@ -230,29 +248,45 @@ class Segmentation(Vector):
                                                            [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]] + \
                                                            [combin_tree[cond_tab.index(cond)][len(combin_tree[cond_tab.index(cond)])-1]]
     
-    def compute_biomass_density(self):
+    def compute_biomass_density(self, method='SEATH'):
         """
         Function to compute the biomass and density distribution.
         It returns threshold of biomass level.
         
+        :param method: Classification method used. It can set 'SEATH' (by default) or 'RF'
+        :type method: str
         """
         
-        distri = [v[1:] for k, v in self.stats_dict.items() if eval('v[0]' + self.out_threshold[1])]
-        
-        distri_bio = []
-        distri_den = []
-        for b in distri:
-            if eval('b[0]' + self.out_threshold[2]) and b[len(b)-1] != float('inf') and b[len(b)-1] != float('nan') and b[len(b)-1] < 1:
-                distri_bio.append(b)
-            else:
-                distri_den.append(b)
-        # Tranpose table        
+        if method == 'SEATH':
+            distri = [v[1:] for k, v in self.stats_dict.items() if eval('v[0]' + self.out_threshold[1])]
+            
+            distri_bio = []
+            distri_den = []
+            for b in distri:
+                if eval('b[0]' + self.out_threshold[2]) and b[len(b)-1] != float('inf') and b[len(b)-1] != float('nan') and b[len(b)-1] < 1:
+                    distri_bio.append(b)
+                else:
+                    distri_den.append(b)
+        elif method == 'RF':
+            distri = [v[1:] for k, v in self.stats_dict.items() if not self.out_threshold[k] in [0,6,7]]
+            
+            distri_bio = []
+            distri_den = []
+            for b in distri:
+                if self.out_threshold[distri.index(b)] in [1,2,8,9,10] and b[len(b)-1] != -10000 and b[len(b)-1] < 1:
+                    distri_bio.append(b)
+                else:
+                    distri_den.append(b)
+
+            # Set this variable used normally to define threshold of the classification with SEATH method
+            self.out_threshold = []
+        # Transpose table        
         t_distri_bio = list(map(list, zip(*distri_bio)))
         t_distri_den = list(map(list, zip(*distri_den)))
         
         # Biomass threshold
-        stdmore =  np.mean(t_distri_bio[2]) + np.std(t_distri_bio[2])
-        stdless =  np.mean(t_distri_bio[2]) - np.std(t_distri_bio[2])
+        stdmore =  (np.mean(t_distri_bio[2]) + np.std(t_distri_bio[2]))/np.max(t_distri_bio[2])
+        stdless =  (np.mean(t_distri_bio[2]) - np.std(t_distri_bio[2]))/np.max(t_distri_bio[2])
         self.out_threshold.append('>'+str(stdmore))
         self.out_threshold.append('')
         self.out_threshold.append('<'+str(stdless))
@@ -279,6 +313,24 @@ class Segmentation(Vector):
             try:
                 if self.class_tab_final[ind_stats][1] == select_class:
                     self.class_tab_final[ind_stats].insert(len(self.class_tab_final[ind_stats])-2,eval(form))
+                    # To add phytomasse
+                    try :
+                        if self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] == '' and \
+                            self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-2] != '':
+                            # dict[][A.index(real_pourcent)-1] == '' and dict[][A.index(real_pourcent)-2] != ''
+                            # Print phytomasse class in the tab because of self.in_class_name in the Processing class
+                            if not eval(form + self.out_threshold[0]) and not eval(form + self.out_threshold[2]):
+                                self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[9]
+                                self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 9
+                            elif eval(form + self.out_threshold[0]):
+                                self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[8]
+                                self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 8
+                            elif eval(form + self.out_threshold[2]):
+                                self.class_tab_final[ind_stats][self.class_tab_final[ind_stats].index(eval(form))-1] = self.out_class_name[10]
+                                self.class_tab_final[ind_stats][len(self.class_tab_final[ind_stats])-1] = 10
+                    except ValueError:
+                        pass
+                        
             except IndexError:
                 pass
                 

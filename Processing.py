@@ -1,31 +1,33 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.2.
+# This file is part of PHYMOBAT 2.0.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
+# PHYMOBAT 2.0 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
+# PHYMOBAT 2.0 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 2.0.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, sys
+import os, sys, math
 import numpy as np
 import subprocess
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import tree
 try :
     import ogr, gdal
 except :
     from osgeo import ogr, gdal
 
-from Toolbox import *
+from Toolbox import Toolbox
 from Seath import Seath
 from Precision_moba import Precision_moba
 # Class group image
@@ -129,6 +131,8 @@ class Processing():
         self.path_segm = ''
         self.output_name_moba = ''
         
+        self.w_proxy = None # For the "Proxy window"
+        
         # Id information to download on theia platform
         self.user = ''
         self.password = ''
@@ -192,6 +196,12 @@ class Processing():
         # Validation shapefiles information
         self.valid_shp = []
         
+        # Radom Forest Model
+        # Set the parameters of this random forest from the estimator 
+        self.rf = RandomForestClassifier(n_estimators=500, criterion='gini', max_depth=None, min_samples_split=2, \
+                                        min_samples_leaf=1, max_features='auto', \
+                                        bootstrap=True, oob_score=True)
+        
     def i_tree_direction(self):
         
         """
@@ -221,7 +231,7 @@ class Processing():
         """
         
         self.folder_archive = self.captor_project + '_PoleTheia'
-        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive)
+        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive, self.w_proxy)
         self.check_download.listing()
         self.nb_avalaible_images = len(self.check_download.list_archive)
         # check_download.set_list_archive_to_try(check_download.list_archive[:3])
@@ -238,7 +248,7 @@ class Processing():
         """
         
         self.folder_archive = self.captor_project + '_PoleTheia'
-        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive)
+        self.check_download = Archive(self.captor_project, self.classif_year, self.path_area, self.path_folder_dpt, self.folder_archive, self.w_proxy)
         self.check_download.decompress()
      
     def i_img_sat(self):
@@ -266,8 +276,16 @@ class Processing():
         # Clip archive images and modify Archive class to integrate clip image path
         for clip in self.check_download.list_img:
             clip_index = self.check_download.list_img.index(clip)
-            self.check_download.list_img[clip_index][3] = clip_raster(clip[3], self.path_area) # Multispectral images
-            self.check_download.list_img[clip_index][4] = clip_raster(clip[4], self.path_area) # Cloud images
+            
+            current_list = Toolbox()
+            current_list.imag = clip[3]
+            current_list.vect = self.path_area
+            current_list.check_proj() # Check if projection is RFG93 
+            self.check_download.list_img[clip_index][3] = current_list.clip_raster() # Multispectral images
+            
+            current_list.imag = clip[4]
+            current_list.check_proj() # Check if projection is RFG93 
+            self.check_download.list_img[clip_index][4] = current_list.clip_raster() # Cloud images
            
         # Images pre-processing
         spectral_out = []
@@ -281,25 +299,25 @@ class Processing():
             if cl > 0.60:
                 check_L8.calcul_ndvi(check_L8._one_date[3])
                 spectral_out.append(check_L8._one_date)
-        
+
         # Compute temporal stats on ndvi index [min, max, std, min-max]
         spectral_trans = np.transpose(np.array(spectral_out, dtype=object))
-        stats_name = ['Min', 'Max', 'Std', 'MaxMin']
-        stats_ndvi, stats_cloud = calc_serie_stats(spectral_trans)
-
+        stats_name = ['Min', 'Date', 'Max', 'Std', 'MaxMin']
+        stats_ndvi, stats_cloud = current_list.calc_serie_stats(spectral_trans)
+        
         # Create stats ndvi raster and stats cloud raster
-        stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [int(self.classif_year)])
+        stats_L8 = RasterSat_by_date(self.check_download, self.folder_processing, [0])
         # Stats cloud raster
-        out_cloud_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
-                           '/Cloud_number_' + self.classif_year + '.TIF'
+        out_cloud_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.captor_project + \
+                           '/Cloud_number_' + self.captor_project + '.TIF'
         stats_L8.complete_raster(stats_L8.create_raster(out_cloud_folder, stats_cloud, \
                                                          stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
                                  stats_cloud)
         
         # Stats ndvi rasters        
         for stats_index in range(len(stats_ndvi)):
-            out_ndvistats_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.classif_year + \
-                           '/' + stats_name[stats_index] + '_' + self.classif_year + '.TIF'
+            out_ndvistats_folder = stats_L8._class_archive._folder + '/' + stats_L8._big_folder + '/' + self.captor_project + \
+                           '/' + stats_name[stats_index] + '_' + self.captor_project + '.TIF'
             self.out_ndvistats_folder_tab[stats_index] = out_ndvistats_folder
             stats_L8.complete_raster(stats_L8.create_raster(out_ndvistats_folder, stats_ndvi[stats_index], \
                                                             stats_L8.raster_data(self.check_download.list_img[0][4])[1]), \
@@ -312,19 +330,28 @@ class Processing():
  
         """
         
-        path_mnt = clip_raster(self.path_mnt, self.path_area)
+        current_path_mnt = Toolbox()
+        current_path_mnt.imag = self.path_mnt
+        current_path_mnt.vect = self.path_area
+        path_mnt = current_path_mnt.clip_raster()
+        
         study_slope = Slope(path_mnt)
         study_slope.extract_slope()# Call this function to compute slope raster
         self.path_mnt = study_slope.out_mnt
     
-    def i_vhrs(self):#, vs):  
+    def i_vhrs(self):#, vs):
         """
         Interface function to processing VHRS images. It create two OTB texture images :func:`Vhrs.Vhrs` : SFS Texture and Haralick Texture
+	
         """
-  
+
         # Create texture image
         # Clip orthography image 
-        path_ortho = clip_raster(self.path_ortho, self.path_area)
+        current_path_ortho = Toolbox()
+        current_path_ortho.imag = self.path_ortho
+        current_path_ortho.vect = self.path_area
+        path_ortho = current_path_ortho.clip_raster()
+        
         texture_irc = Vhrs(path_ortho, self.mp)
         self.out_ndvistats_folder_tab['sfs'] = texture_irc.out_sfs
         self.out_ndvistats_folder_tab['haralick'] = texture_irc.out_haralick
@@ -335,7 +362,7 @@ class Processing():
         Interface function to launch processing VHRS images :func:`i_vhrs` and satellite images :func:`i_img_sat` in multi-processing.
         
         :param vs: Boolean variable to launch processing because of interface checkbox -> 0 or 1.
-    
+        
             - 0 means, not texture processing
             - 1 means, launch texture processing
         :type vs: int
@@ -376,7 +403,7 @@ class Processing():
             self.raster_path.append(self.path_mnt)
             self.list_band_outraster.append(1)
             
-        self.raster_path.append(self.out_ndvistats_folder_tab[1])
+        self.raster_path.append(self.out_ndvistats_folder_tab[2])
         # example raster path tab :
         #                [path_folder_dpt + '/' + folder_processing + '/' + classif_year + '/Min_2014.TIF',\
         #                os.path.dirname(path_ortho) + '/Clip_buffer_surface_dep_18_IRCOrtho65_2m_sfs.TIF',\
@@ -387,8 +414,7 @@ class Processing():
         self.list_band_outraster.append(1) #[1, 4, 2, 1]
         
         print("End of images processing !")
-
-
+        
     def i_rpg(self, path_rpg): 
         """
         Interface function to extract mono rpg crops.
@@ -401,17 +427,20 @@ class Processing():
                
         # Extract mono rpg crops
         mono_sample = Rpg(path_rpg, self.path_area)
-        mono_sample.mono_rpg()
-        mono_sample.create_new_rpg_files()
+        # If exists, do not create a mono rpg file
+        if os.path.basename(str(path_rpg))[:5]!='MONO_':
+            mono_sample.mono_rpg()
+            mono_sample.create_new_rpg_files()
+        else:
+            print('MONO RPG file exists already !!!')
         print('End of RPG processing')
         
         return mono_sample.vector_used
          
-        
     def i_sample(self):
         """
-        Interface function to compute threshold with various sample. It also extract a validation layer (shapefile) to compute
-        the precision of the next classification :func:`i_validate`. 
+        Interface function to compute threshold with various sample. It also extract a list of validation layer (shapefile) 
+        to compute the precision of the next classification :func:`i_validate`. 
         
         It create samples 2 by 2 with kwargs field names and class :func:`Sample.Sample.create_sample`. 
         Then, it compute zonal statistics by polygons :func:`Vector.Sample.zonal_stats`.
@@ -439,7 +468,7 @@ class Processing():
                     
                     # Add the validation shapefile
                     self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
-
+                
                 # Search the optimal threshold by class 
                 # Open a text file to print stats of Seath method
                 file_J = self.path_folder_dpt + '/log_J.lg'
@@ -466,23 +495,209 @@ class Processing():
     
     def i_sample_rf(self):
         """
-        
+        This function build a random forest trees like model to create a final classification.
+        All of This using the method described in the :func:`i_validate` function and because
+        of sklearn module.
         """
         
-        sample_rd = {}
+        X_rf = []
+        y_rf = []
+        sample_rd = {}            
+        # Tricks to add all textural indexes
+        rm_index = 1
+        self.raster_path.remove(self.raster_path[rm_index]) # Remove SFS layer
+        self.raster_path.remove(self.raster_path[rm_index]) # Remove Haralick layer
+        self.list_band_outraster.remove(self.list_band_outraster[rm_index]) # Remove band of the layer
+        self.list_band_outraster.remove(self.list_band_outraster[rm_index]) # Remove band of the layer
+        # Add all layers in the simple index haralick
+        for add_layer in range(8):
+            self.raster_path.insert(add_layer+1, self.out_ndvistats_folder_tab['haralick'])
+            self.list_band_outraster.insert(add_layer+1, add_layer+1)
+        # Add all layers in the SFS index
+        for add_layer in range(6):
+            self.raster_path.insert(add_layer+1, self.out_ndvistats_folder_tab['sfs'])
+            self.list_band_outraster.insert(add_layer+1, add_layer+1)
+            
+        # Extract value mean from polygons
         for sple in range(len(self.sample_name) * 2):
             kwargs = {}
             kwargs['fieldname'] = self.fieldname_args[sple]
             kwargs['class'] = self.class_args[sple]
             sample_rd[sple] = Sample(self.sample_name[sple/2], self.path_area, self.list_nb_sample[sple/2])
             sample_rd[sple].create_sample(**kwargs)
-            sample_rd[sple].zonal_stats((self.raster_path[sple/2], self.list_band_outraster[sple/2]))
+            
+            # Add the validation shapefile
+            self.valid_shp.append([sample_rd[sple].vector_val, kwargs['fieldname'], kwargs['class']])
 
-    def i_classifier(self): 
+            for lbo in range(len(self.raster_path)):
+                kwargs['rank'] = lbo
+                kwargs['nb_img'] = len(self.raster_path)
+                sample_rd[sple].zonal_stats((self.raster_path[lbo], self.list_band_outraster[lbo]), **kwargs)
+            
+            # To convert the dictionnary in a list
+            for key, value in sample_rd[sple].stats_dict.iteritems():
+#                 X_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value])
+                # To set the grassland class of the RPG and PIAO (same class)            
+                if sple == 2:
+#                     y_rf.append(1)
+                    pass
+                elif sple == 3:
+#                     y_rf.append(4)
+                    pass
+                else:
+                    y_rf.append(sple)
+                    X_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value])
+                    
+        # Build a forest of trees from the samples                 
+        self.rf = self.rf.fit(X_rf, y_rf)
+        
+        # Print in a file feature important
+        importance = self.rf.feature_importances_
+        importance = [(importance[x],x+1) for x in range(len(importance))]
+        importance.sort()
+        
+        file_feat_import = os.path.dirname(str(self.raster_path[0])) + '/Feature_important_RF.ft'
+        if os.path.exists(file_feat_import):
+            os.remove(file_feat_import)
+        f_out = open(file_feat_import, "wb")
+        f_out.write(str(importance))
+        # Close the output file
+        f_out.close()
+        
+        # Print in a file decision tree
+        file_decisiontree = os.path.dirname(str(self.raster_path[0])) + '/Decision_tree.dot'
+        if os.path.exists(file_decisiontree):
+            os.remove(file_decisiontree)
+        
+        tree_in_forest = self.rf.estimators_[499]
+        with open(file_decisiontree, 'w') as my_file:
+            my_file = tree.export_graphviz(tree_in_forest, out_file = my_file)
+
+    def i_classifier_rf(self): 
+        """
+        Interface function to launch random forest classification with a input segmentation :func:`Segmentation.Segmentation`.
+        
+        This function use the sklearn module to build the best of decision tree to extract classes.
+        The optimal threshold are stored by class **rf** variable in :func:`Processing.i_sample_rf`. Then it computes zonal statistics by polygons
+        for every images in multi-processing (if **mp** = 1).
+        """
+        
+        # Multiprocessing
+        mgr = BaseManager()
+        mgr.register('defaultdict', defaultdict, DictProxy)
+        mgr.start()
+        multi_process_var = [] # Multi processing variable
+          
+        # Extract final cartography
+        out_carto = Segmentation(self.path_segm, self.path_area) 
+        out_carto.output_file = self.output_name_moba
+        out_carto.out_class_name = self.in_class_name
+#         out_carto.out_threshold = []
+        for ind_th in range(len(self.raster_path)):
+            multi_process_var.append([self.raster_path[ind_th], self.list_band_outraster[ind_th]])
+
+        # Compute zonal stats with multi processing
+        exist_stats = 1 # By default, the stats file exists already
+        file_stats = os.path.dirname(str(self.raster_path[0])) + '/Stats_raster_spectral_texture.stats' # Stats backup file
+        if not os.path.exists(file_stats):
+            exist_stats = 0 # The sats file doesn't exist
+            # Open a stats backup to avoid computing again (Gain of time)
+            f_out = open(file_stats, "wb")
+        
+        p = []
+        kwargs = {}
+        X_out_rf = [] # Variable list to compute decision tree with random forest method
+        if exist_stats == 0:
+            out_carto.stats_dict = mgr.defaultdict(list)
+            for i in range(len(multi_process_var)):
+                kwargs['rank'] = i
+                kwargs['nb_img'] = len(multi_process_var)
+                p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
+                p[i].start()
+                
+                if self.mp == 0:
+                    p[i].join()
+            
+            if self.mp == 1:       
+                for i in range(len(multi_process_var)):
+                    p[i].join()
+                    
+            for key, value_seg in out_carto.stats_dict.items():
+                true_value = [-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value_seg]
+                X_out_rf.append(true_value)
+                
+                # Print rasters stats value in the text file .lg
+                f_out.write(str(true_value) + '\n')
+            
+            # Close the output file
+            f_out.close()
+            
+        else:
+            # If the stats file exists already, open this file and append in the stats_dict variable
+            out_carto.stats_dict = defaultdict(list)
+            with open(file_stats, "r") as f_in:
+                index_in_stats=-1
+                for x_in in f_in.readlines():
+                    index_in_stats = index_in_stats + 1
+                    out_carto.stats_dict[index_in_stats] = eval(x_in.strip('\n'))
+                    X_out_rf.append(eval(x_in.strip('\n')))
+        
+        predicted_rf = self.rf.predict(X_out_rf)
+             
+        # For the higher than level 1
+        if len(self.sample_name) > 2:
+            # Compute the biomass and density distribution
+            # Use 'out_carto.out_threshold' to konw predicted in the segmentation class
+            out_carto.out_threshold = predicted_rf
+            # In the compute_biomass_density function, this variable used normally to define 
+            # threshold of the classification with SEATH method is initialized
+            out_carto.compute_biomass_density('RF')
+        
+        out_carto.class_tab_final = defaultdict(list)
+        for i_polyg in range(len(predicted_rf)):
+            i_final = 0
+            class_final = []
+            # Initialize the predicted output format
+            # For example : predicted => 4, formatted => [1,3,4]
+            while i_final < len(self.tree_direction):
+                if self.tree_direction[i_final][len(self.tree_direction[i_final])-1] == predicted_rf[i_polyg]:
+                    class_final = self.tree_direction[i_final]
+                    i_final = len(self.tree_direction)
+                i_final = i_final + 1
+            
+            if class_final == []:
+                class_final = [1, 2]
+            # Set the class name because of predicted output formatted         
+            out_carto.class_tab_final[i_polyg] = [self.in_class_name[f] for f in class_final] + \
+                                                [predicted_rf[i_polyg]] + [predicted_rf[i_polyg]]
+            
+            # For the output line with one level, add a phantom level
+            # TODO : Replace constant by a variable in the condition 'while'
+            while len(out_carto.class_tab_final[i_polyg]) < 5:
+                out_carto.class_tab_final[i_polyg].insert(len(out_carto.class_tab_final[i_polyg])-2,'')
+        
+        # If there is more one fieldnames line edit fulled in classification tab
+        if len(self.sample_name) > 2:
+            # Compute biomass and density scale
+            out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
+            out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
+        
+        # Rasterize RPG shapefile to complete the final shapefile
+        opt = {}
+        opt['Remove'] = 1
+        rpg_tif = Vector(self.sample_name[0], self.path_area, **opt)
+#         if not os.path.exists(str(rpg_tif.vector_used[:-3]+'TIF')): 
+        kwargs['choice_nb_b'] = 1
+        out_carto.stats_rpg_tif = out_carto.zonal_stats_pp(rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP', **kwargs))
+
+        # Final cartography
+        out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
+        
+    def i_classifier_s(self): 
         """
         Interface function to launch decision tree classification with a input segmentation :func:`Segmentation.Segmentation`.
         
-        This function store optimal threshold by class **Segmentation.out_threshold**. Then compute zonal statistics by polygons
+        This function store optimal threshold by class **Segmentation.out_threshold**. Then it computes zonal statistics by polygons
         for every images in multi-processing (if **mp** = 1).
         """ 
         
@@ -516,7 +731,7 @@ class Processing():
             self.tree_direction[0].append(7)
             
         # Compute zonal stats on Max NDVI raster  
-        try:  
+        try:
             # out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))
             multi_process_var.append([self.raster_path[ind_th+2], self.list_band_outraster[ind_th+2]])
             # Compute stats twice, because there is 3 classes and not 2
@@ -528,23 +743,51 @@ class Processing():
             multi_process_var.append([self.raster_path[ind_th+1], self.list_band_outraster[ind_th+1]])
 
         # Compute zonal stats with multi processing
-        out_carto.stats_dict = mgr.defaultdict(list)
+        exist_stats = 1 # By default, the stats file exists already
+        file_stats = os.path.dirname(str(self.raster_path[0])) + '/Stats_raster_spectral_texture.stats' # Stats backup file
+        if not os.path.exists(file_stats):
+            exist_stats = 0 # The sats file doesn't exist
+            # Open a stats backup to avoid computing again (Gain of time)
+            f_out = open(file_stats, "wb")
+            
         p = []
         kwargs = {}
-        for i in range(len(multi_process_var)):
-            kwargs['rank'] = i
-            kwargs['nb_img'] = len(multi_process_var)
-            p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
-            p[i].start()
-            
-            if self.mp == 0:
-                p[i].join()
-        
-        if self.mp == 1:       
+        X_out_rf = [] # Variable list to compute decision tree with random forest method
+        if exist_stats == 0:
+            out_carto.stats_dict = mgr.defaultdict(list)
             for i in range(len(multi_process_var)):
-                p[i].join()
-
-        # If there is more one fieldnames line edit fulled in classification tab
+                kwargs['rank'] = i
+                kwargs['nb_img'] = len(multi_process_var)
+                p.append(Process(target=out_carto.zonal_stats, args=(multi_process_var[i], ), kwargs=kwargs))
+                p[i].start()
+                
+                if self.mp == 0:
+                    p[i].join()
+            
+            if self.mp == 1:       
+                for i in range(len(multi_process_var)):
+                    p[i].join()
+                    
+            for key, value_seg in out_carto.stats_dict.items():
+                
+                true_value = [-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value_seg]
+                # Print rasters stats value in the text file .lg
+                f_out.write(str(true_value) + '\n')
+            
+            # Close the output file
+            f_out.close()
+            
+        else:
+            # If the stats file exists already, open this file and append in the stats_dict variable
+            out_carto.stats_dict = defaultdict(list)
+            with open(file_stats, "r") as f_in:
+                index_in_stats=-1
+                for x_in in f_in.readlines():
+                    index_in_stats = index_in_stats + 1
+                    out_carto.stats_dict[index_in_stats] = eval(x_in.strip('\n'))
+                    X_out_rf.append(eval(x_in.strip('\n')))
+        
+        # For the higher than level 1 
         if len(self.sample_name) > 2:
             # Compute the biomass and density distribution
             out_carto.compute_biomass_density()
@@ -558,8 +801,15 @@ class Processing():
             # Compute biomass and density scale
             out_carto.append_scale(self.in_class_name[2], 'self.stats_dict[ind_stats][3]/self.max_bio')
             out_carto.append_scale(self.in_class_name[3], 'self.stats_dict[ind_stats][2]/self.max_wood_idm')
+        
+        # Rasterize RPG shapefile to complete the final shapefile
+        opt = {}
+        opt['Remove'] = 1
+        rpg_tif = Vector(self.sample_name[0], self.path_area, **opt)
+        rpg_tif.layer_rasterization(self.path_ortho, 'CODE_GROUP')
           
         # Final cartography
+        out_carto.mono_rpg_tif = self.sample_name[0][:-4] + '.TIF'
         out_carto.create_cartography(self.out_fieldname_carto, self.out_fieldtype_carto)
        
     def i_validate(self):
@@ -572,9 +822,10 @@ class Processing():
         # Variable to convert the input classname to an individual interger
         # Only for the validate sample
         class_validate = 0
-        complete_validate_shp = os.path.dirname(self.valid_shp[0][0]) + '/validate.shp'
-        
-        # TODO: Set this method in the Precision_moba class
+        complete_validate_shp = os.path.dirname(str(self.valid_shp[0][0])) + '/validate.shp'
+
+        # TODO: Set this method in the Precision_moba class
+
         
         # Processing to rasterize the validate shapefile. 1) Merge sahpefiles 2) Rasterization
         for val in self.valid_shp:
@@ -605,7 +856,7 @@ class Processing():
                         process_tocall_merge =  ['ogr2ogr', '-overwrite', complete_validate_shp, val[0]]
                     elif class_validate > 0:
                         process_tocall_merge =  ['ogr2ogr', '-update', '-append', complete_validate_shp, \
-                                                 val[0], '-nln', os.path.basename(complete_validate_shp[:-4])]
+                                                 val[0], '-nln', os.path.basename(str(complete_validate_shp[:-4]))]
                     subprocess.call(process_tocall_merge)
             # Increrment variable
             class_validate = self.valid_shp.index(val) + 1
@@ -617,7 +868,7 @@ class Processing():
         
         # TODO: Call the RasterSat_by_Date class here instead of the Precision_moba class
         
-        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_SUB') # To the classification's data
+        valid.preprocess_to_raster_precision(self.output_name_moba, 'FBPHY_CODE') # To the classification's data
         valid.preprocess_to_raster_precision(complete_validate_shp, val[1]) # To the validation's data
         
         # Compute precision on the output classification

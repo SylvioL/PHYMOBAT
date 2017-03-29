@@ -30,7 +30,7 @@ from collections import *
 from RasterSat_by_date import RasterSat_by_date
 
 class Vector():
-    """
+    """    
     Vector class to extract a area, vector data and zonal statistic (``rasterstats 0.3.2 package``)
     
     :param vector_used: Input/Output shapefile to clip (path)
@@ -129,8 +129,7 @@ class Vector():
         ranking = kwargs['rank'] if kwargs.get('rank') else 0
         nb_img = kwargs['nb_img'] if kwargs.get('nb_img') else 1
 
-        
-        print(os.path.split(self.vector_used)[1] + ' stats on ' + os.path.split(inraster)[1])
+        print('Compute ' + os.path.split(str(self.vector_used))[1] + ' stats on ' + os.path.split(str(inraster))[1])
         stats = raster_stats(str(self.vector_used), str(inraster),  stats =['mean'], band_num=band)
         
         for i in range(len(stats)):
@@ -143,26 +142,52 @@ class Vector():
             temp[0][ranking] = stats[i].values()[1]
             self.stats_dict[i] = temp[0]
             
-        print('End of stats on ' + os.path.split(inraster)[1])
+        print('End of stats on ' + os.path.split(str(inraster))[1])
 
-    def layer_rasterization(self, raster_head, attribute_r):
+    def zonal_stats_pp(self, inraster):
         """
-        Function to rasterize a vector. Complete the gdal pointer empty properties with the layer's information
-        of the vector and a defined field.
+        A zonal statistics ++ to dertermine pxl percent in every polygon
+        
+        :param inraster: Input image path
+        :type inraster: str 
+        :returns: dict -- **p_stats** : dictionnary with pxl percent in every polygon. Mainly 'Maj_count' (Majority Value) and 'Maj_count_perc' (Majority Percent)
+        
+        """
+        
+        p_stats = raster_stats(str(self.vector_used), str(inraster), stats=['count'], copy_properties=True, categorical=True)
+        
+        for i in range(len(p_stats)):
+            percent = 0.0
+            for p in p_stats[i].keys():
+                if type(p) == np.float32 and p_stats[i][p]/float(p_stats[i]['count'])*100 > percent:
+                    p_stats[i]['Maj_count'] = p
+                    p_stats[i]['Maj_count_perc'] = p_stats[i][p]/float(p_stats[i]['count'])*100
+                    percent = p_stats[i]['Maj_count_perc']
+            if not 'Maj_count' in p_stats[i].keys() or not 'Maj_count_perc' in p_stats[i].keys():
+                p_stats[i]['Maj_count']=0
+                p_stats[i]['Maj_count_perc']=0
+        
+        return p_stats
+                
+    def layer_rasterization(self, raster_head, attribute_r, **kwargs):
+        """
+        Function to rasterize a vector. Define resolution, projection of the output raster with a raster head.
+        And complete the gdal pointer empty properties with the layer's information of the vector and a defined field.
+        If a raster has several band, in option you can choice if you want one band or more. 
         
         :param raster_head: Raster path that will look like the final raster of the rasterization
         :type raster_head: str
         :param attribute_r: Field name of the shapefile that contains class names
         :type attribute_r: str
-        :param class_r: Class name corresponding to integer class name
-        :type class_r: list of str
-        :param class_out: Value field pixels for the output raster
-        :type class_out: int
+        :kwargs: **choice_nb_b** (int) - Output image number of band. If you choice 1, take first band. If you choice 2, take two first band etc... 
+        :returns: str -- **valid_raster** : output raster path from the rasterization
+        
         """
         
         # Export a example of a raster out information
         # for the validation shapefile
         example_raster = RasterSat_by_date('', '', [0]) # Call the raster class
+        example_raster.choice_nb_b = kwargs['choice_nb_b'] if kwargs.get('choice_nb_b') else 0
         raster_info = example_raster.raster_data(raster_head)# Extract data info
         
         # Define the validation's vector
@@ -171,31 +196,23 @@ class Vector():
             os.remove(valid_raster)
             
         # Create the empty raster with the same properties
-        info_out = example_raster.create_raster(valid_raster, raster_info[0], raster_info[1])
+        # Condition for the rasters with several bands
+        if raster_info[1].RasterCount > 1:
+            data_raster = raster_info[0][0]
+        else:
+            data_raster = raster_info[0]
+        info_out = example_raster.create_raster(valid_raster, data_raster, raster_info[1])
         self.raster_ds = example_raster.out_ds
         
         # Virtual rasterize the vector 
         pt_rast = gdal.RasterizeLayer(self.raster_ds, [1], self.data_source.GetLayer(), \
                                       options=["ATTRIBUTE=" + str(attribute_r)])
+        
         if pt_rast != 0:
             raise Exception("error rasterizing layer: %s" % pt_rast)
         
         new_data = self.raster_ds.ReadAsArray()
-#         # Expression to find classes in numpy's mask
-#         np_mask = ''
-#         # Convert string in a list. For that, it remove
-#         # space and clip this string with comma (Add everywhere if the script modified
-#         # because the process work with a input string chain)
-#         class_r = class_r.replace(' ','').split(',')
-#         for nm in class_r:
-#             np_mask = np_mask + '(new_data == ' + str(nm) + ') | '
-#         np_mask = np_mask[:-3]
-#         # Replace value data by our own value
-#         new_data=np.ma.masked_where(eval(np_mask), new_data)
-#         new_data.fill_value = class_out
-#         
-#         new_data = new_data.filled()
-               
+        
         self.raster_ds = None
         # Complete the raster creation
         example_raster.complete_raster(info_out, new_data)

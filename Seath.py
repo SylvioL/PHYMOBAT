@@ -1,30 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This file is part of PHYMOBAT 1.2.
+# This file is part of PHYMOBAT 2.0.
 # Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)
 # 
-# PHYMOBAT 1.2 is free software: you can redistribute it and/or modify
+# PHYMOBAT 2.0 is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# PHYMOBAT 1.2 is distributed in the hope that it will be useful,
+# PHYMOBAT 2.0 is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with PHYMOBAT 1.2.  If not, see <http://www.gnu.org/licenses/>.
+# along with PHYMOBAT 2.0.  If not, see <http://www.gnu.org/licenses/>.
 
 import numpy, math, sys
 import numpy as np # sort, ...
 from collections import * # defaultdict
 
 class Seath():
-    """
+    """    
     Get the optimal threshold and Bhattacharyya distance for a separability between two classes
-
+    
     Source article : SEaTH–A new tool for automated feature extraction in the context of object-based image analysis S. Nussbaum et al.
     
     Source Info : Kenji Ose (IRSTEA) et Nathalie St-Geours (IRSTEA) 

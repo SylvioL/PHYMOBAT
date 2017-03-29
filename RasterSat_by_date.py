@@ -39,6 +39,8 @@ class RasterSat_by_date():
             This variable is modified in the function :func:`mosaic_by_date()`. 
             To append mosaic image path, mosaic cloud image path, cloud pixel value table, mosaic ndvi image path and ndvi pixel value table.
     :type one_date: list of str
+    :param choice_nb_b: A option to choice output image number of band :func:`layer_rasterization` in Vector's class. If this option is 0, it take input band. By default 0.
+    :type choice_nb_b: int
     
     """  
     def __init__(self, class_archive, big_folder, one_date):
@@ -57,6 +59,7 @@ class RasterSat_by_date():
             self._one_date = one_date
         
         self.out_ds = None
+        self.choice_nb_b = 0
            
     def group_by_date(self, d_uni):
         """
@@ -97,7 +100,7 @@ class RasterSat_by_date():
         # Select process
         if vrt_translate == 'vrt':
             # Verify input data
-            if type(src_data) is not np.ndarray:
+            if type(src_data) is not np.ndarray and type(src_data) is not list:
                 print 'VRT file ! The data source should be composed of several data. A list minimal of 2 dimensions'
                 sys.exit(1)
                 
@@ -138,7 +141,7 @@ class RasterSat_by_date():
         group_ = np.transpose(np.array(group)) # Transpose matrix to extract path of images
         
         # Create a folder with images year if it doesn't exist
-        index_repertory_img = self._one_date[0]
+        index_repertory_img = self._class_archive._captor
         if not os.path.exists(self._class_archive._folder + '/' + self._big_folder + '/' + index_repertory_img):
             os.mkdir(self._class_archive._folder + '/' + self._big_folder + '/' + index_repertory_img)
         
@@ -180,7 +183,7 @@ class RasterSat_by_date():
         :param img: Raster path
         :type img: str
 
-        :returns: matrix -- variable **data**, Pixel value matrix of a raster.
+        :returns: numpy.array -- variable **data**, Pixel value matrix of a raster.
                   
                   gdal pointer -- variable **_in_ds**, Raster information.
         """
@@ -197,13 +200,16 @@ class RasterSat_by_date():
             print('could not open ')
             sys.exit(1)
         
-        # Information on the input raster    
-        nbband = in_ds.RasterCount # Spectral band number
+        # Information on the input raster 
+        if self.choice_nb_b == 0:
+            nbband = in_ds.RasterCount # Spectral band number
+        else:
+            nbband = self.choice_nb_b
         rows = in_ds.RasterYSize # Rows number
         cols = in_ds.RasterXSize # Columns number
         
         # Table's declaration 
-        data = [] #np.float32([[0]*cols for i in xrange(rows)])
+        data = [] # np.float32([[0]*cols for i in xrange(rows)])
         for band in range(nbband):
             
             canal = in_ds.GetRasterBand(band + 1) # Select a band
@@ -252,13 +258,13 @@ class RasterSat_by_date():
         
         # Cloud mask
         mask_cloud = np.in1d(data_cloud, 0) # This is the same opposite False where there is 0
-        cloud = np.choose(mask_cloud, (False, mask_spec)) #  If True in cloud mask, it take spectral image else False
+        cloud = np.choose(mask_cloud, (False, mask_spec)) # If True in cloud mask, it take spectral image else False
         dist = np.sum(cloud) # Sum of True. True is cloud
         
         # Computer cloud's percentage with dist (sum of cloud) by sum of the image's extent
         try :
             nb0 = float(dist)/(np.sum(mask_spec))
-            print('For ' + os.path.split(str(img_spec))[1][:-4] + ', cloud cover ' + str(100 - round(nb0*100, 2)) + "%")
+            print('For ' + os.path.split(str(img_spec))[1][:-4] + ', cloudy cover ' + str(100 - round(nb0*100, 2)) + "%")
         except ZeroDivisionError:
             nb0 = 0
             print("The raster isn\'t in the area !")
@@ -269,19 +275,27 @@ class RasterSat_by_date():
         """
         Computer NDVI index for a Landsat image.
         
-        NDVI = band4 - band3 / band4 + band3
+        NDVI = band4 - band3 / band4 + band3 with nb_captor = 0
+        
+        or for Sentinel 2 image (2A) : NDVI = band3 - band2 / band3 + band2 with nb_captor = -1
         
         :param img_spec: Spectral image path
         :type img_spec: str
 
         """
         
+        # NDVI formula index for 2 captor (L8 or S2A Theia)
+        if self._class_archive._captor == 'SENTINEL2':
+            n_captor = -1
+        else :
+            n_captor = 0
+        
         # Extract raster's information
         data, in_ds = self.raster_data(img_spec)
         
         # Computer NDVI
         mask = np.greater(data[0], -10000)
-        ndvi = np.choose(mask, (-10000, eval('(data[4]-data[3])') / eval('(data[4]+data[3])'))) # If True, -10000 (NaN) else compute mathematical operation
+        ndvi = np.choose(mask, (-10000, eval('(data[4+n_captor]-data[3+n_captor])') / eval('(data[4+n_captor]+data[3+n_captor])'))) # If True, -10000 (NaN) else compute mathematical operation
         
         # Outfile name
         img_ndvi = img_spec[:-4] + '_ndvi.TIF'
@@ -296,7 +310,7 @@ class RasterSat_by_date():
         :param out_raster: Output image path
         :type out_raster: str
         :param data: Pixel value matrix. Matrix size equal to that of a raster.
-        :type data: matrix
+        :type data: numpy.array
         :param in_ds: Raster information
         :type in_ds: gdal pointer
         
@@ -311,7 +325,7 @@ class RasterSat_by_date():
 #             os.remove(str(out_raster))
         e = 1 # Raster out exists by default 
         # Verify if the processing take input band or one spectral band    
-        if data.ndim == 2:
+        if data.ndim == 2 or self.choice_nb_b == 1:
             nbband = 1
         else:
             nbband = in_ds.RasterCount 
@@ -361,7 +375,7 @@ class RasterSat_by_date():
         :param e: Index to know if the raster existed. If it didn't exist e = 0.
         :type e: int
         :param data: Pixel value matrix. Matrix size equal to that of a raster.
-        :type data: matrix
+        :type data: numpy.array
         """
         
         # The e index to verify if the layer existed already because of the 
@@ -388,7 +402,7 @@ class RasterSat_by_date():
                 out_band.GetStatistics(-1, 1) 
                 out_band = None    
             
-        # Close les données ouvertes
+        # Close open data
         self.out_ds = None
 
             

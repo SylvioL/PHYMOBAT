@@ -104,19 +104,22 @@ class Sample(Vector):
         shp_ogr = self.data_source.GetLayer()
         
         # Loop on input polygons
-        in_feature = shp_ogr.SetNextByIndex(0) # Initialisation
+        in_feature = shp_ogr.SetNextByIndex(0) # Initialization
         in_feature = shp_ogr.GetNextFeature()
         while in_feature:
             
             # if polygon is a defined class name 
             ## .replace('0','') to remove '0' in front of for example '1' (RPG -> '01')
-            if in_feature.GetField(self.field_names[self.field_names.index(kw_field)]).replace('0','') in kw_classes:
-                
-                # Add id in the extract list
-                select_id.append(in_feature.GetFID())
-
-                in_feature.Destroy()
-                
+            table_name_class = in_feature.GetField(self.field_names[self.field_names.index(kw_field)])
+            # To avoid that the process crashed this part of the algorithm will be launch if the field is contains characters
+            if table_name_class != None :
+                if in_feature.GetField(self.field_names[self.field_names.index(kw_field)]).replace('0','') in kw_classes:
+                    
+                    # Add id in the extract list
+                    select_id.append(in_feature.GetFID())
+    
+                    in_feature.Destroy()
+                       
             in_feature = shp_ogr.GetNextFeature()
         return select_id
     

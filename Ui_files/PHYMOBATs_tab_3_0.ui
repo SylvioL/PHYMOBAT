@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PHYMOBAT</class>
+ <widget class="QMainWindow" name="PHYMOBAT">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>726</width>
+    <height>1052</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PHYMOBATs 3.0</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="5" column="1">
+     <widget class="QDialogButtonBox" name="buttonBox">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+       <set>QDialogButtonBox::Close|QDialogButtonBox::Ok</set>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QCheckBox" name="checkBox_multiprocess">
+      <property name="text">
+       <string>Multi-processing</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoRepeat">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QFrame" name="frame_2">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="5" column="5">
+        <widget class="QLabel" name="label_select_sample_nb_poly_3">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nbre de polygones&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_select_sample_class_6">
+         <property name="text">
+          <string>Classes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="label_select_sample_class_7">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Ligneux denses&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="6">
+        <widget class="QLineEdit" name="lineEdit_select_sample_nb_poly_3">
+         <property name="text">
+          <string>20</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_5">
+         <property name="toolTip">
+          <string>Nom du champs qui contient la classe Ligneux denses</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="7" rowspan="2">
+        <widget class="QPushButton" name="pushButton_browser_sample_path_3">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>79</width>
+           <height>24</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="5" column="4">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_6">
+         <property name="toolTip">
+          <string>Intitulé de la classe dans le shapefile</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>79</width>
+           <height>13</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_select_sample_fieldname_3">
+         <property name="text">
+          <string>Champs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label_sample_path_3">
+         <property name="text">
+          <string>Echantillons Ligneux denses / mixtes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QLabel" name="label_select_sample_class_8">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Ligneux mixtes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" rowspan="2" colspan="7">
+        <widget class="QLineEdit" name="lineEdit_sample_path_3">
+         <property name="toolTip">
+          <string>Chemin d'accès au shapefile des échantillons de Ligneux</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_6">
+         <property name="toolTip">
+          <string>Nom du champs qui contient la classe Ligneux mixtes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_5">
+         <property name="toolTip">
+          <string>Intitulé de la classe dans le shapefile</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QFrame" name="frame_3">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_ouput">
+         <property name="text">
+          <string>Fichier de sortie (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="lineEdit_output">
+         <property name="toolTip">
+          <string>Chemin du fichier de la cartographie finale</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButton_browser_output">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QFrame" name="frame_4">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="4" column="1">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>90</width>
+           <height>12</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="6">
+        <widget class="QPushButton" name="pushButton_browser_sample_path">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="6">
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>82</width>
+           <height>15</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="5">
+        <widget class="QLineEdit" name="lineEdit_select_sample_nb_poly">
+         <property name="text">
+          <string>100</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_select_sample_class_1">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Non naturelle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_select_sample_class_2">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Semi-naturelle&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_select_sample_fieldname">
+         <property name="text">
+          <string>Champs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>90</width>
+           <height>12</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLabel" name="label_select_sample_nb_poly">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nbre de polygones&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_2">
+         <property name="toolTip">
+          <string>Intitulé de la classe dans le shapefile</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_1">
+         <property name="toolTip">
+          <string>Nom du champs qui contient la classe Non naturelle</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label_sample_path">
+         <property name="text">
+          <string>Echantillons RPG (Végétation non naturelle / Semi-naturelle)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_2">
+         <property name="toolTip">
+          <string>Nom du champs qui contient la classe Semi-naturelle</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="6">
+        <widget class="QLineEdit" name="lineEdit_sample_path">
+         <property name="toolTip">
+          <string>Chemin d'accès au shapefile RPG</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_1">
+         <property name="toolTip">
+          <string>Intitulé de la classe dans le shapefile</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_select_sample_class">
+         <property name="text">
+          <string>Classes</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QFrame" name="frame_5">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_select_sample_class_4">
+         <property name="text">
+          <string>Classes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="6">
+        <widget class="QLineEdit" name="lineEdit_sample_path_2">
+         <property name="toolTip">
+          <string>Chemin d'accès au shapefile des échantillons Herbacés/Ligneux</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_select_sample_fieldname_2">
+         <property name="text">
+          <string>Champs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_4">
+         <property name="toolTip">
+          <string>Intitulé de la classe dans le shapefile</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLabel" name="label_select_sample_nb_poly_2">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nbre de polygones&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_select_sample_class_3">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Herbacés&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>76</width>
+           <height>24</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_3">
+         <property name="toolTip">
+          <string>Nom du champs qui contient la classe Herbacés</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QPushButton" name="pushButton_browser_sample_path_2">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lineEdit_select_sample_fieldname_4">
+         <property name="toolTip">
+          <string>Nom du champs qui contient la classe Ligneux</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>76</width>
+           <height>24</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <widget class="QLabel" name="label_sample_path_2">
+         <property name="text">
+          <string>Echantillons Herbacés / Ligneux</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="5">
+        <widget class="QLineEdit" name="lineEdit_select_sample_nb_poly_2">
+         <property name="text">
+          <string>20</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="lineEdit_select_sample_class_3">
+         <property name="toolTip">
+          <string>Intitulé de la classe dans le shapefile</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_select_sample_class_5">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Ligneux&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="1" colspan="2">
+        <widget class="QLineEdit" name="lineEdit_year_images">
+         <property name="toolTip">
+          <string>Période des images à télécharger. Pour 2 périodes : Date_begin-Date_en;Date_begin-Date_end</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_VHRS"/>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_principal_folder">
+         <property name="text">
+          <string>Chemin du dossier principal</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_principal_folder">
+         <property name="toolTip">
+          <string>Dossier principal où se trouve tous les fichiers et dossiers des données</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="5">
+        <widget class="QPushButton" name="pushButton_browser_principal_folder">
+         <property name="toolTip">
+          <string>Parcourir</string>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_year_images">
+         <property name="text">
+          <string>Période ou année des images</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QLabel" name="label_area_path">
+         <property name="text">
+          <string>Emprise de la zone (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_area_path"/>
+       </item>
+       <item row="4" column="5">
+        <widget class="QPushButton" name="pushButton_browser_area_path">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_id_theia">
+         <property name="text">
+          <string>Identifiant Theia</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_user">
+         <property name="text">
+          <string>Utilisateur :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="lineEdit_user"/>
+       </item>
+       <item row="6" column="2">
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>73</width>
+           <height>13</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLabel" name="label_password">
+         <property name="text">
+          <string>Mot de passe :</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <widget class="QLineEdit" name="lineEdit_password">
+         <property name="toolTip">
+          <string>Mot de passe masqué</string>
+         </property>
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="checkBox_MNT">
+         <property name="text">
+          <string>BD Alti (Facutatif)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_MNT"/>
+       </item>
+       <item row="8" column="5">
+        <widget class="QPushButton" name="pushButton_browser_MNT">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="checkBox_VHRS">
+         <property name="text">
+          <string>Images THRS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="5">
+        <widget class="QPushButton" name="pushButton_browser_VHRS">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0" colspan="2">
+        <widget class="QLabel" name="label_segmentation">
+         <property name="text">
+          <string>Segmentation (shp)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0" colspan="5">
+        <widget class="QLineEdit" name="lineEdit_segmentation"/>
+       </item>
+       <item row="12" column="5">
+        <widget class="QPushButton" name="pushButton_browser_segmentation">
+         <property name="text">
+          <string>...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="5">
+        <widget class="QPushButton" name="proxy">
+         <property name="text">
+          <string>Proxy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3" colspan="3">
+        <widget class="QLabel" name="label_ex_period">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+           <italic>true</italic>
+           <kerning>true</kerning>
+          </font>
+         </property>
+         <property name="text">
+          <string>Exemple pour 1 periode : AAAA-MM-DD,AAAA-MM-DD</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>726</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="defaultUp">
+    <bool>true</bool>
+   </property>
+   <widget class="QMenu" name="menuMenu">
+    <property name="tearOffEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="title">
+     <string>Menu</string>
+    </property>
+    <addaction name="actionOuvrir"/>
+    <addaction name="actionSauver"/>
+    <addaction name="actionQuiter"/>
+   </widget>
+   <widget class="QMenu" name="menuAide">
+    <property name="title">
+     <string>Aide</string>
+    </property>
+    <addaction name="actionAide_de_PHYMOBAT"/>
+    <addaction name="actionA_propos_de_PHYMOBAT"/>
+   </widget>
+   <widget class="QMenu" name="menuMode">
+    <property name="title">
+     <string>Mode</string>
+    </property>
+    <addaction name="actionMode_Simplifi"/>
+    <addaction name="actionMode_expert"/>
+   </widget>
+   <addaction name="menuMenu"/>
+   <addaction name="menuAide"/>
+   <addaction name="menuMode"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOuvrir">
+   <property name="text">
+    <string>Ouvrir</string>
+   </property>
+  </action>
+  <action name="actionSauver">
+   <property name="text">
+    <string>Sauver</string>
+   </property>
+  </action>
+  <action name="actionQuiter">
+   <property name="text">
+    <string>Quiter</string>
+   </property>
+  </action>
+  <action name="actionAide_de_PHYMOBAT">
+   <property name="text">
+    <string>Aide de PHYMOBAT</string>
+   </property>
+  </action>
+  <action name="actionA_propos_de_PHYMOBAT">
+   <property name="text">
+    <string>A propos de PHYMOBAT</string>
+   </property>
+  </action>
+  <action name="actionMode_Simplifi">
+   <property name="text">
+    <string>Mode Simplifié</string>
+   </property>
+  </action>
+  <action name="actionMode_expert">
+   <property name="text">
+    <string>Mode expert</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>checkBox_multiprocess</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>lineEdit_principal_folder</tabstop>
+  <tabstop>pushButton_browser_principal_folder</tabstop>
+  <tabstop>lineEdit_year_images</tabstop>
+  <tabstop>lineEdit_area_path</tabstop>
+  <tabstop>pushButton_browser_area_path</tabstop>
+  <tabstop>lineEdit_user</tabstop>
+  <tabstop>lineEdit_password</tabstop>
+  <tabstop>lineEdit_MNT</tabstop>
+  <tabstop>pushButton_browser_MNT</tabstop>
+  <tabstop>lineEdit_VHRS</tabstop>
+  <tabstop>pushButton_browser_VHRS</tabstop>
+  <tabstop>lineEdit_segmentation</tabstop>
+  <tabstop>pushButton_browser_segmentation</tabstop>
+  <tabstop>lineEdit_sample_path</tabstop>
+  <tabstop>pushButton_browser_sample_path</tabstop>
+  <tabstop>lineEdit_select_sample_fieldname_1</tabstop>
+  <tabstop>lineEdit_select_sample_fieldname_2</tabstop>
+  <tabstop>lineEdit_select_sample_class_1</tabstop>
+  <tabstop>lineEdit_select_sample_class_2</tabstop>
+  <tabstop>lineEdit_select_sample_nb_poly</tabstop>
+  <tabstop>lineEdit_sample_path_2</tabstop>
+  <tabstop>pushButton_browser_sample_path_2</tabstop>
+  <tabstop>lineEdit_select_sample_fieldname_3</tabstop>
+  <tabstop>lineEdit_select_sample_fieldname_4</tabstop>
+  <tabstop>lineEdit_select_sample_class_3</tabstop>
+  <tabstop>lineEdit_select_sample_class_4</tabstop>
+  <tabstop>lineEdit_select_sample_nb_poly_2</tabstop>
+  <tabstop>lineEdit_sample_path_3</tabstop>
+  <tabstop>pushButton_browser_sample_path_3</tabstop>
+  <tabstop>lineEdit_select_sample_fieldname_5</tabstop>
+  <tabstop>lineEdit_select_sample_fieldname_6</tabstop>
+  <tabstop>lineEdit_select_sample_class_5</tabstop>
+  <tabstop>lineEdit_select_sample_class_6</tabstop>
+  <tabstop>lineEdit_select_sample_nb_poly_3</tabstop>
+  <tabstop>lineEdit_output</tabstop>
+  <tabstop>pushButton_browser_output</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

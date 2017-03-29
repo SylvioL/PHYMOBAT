@@ -20,7 +20,7 @@
 import os, subprocess
 import numpy as np
 
-from Toolbox import *
+from Toolbox import Toolbox
 from Vector import Vector
 from RasterSat_by_date import RasterSat_by_date
 
@@ -87,9 +87,13 @@ class Precision_moba():
         opt['Remove'] = 1 # To remove existing vector
         # Define vector
         vector_pr = Vector(shp_pr, self.path_cut, **opt)
+        # Define Toolbox used
+        current_img = Toolbox()
         # Create the raster output path
         img_pr = vector_pr.layer_rasterization(self.ex_raster, field_pr)
-        self.img_pr.append(clip_raster(img_pr, self.complete_validation_shp, **kwargs))
+        current_img.imag = img_pr
+        current_img.vect = self.complete_validation_shp
+        self.img_pr.append(current_img.clip_raster(**kwargs))
         
         # Call the raster class to extract the image data
         self.complete_img.append(RasterSat_by_date('', '', [0]))

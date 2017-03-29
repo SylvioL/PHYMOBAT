@@ -48,7 +48,7 @@ class Vhrs():
         print('SFS image')
         self.out_sfs = self._imag[:-4] + '_sfs.TIF'
         if not os.path.exists(self.out_sfs):
-            print('SFS image don\'t exists !')
+            print('SFS image doesn\'t exist !')
             p_sfs = Process(target=self.sfs_texture_extraction)
             p_sfs.start()
             if mp == 0:
@@ -58,7 +58,7 @@ class Vhrs():
         print('Haralick image')
         self.out_haralick = self._imag[:-4] + '_haralick.TIF'
         if not os.path.exists(self.out_haralick):
-            print('Haralick image don\'t exists !')
+            print('Haralick image doesn\'t exist !')
             p_har = Process(target=self.haralick_texture_extraction, args=('simple', ))
             p_har.start()
             if mp == 0:

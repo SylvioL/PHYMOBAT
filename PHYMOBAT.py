@@ -436,6 +436,7 @@ class PHYMOBAT(QMainWindow, Processing):
         Add sample information and location to compute optimal threshold :
         
         For the expert mode (mode=1) :
+        
         - Append a sample name by line Edit. *This is a check box* ``RPG``, *if the sample is RPG file. It launch the Rpg class. And append a other sample from Rpg class*.
         - Append two existent sample field names by combobox. It will be the same. 
         - Append sample class names by line edit. One or more for every sample.
@@ -444,8 +445,10 @@ class PHYMOBAT(QMainWindow, Processing):
         - *This check box* ``Image echantillonee``, *image path for samples if the first processing image hasn't been launched*.
             .. note:: This is for a image with one spectral band
         - Clear all widget field at the end.
+        
         For the simply mode (mode=0):
-        - Append a sample name by a different line Edit (a line Edit for each sample)
+        
+        - Append a sample name by a different line Edit (a line Edit for each sample).
         - Append sample class names, existing sample fields and number of polygons (a different line Edit for each sample)
         """
         

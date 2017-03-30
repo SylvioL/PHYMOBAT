@@ -478,7 +478,7 @@ class Ui_PHYMOBAT(object):
         self.label_user.setText(_translate("PHYMOBAT", "Utilisateur :", None))
         self.checkBox_VHRS.setText(_translate("PHYMOBAT", "Images THRS", None))
         self.checkBox_listing.setText(_translate("PHYMOBAT", "Images disponibles :", None))
-        self.checkBox_MNT.setText(_translate("PHYMOBAT", "MNT", None))
+        self.checkBox_MNT.setText(_translate("PHYMOBAT", "BD Alti (Facultatif)", None))
         self.label_listing.setText(_translate("PHYMOBAT", "0", None))
         self.checkBox_processing.setText(_translate("PHYMOBAT", "Traitement des images téléchargées", None))
         self.proxy.setText(_translate("PHYMOBAT", "Proxy", None))

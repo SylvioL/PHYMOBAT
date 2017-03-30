@@ -24,6 +24,11 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_PHYMOBAT(object):
+    
+    """
+    Class to display “Expert PHYMOBAT window”.
+    """
+    
     def setupUi(self, PHYMOBAT):
         PHYMOBAT.setObjectName(_fromUtf8("PHYMOBAT"))
         PHYMOBAT.resize(626, 658)

@@ -445,7 +445,7 @@ class Ui_PHYMOBAT(object):
         self.label_user.setText(_translate("PHYMOBAT", "Utilisateur :", None))
         self.label_password.setText(_translate("PHYMOBAT", "Mot de passe :", None))
         self.lineEdit_password.setToolTip(_translate("PHYMOBAT", "Mot de passe masqué", None))
-        self.checkBox_MNT.setText(_translate("PHYMOBAT", "BD Alti (Facutatif)", None))
+        self.checkBox_MNT.setText(_translate("PHYMOBAT", "BD Alti (Facultatif)", None))
         self.pushButton_browser_MNT.setText(_translate("PHYMOBAT", "...", None))
         self.checkBox_VHRS.setText(_translate("PHYMOBAT", "Images THRS", None))
         self.pushButton_browser_VHRS.setText(_translate("PHYMOBAT", "...", None))

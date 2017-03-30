@@ -24,6 +24,11 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Proxy_window(object):
+    
+    """
+    Class to display “Proxy window”. In this windows, there is 3 lines edit to fill (proxy server, login and password).
+    """
+    
     def setupUi(self, Proxy_window):
         Proxy_window.setObjectName(_fromUtf8("Proxy_window"))
         Proxy_window.resize(344, 144)

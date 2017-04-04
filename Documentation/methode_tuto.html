@@ -2,72 +2,76 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Processus utilisées et tutoriels API &mdash; PHYMOBAT 1 documentation</title>
+    <title>Processus utilisées et tutoriels API &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="index.html" />
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
     <link rel="next" title="CarHab Phy MOBA package" href="package.html" />
     <link rel="prev" title="Installation" href="install.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
         <li class="right" >
           <a href="package.html" title="CarHab Phy MOBA package"
-             accesskey="N">next</a> |</li>
+             accesskey="N">suivant</a> |</li>
         <li class="right" >
           <a href="install.html" title="Installation"
-             accesskey="P">previous</a> |</li>
-        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+             accesskey="P">précédent</a> |</li>
+        <li class="nav-item nav-item-0"><a href="PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="processus-utilisees-et-tutoriels-api">
-<h1>Processus utilisées et tutoriels API<a class="headerlink" href="#processus-utilisees-et-tutoriels-api" title="Permalink to this headline">¶</a></h1>
+<h1>Processus utilisées et tutoriels API<a class="headerlink" href="#processus-utilisees-et-tutoriels-api" title="Lien permanent vers ce titre">¶</a></h1>
 <p>Cette chaîne de traitement répond à un objectif du programme CarHab (Cartographie des Habitats naturels) à savoir : réaliser pour les milieux ouverts de basse altitude (MOBA) un &#8220;fond blanc physionomique&#8221;, c’est-à-dire d’une carte physionomique de ces milieux à l’aide des techniques de télédétection.</p>
 <p>Pour cela, une méthode de classification orientée-objet selon une approche experte a été developpée. Le détail des étapes pour aboutir aux classifications du fond blanc
 physionomique est donné selon l’arbre de décision ci-dessous.</p>
 <div class="figure align-center">
 <img alt="Arbre de decision" src="_images/arbreDecision_cut.png" />
 </div>
-<p>La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales et éboulis. Pour ce faire, les données de télédétection multi-temporelles sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l&#8217;indice du minimum de NDVI sur la série temporelle équivalente à l&#8217;étape de labour (ie à une végétation non-naturelle et aux éboulis).</p>
+<p>La première étape consiste à discriminer les végétations (semi-)naturelles des végétations culturales et éboulis. Pour ce faire, les données de télédétection multi-temporelles Landsat8 ou Sentinel2(+PHYMOBAT 3.0) sont utilisées. L’analyse de traitement d’image s’appuie sur l’hypothèse forte selon laquelle les cultures annuelles comprennent une étape de labour et se retrouvent donc au moins une fois en sol nu dans l’année. Cette analyse a pour objectif de calculer l&#8217;indice du minimum de NDVI sur la série temporelle équivalente à l&#8217;étape de labour (ie à une végétation non-naturelle et aux éboulis).</p>
 <p>Le deuxième niveau se décompose en deux parties. Dans un premier temps, le modèle numérique de terrain est utilisé pour distinguer les éboulis (&gt;30% en pente) des surfaces agricoles (+PHYMOBAT 1.1). Dans la seconde partie de cette étape, la télédétection permet de caractériser la végétation naturelle en termes de structure et de densité c’est-à-dire du point de vue physionomique. Cette analyse se fait par l’utilisation d’images de très hautes résolutions (ici les orthophotographies BD ORTHO © IRC). Il s’agit de distinguer les surfaces herbacées des végétations ligneuses basses à l&#8217;aide de l&#8217;indice de texture SFS&#8217;SD (Structural Feature Set Standard Deviation).</p>
 <p>Pour le niveau suivante, les végétations ligneuses basses sont déclinées en deux niveaux de densités : mixtes (ouverts) et denses. Ils sont également caractérisés par leur structure et leur densité. La distinction entre ces deux classes se fait en calculant cette fois-çi l&#8217;indice d&#8217;Haralick, IDM (inverse Inverse Difference).</p>
 <p>Une dernière phase consiste à extraire de l’information sur la production chlorophyllienne des zones herbacées. Cette étape utilise les séries temporelles. Elle se base sur le calcul de l&#8217;indice du maximum de NDVI dans l&#8217;année.</p>
 <p>(Pour plus de renseignements, voir &#8220;Rapport méthodologique pour la cartographie physionomique des milieux ouverts de basse altitude par télédétection&#8221; - <em>Samuel Alleaume 2014</em>).</p>
+<p>Une autre méthode avec un temps de calcul plus longue a été  implémentée pour extraire la carte de végétation physionomique. Il s&#8217;agit de la méthode Random Forest (+PHYMOBAT 2.0). Elle permet de discriminer les mêmes classes sur un plus grand jeu de donneés.</p>
 <div class="section" id="processus-algorithmiques-utilisees">
-<h2>Processus algorithmiques utilisées<a class="headerlink" href="#processus-algorithmiques-utilisees" title="Permalink to this headline">¶</a></h2>
+<h2>Processus algorithmiques utilisées<a class="headerlink" href="#processus-algorithmiques-utilisees" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Le Processus utilisé se décompose en trois parties :</p>
 <ul class="simple">
 <li>Traitements des images</li>
@@ -78,8 +82,13 @@ physionomique est donné selon l’arbre de décision ci-dessous.</p>
 <img alt="Modèle conceptuel de la chaîne de traitement" src="_images/ChaineTraitementCarHab.png" />
 </div>
 <div class="section" id="traitement-des-images">
-<h3>Traitement des images<a class="headerlink" href="#traitement-des-images" title="Permalink to this headline">¶</a></h3>
-<p>Deux types d&#8217;images sont utilisés dans cette chaîne de traitement : les orthophotographies © de l&#8217;IGN en IRC (infra-rouge fausse couleur) et les images gratuites issues du satellite Landsat 8 OLI (Operational Land Imager). Ce dernier satellite en orbitre depuis 2013 fourni des images à 30 mètres de résolution spatiale et 9 bandes spectrales (aérosols, bleu, vert, rouge, proche infra-rouge, moyen infra-rouge 1 et 2, panchromatique-15m, cirrus). A ces images, est joint un raster de détection des nuages, figure ci-dessous b (masque des nuages), utilisé pour sélection les images dans le processus.</p>
+<h3>Traitement des images<a class="headerlink" href="#traitement-des-images" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Deux types d&#8217;images sont utilisés dans cette chaîne de traitement : les orthophotographies © de l&#8217;IGN en IRC (infra-rouge fausse couleur) et les images gratuites issues de la plate-forme <a class="reference external" href="https://www.theia-land.fr/fr">Theia</a> :</p>
+<ul class="simple">
+<li><strong>Landsat 8 OLI</strong> (Operational Land Imager). En orbitre depuis 2013, ces images ont une résolution spatiale de 30 mètres et 9 bandes spectrales (aérosols, bleu, vert, rouge, proche infra-rouge, moyen infra-rouge 1 et 2, panchromatique-15m, cirrus).</li>
+<li><strong>Sentinel 2A</strong>. En orbitre depuis Juin 2015, ces images ont 13 bandes spectrales et différentes résolutions spatiales 10, 20 et 30 mètres en fonction de ces mêmes bandes. PHYMOBAT 3.0 utilise que les bandes à 10 mètres soit le bleu, vert, rouge et proche infra-rouge.</li>
+</ul>
+<p>A ces images, est joint un raster de détection des nuages, figure ci-dessous b (masque des nuages), utilisé pour sélection les images dans le processus.</p>
 <div class="figure align-center">
 <img alt="spectral_cloud" src="_images/spectral_cloud.png" />
 </div>
@@ -90,108 +99,112 @@ physionomique est donné selon l’arbre de décision ci-dessous.</p>
 <li>Traitement des images très haute résolution spatiales (calcul des indices de textures)</li>
 </ol>
 <div class="section" id="listing-et-telechargements-des-images-sur-la-plate-forme-theia">
-<h4>1. Listing et téléchargements des images sur la plate-forme Theia<a class="headerlink" href="#listing-et-telechargements-des-images-sur-la-plate-forme-theia" title="Permalink to this headline">¶</a></h4>
-<p>Le listing des images disponibles se fait à travers une base de données GeoJSON via une API serveur : <a class="reference external" href="https://theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&amp;_pretty=true&amp;q=2013&amp;box=4.5,43.16,5.8,43.5&amp;maxRecord=500">https://theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&amp;_pretty=true&amp;q=2013&amp;box=4.5,43.16,5.8,43.5&amp;maxRecord=500</a></p>
+<h4>1. Listing et téléchargements des images sur la plate-forme Theia<a class="headerlink" href="#listing-et-telechargements-des-images-sur-la-plate-forme-theia" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Le listing des images disponibles se fait à travers une base de données GeoJSON via une API serveur pour Landsat8 (resp. Sentinel2): <a class="reference external" href="https://landsat-theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&amp;_pretty=true&amp;q=2013&amp;box=4.5,43.16,5.8,43.5&amp;maxRecord=500">https://landsat-theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&amp;_pretty=true&amp;q=2013&amp;box=4.5,43.16,5.8,43.5&amp;maxRecord=500</a> (resp. <a class="reference external" href="https://theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&amp;_pretty=true&amp;completionDate=2015-12-31&amp;box=4.5,43.16,5.8,43.5&amp;maxRecord=500&amp;startDate=2015-01-01">https://theia.cnes.fr/resto/api/collections/Landsat/search.json?lang=fr&amp;_pretty=true&amp;completionDate=2015-12-31&amp;box=4.5,43.16,5.8,43.5&amp;maxRecord=500&amp;startDate=2015-01-01</a>).</p>
 <p><em>Avec q=2013 : Année des images disponibles</em></p>
 <blockquote>
-<div><em>box=4.5,43.16,5.8,43.5 : Zone d&#8217;emprise en degrés décimaux</em></div></blockquote>
-<p>La fonction <a class="reference internal" href="package.html#Archive.Archive.listing" title="Archive.Archive.listing"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.listing()</span></tt></a> utilise cette base. Elle remplace dans l&#8217;exemple &#8220;2013&#8221; par l&#8217;année entrée par un utilisateur. Ensuite, à l&#8217;aide du shapefile de la zone d&#8217;étude, la fonction convertie les coordonnées des extrémités du fichier vecteur en degrés décimaux pour les inclure dans l&#8217;url ci-dessus (<em>box =</em>).</p>
-<p>A l&#8217;issue du listing, le nom et l&#8217;identifiant des images sont stockés dans une liste. Le nom de l&#8217;image est utilisé pour nommer l&#8217;image après téléchargement et l&#8217;identifiant est utilisé pour le téléchargement <a class="reference internal" href="package.html#Archive.Archive.download_auto" title="Archive.Archive.download_auto"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.download_auto()</span></tt></a> (+PHYMOBAT 1.1):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c">## Source : https://github.com/olivierhagolle/theia_download</span>
-<span class="c"># Authentification</span>
-<span class="n">get_token</span><span class="o">=</span><span class="s">&#39;curl -k -s -X POST --data-urlencode &quot;ident=</span><span class="si">%s</span><span class="s">&quot; --data-urlencode &quot;pass=</span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/services/authenticate/&gt;token.json&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">)</span>
+<div><p><em>startDate=2015-01-01 : Date de début de la période choisie des images disponibles</em></p>
+<p><em>completionDate=2015-12-31 : Date de fin de la période choisie des images disponibles</em></p>
+<p><em>box=4.5,43.16,5.8,43.5 : Zone d&#8217;emprise en degrés décimaux</em></p>
+</div></blockquote>
+<p>La fonction <a class="reference internal" href="package.html#Archive.Archive.listing" title="Archive.Archive.listing"><code class="xref py py-func docutils literal"><span class="pre">Archive.Archive.listing()</span></code></a> utilise cette base. Elle remplace dans l&#8217;exemple &#8220;2013&#8221; par la période ou l&#8217;année entrée par un utilisateur. Ensuite, à l&#8217;aide du shapefile de la zone d&#8217;étude, la fonction convertie les coordonnées des extrémités du fichier vecteur en degrés décimaux pour les inclure dans l&#8217;url ci-dessus (<em>box =</em>).</p>
+<p>A l&#8217;issue du listing, le nom et l&#8217;identifiant des images sont stockés dans une liste. Le nom de l&#8217;image est utilisé pour nommer l&#8217;image après téléchargement et l&#8217;identifiant est utilisé pour le téléchargement <a class="reference internal" href="package.html#Archive.Archive.download_auto" title="Archive.Archive.download_auto"><code class="xref py py-func docutils literal"><span class="pre">Archive.Archive.download_auto()</span></code></a> (+PHYMOBAT 1.1). Une bouton <strong>Proxy</strong> a été ajouté à PHYMOBAT 3.0:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1">## Source : https://github.com/olivierhagolle/theia_download</span>
+<span class="c1"># Authentification</span>
+<span class="n">get_token</span><span class="o">=</span><span class="s1">&#39;curl -k -s -X POST </span><span class="si">%s</span><span class="s1"> --data-urlencode &quot;ident=</span><span class="si">%s</span><span class="s1">&quot; --data-urlencode &quot;pass=</span><span class="si">%s</span><span class="s1">&quot; </span><span class="si">%s</span><span class="s1">/services/authenticate/&gt;token.json&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">curl_proxy</span><span class="p">,</span> <span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_token</span><span class="p">)</span>
-<span class="c"># .</span>
-<span class="c"># .</span>
-<span class="c">#.</span>
-<span class="c"># Téléchargement -&gt; loop ... d in range(...)</span>
-<span class="n">get_product</span><span class="o">=</span><span class="s">&#39;curl -o </span><span class="si">%s</span><span class="s"> -k -H &quot;Authorization: Bearer </span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/resto/collections/Landsat/</span><span class="si">%s</span><span class="s">/download/?issuerId=theia&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># .</span>
+<span class="c1"># Téléchargement -&gt; loop ... d in range(...)</span>
+<span class="n">get_product</span><span class="o">=</span><span class="s1">&#39;curl </span><span class="si">%s</span><span class="s1"> -o </span><span class="si">%s</span><span class="s1"> -k -H &quot;Authorization: Bearer </span><span class="si">%s</span><span class="s1">&quot; </span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/collections/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/download/?issuerId=theia&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">curl_proxy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_product</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>A la fin du téléchargement des images, <a class="reference internal" href="package.html#Archive.Archive.decompress" title="Archive.Archive.decompress"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.decompress()</span></tt></a> va décompresser les archives grâce au module <tt class="docutils literal"><span class="pre">tarfile</span></tt>.</p>
+<p>A la fin du téléchargement des images, <a class="reference internal" href="package.html#Archive.Archive.decompress" title="Archive.Archive.decompress"><code class="xref py py-func docutils literal"><span class="pre">Archive.Archive.decompress()</span></code></a> va décompresser les archives Landsat 8 grâce au module <code class="docutils literal"><span class="pre">tarfile</span></code>.
+Pour les Sentinel 2A, les archives seront extraits à l&#8217;aide du module <code class="docutils literal"><span class="pre">zipfile</span></code> en sélectionnant que les bandes à 10m. En effet, les rasters Sentinel 2A sont fournis avec des bandes séparées qu&#8217;il faut &#8220;stacker&#8221;.</p>
 </div>
 <div class="section" id="traitements-des-images-telechargees">
-<h4>2. Traitements des images téléchargées<a class="headerlink" href="#traitements-des-images-telechargees" title="Permalink to this headline">¶</a></h4>
-<p>Toutes les images décompréssées (images spectrales à 9 bandes et masque de nuages) sont découpées <a class="reference internal" href="package.html#Toolbox.clip_raster" title="Toolbox.clip_raster"><tt class="xref py py-func docutils literal"><span class="pre">Toolbox.clip_raster()</span></tt></a> en fonction de la zone d&#8217;étude. Le découpage est éffectué en ligne de commande grâce au module python <tt class="docutils literal"><span class="pre">subprocess</span></tt> :</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>gdalwarp -dstnodata -10000 -q -cutline study_area.shp -crop_to_cutline -of GTiff raster.TIF Clip_raster.TIF
+<h4>2. Traitements des images téléchargées<a class="headerlink" href="#traitements-des-images-telechargees" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Toutes les images décompréssées (images spectrales à 9 bandes pour L8 (à 4 bandes pour S2A) et masque de nuages) sont découpées <code class="xref py py-func docutils literal"><span class="pre">Toolbox.clip_raster()</span></code> en fonction de la zone d&#8217;étude. Le découpage est éffectué en ligne de commande grâce au module python <code class="docutils literal"><span class="pre">subprocess</span></code> :</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gdalwarp -dstnodata -10000 -q -cutline study_area.shp -crop_to_cutline -of GTiff raster.TIF Clip_raster.TIF
 </pre></div>
 </div>
-<p>Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d&#8217;étude. Pour cela, le processus regroupe <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.group_by_date" title="RasterSat_by_date.RasterSat_by_date.group_by_date"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.group_by_date()</span></tt></a> et mosaïque d&#8217;abord les rasters par date <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.mosaic_by_date" title="RasterSat_by_date.RasterSat_by_date.mosaic_by_date"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.mosaic_by_date()</span></tt></a>.</p>
-<p>Le mosaïquage est réalisé en ligne de commande <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal" title="RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal()</span></tt></a> en utilisant le format virtuel de <cite>gdal</cite>, <em>VRT (Virtual Dataset)</em> :</p>
-<div class="highlight-bash"><div class="highlight"><pre>$ gdalbuildvrt -srcnodata -10000 dst_data.VRT raster1.TIF raster2.TIF
-Input file size is 286, 467
-0...10...20...30...40...50...60...70...80...90...100 - done.
+<p>Ensuite une sélection des images est éffectuée en fonction de la couverture nuageuse dans la zone d&#8217;étude. Pour cela, le processus regroupe <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.group_by_date" title="RasterSat_by_date.RasterSat_by_date.group_by_date"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.group_by_date()</span></code></a> et mosaïque d&#8217;abord les rasters par date <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.mosaic_by_date" title="RasterSat_by_date.RasterSat_by_date.mosaic_by_date"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.mosaic_by_date()</span></code></a>.</p>
+<p>Le mosaïquage est réalisé en ligne de commande <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal" title="RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal()</span></code></a> en utilisant le format virtuel de <cite>gdal</cite>, <em>VRT (Virtual Dataset)</em> :</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gdalbuildvrt -srcnodata -10000 dst_data.VRT raster1.TIF raster2.TIF
+Input file size is <span class="m">286</span>, <span class="m">467</span>
+<span class="m">0</span>...10...20...30...40...50...60...70...80...90...100 - <span class="k">done</span>.
 $
 $ gdal_translate -a_nodata -10000 dst_data.TIF dst_data.VRT
-Input file size is 286, 467
-0...10...20...30...40...50...60...70...80...90...100 - done.
+Input file size is <span class="m">286</span>, <span class="m">467</span>
+<span class="m">0</span>...10...20...30...40...50...60...70...80...90...100 - <span class="k">done</span>.
 </pre></div>
 </div>
-<p>La selection est faite dans <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.pourc_cloud" title="RasterSat_by_date.RasterSat_by_date.pourc_cloud"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.pourc_cloud()</span></tt></a>. Elle renvoie le pourcentage de couverture claire <strong>cl</strong> par mosaïque de la façon suivante :</p>
+<p>La selection est faite dans <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.pourc_cloud" title="RasterSat_by_date.RasterSat_by_date.pourc_cloud"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.pourc_cloud()</span></code></a>. Elle renvoie le pourcentage de couverture claire <strong>cl</strong> par mosaïque de la façon suivante :</p>
 <ul class="simple">
 <li>Extrait l&#8217;étendue de l&#8217;image en matrice :</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">mask_spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">],</span> <span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mask_spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">],</span> <span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>Extrait les pixels correspondant aux nuages :</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">mask_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_cloud</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">mask_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_cloud</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>Détermine les pixels de nuages par rapport à l&#8217;emprise de l&#8217;image :</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">mask_cloud</span><span class="p">,</span> <span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">mask_spec</span><span class="p">))</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">mask_cloud</span><span class="p">,</span> <span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">mask_spec</span><span class="p">))</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>Détermine la somme de pixels en nuages et le pourcentage dans la zone d&#8217;emprise :</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
 <span class="n">nb0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_spec</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Par défaut, le pourcentage de couverture nuageuse maximum accepté est de 40%.</p>
-<p>Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.calcul_ndvi" title="RasterSat_by_date.RasterSat_by_date.calcul_ndvi"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.calcul_ndvi()</span></tt></a> (calcul de NDVI), <a class="reference internal" href="package.html#Toolbox.calc_serie_stats" title="Toolbox.calc_serie_stats"><tt class="xref py py-func docutils literal"><span class="pre">Toolbox.calc_serie_stats()</span></tt></a> (calcul de minimum, maximum de ndvi et temporalité nuageuse) et <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.create_raster" title="RasterSat_by_date.RasterSat_by_date.create_raster"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.create_raster()</span></tt></a>. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d&#8217;image utilisé par pixel clair (exemple sur l&#8217;image ci-dessous).</p>
+<p>Toutes les mosaïques ayant plus de 60% de pixels clair, passeront par les fonctions <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.calcul_ndvi" title="RasterSat_by_date.RasterSat_by_date.calcul_ndvi"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.calcul_ndvi()</span></code></a> (calcul de NDVI), <code class="xref py py-func docutils literal"><span class="pre">Toolbox.calc_serie_stats()</span></code> (calcul de minimum, maximum de ndvi et temporalité nuageuse) et <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.create_raster" title="RasterSat_by_date.RasterSat_by_date.create_raster"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.create_raster()</span></code></a>. Cette dernière fonction crée cinq rasters : minimum ndvi, maximum ndvi, std ndvi (écart-type), MaxMin ndvi (max ndvi - min ndvi) et un dernier raster qui correspond au nombre d&#8217;image utilisé par pixel clair (exemple sur l&#8217;image ci-dessous).</p>
 <div class="figure align-center">
 <img alt="temporal_cloud" src="_images/temporal_cloud.png" />
 </div>
 </div>
 <div class="section" id="traitements-des-images-thrs">
-<h4>3. Traitements des images THRS<a class="headerlink" href="#traitements-des-images-thrs" title="Permalink to this headline">¶</a></h4>
-<p>Le traitement des images THRS est éffectué pour déterminer les ligneux et différents types de ligneux. Ligneux sont caractérisés par leur texture vis-à-vis des herbacés, et de leur type. Ces caractéristiques sont extraits à l&#8217;aide d&#8217;indices de textures issus de l&#8217;<tt class="docutils literal"><span class="pre">OTB</span></tt> via <a class="reference internal" href="package.html#Vhrs.Vhrs" title="Vhrs.Vhrs"><tt class="xref py py-func docutils literal"><span class="pre">Vhrs.Vhrs()</span></tt></a>.</p>
+<h4>3. Traitements des images THRS<a class="headerlink" href="#traitements-des-images-thrs" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Le traitement des images THRS est éffectué pour déterminer les ligneux et différents types de ligneux. Ligneux sont caractérisés par leur texture vis-à-vis des herbacés, et de leur type. Ces caractéristiques sont extraits à l&#8217;aide d&#8217;indices de textures issus de l&#8217;<code class="docutils literal"><span class="pre">OTB</span></code> via <a class="reference internal" href="package.html#Vhrs.Vhrs" title="Vhrs.Vhrs"><code class="xref py py-func docutils literal"><span class="pre">Vhrs.Vhrs()</span></code></a>.</p>
 <p>Deux indices ont été sélectionnés pour discriminer les classes par rapport aux ligneux :</p>
 <ul class="simple">
 <li>SFS’SD des indices de textures de Structural Feature Set Standard Deviation (Herbacés / Ligneux)</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>otbcli_SFSTextureExtraction -in raster.tif -channel 2 -parameters.spethre 50.0 -parameters.spathre 100 -out out_sfs.tif
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ otbcli_SFSTextureExtraction -in raster.tif -channel <span class="m">2</span> -parameters.spethre <span class="m">50</span>.0 -parameters.spathre <span class="m">100</span> -out out_sfs.tif
 </pre></div>
 </div>
 <ul class="simple">
 <li>Inverse Difference Moment des indices d&#8217;Haralick (Ligneux mixtes / Ligneux denses)</li>
 </ul>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>otbcli_HaralickTextureExtraction -in raster.tif -channel 2 -parameters.xrad 3 -parameters.yrad 3 -texture simple -out out_haralick.tif
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ otbcli_HaralickTextureExtraction -in raster.tif -channel <span class="m">2</span> -parameters.xrad <span class="m">3</span> -parameters.yrad <span class="m">3</span> -texture simple -out out_haralick.tif
 </pre></div>
 </div>
-<p>Pour extraire deux indices, il faut lancer les deux commandes ci-dessus qui calculent malgré tout 14 indices. Par conséquent, les traitements deviennent très long. Pour réduire ce temps de calcul, la chaîne de traitement utilise le <tt class="docutils literal"><span class="pre">multiprocessing</span></tt>. Il permet de lancer tous les traitements en même temps.</p>
-<p>Le code Python associé au <tt class="docutils literal"><span class="pre">multiprocessing</span></tt> est le suivant :</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
+<p>Pour extraire deux indices, il faut lancer les deux commandes ci-dessus qui calculent malgré tout 14 indices. Par conséquent, les traitements deviennent très long. Pour réduire ce temps de calcul, la chaîne de traitement utilise le <code class="docutils literal"><span class="pre">multiprocessing</span></code>. Il permet de lancer tous les traitements en même temps.</p>
+<p>Le code Python associé au <code class="docutils literal"><span class="pre">multiprocessing</span></code> est le suivant :</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Process</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p_sfs</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">sfs_function</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p_har</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">haralick_function</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># Lancement des traitements</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Lancement des traitements</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p_sfs</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p_har</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># Attente de la fin des calculs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Attente de la fin des calculs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p_sfs</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">p_har</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Pour utiliser le <tt class="docutils literal"><span class="pre">multiprocessing</span></tt>, il faut une machine avec minimum 12Go de mémoire vive. Sinon les traitements seront plus long que sans l&#8217;utilisation du <tt class="docutils literal"><span class="pre">multiprocessing</span></tt>!</p>
+<p class="first admonition-title">Avertissement</p>
+<p class="last">Pour utiliser le <code class="docutils literal"><span class="pre">multiprocessing</span></code>, il faut une machine avec minimum 12Go de mémoire vive. Sinon les traitements seront plus long que sans l&#8217;utilisation du <code class="docutils literal"><span class="pre">multiprocessing</span></code>!</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -200,103 +213,235 @@ Input file size is 286, 467
 </div>
 </div>
 <div class="section" id="traitements-des-echantillons">
-<h3>Traitements des échantillons<a class="headerlink" href="#traitements-des-echantillons" title="Permalink to this headline">¶</a></h3>
+<h3>Traitements des échantillons<a class="headerlink" href="#traitements-des-echantillons" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Il faut trois paires d&#8217;échantillons pour compléter l&#8217;arbre de décision défini plus haut. Un échantillon pour séparer : <strong>Cultures / Végétation semi-naturelle</strong>, <strong>Herbacées / Ligneux</strong> et <strong>Ligneux mixtes / Ligneux denses</strong>.</p>
-<p>Les traitements des échantillons <a class="reference internal" href="API.html#Processing.Processing.i_sample" title="Processing.Processing.i_sample"><tt class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_sample()</span></tt></a> est le même pour les trois, soit :</p>
+<p>Les traitements des échantillons <a class="reference internal" href="API.html#Processing.Processing.i_sample" title="Processing.Processing.i_sample"><code class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_sample()</span></code></a> est le même pour les trois, soit :</p>
 <ul class="simple">
-<li>En partant du principe que tous les échantillons soit dans un même shapefile, il faut indiquer le nom de la classe et le champs où il se trouve.</li>
+<li>En partant du principe que tous les échantillons soit dans un même shapefile, il faut indiquer le nom de la classe et le champ où il se trouve.</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li>Créer un shapefile par échantillon <a class="reference internal" href="package.html#Sample.Sample.create_sample" title="Sample.Sample.create_sample"><tt class="xref py py-func docutils literal"><span class="pre">Sample.Sample.create_sample()</span></tt></a> puis réaliser une statistique zonale par polygone <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><tt class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></tt></a>.</li>
+<li>Créer un shapefile par échantillon <a class="reference internal" href="package.html#Sample.Sample.create_sample" title="Sample.Sample.create_sample"><code class="xref py py-func docutils literal"><span class="pre">Sample.Sample.create_sample()</span></code></a> de calibration et de validation puis réaliser une statistique zonale par polygone <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><code class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></code></a>.</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_nb_sample</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_nb_sample</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">create_sample</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">zonal_stats</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">]))</span>
 </pre></div>
 </div>
 <p>La création du shapefile est fait sur un certain nombre de polygone (chiffre indiqué par l&#8217;utilisateur) tiré aléatoirement.</p>
-<p>Au final, à l&#8217;aide des valeurs déterminer par <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><tt class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></tt></a>, la fonction <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><tt class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></tt></a> détermine le seuil optimal (<em>SEaTH–A new tool for automated feature extraction in the context of object-based image analysis S. Nussbaum et al.</em>) pour discriminer les classes issues de l&#8217;arbre de décision.</p>
-<p>Pour l&#8217;instant, l&#8217;utilisation du RPG (Régistre Parcellaire Graphique) est insdispensable comme échantillon de <strong>Cultures</strong>. Hors le RPG possède des polygones poly-culturaux.</p>
-<p>Il se pourrait qu&#8217;un polygone renseigné soit ainsi blé, maïs et une prairie permanente. Par conséquent, ce polygones injecterait une erreur dans le calcul du seuil optimal puisque le polygone est un mélange de végétation non naturelle et semi-naturelle. Dans ce cas, <a class="reference internal" href="package.html#Rpg.Rpg" title="Rpg.Rpg"><tt class="xref py py-func docutils literal"><span class="pre">Rpg.Rpg()</span></tt></a> a été mis en place pour créer des échantillons mon-culturaux de cultures et de prairies permanentes.</p>
+<ul class="simple">
+<li>Et Extrait le modèle de distinction</li>
+</ul>
+<div class="section" id="modele-seath">
+<h4>1. Modèle Seath<a class="headerlink" href="#modele-seath" title="Lien permanent vers ce titre">¶</a></h4>
+<p>A l&#8217;aide des valeurs déterminer par <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><code class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></code></a>, la fonction <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><code class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></code></a> détermine le seuil optimal (<em>SEaTH–A new tool for automated feature extraction in the context of object-based image analysis S. Nussbaum et al.</em>) pour discriminer les classes deux à deux issues de l&#8217;arbre de décision.</p>
+<p>Pour l&#8217;instant, l&#8217;utilisation du RPG (Régistre Parcellaire Graphique) est insdispensable comme échantillon de <strong>Cultures</strong>. Or le RPG possède des polygones poly-culturaux.
+Il se pourrait qu&#8217;un polygone renseigné soit ainsi blé, maïs et une prairie permanente. Par conséquent, ce polygones injecterait une erreur dans le calcul du seuil optimal puisque le polygone est un mélange de végétation non naturelle et semi-naturelle. Dans ce cas, <a class="reference internal" href="package.html#Rpg.Rpg" title="Rpg.Rpg"><code class="xref py py-func docutils literal"><span class="pre">Rpg.Rpg()</span></code></a> a été mis en place pour créer des échantillons mono-culturaux de cultures et de prairies permanentes.</p>
+</div>
+<div class="section" id="moldele-random-forest-rf">
+<h4>2. Moldèle Random Forest (RF)<a class="headerlink" href="#moldele-random-forest-rf" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Le RF quant à lui stocke toutes les bandes de textures contrairement à la l&#8217;utilisation méthode Seath dite experte. Cette méthode a été mise en place à l&#8217;aide du module Python <code class="docutils literal"><span class="pre">sklearn</span></code> avec un export des indices les plus significatifs et de l&#8217;arbre de décision généré :</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Build a forest of trees from the samples</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">rf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_rf</span><span class="p">,</span> <span class="n">y_rf</span><span class="p">)</span>
+
+<span class="c1"># Print in a file feature important</span>
+<span class="n">importance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">importance</span> <span class="o">=</span> <span class="p">[(</span><span class="n">importance</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importance</span><span class="p">))]</span>
+<span class="n">importance</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="n">file_feat_import</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/Feature_important_RF.ft&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_feat_import</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_feat_import</span><span class="p">)</span>
+<span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_feat_import</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+<span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">importance</span><span class="p">))</span>
+<span class="c1"># Close the output file</span>
+<span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># Print in a file decision tree</span>
+<span class="n">file_decisiontree</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/Decision_tree.dot&#39;</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_decisiontree</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_decisiontree</span><span class="p">)</span>
+
+<span class="n">tree_in_forest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">estimators_</span><span class="p">[</span><span class="mi">499</span><span class="p">]</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_decisiontree</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">my_file</span><span class="p">:</span>
+    <span class="n">my_file</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">tree_in_forest</span><span class="p">,</span> <span class="n">out_file</span> <span class="o">=</span> <span class="n">my_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le temps de calcul de ce modèle est plus long car le traitement de <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><code class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></code></a> se fait sur 17 images. Par contre, il a l&#8217;avantage d&#8217;être plus précis.</p>
+</div>
 </div>
 <div class="section" id="traitements-de-classification">
-<h3>Traitements de classification<a class="headerlink" href="#traitements-de-classification" title="Permalink to this headline">¶</a></h3>
-<p>La classification est réalisée sur la segmentation issue de la l&#8217;orthophotographie © IGN. A chaque polygone, est affecté une valeur moyenne <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><tt class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></tt></a> par image. Les statistiques zonales sur les rasters à THRS sont très long. Le <tt class="docutils literal"><span class="pre">multiprocessing</span></tt> est, une nouvelle fois, utilisé par ici pour accélérer le gain de temps de calcul.</p>
-<p><a class="reference internal" href="package.html#Segmentation.Segmentation.compute_biomass_density" title="Segmentation.Segmentation.compute_biomass_density"><tt class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.compute_biomass_density()</span></tt></a> extrait la distribution de la densité de ligneux et de phytomasse.</p>
+<h3>Traitements de classification<a class="headerlink" href="#traitements-de-classification" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La classification est réalisée sur la segmentation issue de la l&#8217;orthophotographie © IGN. A chaque polygone, est affecté une valeur moyenne <a class="reference internal" href="package.html#Vector.Vector.zonal_stats" title="Vector.Vector.zonal_stats"><code class="xref py py-func docutils literal"><span class="pre">Vector.Vector.zonal_stats()</span></code></a> par image. Les statistiques zonales sur les rasters à THRS sont très long (Plus long pour la méthode RF). Le <code class="docutils literal"><span class="pre">multiprocessing</span></code> est, une nouvelle fois, utilisé par ici pour accélérer le gain de temps de calcul.</p>
+<p><a class="reference internal" href="package.html#Segmentation.Segmentation.compute_biomass_density" title="Segmentation.Segmentation.compute_biomass_density"><code class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.compute_biomass_density()</span></code></a> extrait la distribution de la densité de ligneux et de phytomasse.</p>
 <div class="figure align-center">
 <img alt="Distribution normale et pourcentage de représentation en fonction de l’écart-type" src="_images/phytomasse.png" />
 </div>
-<p><a class="reference internal" href="package.html#Segmentation.Segmentation.decision_tree" title="Segmentation.Segmentation.decision_tree"><tt class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.decision_tree()</span></tt></a> classe les polygones en fonction des seuils optimaux pré-déterminés <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><tt class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></tt></a> et des valeurs zonales par raster.</p>
-<p><a class="reference internal" href="package.html#Segmentation.Segmentation.create_cartography" title="Segmentation.Segmentation.create_cartography"><tt class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.create_cartography()</span></tt></a> va créer le shapefile final qui représentera le <strong>FB physionomique MOBA</strong>.</p>
+<p><a class="reference internal" href="package.html#Segmentation.Segmentation.decision_tree" title="Segmentation.Segmentation.decision_tree"><code class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.decision_tree()</span></code></a> (resp. <code class="docutils literal"><span class="pre">rf.predict()</span></code>) classe les polygones en fonction des seuils optimaux pré-déterminés <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><code class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></code></a> (resp. <a class="reference internal" href="API.html#Processing.Processing.i_sample_rf" title="Processing.Processing.i_sample_rf"><code class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_sample_rf()</span></code></a>) et des valeurs zonales par raster.</p>
+<p><a class="reference internal" href="package.html#Segmentation.Segmentation.create_cartography" title="Segmentation.Segmentation.create_cartography"><code class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.create_cartography()</span></code></a> va créer le shapefile final qui représentera le <strong>FB physionomique MOBA</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Le document final contient une colonne RPG qui correspond à la donnée du RPG (îlots de culture) pour un polygone de la segmentation inclut à 85%.</p>
+</div>
+<p><a class="reference internal" href="API.html#Processing.Processing.i_classifier_rf" title="Processing.Processing.i_classifier_rf"><code class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_classifier_rf()</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Rasterize RPG shapefile to complete the final shapefile</span>
+<span class="n">opt</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Remove&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">rpg_tif</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
+<span class="c1">#         if not os.path.exists(str(rpg_tif.vector_used[:-3]+&#39;TIF&#39;)):</span>
+<span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;choice_nb_b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">out_carto</span><span class="o">.</span><span class="n">stats_rpg_tif</span> <span class="o">=</span> <span class="n">out_carto</span><span class="o">.</span><span class="n">zonal_stats_pp</span><span class="p">(</span><span class="n">rpg_tif</span><span class="o">.</span><span class="n">layer_rasterization</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span><span class="p">,</span> <span class="s1">&#39;CODE_GROUP&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="package.html#Segmentation.Segmentation.create_cartography" title="Segmentation.Segmentation.create_cartography"><code class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation.create_cartography()</span></code></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">pourc_inter</span> <span class="o">&gt;=</span> <span class="mi">85</span><span class="p">:</span>
+        <span class="n">recouv_crops_RPG</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_rpg_tif</span><span class="p">[</span><span class="n">in_feature</span><span class="o">.</span><span class="n">GetFID</span><span class="p">()][</span><span class="s1">&#39;Maj_count&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="tutoriels-interface">
-<h2>Tutoriels interface<a class="headerlink" href="#tutoriels-interface" title="Permalink to this headline">¶</a></h2>
-<p>L&#8217;interface utilisateur est présenté sous cette forme :</p>
-<div class="figure align-center">
-<img alt="API" src="_images/API_0.png" />
-</div>
-<p>Elle est ouverte en tapant dans la console :</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python PHYMOBAT.py
+<h2>Tutoriels interface<a class="headerlink" href="#tutoriels-interface" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Il existe 2 interfaces : une interface simplifiée et une interface experte.</p>
+<p><strong>L&#8217;interface simplifiée</strong> <a class="reference internal" href="API.html#ui_PHYMOBATs_tab.Ui_PHYMOBAT" title="ui_PHYMOBATs_tab.Ui_PHYMOBAT"><code class="xref py py-func docutils literal"><span class="pre">ui_PHYMOBATs_tab.Ui_PHYMOBAT()</span></code></a> comme son nom l&#8217;indique est assez simple, elle est représentée sur une fenêtre et est très limitée au niveau des choix à faire (selection des types d&#8217;images, méthode de classification, choix des champs pour la classification finale, etc ...)</p>
+<p><strong>L&#8217;interface experte</strong> <a class="reference internal" href="API.html#ui_PHYMOBATe_tab.Ui_PHYMOBAT" title="ui_PHYMOBATe_tab.Ui_PHYMOBAT"><code class="xref py py-func docutils literal"><span class="pre">ui_PHYMOBATe_tab.Ui_PHYMOBAT()</span></code></a> est plus complexe. Elle est composée de 3 sous-onglets qui permettent de dissocier les traitements (pré-traitements images, traitements vecteur et classification) mais également de choisir les méthodes de classification et le types d&#8217;images à utiliser.</p>
+<p>Le passage d&#8217;une interface à une autre se fait à travers le sur-onglet Mode (référence 1 sur la figure ci-dessous).
+Il y a 3 sur-onglets : Menu, Aide et Mode</p>
+<ul class="simple">
+<li><strong>Menu</strong> : cet onglet est composé quant à lui de 3 fonctions (Ouvrir, Sauver, Quitter).
+Les fonctions <code class="docutils literal"><span class="pre">Ouvrir</span></code> <a class="reference internal" href="API.html#PHYMOBAT.PHYMOBAT.open_backup" title="PHYMOBAT.PHYMOBAT.open_backup"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.PHYMOBAT.open_backup()</span></code></a> et <code class="docutils literal"><span class="pre">Sauver</span></code> <a class="reference internal" href="API.html#PHYMOBAT.PHYMOBAT.save_backup" title="PHYMOBAT.PHYMOBAT.save_backup"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.PHYMOBAT.save_backup()</span></code></a>. sont utilisées pour charger ou sauvegarder dans un fichier .xml les paramètres entrés dans chaque case de l&#8217;application.
+La fonction <cite>Quitter</cite> <a class="reference internal" href="API.html#PHYMOBAT.PHYMOBAT.close_button" title="PHYMOBAT.PHYMOBAT.close_button"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.PHYMOBAT.close_button()</span></code></a>, ferme l&#8217;application.</li>
+<li><strong>Aide</strong> : <code class="docutils literal"><span class="pre">Aide</span> <span class="pre">de</span> <span class="pre">PHYMOBAT</span></code> et <code class="docutils literal"><span class="pre">A</span> <span class="pre">propos</span> <span class="pre">de</span> <span class="pre">PHYMOBAT</span></code>.
+La fonction <code class="docutils literal"><span class="pre">Aide</span> <span class="pre">de</span> <span class="pre">PHYMOBAT</span></code> <a class="reference internal" href="API.html#PHYMOBAT.PHYMOBAT.help_tools" title="PHYMOBAT.PHYMOBAT.help_tools"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.PHYMOBAT.help_tools()</span></code></a> ouvre une page HTML décrivant les méthodes de télédétection et les scripts utilisés (Pas à jour).
+La fonction <code class="docutils literal"><span class="pre">A</span> <span class="pre">propos</span> <span class="pre">de</span> <span class="pre">PHYMOBAT</span></code>  <a class="reference internal" href="API.html#PHYMOBAT.MyPopup_about" title="PHYMOBAT.MyPopup_about"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.MyPopup_about()</span></code></a> rappelle l&#8217;objectif de l&#8217;application et la licence utilisée.</li>
+<li><strong>Mode</strong> : <code class="docutils literal"><span class="pre">Mode</span> <span class="pre">Simplifié</span></code> <a class="reference internal" href="API.html#PHYMOBAT.PHYMOBAT.mode_simpli" title="PHYMOBAT.PHYMOBAT.mode_simpli"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.PHYMOBAT.mode_simpli()</span></code></a> et <code class="docutils literal"><span class="pre">Mode</span> <span class="pre">Expert</span></code> <a class="reference internal" href="API.html#PHYMOBAT.PHYMOBAT.mode_expert" title="PHYMOBAT.PHYMOBAT.mode_expert"><code class="xref py py-func docutils literal"><span class="pre">PHYMOBAT.PHYMOBAT.mode_expert()</span></code></a>.
+Ces deux modes sont basés sur le même algorithme. Par conséquent, bien paramétrés, le résultat de la carte finale est le même.</li>
+</ul>
+<div class="section" id="interface-simplifiee">
+<h3>Interface Simplifiée<a class="headerlink" href="#interface-simplifiee" title="Lien permanent vers ce titre">¶</a></h3>
+<p>C&#8217;est l&#8217;interface par défaut. Elle s&#8217;ouverte en tapant dans la console :</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python PHYMOBAT.py
 </pre></div>
 </div>
-<p>Cette interface est composé de trois onglets. Chaque onglet représente les parties du processus algorithmique décrit plus haut.</p>
-<p>Elle possède également en haut à droite une barre de menu : <em>Menu</em> et <em>Aide</em>. <em>Menu</em> permet de sauvegarder les informations entrées ou d&#8217;ouvrir une sauvegarde (fichier .xml). <em>Aide</em> ouvrir la documentation et une fenêtre d&#8217;information sur l&#8217;outil (+PHYMOBAT 1.1).</p>
-<p>A la dernière ligne de l&#8217;interface est indépendante des onglets. Il y a une &#8220;check box&#8221; pour lancer la chaîne de traitement en multi-processing <em>(cochée par défaut mais à décocher si la machine ne possède pas minimum 12Go de mémoire vive)</em> et des boutons : &#8220;Annuler&#8221; <em>(fermer l&#8217;application)</em> &#8220;OK&#8221; <em>(lancer le traitement)</em>.</p>
+<p>Elle est présenté sous cette forme :</p>
+<div class="figure align-center">
+<img alt="APIs" src="_images/APIs_0.png" />
+</div>
+<p>1 - Sur-onglets : <strong>Menu</strong>, <strong>Aide</strong> et <strong>Mode</strong></p>
+<p>2 - <strong>Chemin du dossier principal</strong> : Chemin d&#8217;accès au dossier où sont stockées toutes les données en entrée mais également toutes les données en sortie de l&#8217;application.</p>
+<p>3 - <strong>Période ou année des images</strong> : Intervalles de dates des images à télécharger et à traiter.</p>
+<p>L&#8217;intervalle doit être sous cette forme <em>AAAA-MM-DD,AAAA-MM-DD</em> où A -&gt; Année (2015), M -&gt; Mois (05) et D -&gt; Jour (25).
+Pour plusieurs intervalles, par exemple deux (Séparer par un point virgule) : <em>AAAA-MM-DD,AAAA-MM-DD;AAAA-MM-DD,AAAA-MM-DD</em>.
+Pour une année complète : <em>AAAA</em></p>
+<p>4 - <strong>Emprise de la zone</strong> : Chemin d&#8217;accès au shapefile correspondant à la zone d&#8217;emprise sur laquelle le traitement sera lancé.</p>
+<p>5 - <strong>Identifiant Theia</strong> : Pour télécharger les images Landsat8 sur la plateforme Theia, il faut d&#8217;abord s’inscrire sur le site : <a class="reference external" href="https://theia-landsat.cnes.fr/rocket/#/home">https://theia-landsat.cnes.fr/rocket/#/home</a>. Puis entrer le nom d&#8217;utilisateur et le mot de passe enregistré sur Theia-land dans l&#8217;application. Il y a également un bouton <code class="docutils literal"><span class="pre">Proxy</span></code> <a class="reference internal" href="API.html#ui_Proxy_window.Ui_Proxy_window" title="ui_Proxy_window.Ui_Proxy_window"><code class="xref py py-func docutils literal"><span class="pre">ui_Proxy_window.Ui_Proxy_window()</span></code></a> qui permet de rentrer les informations concernant un eventuel <strong>Proxy</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dès que les images ont été téléchargées, l&#8217;outil ne les téléchargeront pas à nouveau.</p>
+</div>
+<p>6 - <strong>BD Alti</strong> (Facultatif) : Chemin d&#8217;accès à la BD Alti. Calcul de pentes (+PHYMOBAT 1.1) <a class="reference internal" href="package.html#Slope.Slope" title="Slope.Slope"><code class="xref py py-func docutils literal"><span class="pre">Slope.Slope()</span></code></a>.</p>
+<p>7 - <strong>Images THRS</strong> : Chemin d&#8217;accès à l&#8217;orthographie IRC à 2m de résolution spatiale en GeoTiff. Les orthographies IRC sont distribuées par l&#8217;IGN par tuile, en ECW et à 50cm de résolution spatiale. Par conséquent, en utilisant les outils de GDAL (gdalbuildvrt, gdal_translate, gdalwarp), il faut fusionner toutes les tuiles , convertir la mosaïque finale en TIF et la dégrader à 2m de résolution spatiale (<a class="reference external" href="https://github.com/SylvioL/MosaiqueIRC.git">https://github.com/SylvioL/MosaiqueIRC.git</a>).</p>
+<p>8 - <strong>Segmentation</strong> : Chemin d&#8217;accès au shapefile correspondant à la segmentation IGN.</p>
+<p>9 - <strong>Echantillons RPG</strong> : Chemin d&#8217;accès au shapefile correspondant aux surfaces des îlots culturaux du RPG. Ces polygones représentent les échantillons de la végétation non naturelle (Cultures) et semi naturelle (Prairies permanentes).</p>
+<p>10 - <strong>Champs</strong> : Le nom des champs où sont stockées les classes correspondantes aux grandes classes de la végétation→ Non naturelle / Semi-naturelle.</p>
+<p>11 - <strong>Classes</strong> : Les classes Non naturelles (1, 2, 3, 4, ... etc) et la classe semi naturelle (18).</p>
+<p>12 - <strong>Nbre de polygones</strong> : Nombre d&#8217;échantillons à extraire du shapefile surfaces RPG pour lancer l&#8217;entraînement du classifieur et valider la classification.</p>
+<p>13 - <strong>Echantillons Herbacés / Ligneux</strong> : Chemin d&#8217;accès au shapefile où sont stockés les échantillons d&#8217;herbacés et de ligneux.
+Même utilisation que pour les références 9, 10, 11, il faut entrer le nom des champs où sont les classes, écrire les classes et le nombres de polygones à utiliser.</p>
+<p>14 - <strong>Echantillons Ligneux denses</strong> / Ligneux mixtes : Chemin d&#8217;accès au shapefile où sont stockés les échantillons de ligneux.
+Même utilisation que pour les références 9, 10, 11, il faut entrer le nom des champs où sont les classes, écrire les classes et le nombres de polygones à utiliser.</p>
+<p>15 - <strong>Fichier de sortie</strong> : Chemin où sera stocké le résultat final (shapefile) en sortie de PHYMOBAT.</p>
+<p>16 - Lancement des traitements (OK), ou fermer l&#8217;application (Close).</p>
+<p>17 - <strong>Multi-proccessing</strong> : Sélectionné par défaut. Il permet d&#8217;accélérer le calcul des traitements en utilisant plusieurs processeurs. A décocher <strong>si la machine ne possède pas minimum 12Go de mémoire vive</strong>.</p>
+<div class="section" id="exemple-sur-un-jeu-de-donnees-test">
+<h4>Exemple sur un jeu de données test<a class="headerlink" href="#exemple-sur-un-jeu-de-donnees-test" title="Lien permanent vers ce titre">¶</a></h4>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Jeu de données test à demander à <a class="reference external" href="mailto:samuel&#46;alleaume&#37;&#52;&#48;irstea&#46;fr">samuel<span>&#46;</span>alleaume<span>&#64;</span>irstea<span>&#46;</span>fr</a></p>
+</div>
+<p>L&#8217;image ci-dessous indique ce qu&#8217;il faut mettre dans chaque champs de l&#8217;application pour un jeu de données test bien précis. Il suffit juste de remplacer &#8216;/media/laventure/DATA/EclipseFolder/CarHab_v2/Cher18_small_zone_test&#8217; par l&#8217;arborescence où se trouve le jeu de données test sur votre machine.</p>
+<p>Bien entendu il faut, comme indiqué dans la référence 5, avoir vos propres identifiants Theia (Utilisateur et mot de passe).</p>
+<p>Pour les classes de cultures (Non-naturelles) du RPG qui ne sont pas bien visible sur l&#8217;image : 1, 2, 3, 4, 5, 6, 7, 8, 9, 15, 20, 21, 24</p>
+<p>Tous ces éléments sont également enregistrés dans le fichier &#8220;Save_test.xml&#8221; du dossier &#8220;data_test&#8221;.</p>
+<div class="figure align-center">
+<img alt="APIs_fill" src="_images/APIs_01.png" />
+</div>
+</div>
+</div>
+<div class="section" id="interface-experte">
+<h3>Interface experte<a class="headerlink" href="#interface-experte" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour ouvrir l&#8217;interface experte : Sur-onglet <em>Mode &gt; Mode expert</em></p>
+<div class="figure align-center">
+<img alt="APIe" src="_images/API_0.png" />
+</div>
+<p>Cette interface est composé de trois onglets :</p>
+<ul class="simple">
+<li>Traitement des images</li>
+<li>Traitement des échantillons</li>
+<li>Traitement de classification</li>
+</ul>
+<p>Chaque onglet représente les parties du processus algorithmique décrit plus haut.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Les traitements sont lancés en appuyant sur le bouton &#8220;OK&#8221; et si au moins une &#8220;check box&#8221; associée à chaque onglets et fonction est cochée. Si aucune &#8220;check box&#8221; n&#8217;est cochée, aucun traitement ne sera lancé.</p>
 </div>
 <p>Cette présentation d&#8217;API se compose suivant les trois onglets.</p>
+</div>
 <div class="section" id="interface-du-traitement-des-images">
-<h3>Interface du traitement des images<a class="headerlink" href="#interface-du-traitement-des-images" title="Permalink to this headline">¶</a></h3>
+<h3>Interface du traitement des images<a class="headerlink" href="#interface-du-traitement-des-images" title="Lien permanent vers ce titre">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Cet onglet est indépendant des autres onglets.</p>
 </div>
+<p>Les références en rouge sur les images suivantes sont les mêmes que celles qui ont été présentées sur l&#8217;interface simplifiée.</p>
 <div class="figure align-center">
-<img alt="API" src="_images/API.png" />
+<img alt="APIe_empty" src="_images/API.png" />
 </div>
+<p>Au numéro 18, le choix du <strong>capteur des images à télécharger</strong> (Landsat, Sentinel 2 et Spot Word Heritage)</p>
 <p>Dans cet onglet il y a cinq traitements qui peuvent être lancés :</p>
-<ol class="arabic simple">
+<ol class="arabic simple" start="19">
 <li><strong>Images disponibles</strong> : Cherche le nombre d&#8217;images disponibles sur la plate-forme Theia et l&#8217;inscrit à la palce du zéro en face.</li>
 <li><strong>Télécharger</strong> : Télécharge les images à partir de la plate-forme Theia. Pour cela, il faut obligatoirement remplir dans les lignes d&#8217;édition en-dessous correspondant aux identifiants Theia (Utilisateur et mot de passe).</li>
 <li><strong>Traitement des images</strong> : Traitement des images satellites (mosaïque des images, calculs des indices spectraux, ...)</li>
-<li><strong>MNT</strong> : Calcul des pentes (+PHYMOBAT 1.1) issues du MNT (renseigner la ligne d&#8217;édition associée au modèle numérique de terrain).</li>
-<li><strong>Image THRS</strong> : Calcul des indices de textures. Il faut renseigner dans la ligne d&#8217;édition associée, le raster THRS.</li>
 </ol>
-<p>Avant de lancer un traitement, il faut renseigner toutes les premières lignes d&#8217;édition et sélectionner un <em>capteur</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Pour <strong>BD Alti</strong> et <strong>Image THRS</strong> : Pour que le traitement soit réalisé, il faut absolument que ces cases soient cochées.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Avertissement</p>
+<p class="last">Avant de lancer un traitement, il faut absolument renseigner toutes les premières lignes d&#8217;édition et sélectionner un <em>capteur</em>.</p>
+</div>
 <div class="figure align-center">
-<img alt="API" src="_images/API_01.png" />
+<img alt="APIe_used" src="_images/API_01.png" />
 </div>
 </div>
 <div class="section" id="interface-du-traitement-des-echantillons">
-<h3>Interface du traitement des échantillons<a class="headerlink" href="#interface-du-traitement-des-echantillons" title="Permalink to this headline">¶</a></h3>
+<h3>Interface du traitement des échantillons<a class="headerlink" href="#interface-du-traitement-des-echantillons" title="Lien permanent vers ce titre">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Cet onglet peut être indépendant des autres onglets. Il faut cocher la &#8220;check box&#8221; <strong>Image échantillonnée</strong> pour signaler au processus que les traitements du premier onglet n&#8217;ont pas été lancés. Ainsi renseigner le raster associé aux échantillons dans la ligne d&#8217;édition en-dessous.</p>
+<p class="last">Cet onglet peut être indépendant des autres onglets. Il faut cocher la &#8220;check box&#8221; <strong>Image échantillonnée</strong> (22) pour signaler au processus que les traitements du premier onglet n&#8217;ont pas été lancés. Ainsi renseigner le raster associé aux échantillons dans la ligne d&#8217;édition en-dessous.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner dans le premier onglet &#8220;Traitement des images&#8221; l&#8217;<strong>emprise de la zone</strong>.</p>
+<p class="last">Même si cet onglet peut être indépendant des autres onglets, il faut malgré tout renseigner l&#8217;<strong>emprise de la zone</strong> du premier onglet &#8220;Traitement des images&#8221;.</p>
 </div>
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_20.png" />
 </div>
 <p>Dans cet onglet il y a trois &#8220;check box&#8221; dont deux correspondent à des fonctions de traitement :</p>
-<ol class="arabic simple">
-<li><strong>RPG</strong> : Création du shapefile RPG mono-cultural <a class="reference internal" href="API.html#Processing.Processing.i_vhrs" title="Processing.Processing.i_vhrs"><tt class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_vhrs()</span></tt></a>.</li>
+<ol class="arabic simple" start="23">
+<li><strong>RPG</strong> : Création du shapefile RPG mono-cultural <a class="reference internal" href="API.html#Processing.Processing.i_vhrs" title="Processing.Processing.i_vhrs"><code class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_vhrs()</span></code></a>.</li>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Ce traitement est lancé en appuyant sur le bouton &#8220;Ajouter&#8221;.</p>
 </div>
-<ol class="arabic simple" start="2">
-<li><strong>Déterminer les seuils optimaux</strong> : Calcul des seuils optimaux par paire de classes <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><tt class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></tt></a>. Ce traitement est activé en appuyant sur &#8220;OK&#8221;.</li>
+<ol class="arabic simple" start="24">
+<li><strong>Déterminer les seuils optimaux</strong> : Calcul des seuils optimaux par paire de classes <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><code class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></code></a>. Ce traitement est activé en appuyant sur &#8220;OK&#8221;.</li>
 </ol>
 <p>Cette dernière fonction est l&#8217;objectif principal de cet onglet. Il faut ajouter à la chaîne de traitement, les échantillons associés aux paires de classes. Les deux exemples suivants montrent la démarche à suivre pour remplir les champs associés aux échantillons.</p>
 <p><strong>Exemple pour la classe 1</strong>, Végétation non naturelle (cultures) / Semi-naturelle :</p>
@@ -319,7 +464,7 @@ Input file size is 286, 467
 <p>Le bouton <strong>Effacer</strong>, efface toutes les informations entrées par l&#8217;utilisateur.</p>
 </div>
 <div class="section" id="interface-du-traitement-de-classification">
-<h3>Interface du traitement de classification<a class="headerlink" href="#interface-du-traitement-de-classification" title="Permalink to this headline">¶</a></h3>
+<h3>Interface du traitement de classification<a class="headerlink" href="#interface-du-traitement-de-classification" title="Lien permanent vers ce titre">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Cet onglet est dépendant des deux autres. Au préalable, il faut obligatoirement lancer tous les traitements précédents.</p>
@@ -327,18 +472,23 @@ Input file size is 286, 467
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_class.png" />
 </div>
-<p>Le seul traitement qui sera lancé dans cet onglet est le processus de classification <a class="reference internal" href="API.html#Processing.Processing.i_classifier" title="Processing.Processing.i_classifier"><tt class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_classifier()</span></tt></a>.</p>
-<p>Un fichier shapefile sera crée à l&#8217;emplacement indiqué par l&#8217;utilisateur, <strong>fichier de sortie</strong>. Il dépend du shapefile en entrée issue de la <strong>segmentation</strong> IGN.</p>
-<p>L&#8217;utilisateur doit personnaliser les champs des entités de sortie comme ceci (+PHYMOBAT 1.1) :</p>
-<p><em>Pour un niveau</em></p>
+<p>Le seul traitement qui sera lancé dans cet onglet est le processus de classification <a class="reference internal" href="API.html#Processing.Processing.i_classifier_s" title="Processing.Processing.i_classifier_s"><code class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_classifier_s()</span></code></a> ou <a class="reference internal" href="API.html#Processing.Processing.i_classifier_rf" title="Processing.Processing.i_classifier_rf"><code class="xref py py-func docutils literal"><span class="pre">Processing.Processing.i_classifier_rf()</span></code></a>.</p>
+<p>Un fichier shapefile sera crée à l&#8217;emplacement indiqué par l&#8217;utilisateur, <strong>fichier de sortie (15)</strong>. Il dépend du shapefile en entrée issue de la <strong>segmentation (8)</strong> IGN.</p>
+<p>Il y a un choix entre deux <strong>méthodes de classification (25)</strong> : Random Forest (Plus long en calcul) et Seath.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Avec la méthode du Random Forest, la classification se fait directement sur les trois niveaux contrairement à la méthode Seath qui peut se faire sur un, deux ou trois niveaux de classe.</p>
+</div>
+<p>Pour activer les niveaux d&#8217;extraction, il faut cocher les cases associées. L&#8217;utilisateur peut personnaliser les champs des entités de sortie comme ceci :</p>
+<p>26-1 - <strong>Pour extraire que le premier niveau (Seath)</strong></p>
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_class_10.png" />
 </div>
-<p><em>OU pour 2 niveaux</em></p>
+<p>26-2 - <strong>Pour extraire les deux premiers niveaux (Seath)</strong></p>
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_class_11.png" />
 </div>
-<p><em>OU pour tous les niveaux</em></p>
+<p>26-3 - <strong>Pour extraire tous les niveaux (RF et Seath)</strong></p>
 <div class="figure align-center">
 <img alt="API 2" src="_images/API_class_12.png" />
 </div>
@@ -364,9 +514,9 @@ Input file size is 286, 467
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="PHYMOBAT_documentation.html">Table Of Contents</a></h3>
+  <h3><a href="PHYMOBAT_documentation.html">Table des Matières</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Processus utilisées et tutoriels API</a><ul>
 <li><a class="reference internal" href="#processus-algorithmiques-utilisees">Processus algorithmiques utilisées</a><ul>
@@ -376,11 +526,20 @@ Input file size is 286, 467
 <li><a class="reference internal" href="#traitements-des-images-thrs">3. Traitements des images THRS</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#traitements-des-echantillons">Traitements des échantillons</a></li>
+<li><a class="reference internal" href="#traitements-des-echantillons">Traitements des échantillons</a><ul>
+<li><a class="reference internal" href="#modele-seath">1. Modèle Seath</a></li>
+<li><a class="reference internal" href="#moldele-random-forest-rf">2. Moldèle Random Forest (RF)</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#traitements-de-classification">Traitements de classification</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#tutoriels-interface">Tutoriels interface</a><ul>
+<li><a class="reference internal" href="#interface-simplifiee">Interface Simplifiée</a><ul>
+<li><a class="reference internal" href="#exemple-sur-un-jeu-de-donnees-test">Exemple sur un jeu de données test</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interface-experte">Interface experte</a></li>
 <li><a class="reference internal" href="#interface-du-traitement-des-images">Interface du traitement des images</a></li>
 <li><a class="reference internal" href="#interface-du-traitement-des-echantillons">Interface du traitement des échantillons</a></li>
 <li><a class="reference internal" href="#interface-du-traitement-de-classification">Interface du traitement de classification</a></li>
@@ -390,55 +549,54 @@ Input file size is 286, 467
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
+  <h4>Sujet précédent</h4>
   <p class="topless"><a href="install.html"
-                        title="previous chapter">Installation</a></p>
-  <h4>Next topic</h4>
+                        title="Chapitre précédent">Installation</a></p>
+  <h4>Sujet suivant</h4>
   <p class="topless"><a href="package.html"
-                        title="next chapter">CarHab Phy MOBA package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/methode_tuto.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+                        title="Chapitre suivant">CarHab Phy MOBA package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/methode_tuto.rst.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
         <li class="right" >
           <a href="package.html" title="CarHab Phy MOBA package"
-             >next</a> |</li>
+             >suivant</a> |</li>
         <li class="right" >
           <a href="install.html" title="Installation"
-             >previous</a> |</li>
-        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+             >précédent</a> |</li>
+        <li class="nav-item nav-item-0"><a href="PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

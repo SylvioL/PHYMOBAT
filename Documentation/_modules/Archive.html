@@ -2,88 +2,92 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Archive &mdash; PHYMOBAT 1 documentation</title>
+    <title>Archive &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" /> 
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Code du module</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <h1>Source code for Archive</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># This file is part of PHYMOBAT 1.1.</span>
-<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
-<span class="c">#</span>
-<span class="c"># PHYMOBAT 1.1 is free software: you can redistribute it and/or modify</span>
-<span class="c"># it under the terms of the GNU General Public License as published by</span>
-<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c"># (at your option) any later version.</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is distributed in the hope that it will be useful,</span>
-<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c"># GNU General Public License for more details.</span>
-<span class="c"># </span>
-<span class="c"># You should have received a copy of the GNU General Public License</span>
-<span class="c"># along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+  <h1>Code source de Archive</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PHYMOBAT 3.0.</span>
+<span class="c1"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c1">#</span>
+<span class="c1"># PHYMOBAT 3.0 is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 3.0 is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with PHYMOBAT 3.0.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">shutil</span><span class="o">,</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">urllib2</span>
-<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">tarfile</span><span class="o">,</span> <span class="nn">zipfile</span>
 
 <span class="k">try</span> <span class="p">:</span>
     <span class="kn">import</span> <span class="nn">ogr</span>
 <span class="k">except</span> <span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
-    
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="k">import</span> <span class="n">ogr</span>
+
 <span class="kn">import</span> <span class="nn">UserDict</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">lxml</span> <span class="kn">import</span> <span class="n">etree</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">etree</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">RasterSat_by_date</span> <span class="k">import</span> <span class="n">RasterSat_by_date</span>
 
 <div class="viewcode-block" id="Archive"><a class="viewcode-back" href="../package.html#Archive.Archive">[docs]</a><span class="k">class</span> <span class="nc">Archive</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class to list, upload and unpack Theia image archive because of a shapefile (box).</span>
+<span class="sd">    Class to list, download and unpack Theia image archive because of a shapefile (box).</span>
 <span class="sd">    This shapefile get extent of the area.</span>
 <span class="sd">            </span>
 <span class="sd">    :param captor: Name of the satellite (ex: Landsat or SpotWorldHeritage ...). </span>
@@ -100,31 +104,43 @@
 <span class="sd">    :type repertory: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">captor</span><span class="p">,</span> <span class="n">list_year</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">repertory</span><span class="p">,</span> <span class="n">proxy_enabled</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a new &#39;Archive&#39; instance</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">=</span> <span class="n">captor</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">list_year</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span> <span class="o">=</span> <span class="n">list_year</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_box</span> <span class="o">=</span> <span class="n">box</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">=</span> <span class="n">folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">=</span> <span class="n">repertory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span> <span class="o">=</span> <span class="n">proxy_enabled</span>
         
-        <span class="c"># Archive&#39;s list (two dimensions) :</span>
-        <span class="c"># 1. List of the website path archives</span>
-        <span class="c"># 2. List of the local path archives</span>
+        <span class="c1"># Archive&#39;s list (two dimensions) :</span>
+        <span class="c1"># 1. List of the website path archives</span>
+        <span class="c1"># 2. List of the local path archives</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;&#39;</span> <span class="c"># str : website JSON database</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># Host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resto</span> <span class="o">=</span><span class="s1">&#39;&#39;</span>
+        <span class="c1"># Info from Theia-land website or Olivier Hagolle blog</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">==</span> <span class="s1">&#39;SENTINEL2&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="s1">&#39;https://theia.cnes.fr/atdistrib&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resto</span> <span class="o">=</span> <span class="s1">&#39;resto2&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_type</span> <span class="o">=</span> <span class="s1">&#39;text&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="s1">&#39;https://theia-landsat.cnes.fr&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resto</span> <span class="o">=</span> <span class="s1">&#39;resto&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token_type</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="c1"># str : complete website JSON database</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># List (dim 5) to get year, month, day, path of multispectral&#39;s images and path of cloud&#39;s images</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># date list without duplication</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># List (dim 5) to get year, month, day, path of multispectral&#39;s images and path of cloud&#39;s images</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># date list without duplication</span>
         
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="s">&#39;Year</span><span class="se">\&#39;</span><span class="s">s list : &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span>
+        <span class="k">return</span> <span class="s1">&#39;Year</span><span class="se">\&#39;</span><span class="s1">s list : &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span>
     
 <div class="viewcode-block" id="Archive.set_list_archive_to_try"><a class="viewcode-back" href="../package.html#Archive.Archive.set_list_archive_to_try">[docs]</a>    <span class="k">def</span> <span class="nf">set_list_archive_to_try</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">few_list_archive</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Test function to upload a few archives</span>
+<span class="sd">        Test function to download a few archives</span>
 <span class="sd">        </span>
 <span class="sd">        :param few_list_archive: [archive_download, out_archive]</span>
 <span class="sd">                    </span>
@@ -138,13 +154,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         
         <span class="n">_few_list_archive</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">few_list_archive</span><span class="p">)</span>
-        <span class="c"># Verify list informations</span>
+        <span class="c1"># Verify list informations</span>
         <span class="k">if</span> <span class="n">_few_list_archive</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span> 
-            <span class="k">print</span> <span class="s">&#39;Few information in the list&#39;</span>
+            <span class="nb">print</span> <span class="s1">&#39;Few information in the list&#39;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">=</span> <span class="n">few_list_archive</span>
-        </div>
-<div class="viewcode-block" id="Archive.utm_to_latlng"><a class="viewcode-back" href="../package.html#Archive.Archive.utm_to_latlng">[docs]</a>    <span class="k">def</span> <span class="nf">utm_to_latlng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">easting</span><span class="p">,</span> <span class="n">northing</span><span class="p">,</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span> <span class="o">=</span> <span class="n">few_list_archive</span></div>
+        
+<div class="viewcode-block" id="Archive.utm_to_latlng"><a class="viewcode-back" href="../package.html#Archive.Archive.utm_to_latlng">[docs]</a>    <span class="k">def</span> <span class="nf">utm_to_latlng</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">zone</span><span class="p">,</span> <span class="n">easting</span><span class="p">,</span> <span class="n">northing</span><span class="p">,</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to convert UTM to geographic coordinates </span>
 <span class="sd">        </span>
@@ -211,116 +227,132 @@
         
         <span class="n">longitude</span> <span class="o">=</span> <span class="p">((</span><span class="n">zone</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="n">zone</span> <span class="o">-</span> <span class="mf">183.0</span><span class="p">)</span> <span class="ow">or</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">_a3</span>
         
-        <span class="k">return</span> <span class="p">(</span><span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">)</span>
-</div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">longitude</span><span class="p">,</span> <span class="n">latitude</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Archive.coord_box_dd"><a class="viewcode-back" href="../package.html#Archive.Archive.coord_box_dd">[docs]</a>    <span class="k">def</span> <span class="nf">coord_box_dd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to get area&#39;s coordinates of shapefile</span>
 
-<span class="sd">        :returns: str -- Area coordinates corner </span>
+<span class="sd">        :returns: str -- **area_coord_corner** : Area coordinates corner</span>
 <span class="sd">        </span>
 <span class="sd">                    --&gt; Left bottom on x, Left bottom on y, Right top on x, Right top on y</span>
 <span class="sd">        :Example:</span>
 <span class="sd">        </span>
 <span class="sd">        &gt;&gt;&gt; import Archive</span>
-<span class="sd">        &gt;&gt;&gt; test = Archive(captor, list_year, box, folder, repertory) </span>
+<span class="sd">        &gt;&gt;&gt; test = Archive(captor, list_year, box, folder, repertory, proxy_enabled) </span>
 <span class="sd">        &gt;&gt;&gt; coor_test = test.coord_box_dd()</span>
 <span class="sd">        &gt;&gt;&gt; coor_test</span>
 <span class="sd">        &#39;45.52, 2.25, 46.71, 3.27&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Processus to convert the UTM shapefile in decimal degrees shapefile with ogr2ogr in command line </span>
-        <span class="n">utm_outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/UTM_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Processus to convert the UTM shapefile in decimal degrees shapefile with ogr2ogr in command line </span>
+        <span class="n">utm_outfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/UTM_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">utm_outfile</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">utm_outfile</span><span class="p">)</span>
         
-        <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="s">&#39;-f&#39;</span><span class="p">,</span> <span class="s">&#39;Esri Shapefile&#39;</span><span class="p">,</span> <span class="s">&#39;-t_srs&#39;</span><span class="p">,</span> <span class="s">&#39;EPSG:32631&#39;</span><span class="p">,</span> <span class="n">utm_outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">]</span>
+        <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;Esri Shapefile&#39;</span><span class="p">,</span> <span class="s1">&#39;-t_srs&#39;</span><span class="p">,</span> <span class="s1">&#39;EPSG:32631&#39;</span><span class="p">,</span> <span class="n">utm_outfile</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_box</span><span class="p">]</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
         
-        <span class="c"># To get shapefile extent</span>
-        <span class="c"># Avec import ogr</span>
-        <span class="n">driver</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s">&#39;ESRI Shapefile&#39;</span><span class="p">)</span>
-        <span class="c"># Open shapefile</span>
+        <span class="c1"># To get shapefile extent</span>
+        <span class="c1"># Avec import ogr</span>
+        <span class="n">driver</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;ESRI Shapefile&#39;</span><span class="p">)</span>
+        <span class="c1"># Open shapefile</span>
         <span class="n">data_source</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">utm_outfile</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         
-        <span class="k">if</span> <span class="n">data_source</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&#39;Could not open file&#39;</span>
+        <span class="k">if</span> <span class="n">data_source</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;Could not open file&#39;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         
         <span class="n">shp_ogr</span> <span class="o">=</span> <span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span>
-        <span class="c"># Extent</span>
-        <span class="n">extent_</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">()</span> <span class="c"># (xMin, xMax, yMin, yMax)</span>
+        <span class="c1"># Extent</span>
+        <span class="n">extent_</span> <span class="o">=</span> <span class="n">shp_ogr</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">()</span> <span class="c1"># (xMin, xMax, yMin, yMax)</span>
         
-        <span class="c">## Close source data</span>
+        <span class="c1">## Close source data</span>
         <span class="n">data_source</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
         
-        <span class="c"># Coordinates min in decimal degrees</span>
-        <span class="n">LL_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utm_to_latlng</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="n">extent_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">extent_</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-        <span class="c"># Coordinates max in decimal degrees</span>
-        <span class="n">LL_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utm_to_latlng</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="n">extent_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="n">extent_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-                                            
-        <span class="c"># AdressUrl = &#39;http://spirit.cnes.fr/resto/Landsat/?format=html&amp;lang=fr&amp;q=2013&amp;box=&#39; + str(LL_Min[0]) + &#39;,&#39; + str(LL_Min[1]) + &#39;,&#39; + str(LL_Max[0]) + &#39;,&#39; + str(LL_Max[1])</span>
+        <span class="c1"># Coordinates min in decimal degrees</span>
+        <span class="n">LL_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utm_to_latlng</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="n">extent_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="n">extent_</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_min</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_min</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_max</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_max</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    </div>
+        <span class="c1"># Coordinates max in decimal degrees</span>
+        <span class="n">LL_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">utm_to_latlng</span><span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="n">extent_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>  <span class="n">extent_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">northernHemisphere</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                                            
+        <span class="c1"># AdressUrl = &#39;http://spirit.cnes.fr/resto/Landsat/?format=html&amp;lang=fr&amp;q=2013&amp;box=&#39; + str(LL_Min[0]) + &#39;,&#39; + str(LL_Min[1]) + &#39;,&#39; + str(LL_Max[0]) + &#39;,&#39; + str(LL_Max[1])</span>
+        <span class="n">area_coord_corner</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_min</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_min</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_max</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">LL_max</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">area_coord_corner</span></div>
+    
 <div class="viewcode-block" id="Archive.listing"><a class="viewcode-back" href="../package.html#Archive.Archive.listing">[docs]</a>    <span class="k">def</span> <span class="nf">listing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to list available archive on plateform Theia Land, and on the area</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Loop on the years</span>
-        <span class="k">print</span> <span class="s">&quot;Images availables&quot;</span>
+        <span class="c1"># Loop on the years</span>
+        <span class="nb">print</span> <span class="s2">&quot;Images availables&quot;</span>
         <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span><span class="p">:</span>
             
-            <span class="k">print</span> <span class="s">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ===============&quot;</span>
-            <span class="c"># Initialisation variable for a next page </span>
-            <span class="c"># There is a next page, next = 1</span>
-            <span class="c"># There isn&#39;t next page, next = 0</span>
+            <span class="n">first_date</span> <span class="o">=</span> <span class="n">year</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># Tricks to put whether a year or a date (year-month-day)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">end_date</span> <span class="o">=</span> <span class="n">year</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="nb">print</span> <span class="s2">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">first_date</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; to &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end_date</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; ===============&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">resto</span> <span class="o">+</span> <span class="s1">&#39;/api/collections/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="s1">&#39;/search.json?lang=fr&amp;_pretty=true&amp;completionDate=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end_date</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&amp;box=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&amp;maxRecord=500&amp;startDate=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">first_date</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s2">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">first_date</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; ===============&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">resto</span> <span class="o">+</span> <span class="s1">&#39;/api/collections/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="s1">&#39;/search.json?lang=fr&amp;_pretty=true&amp;q=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&amp;box=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;&amp;maxRecord=500&#39;</span>
+
+            <span class="nb">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span>
+            <span class="c1"># Link to connect in the database JSON of the Theia plateform</span>
+<span class="c1">#             self.url = r&#39;https://theia.cnes.fr/resto/api/collections/&#39; + self._captor + &#39;/search.json?lang=fr&amp;_pretty=true&amp;q=&#39; + str(year) + &#39;&amp;box=&#39; + self.coord_box_dd() + &#39;&amp;maxRecord=500&#39;</span>
+            <span class="c1"># Temporary link</span>
+<span class="c1">#             if self._captor == &#39;SENTINEL2&#39;:</span>
+<span class="c1">#                 self.url = r&#39;https://theia.cnes.fr/atdistrib/resto2/api/collections/&#39;</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 self.url = r&#39;https://theia-landsat.cnes.fr/resto/api/collections/&#39;</span>
+            
+            <span class="c1"># Initialisation variable for a next page </span>
+            <span class="c1"># There is a next page, next = 1</span>
+            <span class="c1"># There isn&#39;t next page, next = 0</span>
             <span class="n">next_</span> <span class="o">=</span> <span class="mi">1</span>
-            
-            <span class="c"># Link to connect in the database JSON of the Theia plateform</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">r&#39;https://theia.cnes.fr/resto/api/collections/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="s">&#39;/search.json?lang=fr&amp;_pretty=true&amp;q=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;&amp;box=&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">coord_box_dd</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39;&amp;maxRecord=500&#39;</span>
-            
-            <span class="n">listing_repertory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertory</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertory</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span><span class="p">)</span>
                 
-            <span class="c"># To know path to upload images</span>
+            <span class="c1"># To know path to download images</span>
             <span class="k">while</span> <span class="n">next_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 
                 <span class="k">try</span> <span class="p">:</span>
-                    <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">))</span> <span class="c"># Connexion in the database</span>
-                    <span class="n">data</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c"># Read in the database</span>
+                    <span class="n">request_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;Firefox/48.0&quot;</span><span class="p">}</span>
+                    <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">),</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">request_headers</span><span class="p">)</span> <span class="c1"># Connexion in the database</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c1"># Read in the database</span>
                     
-                    <span class="n">new_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&quot;null&quot;</span><span class="p">,</span> <span class="s">&quot;&#39;null&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="c"># Remove &quot;null&quot; because Python don&#39;t like</span>
+                    <span class="n">new_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;null&quot;</span><span class="p">,</span> <span class="s2">&quot;&#39;null&#39;&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="c1"># Remove &quot;null&quot; because Python don&#39;t like</span>
+                    <span class="n">new_data</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;false&quot;</span><span class="p">,</span> <span class="s2">&quot;False&quot;</span><span class="p">,</span> <span class="n">new_data</span><span class="p">)</span> <span class="c1"># Remove &quot;false&quot; and replace by False (Python know False with a capital letter F)</span>
                     
-                    <span class="c"># Transform the data in dictionary</span>
+                    <span class="c1"># Transform the data in dictionary</span>
                     <span class="n">data_Dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
                     <span class="n">data_Dict</span> <span class="o">=</span> <span class="n">UserDict</span><span class="o">.</span><span class="n">UserDict</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">new_data</span><span class="p">))</span>    
                     
-                    <span class="c"># Select archives to upload</span>
-                    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">])):</span>
-                        <span class="n">name_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;productIdentifier&#39;</span><span class="p">]</span>    
-                        <span class="n">feature_id</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&quot;features&quot;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;id&#39;</span><span class="p">]</span>
-                        <span class="n">link_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;services&#39;</span><span class="p">][</span><span class="s">&#39;download&#39;</span><span class="p">][</span><span class="s">&#39;url&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
-                        <span class="n">url_archive</span> <span class="o">=</span> <span class="n">link_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;resto&quot;</span><span class="p">,</span> <span class="s">&quot;rocket/#&quot;</span><span class="p">)</span>
-                        <span class="n">archive_download</span> <span class="o">=</span> <span class="n">url_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;/download&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="c"># Path to upload</span>
-                        <span class="n">out_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">listing_repertory</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">name_archive</span> <span class="o">+</span> <span class="s">&#39;.tgz&#39;</span> <span class="c"># Name after download</span>
+                    <span class="c1"># Select archives to download</span>
+                    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">])):</span>
+                        <span class="n">name_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;productIdentifier&#39;</span><span class="p">]</span>    
+                        <span class="n">feature_id</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                        <span class="n">link_archive</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;services&#39;</span><span class="p">][</span><span class="s1">&#39;download&#39;</span><span class="p">][</span><span class="s1">&#39;url&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                        <span class="n">url_archive</span> <span class="o">=</span> <span class="n">link_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resto</span><span class="p">,</span> <span class="s2">&quot;rocket/#&quot;</span><span class="p">)</span>
+                        <span class="n">archive_download</span> <span class="o">=</span> <span class="n">url_archive</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/download&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># Path to download</span>
+                        <span class="n">out_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">name_archive</span> <span class="o">+</span> <span class="s1">&#39;.tgz&#39;</span> <span class="c1"># Name after download</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">archive_download</span><span class="p">,</span> <span class="n">out_archive</span><span class="p">,</span> <span class="n">feature_id</span><span class="p">])</span>  
                     
-                    <span class="c"># Verify if there is another page (next)</span>
-                    <span class="k">if</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;title&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;suivant&#39;</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s">&#39;properties&#39;</span><span class="p">][</span><span class="s">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+                    <span class="c1"># Verify if there is another page (next)</span>
+                    <span class="k">if</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;suivant&#39;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;links&#39;</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">data_Dict</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="s1">&#39;links&#39;</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">next_</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">except</span><span class="p">:</span>
-                    <span class="k">print</span> <span class="s">&quot;Error connexion or error variable !&quot;</span>
+                    <span class="nb">print</span> <span class="s2">&quot;Error connexion or error variable !&quot;</span>
                     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">print</span> <span class="s">&quot;There is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot; images to upload !&quot;</span>
-</div>
+        <span class="nb">print</span> <span class="s2">&quot;There is &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; images to download !&quot;</span></div>
+
 <div class="viewcode-block" id="Archive.download_auto"><a class="viewcode-back" href="../package.html#Archive.Archive.download_auto">[docs]</a>    <span class="k">def</span> <span class="nf">download_auto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to download images archive automatically on Theia land data center.</span>
@@ -332,135 +364,197 @@
 <span class="sd">        :type password_theia: str</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#============================================================</span>
-        <span class="c"># get a token to be allowed to bypass the authentification.</span>
-        <span class="c"># The token is only valid for two hours. If your connection is slow</span>
-        <span class="c"># or if you are downloading lots of products, it might be an issue</span>
-        <span class="c">#=============================================================</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">)</span>
-        <span class="n">get_token</span><span class="o">=</span><span class="s">&#39;curl -k -s -X POST --data-urlencode &quot;ident=</span><span class="si">%s</span><span class="s">&quot; --data-urlencode &quot;pass=</span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/services/authenticate/&gt;token.json&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">)</span>
+        <span class="c1">#=====================</span>
+        <span class="c1"># Proxy</span>
+        <span class="c1">#=====================</span>
+        <span class="n">curl_proxy</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span><span class="o">.</span><span class="n">proxy</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">curl_proxy</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot;-x </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span><span class="o">.</span><span class="n">proxy</span><span class="p">))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span><span class="o">.</span><span class="n">login_proxy</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span><span class="o">.</span><span class="n">password_proxy</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">curl_proxy</span> <span class="o">=</span> <span class="n">curl_proxy</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot; --proxy-user </span><span class="si">%s</span><span class="s2">:</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span><span class="o">.</span><span class="n">login_proxy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_enabled</span><span class="o">.</span><span class="n">password_proxy</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+        <span class="c1">#============================================================</span>
+        <span class="c1"># get a token to be allowed to bypass the authentification.</span>
+        <span class="c1"># The token is only valid for two hours. If your connection is slow</span>
+        <span class="c1"># or if you are downloading lots of products</span>
+        <span class="c1">#=============================================================</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">)</span>
+<span class="c1">#         get_token=&#39;curl -k -s -X POST --data-urlencode &quot;ident=%s&quot; --data-urlencode &quot;pass=%s&quot; https://theia.cnes.fr/services/authenticate/&gt;token.json&#39;%(curl_proxy,user_theia, password_theia)</span>
+        <span class="n">get_token</span><span class="o">=</span><span class="s1">&#39;curl -k -s -X POST </span><span class="si">%s</span><span class="s1"> --data-urlencode &quot;ident=</span><span class="si">%s</span><span class="s1">&quot; --data-urlencode &quot;pass=</span><span class="si">%s</span><span class="s1">&quot; </span><span class="si">%s</span><span class="s1">/services/authenticate/&gt;token.json&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">curl_proxy</span><span class="p">,</span> <span class="n">user_theia</span><span class="p">,</span> <span class="n">password_theia</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_token</span><span class="p">)</span>
         
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_file</span><span class="p">:</span>    
-            <span class="n">token_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="n">token_json</span><span class="p">[</span><span class="s">&quot;access_token&quot;</span><span class="p">]</span>
-            
-        <span class="c">#====================</span>
-        <span class="c"># Download</span>
-        <span class="c">#====================  </span>
-        <span class="c"># Loop on list archive to download images  </span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">data_file</span><span class="p">:</span> 
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_type</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+                    <span class="n">token_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+                    <span class="n">token</span> <span class="o">=</span> <span class="n">token_json</span><span class="p">[</span><span class="s2">&quot;access_token&quot;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_type</span><span class="o">==</span><span class="s2">&quot;text&quot;</span><span class="p">:</span>
+                    <span class="n">token</span><span class="o">=</span><span class="n">data_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">:</span>
+                <span class="nb">print</span> <span class="s2">&quot;Authentification is probably wrong&quot;</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">#====================</span>
+        <span class="c1"># Download</span>
+        <span class="c1">#====================  </span>
+        <span class="c1"># Loop on list archive to download images  </span>
         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">)):</span>
-            <span class="c"># Download if not exist</span>
+            <span class="c1"># Download if not exist</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
                  
-                <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;%&quot;</span> <span class="c"># Print loading bar</span>
-                <span class="k">print</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="nb">print</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">),</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span> <span class="c1"># Print loading bar</span>
+                <span class="nb">print</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]))[</span><span class="mi">1</span><span class="p">]</span>
                 
-                <span class="n">get_product</span><span class="o">=</span><span class="s">&#39;curl -o </span><span class="si">%s</span><span class="s"> -k -H &quot;Authorization: Bearer </span><span class="si">%s</span><span class="s">&quot; https://theia.cnes.fr/resto/collections/Landsat/</span><span class="si">%s</span><span class="s">/download/?issuerId=theia&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
-                <span class="k">print</span> <span class="n">get_product</span>
+<span class="c1">#                 get_product=&#39;curl -o %s -k -H &quot;Authorization: Bearer %s&quot; https://theia.cnes.fr/resto/collections/Landsat/%s/download/?issuerId=theia&#39;%(curl_proxy,self.list_archive[d][1], token, self.list_archive[d][2])</span>
+                <span class="n">get_product</span><span class="o">=</span><span class="s1">&#39;curl </span><span class="si">%s</span><span class="s1"> -o </span><span class="si">%s</span><span class="s1"> -k -H &quot;Authorization: Bearer </span><span class="si">%s</span><span class="s1">&quot; </span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/collections/</span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/download/?issuerId=theia&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">curl_proxy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_archive</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+                <span class="nb">print</span> <span class="n">get_product</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">get_product</span><span class="p">)</span>
                 
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;token.json&#39;</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&quot;100%&quot;</span>
-        <span class="k">print</span> <span class="s">&quot;END OF DOWNLOAD !&quot;</span>   
-        </div>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;token.json&#39;</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="s2">&quot;100%&quot;</span>
+        <span class="nb">print</span> <span class="s2">&quot;END OF DOWNLOAD !&quot;</span>   </div>
+        
 <div class="viewcode-block" id="Archive.decompress"><a class="viewcode-back" href="../package.html#Archive.Archive.decompress">[docs]</a>    <span class="k">def</span> <span class="nf">decompress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to unpack archives and store informations of the images (date, path, ...)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="k">print</span> <span class="s">&quot;Unpack archives&quot;</span>
+        <span class="nb">print</span> <span class="s2">&quot;Unpack archives&quot;</span>
         
         <span class="k">for</span> <span class="n">annee</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_year</span><span class="p">:</span>
             
-            <span class="k">print</span> <span class="s">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; ===============&quot;</span>
+            <span class="n">first_date</span> <span class="o">=</span> <span class="n">annee</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># Tricks to put whether a year or a date (year-month-day)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">end_date</span> <span class="o">=</span> <span class="n">annee</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="nb">print</span> <span class="s2">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">first_date</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; to &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">end_date</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; ===============&quot;</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s2">&quot;=============== &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">first_date</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; ===============&quot;</span>
             
             <span class="n">img_in_glob</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">img_in_glob</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/*gz&#39;</span><span class="p">)</span>
+            <span class="n">img_in_glob</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folder</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/*gz&#39;</span><span class="p">)</span>
             
             <span class="k">if</span> <span class="n">img_in_glob</span> <span class="o">==</span> <span class="p">[]:</span>
-                <span class="k">print</span> <span class="s">&quot;There isn&#39;t tgzfile in the folder&quot;</span>
+                <span class="nb">print</span> <span class="s2">&quot;There isn&#39;t tgzfile in the folder&quot;</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c"># Create a folder &quot;Unpack&quot;</span>
-                <span class="n">folder_unpack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">annee</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/Unpack&#39;</span>
+                <span class="c1"># Create a folder &quot;Unpack&quot;</span>
+                <span class="n">folder_unpack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repertory</span> <span class="o">+</span> <span class="s1">&#39;/Unpack&#39;</span>
                 
                 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">):</span>
-                    <span class="k">print</span><span class="p">(</span><span class="s">&#39;The folder already exists&#39;</span><span class="p">)</span>
-            <span class="c">#        shutil.rmtree(FolderOut) # Remove the folder that it contains if exists ...</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The folder already exists&#39;</span><span class="p">)</span>
+            <span class="c1">#        shutil.rmtree(FolderOut) # Remove the folder that it contains if exists ...</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;mkdir&#39;</span><span class="p">,</span> <span class="n">folder_unpack</span><span class="p">]</span>
+                    <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mkdir&#39;</span><span class="p">,</span> <span class="n">folder_unpack</span><span class="p">]</span>
                     <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
                 
                 <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">img_in_glob</span><span class="p">:</span>
-                    <span class="n">out_folder_unpack</span> <span class="o">=</span> <span class="n">folder_unpack</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
-                    <span class="c"># Unpack the archives if they aren&#39;t again!</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_folder_unpack</span><span class="p">):</span>
-                        <span class="k">print</span> <span class="s">&#39;Unpack :&#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                        <span class="n">tfile</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="s">&#39;r:gz&#39;</span><span class="p">)</span>
-                        <span class="n">tfile</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">))</span>
                     
-                    <span class="c"># On xmlfile, extract dates, path of images, cloud&#39;s images</span>
-                    <span class="n">xmlfile</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_folder_unpack</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.xml&#39;</span><span class="p">)</span>
+                    <span class="c1"># Unpack the archives if they aren&#39;t again!</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">==</span> <span class="s1">&#39;Landsat&#39;</span><span class="p">:</span>
+                        <span class="n">out_folder_unpack</span> <span class="o">=</span> <span class="n">folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_folder_unpack</span><span class="p">):</span>
+                            <span class="nb">print</span> <span class="s1">&#39;Unpack :&#39;</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>   
+                            <span class="n">tfile</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="s1">&#39;r:gz&#39;</span><span class="p">)</span>
+                            <span class="n">tfile</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">))</span>
                     
-                    <span class="c"># Date images</span>
-                    <span class="c"># Exemple : &#39;2015-09-27 10:41:25.956749&#39;</span>
-                    <span class="c"># To get year, month and day ---&gt; .split(&#39; &#39;)[0].split(&#39;-&#39;)</span>
-                    <span class="n">di</span> <span class="o">=</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;/METADATA/HEADER/DATE_PDV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">)</span>
-                    <span class="c"># Multispectral images</span>
-                    <span class="n">hi</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;/METADATA/FILES/ORTHO_SURF_CORR_ENV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
-                    <span class="c"># Cloud images</span>
-                    <span class="c"># Cloud&#39;s path not exists in xmlfile, then replace &#39;SAT&#39; by &#39;NUA&#39;</span>
-                    <span class="n">ci</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s">&quot;/METADATA/FILES/MASK_SATURATION&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;_SAT&#39;</span><span class="p">,</span> <span class="s">&#39;_NUA&#39;</span><span class="p">)</span>
-                                            
-                    <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">di</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">di</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">di</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">hi</span><span class="p">,</span> <span class="n">ci</span><span class="p">])</span>
+                        <span class="c1"># On xmlfile, extract dates, path of images, cloud&#39;s images</span>
+                        <span class="n">xmlfile</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_folder_unpack</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">img</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.xml&#39;</span><span class="p">)</span>
+                        
+                        <span class="c1"># Date images</span>
+                        <span class="c1"># Exemple : &#39;2015-09-27 10:41:25.956749&#39;</span>
+                        <span class="c1"># To get year, month and day ---&gt; .split(&#39; &#39;)[0].split(&#39;-&#39;)</span>
+                        <span class="n">di</span> <span class="o">=</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/METADATA/HEADER/DATE_PDV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                        <span class="c1"># Multispectral images</span>
+                        <span class="n">hi</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/METADATA/FILES/ORTHO_SURF_CORR_ENV&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+                        <span class="c1"># Cloud images</span>
+                        <span class="c1"># Cloud&#39;s path not exists in xmlfile, then replace &#39;SAT&#39; by &#39;NUA&#39;</span>
+                        <span class="n">ci</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/METADATA/FILES/MASK_SATURATION&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_SAT&#39;</span><span class="p">,</span> <span class="s1">&#39;_NUA&#39;</span><span class="p">)</span>
                     
-                    <span class="c"># Create a list with dates without duplicates</span>
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_captor</span> <span class="o">==</span> <span class="s1">&#39;SENTINEL2&#39;</span><span class="p">:</span>
+                        
+                        <span class="n">tzip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+                        <span class="c1"># Extract band 2 (Blue), 3 (Green), 4 (Red), and 8 (NIR) at surface reflectance 10m, XML file, Cloud mask at 10m</span>
+                        <span class="n">extent_img</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_SRE_B2.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;_SRE_B3.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;_SRE_B4.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;_SRE_B8.tif&#39;</span><span class="p">,</span> <span class="s1">&#39;_MTD_ALL.xml&#39;</span><span class="p">,</span> <span class="s1">&#39;_CLM_R1.tif&#39;</span><span class="p">]</span>
+                        <span class="n">zip_img</span> <span class="o">=</span> <span class="n">tzip</span><span class="o">.</span><span class="n">namelist</span><span class="p">()</span> <span class="c1"># Images list in the archive </span>
+                        <span class="n">zip_folder</span> <span class="o">=</span> <span class="n">zip_img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">out_folder_unpack</span> <span class="o">=</span> <span class="n">folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">zip_folder</span>
+                        
+                        <span class="nb">print</span> <span class="s1">&#39;Unpack :&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">zip_folder</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">extraction_img</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">extent_img</span><span class="p">:</span>
+                            <span class="n">z_out</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">zip_img</span> <span class="k">if</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">f</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                            <span class="n">extraction_img</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">z_out</span><span class="p">))</span>
+                            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">z_out</span><span class="p">)):</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Extract :</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">z_out</span><span class="p">))</span>
+                                <span class="n">tzip</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">z_out</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">folder_unpack</span><span class="p">))</span>
+                                                 
+                        <span class="c1"># On xmlfile, extract dates, path of images, cloud&#39;s images</span>
+                        <span class="n">xmlfile</span> <span class="o">=</span> <span class="n">etree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">extraction_img</span><span class="p">[</span><span class="mi">4</span><span class="p">]))</span>
+                        <span class="c1"># Date images</span>
+                        <span class="n">di</span> <span class="o">=</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/Muscate_Metadata_Document/Product_Characteristics/ACQUISITION_DATE&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                        <span class="c1"># Multispectral images</span>
+                        <span class="n">hi</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/Muscate_Metadata_Document/Product_Characteristics/PRODUCT_ID&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span> <span class="o">+</span> <span class="s1">&#39;.tif&#39;</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">hi</span><span class="p">):</span>
+                            <span class="c1"># For Sentinel2 from Theia plateform, we need to make a stack layer for rasters</span>
+                            <span class="c1"># There is a function that make this in RasterSat_by_date class</span>
+                            <span class="n">stack_img</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="n">input_stack</span> <span class="o">=</span> <span class="n">extraction_img</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+                            <span class="n">input_stack</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;-separate&#39;</span><span class="p">)</span>
+                            <span class="n">stack_img</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s1">&#39;vrt&#39;</span><span class="p">,</span> <span class="n">input_stack</span><span class="p">,</span> <span class="n">hi</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.VRT&#39;</span><span class="p">)</span>
+                            <span class="n">stack_img</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s1">&#39;translate&#39;</span><span class="p">,</span> <span class="n">hi</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.VRT&#39;</span><span class="p">,</span> <span class="n">hi</span><span class="p">)</span>
+                        <span class="c1"># Cloud images</span>
+                        <span class="n">ci</span> <span class="o">=</span> <span class="n">out_folder_unpack</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">xmlfile</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;/Muscate_Metadata_Document/Product_Organisation/Muscate_Product/Mask_List/Mask/Mask_File_List/MASK_FILE&quot;</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+                       
+                    <span class="bp">self</span><span class="o">.</span><span class="n">list_img</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">di</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">di</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">di</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nb">str</span><span class="p">(</span><span class="n">hi</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">ci</span><span class="p">)])</span>
+                    
+                    <span class="c1"># Create a list with dates without duplicates</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">di</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">single_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
-                    
-        <span class="k">print</span> <span class="s">&quot;End of unpack archives&quot;</span>
-    </div></div>
+    
+        <span class="nb">print</span> <span class="s2">&quot;End of unpack archives&quot;</span></div></div>
+    
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Code du module</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

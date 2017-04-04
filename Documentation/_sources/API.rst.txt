@@ -1,0 +1,44 @@
+Graphical User Interface package
+================================
+
+The class diagram associated to the interface is this :
+
+.. figure:: /images_doc/ChainedeTraitementCarHab_API_UML_v3.png
+   :align: center
+   :alt: Class diagram Interface
+
+Interface command
+-----------------
+
+.. automodule:: PHYMOBAT
+	:members:
+
+Control processing
+------------------
+
+.. automodule:: Processing
+	:members:
+
+Interface element
+-----------------
+
+.. automodule:: ui_PHYMOBATs_tab
+	:members:
+
+.. automodule:: ui_PHYMOBATe_tab
+	:members:
+
+Popup about and warming
+-----------------------
+
+.. automodule:: ui_A_propos_PHYMOBAT_window
+	:members:
+
+.. automodule:: ui_Warming_study_area
+	:members:
+
+.. automodule:: ui_Warming_forgetting
+	:members:
+
+.. automodule:: ui_Proxy_window
+	:members:

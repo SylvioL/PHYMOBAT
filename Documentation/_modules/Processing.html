@@ -2,94 +2,101 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Processing &mdash; PHYMOBAT 1 documentation</title>
+    <title>Processing &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" /> 
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Code du module</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <h1>Source code for Processing</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># This file is part of PHYMOBAT 1.1.</span>
-<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is free software: you can redistribute it and/or modify</span>
-<span class="c"># it under the terms of the GNU General Public License as published by</span>
-<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c"># (at your option) any later version.</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is distributed in the hope that it will be useful,</span>
-<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c"># GNU General Public License for more details.</span>
-<span class="c"># </span>
-<span class="c"># You should have received a copy of the GNU General Public License</span>
-<span class="c"># along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+  <h1>Code source de Processing</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PHYMOBAT 2.0.</span>
+<span class="c1"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 2.0 is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 2.0 is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with PHYMOBAT 2.0.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">tree</span>
 <span class="k">try</span> <span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">ogr</span>
+    <span class="kn">import</span> <span class="nn">ogr</span><span class="o">,</span> <span class="nn">gdal</span>
 <span class="k">except</span> <span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="k">import</span> <span class="n">ogr</span><span class="p">,</span> <span class="n">gdal</span>
 
-<span class="kn">from</span> <span class="nn">Toolbox</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">Seath</span> <span class="kn">import</span> <span class="n">Seath</span>
-<span class="c"># Class group image</span>
-<span class="kn">from</span> <span class="nn">Archive</span> <span class="kn">import</span> <span class="n">Archive</span>
-<span class="kn">from</span> <span class="nn">RasterSat_by_date</span> <span class="kn">import</span> <span class="n">RasterSat_by_date</span>
-<span class="kn">from</span> <span class="nn">Vhrs</span> <span class="kn">import</span> <span class="n">Vhrs</span>
-<span class="kn">from</span> <span class="nn">Slope</span> <span class="kn">import</span> <span class="n">Slope</span>
+<span class="kn">from</span> <span class="nn">Toolbox</span> <span class="k">import</span> <span class="n">Toolbox</span>
+<span class="kn">from</span> <span class="nn">Seath</span> <span class="k">import</span> <span class="n">Seath</span>
+<span class="kn">from</span> <span class="nn">Precision_moba</span> <span class="k">import</span> <span class="n">Precision_moba</span>
+<span class="c1"># Class group image</span>
+<span class="kn">from</span> <span class="nn">Archive</span> <span class="k">import</span> <span class="n">Archive</span>
+<span class="kn">from</span> <span class="nn">RasterSat_by_date</span> <span class="k">import</span> <span class="n">RasterSat_by_date</span>
+<span class="kn">from</span> <span class="nn">Vhrs</span> <span class="k">import</span> <span class="n">Vhrs</span>
+<span class="kn">from</span> <span class="nn">Slope</span> <span class="k">import</span> <span class="n">Slope</span>
 
-<span class="c"># Class group vector</span>
-<span class="kn">from</span> <span class="nn">Sample</span> <span class="kn">import</span> <span class="n">Sample</span>
-<span class="kn">from</span> <span class="nn">Segmentation</span> <span class="kn">import</span> <span class="n">Segmentation</span>
-<span class="kn">from</span> <span class="nn">Rpg</span> <span class="kn">import</span> <span class="n">Rpg</span>
+<span class="c1"># Class group vector</span>
+<span class="kn">from</span> <span class="nn">Vector</span> <span class="k">import</span> <span class="n">Vector</span>
+<span class="kn">from</span> <span class="nn">Sample</span> <span class="k">import</span> <span class="n">Sample</span>
+<span class="kn">from</span> <span class="nn">Segmentation</span> <span class="k">import</span> <span class="n">Segmentation</span>
+<span class="kn">from</span> <span class="nn">Rpg</span> <span class="k">import</span> <span class="n">Rpg</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Process</span>
-<span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="kn">import</span> <span class="n">BaseManager</span><span class="p">,</span> <span class="n">DictProxy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="k">import</span> <span class="n">Process</span>
+<span class="kn">from</span> <span class="nn">multiprocessing.managers</span> <span class="k">import</span> <span class="n">BaseManager</span><span class="p">,</span> <span class="n">DictProxy</span>
 
 <div class="viewcode-block" id="Processing"><a class="viewcode-back" href="../API.html#Processing.Processing">[docs]</a><span class="k">class</span> <span class="nc">Processing</span><span class="p">():</span>
     
@@ -100,7 +107,8 @@
 <span class="sd">    This way is broken down into 3 parts :</span>
 <span class="sd">        - Image Processing (Search, download and processing)</span>
 <span class="sd">        - Vector Processing (Optimal threshold, Sample processing)</span>
-<span class="sd">        - Classification  </span>
+<span class="sd">        - Classification </span>
+<span class="sd">        - Validation </span>
 <span class="sd">    </span>
 <span class="sd">    **Main parameters**</span>
 <span class="sd">    </span>
@@ -163,87 +171,101 @@
     
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         
-        <span class="c"># Used variables</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">folder_processing</span> <span class="o">=</span> <span class="s">&#39;Traitement&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_segm</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_name_moba</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="c1"># Used variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_processing</span> <span class="o">=</span> <span class="s1">&#39;Traitement&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_segm</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_name_moba</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         
-        <span class="c"># Id information to download on theia platform</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_proxy</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># For the &quot;Proxy window&quot;</span>
+        
+        <span class="c1"># Id information to download on theia platform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
-        <span class="c"># List of output raster path</span>
+        <span class="c1"># List of output raster path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span> <span class="o">=</span> <span class="p">[]</span>
         
-        <span class="c"># Class name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Non Vegetation semi-naturelle&#39;</span><span class="p">,</span> <span class="s">&#39;Vegetation semi-naturelle&#39;</span><span class="p">,</span>\
-                         <span class="s">&#39;Herbacees&#39;</span><span class="p">,</span> <span class="s">&#39;Ligneux&#39;</span><span class="p">,</span> \
-                         <span class="s">&#39;Ligneux mixtes&#39;</span><span class="p">,</span> <span class="s">&#39;Ligneux denses&#39;</span><span class="p">,</span>\
-                         <span class="s">&#39;Agriculture&#39;</span><span class="p">,</span> <span class="s">&#39;Eboulis&#39;</span><span class="p">,</span> \
-                         <span class="s">&#39;Forte phytomasse&#39;</span><span class="p">,</span> <span class="s">&#39;Moyenne phytomasse&#39;</span><span class="p">,</span> <span class="s">&#39;Faible phytomasse&#39;</span><span class="p">]</span>
-        <span class="c"># Sample field names 2 by 2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="c">#                                &#39;CODE_GROUP&#39;, &#39;CODE_GROUP&#39;,\</span>
-<span class="c">#                           &#39;echant&#39;, &#39;echant&#39;,\</span>
-<span class="c">#                           &#39;echant&#39;, &#39;echant&#39;]</span>
-        <span class="c"># Sample class names 2 by 2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="c">#                            &#39;1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 15, 20, 21, 22, 23, 24, 26, 28&#39;, &#39;18&#39;,\</span>
-<span class="c">#                       &#39;H&#39;,&#39;LF, LO&#39;,\</span>
-<span class="c">#                       &#39;LF&#39;, &#39;LO&#39;]</span>
+        <span class="c1"># Class name</span>
         
-        <span class="c"># Decision tree combination</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>\
-                          <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>\
+        <span class="c1"># TODO : Change index of the classes -&gt; Harbacées 6 / Ligneux 7 by Agriculuture 4 / Eboulis 5</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Non Vegetation semi-naturelle&#39;</span><span class="p">,</span> <span class="s1">&#39;Vegetation semi-naturelle&#39;</span><span class="p">,</span>\
+                         <span class="s1">&#39;Herbacees&#39;</span><span class="p">,</span> <span class="s1">&#39;Ligneux&#39;</span><span class="p">,</span> \
+                         <span class="s1">&#39;Ligneux mixtes&#39;</span><span class="p">,</span> <span class="s1">&#39;Ligneux denses&#39;</span><span class="p">,</span>\
+                         <span class="s1">&#39;Agriculture&#39;</span><span class="p">,</span> <span class="s1">&#39;Eboulis&#39;</span><span class="p">,</span> \
+                         <span class="s1">&#39;Forte phytomasse&#39;</span><span class="p">,</span> <span class="s1">&#39;Moyenne phytomasse&#39;</span><span class="p">,</span> <span class="s1">&#39;Faible phytomasse&#39;</span><span class="p">]</span>
+        <span class="c1"># Sample field names 2 by 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#                                &#39;CODE_GROUP&#39;, &#39;CODE_GROUP&#39;,\</span>
+<span class="c1">#                           &#39;echant&#39;, &#39;echant&#39;,\</span>
+<span class="c1">#                           &#39;echant&#39;, &#39;echant&#39;]</span>
+        <span class="c1"># Sample class names 2 by 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1">#                            &#39;1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 15, 20, 21, 22, 23, 24, 26, 28&#39;, &#39;18&#39;,\</span>
+<span class="c1">#                       &#39;H&#39;,&#39;LF, LO&#39;,\</span>
+<span class="c1">#                       &#39;LF&#39;, &#39;LO&#39;]</span>
+        
+        <span class="c1"># Decision tree combination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span>\
+                          <span class="p">[</span><span class="mi">0</span><span class="p">],</span>\
                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>\
                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>\
                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>\
                           <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>\
-                          <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">]]</span> <span class="c"># [[&#39;Cultures&#39;],[&#39;Semi-naturelles&#39;, &#39;Herbacees&#39;, &#39;Forte phytomasse&#39;], ...</span>
-                                    <span class="c"># ..., [&#39;Semi-naturelles&#39;, &#39;Ligneux&#39;, &#39;Ligneux denses&#39;]]</span>
-        <span class="c"># Slope degrees</span>
+                          <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">]]</span> <span class="c1"># [[&#39;Cultures&#39;],[&#39;Semi-naturelles&#39;, &#39;Herbacees&#39;, &#39;Forte phytomasse&#39;], ...</span>
+                                    <span class="c1"># ..., [&#39;Semi-naturelles&#39;, &#39;Ligneux&#39;, &#39;Ligneux denses&#39;]]</span>
+        <span class="c1"># Slope degrees</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slope_degree</span> <span class="o">=</span> <span class="mi">30</span>
         
-        <span class="c"># Output shapefile field name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;ID&#39;</span><span class="p">,</span> <span class="s">&#39;AREA&#39;</span><span class="p">]</span> <span class="c">#, &#39;NIVEAU_1&#39;, &#39;NIVEAU_2&#39;, &#39;NIVEAU_3&#39;, &#39;POURC&#39;]</span>
-        <span class="c"># Output shapefile field type</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldtype_carto</span> <span class="o">=</span> <span class="p">[</span><span class="n">ogr</span><span class="o">.</span><span class="n">OFTString</span><span class="p">,</span> <span class="n">ogr</span><span class="o">.</span><span class="n">OFTReal</span><span class="p">]</span> <span class="c">#, ogr.OFTString, ogr.OFTString, ogr.OFTString, ogr.OFTReal]</span>
+        <span class="c1"># Output shapefile field name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;AREA&#39;</span><span class="p">]</span> <span class="c1">#, &#39;NIVEAU_1&#39;, &#39;NIVEAU_2&#39;, &#39;NIVEAU_3&#39;, &#39;POURC&#39;]</span>
+        <span class="c1"># Output shapefile field type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldtype_carto</span> <span class="o">=</span> <span class="p">[</span><span class="n">ogr</span><span class="o">.</span><span class="n">OFTString</span><span class="p">,</span> <span class="n">ogr</span><span class="o">.</span><span class="n">OFTReal</span><span class="p">]</span> <span class="c1">#, ogr.OFTString, ogr.OFTString, ogr.OFTString, ogr.OFTReal]</span>
         
-        <span class="c"># List of sample name path</span>
+        <span class="c1"># List of sample name path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c"># List of number sample</span>
+        <span class="c1"># List of number sample</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_nb_sample</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c"># Number download available images</span>
+        <span class="c1"># Number download available images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nb_avalaible_images</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c"># Multi-processing variable</span>
+        <span class="c1"># Multi-processing variable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">=</span> <span class="mi">1</span>
         
-        <span class="c"># Function followed</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="c1"># Function followed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">decis</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="c"># Images after processing images</span>
+        <span class="c1"># Images after processing images</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        
+        <span class="c1"># Validation shapefiles information</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="c1"># Radom Forest Model</span>
+        <span class="c1"># Set the parameters of this random forest from the estimator </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_samples_split</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> \
+                                        <span class="n">min_samples_leaf</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> \
+                                        <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">oob_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         
 <div class="viewcode-block" id="Processing.i_tree_direction"><a class="viewcode-back" href="../API.html#Processing.Processing.i_tree_direction">[docs]</a>    <span class="k">def</span> <span class="nf">i_tree_direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Interface function to can extract one level or two levels of the final classification </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-    
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
             
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
-        </div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span></div>
+        
 <div class="viewcode-block" id="Processing.i_download"><a class="viewcode-back" href="../API.html#Processing.Processing.i_download">[docs]</a>    <span class="k">def</span> <span class="nf">i_download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dd</span><span class="p">):</span>
         
         <span class="sd">&quot;&quot;&quot;</span>
@@ -260,16 +282,27 @@
 <span class="sd">        :type dd: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> <span class="s">&#39;_PoleTheia&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> <span class="s1">&#39;_PoleTheia&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_proxy</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">listing</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nb_avalaible_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_archive</span><span class="p">)</span>
-        <span class="c"># check_download.set_list_archive_to_try(check_download.list_archive[:3])</span>
+        <span class="c1"># check_download.set_list_archive_to_try(check_download.list_archive[:3])</span>
         <span class="k">if</span> <span class="n">dd</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-<span class="c">#             self.check_download.download_auto(self.user, self.password)</span>
+<span class="c1">#             self.check_download.download_auto(self.user, self.password)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">download_auto</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">decompress</span><span class="p">()</span>
-     </div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">decompress</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="Processing.i_glob"><a class="viewcode-back" href="../API.html#Processing.Processing.i_glob">[docs]</a>    <span class="k">def</span> <span class="nf">i_glob</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to load existing images to launch the processing. </span>
+<span class="sd">        It need to archives. Then, to select processing images, select archives </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> <span class="s1">&#39;_PoleTheia&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span> <span class="o">=</span> <span class="n">Archive</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_archive</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_proxy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">decompress</span><span class="p">()</span></div>
+     
 <div class="viewcode-block" id="Processing.i_img_sat"><a class="viewcode-back" href="../API.html#Processing.Processing.i_img_sat">[docs]</a>    <span class="k">def</span> <span class="nf">i_img_sat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         
         <span class="sd">&quot;&quot;&quot;</span>
@@ -289,47 +322,59 @@
 <span class="sd">            </span>
 <span class="sd">            &gt;&gt;&gt; import RasterSat_by_date</span>
 <span class="sd">            &gt;&gt;&gt; stats_test = RasterSat_by_date(class_archive, big_folder, one_date)</span>
-<span class="sd">            &gt;&gt;&gt; stats_test.create_raster(in_raster, stats_data, in_ds)</span>
+<span class="sd">            &gt;&gt;&gt; stats_test.complete_raster(stats_test.create_raster(in_raster, stats_data, in_ds), stats_data)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c"># Clip archive images and modify Archive class to integrate clip image path</span>
+        <span class="c1"># Clip archive images and modify Archive class to integrate clip image path</span>
         <span class="k">for</span> <span class="n">clip</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">:</span>
             <span class="n">clip_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">clip</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="n">clip_index</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_raster</span><span class="p">(</span><span class="n">clip</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span> <span class="c"># Multispectral images</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="n">clip_index</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_raster</span><span class="p">(</span><span class="n">clip</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span> <span class="c"># Cloud images</span>
+            
+            <span class="n">current_list</span> <span class="o">=</span> <span class="n">Toolbox</span><span class="p">()</span>
+            <span class="n">current_list</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="n">clip</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">current_list</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span>
+            <span class="n">current_list</span><span class="o">.</span><span class="n">check_proj</span><span class="p">()</span> <span class="c1"># Check if projection is RFG93 </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="n">clip_index</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_list</span><span class="o">.</span><span class="n">clip_raster</span><span class="p">()</span> <span class="c1"># Multispectral images</span>
+            
+            <span class="n">current_list</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="n">clip</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="n">current_list</span><span class="o">.</span><span class="n">check_proj</span><span class="p">()</span> <span class="c1"># Check if projection is RFG93 </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="n">clip_index</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_list</span><span class="o">.</span><span class="n">clip_raster</span><span class="p">()</span> <span class="c1"># Cloud images</span>
            
-        <span class="c"># Images pre-processing</span>
+        <span class="c1"># Images pre-processing</span>
         <span class="n">spectral_out</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">single_date</span><span class="p">:</span>
                
             <span class="n">check_L8</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_processing</span><span class="p">,</span> <span class="n">date</span><span class="p">)</span>
             <span class="n">check_L8</span><span class="o">.</span><span class="n">mosaic_by_date</span><span class="p">()</span>
              
-            <span class="c"># Search cloud&#39;s percentage, select image and compute ndvi index if &gt; cl</span>
+            <span class="c1"># Search cloud&#39;s percentage, select image and compute ndvi index if &gt; cl</span>
             <span class="n">cl</span> <span class="o">=</span> <span class="n">check_L8</span><span class="o">.</span><span class="n">pourc_cloud</span><span class="p">(</span><span class="n">check_L8</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">check_L8</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">cl</span> <span class="o">&gt;</span> <span class="mf">0.60</span><span class="p">:</span>
                 <span class="n">check_L8</span><span class="o">.</span><span class="n">calcul_ndvi</span><span class="p">(</span><span class="n">check_L8</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
                 <span class="n">spectral_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check_L8</span><span class="o">.</span><span class="n">_one_date</span><span class="p">)</span>
-           
-        <span class="c"># Compute temporal stats on ndvi index [min, max, std, min-max]</span>
+
+        <span class="c1"># Compute temporal stats on ndvi index [min, max, std, min-max]</span>
         <span class="n">spectral_trans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spectral_out</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">))</span>
-        <span class="n">stats_name</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Min&#39;</span><span class="p">,</span> <span class="s">&#39;Max&#39;</span><span class="p">,</span> <span class="s">&#39;Std&#39;</span><span class="p">,</span> <span class="s">&#39;MaxMin&#39;</span><span class="p">]</span>
-        <span class="n">stats_ndvi</span><span class="p">,</span> <span class="n">stats_cloud</span> <span class="o">=</span> <span class="n">calc_serie_stats</span><span class="p">(</span><span class="n">spectral_trans</span><span class="p">)</span>
-           
-        <span class="c"># Create stats ndvi raster and stats cloud raster</span>
-        <span class="n">stats_L8</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_processing</span><span class="p">,</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span><span class="p">)])</span>
-        <span class="c"># Stats cloud raster</span>
-        <span class="n">out_cloud_folder</span> <span class="o">=</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span> <span class="o">+</span> \
-                           <span class="s">&#39;/Cloud_number_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span> <span class="o">+</span> <span class="s">&#39;.TIF&#39;</span>
-        <span class="n">stats_L8</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">out_cloud_folder</span><span class="p">,</span> <span class="n">stats_cloud</span><span class="p">,</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
-           
-        <span class="c"># Stats ndvi rasters        </span>
+        <span class="n">stats_name</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">,</span> <span class="s1">&#39;Std&#39;</span><span class="p">,</span> <span class="s1">&#39;MaxMin&#39;</span><span class="p">]</span>
+        <span class="n">stats_ndvi</span><span class="p">,</span> <span class="n">stats_cloud</span> <span class="o">=</span> <span class="n">current_list</span><span class="o">.</span><span class="n">calc_serie_stats</span><span class="p">(</span><span class="n">spectral_trans</span><span class="p">)</span>
+        
+        <span class="c1"># Create stats ndvi raster and stats cloud raster</span>
+        <span class="n">stats_L8</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_processing</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># Stats cloud raster</span>
+        <span class="n">out_cloud_folder</span> <span class="o">=</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> \
+                           <span class="s1">&#39;/Cloud_number_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> <span class="s1">&#39;.TIF&#39;</span>
+        <span class="n">stats_L8</span><span class="o">.</span><span class="n">complete_raster</span><span class="p">(</span><span class="n">stats_L8</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">out_cloud_folder</span><span class="p">,</span> <span class="n">stats_cloud</span><span class="p">,</span> \
+                                                         <span class="n">stats_L8</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">])[</span><span class="mi">1</span><span class="p">]),</span> \
+                                 <span class="n">stats_cloud</span><span class="p">)</span>
+        
+        <span class="c1"># Stats ndvi rasters        </span>
         <span class="k">for</span> <span class="n">stats_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats_ndvi</span><span class="p">)):</span>
-            <span class="n">out_ndvistats_folder</span> <span class="o">=</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span> <span class="o">+</span> \
-                           <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">stats_name</span><span class="p">[</span><span class="n">stats_index</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">classif_year</span> <span class="o">+</span> <span class="s">&#39;.TIF&#39;</span>
+            <span class="n">out_ndvistats_folder</span> <span class="o">=</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> \
+                           <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">stats_name</span><span class="p">[</span><span class="n">stats_index</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">captor_project</span> <span class="o">+</span> <span class="s1">&#39;.TIF&#39;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="n">stats_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_ndvistats_folder</span>
-            <span class="n">stats_L8</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">out_ndvistats_folder</span><span class="p">,</span> <span class="n">stats_ndvi</span><span class="p">[</span><span class="n">stats_index</span><span class="p">],</span> <span class="n">stats_L8</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">])[</span><span class="mi">1</span><span class="p">])</span>
-        </div>
+            <span class="n">stats_L8</span><span class="o">.</span><span class="n">complete_raster</span><span class="p">(</span><span class="n">stats_L8</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">out_ndvistats_folder</span><span class="p">,</span> <span class="n">stats_ndvi</span><span class="p">[</span><span class="n">stats_index</span><span class="p">],</span> \
+                                                            <span class="n">stats_L8</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_download</span><span class="o">.</span><span class="n">list_img</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">])[</span><span class="mi">1</span><span class="p">]),</span> \
+                                     <span class="n">stats_ndvi</span><span class="p">[</span><span class="n">stats_index</span><span class="p">])</span></div>
+        
 <div class="viewcode-block" id="Processing.i_slope"><a class="viewcode-back" href="../API.html#Processing.Processing.i_slope">[docs]</a>    <span class="k">def</span> <span class="nf">i_slope</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Interface function to processing slope raster. From a MNT, and with a command line gdal,</span>
@@ -337,39 +382,47 @@
 <span class="sd"> </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="n">path_mnt</span> <span class="o">=</span> <span class="n">clip_raster</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span>
+        <span class="n">current_path_mnt</span> <span class="o">=</span> <span class="n">Toolbox</span><span class="p">()</span>
+        <span class="n">current_path_mnt</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span>
+        <span class="n">current_path_mnt</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span>
+        <span class="n">path_mnt</span> <span class="o">=</span> <span class="n">current_path_mnt</span><span class="o">.</span><span class="n">clip_raster</span><span class="p">()</span>
+        
         <span class="n">study_slope</span> <span class="o">=</span> <span class="n">Slope</span><span class="p">(</span><span class="n">path_mnt</span><span class="p">)</span>
-        <span class="n">study_slope</span><span class="o">.</span><span class="n">extract_slope</span><span class="p">()</span><span class="c"># Call this function to compute slope raster</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">=</span> <span class="n">study_slope</span><span class="o">.</span><span class="n">out_mnt</span>
-    </div>
-<div class="viewcode-block" id="Processing.i_vhrs"><a class="viewcode-back" href="../API.html#Processing.Processing.i_vhrs">[docs]</a>    <span class="k">def</span> <span class="nf">i_vhrs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="c">#, vs):  </span>
+        <span class="n">study_slope</span><span class="o">.</span><span class="n">extract_slope</span><span class="p">()</span><span class="c1"># Call this function to compute slope raster</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">=</span> <span class="n">study_slope</span><span class="o">.</span><span class="n">out_mnt</span></div>
+    
+<div class="viewcode-block" id="Processing.i_vhrs"><a class="viewcode-back" href="../API.html#Processing.Processing.i_vhrs">[docs]</a>    <span class="k">def</span> <span class="nf">i_vhrs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="c1">#, vs):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Interface function to processing VHRS images. It create two OTB texture images :func:`Vhrs.Vhrs` : SFS Texture and Haralick Texture</span>
-
+<span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-  
-        <span class="c"># Create texture image</span>
-        <span class="c"># Clip orthography image </span>
-        <span class="n">path_ortho</span> <span class="o">=</span> <span class="n">clip_raster</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span>
+
+        <span class="c1"># Create texture image</span>
+        <span class="c1"># Clip orthography image </span>
+        <span class="n">current_path_ortho</span> <span class="o">=</span> <span class="n">Toolbox</span><span class="p">()</span>
+        <span class="n">current_path_ortho</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span>
+        <span class="n">current_path_ortho</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span>
+        <span class="n">path_ortho</span> <span class="o">=</span> <span class="n">current_path_ortho</span><span class="o">.</span><span class="n">clip_raster</span><span class="p">()</span>
+        
         <span class="n">texture_irc</span> <span class="o">=</span> <span class="n">Vhrs</span><span class="p">(</span><span class="n">path_ortho</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s">&#39;sfs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texture_irc</span><span class="o">.</span><span class="n">out_sfs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s">&#39;haralick&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texture_irc</span><span class="o">.</span><span class="n">out_haralick</span>
-        </div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s1">&#39;sfs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texture_irc</span><span class="o">.</span><span class="n">out_sfs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s1">&#39;haralick&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">texture_irc</span><span class="o">.</span><span class="n">out_haralick</span></div>
+        
 <div class="viewcode-block" id="Processing.i_images_processing"><a class="viewcode-back" href="../API.html#Processing.Processing.i_images_processing">[docs]</a>    <span class="k">def</span> <span class="nf">i_images_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vs</span><span class="p">):</span> 
         
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Interface function to launch processing VHRS images :func:`i_vhrs` and satellite images :func:`i_img_sat` in multi-processing.</span>
 <span class="sd">        </span>
 <span class="sd">        :param vs: Boolean variable to launch processing because of interface checkbox -&gt; 0 or 1.</span>
-<span class="sd">    </span>
+<span class="sd">        </span>
 <span class="sd">            - 0 means, not texture processing</span>
 <span class="sd">            - 1 means, launch texture processing</span>
 <span class="sd">        :type vs: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Multiprocessing</span>
+        <span class="c1"># Multiprocessing</span>
         <span class="n">mgr</span> <span class="o">=</span> <span class="n">BaseManager</span><span class="p">()</span>
-        <span class="n">mgr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;defaultdict&#39;</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">DictProxy</span><span class="p">)</span>
+        <span class="n">mgr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;defaultdict&#39;</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">DictProxy</span><span class="p">)</span>
         <span class="n">mgr</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         
@@ -379,42 +432,41 @@
             <span class="n">p_img_sat</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
         
         <span class="k">if</span> <span class="n">vs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">p_vhrs</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">i_vhrs</span><span class="p">)</span><span class="c">#, args=(vs, ))</span>
+            <span class="n">p_vhrs</span> <span class="o">=</span> <span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">i_vhrs</span><span class="p">)</span><span class="c1">#, args=(vs, ))</span>
             <span class="n">p_vhrs</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="n">p_vhrs</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
         
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">p_img_sat</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
         
-        <span class="c"># List of output raster path</span>
+        <span class="c1"># List of output raster path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="c"># List of output raster band</span>
+        <span class="c1"># List of output raster band</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         
         <span class="k">if</span> <span class="n">vs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s">&#39;sfs&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s1">&#39;sfs&#39;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s">&#39;haralick&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s1">&#39;haralick&#39;</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         
-        <span class="c"># To slope, to extract scree</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+        <span class="c1"># To slope, to extract scree</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             
-        <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="c"># example raster path tab :</span>
-        <span class="c">#                [path_folder_dpt + &#39;/&#39; + folder_processing + &#39;/&#39; + classif_year + &#39;/Min_2014.TIF&#39;,\</span>
-        <span class="c">#                os.path.dirname(path_ortho) + &#39;/Clip_buffer_surface_dep_18_IRCOrtho65_2m_sfs.TIF&#39;,\</span>
-        <span class="c">#                os.path.dirname(path_ortho) + &#39;/Clip_buffer_surface_dep_18_IRCOrtho65_2m_haralick.TIF&#39;,\</span>
-        <span class="c">#                path_folder_dpt + &#39;/&#39; + folder_processing + &#39;/&#39; + classif_year + &#39;/Max_2014.TIF&#39;]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="c1"># example raster path tab :</span>
+        <span class="c1">#                [path_folder_dpt + &#39;/&#39; + folder_processing + &#39;/&#39; + classif_year + &#39;/Min_2014.TIF&#39;,\</span>
+        <span class="c1">#                os.path.dirname(path_ortho) + &#39;/Clip_buffer_surface_dep_18_IRCOrtho65_2m_sfs.TIF&#39;,\</span>
+        <span class="c1">#                os.path.dirname(path_ortho) + &#39;/Clip_buffer_surface_dep_18_IRCOrtho65_2m_haralick.TIF&#39;,\</span>
+        <span class="c1">#                path_folder_dpt + &#39;/&#39; + folder_processing + &#39;/&#39; + classif_year + &#39;/Max_2014.TIF&#39;]</span>
         
-        <span class="c"># List of output raster band</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c">#[1, 4, 2, 1]</span>
+        <span class="c1"># List of output raster band</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#[1, 4, 2, 1]</span>
         
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;End of images processing !&quot;</span><span class="p">)</span>
-
-</div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;End of images processing !&quot;</span><span class="p">)</span></div>
+        
 <div class="viewcode-block" id="Processing.i_rpg"><a class="viewcode-back" href="../API.html#Processing.Processing.i_rpg">[docs]</a>    <span class="k">def</span> <span class="nf">i_rpg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path_rpg</span><span class="p">):</span> 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Interface function to extract mono rpg crops.</span>
@@ -425,166 +477,493 @@
 <span class="sd">        :returns: str -- variable **Rpg.vector_used**, output no duplicated crops shapefile (path).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
                
-        <span class="c"># Extract mono rpg crops</span>
+        <span class="c1"># Extract mono rpg crops</span>
         <span class="n">mono_sample</span> <span class="o">=</span> <span class="n">Rpg</span><span class="p">(</span><span class="n">path_rpg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span>
-        <span class="n">mono_sample</span><span class="o">.</span><span class="n">mono_rpg</span><span class="p">()</span>
-        <span class="n">mono_sample</span><span class="o">.</span><span class="n">create_new_rpg_files</span><span class="p">()</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;End of RPG processing&#39;</span><span class="p">)</span>
+        <span class="c1"># If exists, do not create a mono rpg file</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">path_rpg</span><span class="p">))[:</span><span class="mi">5</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39;MONO_&#39;</span><span class="p">:</span>
+            <span class="n">mono_sample</span><span class="o">.</span><span class="n">mono_rpg</span><span class="p">()</span>
+            <span class="n">mono_sample</span><span class="o">.</span><span class="n">create_new_rpg_files</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MONO RPG file exists already !!!&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;End of RPG processing&#39;</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="n">mono_sample</span><span class="o">.</span><span class="n">vector_used</span>
+        <span class="k">return</span> <span class="n">mono_sample</span><span class="o">.</span><span class="n">vector_used</span></div>
          
-        </div>
 <div class="viewcode-block" id="Processing.i_sample"><a class="viewcode-back" href="../API.html#Processing.Processing.i_sample">[docs]</a>    <span class="k">def</span> <span class="nf">i_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Interface function to compute threshold with various sample.</span>
+<span class="sd">        Interface function to compute threshold with various sample. It also extract a list of validation layer (shapefile) </span>
+<span class="sd">        to compute the precision of the next classification :func:`i_validate`. </span>
 <span class="sd">        </span>
 <span class="sd">        It create samples 2 by 2 with kwargs field names and class :func:`Sample.Sample.create_sample`. </span>
 <span class="sd">        Then, it compute zonal statistics by polygons :func:`Vector.Sample.zonal_stats`.</span>
 <span class="sd">        </span>
-<span class="sd">        With zonal statistics computed, a optimal threshold is determined :func:`Seath.Seath.separability_and_threshold`.</span>
+<span class="sd">        With zonal statistics computed, a optimal threshold is determined :func:`Seath.Seath.separability_and_threshold` that</span>
+<span class="sd">        will print in a text file .lg in the main folder.</span>
 <span class="sd">        </span>
 <span class="sd">        .. warning:: :func:`Seath.Seath.separability_and_threshold` does not always allow to discriminate optimal threshold. </span>
 <span class="sd">                    Then, this function will be launch at least ten time until it reaches a optimal threshold.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Compute threshold with various sample</span>
+        <span class="c1"># Compute threshold with various sample</span>
         <span class="n">i_s</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="n">i_s</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
             <span class="k">try</span> <span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">sample_rd</span> <span class="o">=</span> <span class="p">{}</span>
                 <span class="k">for</span> <span class="n">sple</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
                     <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
-                    <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
-                    <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
+                    <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
                     <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_nb_sample</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
                     <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">create_sample</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
                     <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">zonal_stats</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">]))</span>
-                   
+                    
+                    <span class="c1"># Add the validation shapefile</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">vector_val</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]])</span>
+                
+                <span class="c1"># Search the optimal threshold by class </span>
+                <span class="c1"># Open a text file to print stats of Seath method</span>
+                <span class="n">file_J</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span> <span class="o">+</span> <span class="s1">&#39;/log_J.lg&#39;</span>
+                <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_J</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">th_seath</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">th_seath</span><span class="p">]</span> <span class="o">=</span> <span class="n">Seath</span><span class="p">()</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">th_seath</span><span class="p">]</span><span class="o">.</span><span class="n">value_1</span> <span class="o">=</span> <span class="n">sample_rd</span><span class="p">[</span><span class="n">th_seath</span><span class="o">*</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">stats_dict</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">th_seath</span><span class="p">]</span><span class="o">.</span><span class="n">value_2</span> <span class="o">=</span> <span class="n">sample_rd</span><span class="p">[</span><span class="n">th_seath</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stats_dict</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">th_seath</span><span class="p">]</span><span class="o">.</span><span class="n">separability_and_threshold</span><span class="p">()</span>
-                
-                <span class="n">i_s</span> <span class="o">=</span> <span class="mi">10</span>
+                    
+                    <span class="c1"># Print the J value in the text file .lg</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;For &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">th_seath</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39; :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;J = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">th_seath</span><span class="p">]</span><span class="o">.</span><span class="n">J</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;The class 1 &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">th_seath</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    
+                <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>    
+                <span class="n">i_s</span> <span class="o">=</span> <span class="mi">20</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">i_s</span> <span class="o">=</span> <span class="n">i_s</span> <span class="o">+</span> <span class="mi">1</span>
-</div>
-<div class="viewcode-block" id="Processing.i_classifier"><a class="viewcode-back" href="../API.html#Processing.Processing.i_classifier">[docs]</a>    <span class="k">def</span> <span class="nf">i_classifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="c1"># Method to stop the processus if there is not found a valid threshold</span>
+        <span class="k">if</span> <span class="n">i_s</span> <span class="o">!=</span> <span class="mi">20</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;Problem in the sample processing !!!&#39;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Processing.i_sample_rf"><a class="viewcode-back" href="../API.html#Processing.Processing.i_sample_rf">[docs]</a>    <span class="k">def</span> <span class="nf">i_sample_rf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function build a random forest trees like model to create a final classification.</span>
+<span class="sd">        All of This using the method described in the :func:`i_validate` function and because</span>
+<span class="sd">        of sklearn module.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">X_rf</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">y_rf</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">sample_rd</span> <span class="o">=</span> <span class="p">{}</span>            
+        <span class="c1"># Tricks to add all textural indexes</span>
+        <span class="n">rm_index</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">rm_index</span><span class="p">])</span> <span class="c1"># Remove SFS layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">rm_index</span><span class="p">])</span> <span class="c1"># Remove Haralick layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">rm_index</span><span class="p">])</span> <span class="c1"># Remove band of the layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">rm_index</span><span class="p">])</span> <span class="c1"># Remove band of the layer</span>
+        <span class="c1"># Add all layers in the simple index haralick</span>
+        <span class="k">for</span> <span class="n">add_layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">add_layer</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s1">&#39;haralick&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">add_layer</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">add_layer</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># Add all layers in the SFS index</span>
+        <span class="k">for</span> <span class="n">add_layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">add_layer</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_ndvistats_folder_tab</span><span class="p">[</span><span class="s1">&#39;sfs&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">add_layer</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">add_layer</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            
+        <span class="c1"># Extract value mean from polygons</span>
+        <span class="k">for</span> <span class="n">sple</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fieldname_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_args</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span>
+            <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_nb_sample</span><span class="p">[</span><span class="n">sple</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">create_sample</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+            <span class="c1"># Add the validation shapefile</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">vector_val</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">],</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]])</span>
+
+            <span class="k">for</span> <span class="n">lbo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">)):</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lbo</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nb_img&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">)</span>
+                <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">zonal_stats</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">lbo</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">lbo</span><span class="p">]),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+            <span class="c1"># To convert the dictionnary in a list</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sample_rd</span><span class="p">[</span><span class="n">sple</span><span class="p">]</span><span class="o">.</span><span class="n">stats_dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="c1">#                 X_rf.append([-10000 if (math.isnan(x) or math.isinf(x)) else x for x in value])</span>
+                <span class="c1"># To set the grassland class of the RPG and PIAO (same class)            </span>
+                <span class="k">if</span> <span class="n">sple</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="c1">#                     y_rf.append(1)</span>
+                    <span class="k">pass</span>
+                <span class="k">elif</span> <span class="n">sple</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+<span class="c1">#                     y_rf.append(4)</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">y_rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sple</span><span class="p">)</span>
+                    <span class="n">X_rf</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="o">-</span><span class="mi">10000</span> <span class="k">if</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value</span><span class="p">])</span>
+                    
+        <span class="c1"># Build a forest of trees from the samples                 </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_rf</span><span class="p">,</span> <span class="n">y_rf</span><span class="p">)</span>
+        
+        <span class="c1"># Print in a file feature important</span>
+        <span class="n">importance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span>
+        <span class="n">importance</span> <span class="o">=</span> <span class="p">[(</span><span class="n">importance</span><span class="p">[</span><span class="n">x</span><span class="p">],</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">importance</span><span class="p">))]</span>
+        <span class="n">importance</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        
+        <span class="n">file_feat_import</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/Feature_important_RF.ft&#39;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_feat_import</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_feat_import</span><span class="p">)</span>
+        <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_feat_import</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">importance</span><span class="p">))</span>
+        <span class="c1"># Close the output file</span>
+        <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="c1"># Print in a file decision tree</span>
+        <span class="n">file_decisiontree</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/Decision_tree.dot&#39;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_decisiontree</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">file_decisiontree</span><span class="p">)</span>
+        
+        <span class="n">tree_in_forest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">estimators_</span><span class="p">[</span><span class="mi">499</span><span class="p">]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_decisiontree</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">my_file</span><span class="p">:</span>
+            <span class="n">my_file</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">export_graphviz</span><span class="p">(</span><span class="n">tree_in_forest</span><span class="p">,</span> <span class="n">out_file</span> <span class="o">=</span> <span class="n">my_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Processing.i_classifier_rf"><a class="viewcode-back" href="../API.html#Processing.Processing.i_classifier_rf">[docs]</a>    <span class="k">def</span> <span class="nf">i_classifier_rf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Interface function to launch random forest classification with a input segmentation :func:`Segmentation.Segmentation`.</span>
+<span class="sd">        </span>
+<span class="sd">        This function use the sklearn module to build the best of decision tree to extract classes.</span>
+<span class="sd">        The optimal threshold are stored by class **rf** variable in :func:`Processing.i_sample_rf`. Then it computes zonal statistics by polygons</span>
+<span class="sd">        for every images in multi-processing (if **mp** = 1).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># Multiprocessing</span>
+        <span class="n">mgr</span> <span class="o">=</span> <span class="n">BaseManager</span><span class="p">()</span>
+        <span class="n">mgr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;defaultdict&#39;</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">DictProxy</span><span class="p">)</span>
+        <span class="n">mgr</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">multi_process_var</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Multi processing variable</span>
+          
+        <span class="c1"># Extract final cartography</span>
+        <span class="n">out_carto</span> <span class="o">=</span> <span class="n">Segmentation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_segm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span> 
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_name_moba</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">out_class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span>
+<span class="c1">#         out_carto.out_threshold = []</span>
+        <span class="k">for</span> <span class="n">ind_th</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">)):</span>
+            <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]])</span>
+
+        <span class="c1"># Compute zonal stats with multi processing</span>
+        <span class="n">exist_stats</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># By default, the stats file exists already</span>
+        <span class="n">file_stats</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/Stats_raster_spectral_texture.stats&#39;</span> <span class="c1"># Stats backup file</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_stats</span><span class="p">):</span>
+            <span class="n">exist_stats</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># The sats file doesn&#39;t exist</span>
+            <span class="c1"># Open a stats backup to avoid computing again (Gain of time)</span>
+            <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_stats</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        
+        <span class="n">p</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">X_out_rf</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Variable list to compute decision tree with random forest method</span>
+        <span class="k">if</span> <span class="n">exist_stats</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)):</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nb_img&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">out_carto</span><span class="o">.</span><span class="n">zonal_stats</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">),</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">))</span>
+                <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>       
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)):</span>
+                    <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+                    
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value_seg</span> <span class="ow">in</span> <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">true_value</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span> <span class="k">if</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value_seg</span><span class="p">]</span>
+                <span class="n">X_out_rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">true_value</span><span class="p">)</span>
+                
+                <span class="c1"># Print rasters stats value in the text file .lg</span>
+                <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">true_value</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Close the output file</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If the stats file exists already, open this file and append in the stats_dict variable</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_stats</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">:</span>
+                <span class="n">index_in_stats</span><span class="o">=-</span><span class="mi">1</span>
+                <span class="k">for</span> <span class="n">x_in</span> <span class="ow">in</span> <span class="n">f_in</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+                    <span class="n">index_in_stats</span> <span class="o">=</span> <span class="n">index_in_stats</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span><span class="p">[</span><span class="n">index_in_stats</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">x_in</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+                    <span class="n">X_out_rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">x_in</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))</span>
+        
+        <span class="n">predicted_rf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_out_rf</span><span class="p">)</span>
+             
+        <span class="c1"># For the higher than level 1</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Compute the biomass and density distribution</span>
+            <span class="c1"># Use &#39;out_carto.out_threshold&#39; to konw predicted in the segmentation class</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span> <span class="o">=</span> <span class="n">predicted_rf</span>
+            <span class="c1"># In the compute_biomass_density function, this variable used normally to define </span>
+            <span class="c1"># threshold of the classification with SEATH method is initialized</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">compute_biomass_density</span><span class="p">(</span><span class="s1">&#39;RF&#39;</span><span class="p">)</span>
+        
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">class_tab_final</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i_polyg</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">predicted_rf</span><span class="p">)):</span>
+            <span class="n">i_final</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">class_final</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Initialize the predicted output format</span>
+            <span class="c1"># For example : predicted =&gt; 4, formatted =&gt; [1,3,4]</span>
+            <span class="k">while</span> <span class="n">i_final</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">[</span><span class="n">i_final</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">[</span><span class="n">i_final</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">predicted_rf</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">]:</span>
+                    <span class="n">class_final</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">[</span><span class="n">i_final</span><span class="p">]</span>
+                    <span class="n">i_final</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">)</span>
+                <span class="n">i_final</span> <span class="o">=</span> <span class="n">i_final</span> <span class="o">+</span> <span class="mi">1</span>
+            
+            <span class="k">if</span> <span class="n">class_final</span> <span class="o">==</span> <span class="p">[]:</span>
+                <span class="n">class_final</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="c1"># Set the class name because of predicted output formatted         </span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">class_final</span><span class="p">]</span> <span class="o">+</span> \
+                                                <span class="p">[</span><span class="n">predicted_rf</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">]]</span> <span class="o">+</span> <span class="p">[</span><span class="n">predicted_rf</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">]]</span>
+            
+            <span class="c1"># For the output line with one level, add a phantom level</span>
+            <span class="c1"># TODO : Replace constant by a variable in the condition &#39;while&#39;</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_carto</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+                <span class="n">out_carto</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">out_carto</span><span class="o">.</span><span class="n">class_tab_final</span><span class="p">[</span><span class="n">i_polyg</span><span class="p">])</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># If there is more one fieldnames line edit fulled in classification tab</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Compute biomass and density scale</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;self.stats_dict[ind_stats][3]/self.max_bio&#39;</span><span class="p">)</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;self.stats_dict[ind_stats][2]/self.max_wood_idm&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Rasterize RPG shapefile to complete the final shapefile</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Remove&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">rpg_tif</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
+<span class="c1">#         if not os.path.exists(str(rpg_tif.vector_used[:-3]+&#39;TIF&#39;)): </span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;choice_nb_b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_rpg_tif</span> <span class="o">=</span> <span class="n">out_carto</span><span class="o">.</span><span class="n">zonal_stats_pp</span><span class="p">(</span><span class="n">rpg_tif</span><span class="o">.</span><span class="n">layer_rasterization</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span><span class="p">,</span> <span class="s1">&#39;CODE_GROUP&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        
+        <span class="c1"># Final cartography</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">create_cartography</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldtype_carto</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="Processing.i_classifier_s"><a class="viewcode-back" href="../API.html#Processing.Processing.i_classifier_s">[docs]</a>    <span class="k">def</span> <span class="nf">i_classifier_s</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Interface function to launch decision tree classification with a input segmentation :func:`Segmentation.Segmentation`.</span>
 <span class="sd">        </span>
-<span class="sd">        This function store optimal threshold by class **Segmentation.out_threshold**. Then compute zonal statistics by polygons</span>
+<span class="sd">        This function store optimal threshold by class **Segmentation.out_threshold**. Then it computes zonal statistics by polygons</span>
 <span class="sd">        for every images in multi-processing (if **mp** = 1).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span> 
         
-        <span class="c"># Multiprocessing</span>
+        <span class="c1"># Multiprocessing</span>
         <span class="n">mgr</span> <span class="o">=</span> <span class="n">BaseManager</span><span class="p">()</span>
-        <span class="n">mgr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&#39;defaultdict&#39;</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">DictProxy</span><span class="p">)</span>
+        <span class="n">mgr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;defaultdict&#39;</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">DictProxy</span><span class="p">)</span>
         <span class="n">mgr</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="n">multi_process_var</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># Multi processing variable</span>
+        <span class="n">multi_process_var</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Multi processing variable</span>
           
-        <span class="c"># Extract final cartography</span>
+        <span class="c1"># Extract final cartography</span>
         <span class="n">out_carto</span> <span class="o">=</span> <span class="n">Segmentation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_segm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">)</span> 
         <span class="n">out_carto</span><span class="o">.</span><span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_name_moba</span>
         <span class="n">out_carto</span><span class="o">.</span><span class="n">out_class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span>
         <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">ind_th</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)):</span>
             <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">if</span> <span class="s">&#39;&gt;&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;=&#39;</span><span class="p">))</span>
-            <span class="k">elif</span> <span class="s">&#39;&lt;&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s">&#39;&gt;=&#39;</span><span class="p">))</span>
-        <span class="c">#     out_carto.zonal_stats((raster_path[ind_th], list_band_outraster[ind_th]))</span>
+            <span class="k">if</span> <span class="s1">&#39;&gt;&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="s1">&#39;&lt;&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decis</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">))</span>
+        <span class="c1">#     out_carto.zonal_stats((raster_path[ind_th], list_band_outraster[ind_th]))</span>
             <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="p">]])</span>
          
-        <span class="c"># Compute zonal stats on slope raster</span>
+        <span class="c1"># Compute zonal stats on slope raster</span>
         <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
-        <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&lt;&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slope_degree</span><span class="p">))</span> <span class="c"># To agriculture</span>
-        <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;&gt;=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slope_degree</span><span class="p">))</span> <span class="c"># To scree</span>
-        <span class="c"># Compute zonal stats on Max NDVI raster    </span>
-        <span class="c"># out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))</span>
-        <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">]])</span>
-        <span class="c"># Compute stats twice, because there is 3 classes and not 2</span>
-        <span class="c"># out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))</span>
-        <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">]])</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slope_degree</span><span class="p">))</span> <span class="c1"># To agriculture</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">out_threshold</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&gt;=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slope_degree</span><span class="p">))</span> <span class="c1"># To scree</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_mnt</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="c1"># Add class indexes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+            
+        <span class="c1"># Compute zonal stats on Max NDVI raster  </span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))</span>
+            <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">]])</span>
+            <span class="c1"># Compute stats twice, because there is 3 classes and not 2</span>
+            <span class="c1"># out_carto.zonal_stats((raster_path[ind_th+1], list_band_outraster[ind_th+1]))</span>
+            <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">2</span><span class="p">]])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Not MNT on the 3rd step&#39;</span><span class="p">)</span>
+            <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="n">multi_process_var</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_band_outraster</span><span class="p">[</span><span class="n">ind_th</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
 
-        <span class="c"># Compute zonal stats with multi processing</span>
-        <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="c1"># Compute zonal stats with multi processing</span>
+        <span class="n">exist_stats</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># By default, the stats file exists already</span>
+        <span class="n">file_stats</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/Stats_raster_spectral_texture.stats&#39;</span> <span class="c1"># Stats backup file</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_stats</span><span class="p">):</span>
+            <span class="n">exist_stats</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># The sats file doesn&#39;t exist</span>
+            <span class="c1"># Open a stats backup to avoid computing again (Gain of time)</span>
+            <span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_stats</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+            
         <span class="n">p</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)):</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;nb_img&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">out_carto</span><span class="o">.</span><span class="n">zonal_stats</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">),</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">))</span>
-            <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-            
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-        
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>       
+        <span class="n">X_out_rf</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Variable list to compute decision tree with random forest method</span>
+        <span class="k">if</span> <span class="n">exist_stats</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span> <span class="o">=</span> <span class="n">mgr</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)):</span>
-                <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-
-        <span class="c"># If there is more one fieldnames line edit fulled in classification tab</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nb_img&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">out_carto</span><span class="o">.</span><span class="n">zonal_stats</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="p">),</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">))</span>
+                <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>       
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">multi_process_var</span><span class="p">)):</span>
+                    <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+                    
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value_seg</span> <span class="ow">in</span> <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                
+                <span class="n">true_value</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span> <span class="k">if</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">or</span> <span class="n">math</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value_seg</span><span class="p">]</span>
+                <span class="c1"># Print rasters stats value in the text file .lg</span>
+                <span class="n">f_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">true_value</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Close the output file</span>
+            <span class="n">f_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If the stats file exists already, open this file and append in the stats_dict variable</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_stats</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_in</span><span class="p">:</span>
+                <span class="n">index_in_stats</span><span class="o">=-</span><span class="mi">1</span>
+                <span class="k">for</span> <span class="n">x_in</span> <span class="ow">in</span> <span class="n">f_in</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+                    <span class="n">index_in_stats</span> <span class="o">=</span> <span class="n">index_in_stats</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="n">out_carto</span><span class="o">.</span><span class="n">stats_dict</span><span class="p">[</span><span class="n">index_in_stats</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">x_in</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+                    <span class="n">X_out_rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">x_in</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))</span>
+        
+        <span class="c1"># For the higher than level 1 </span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="c"># Compute the biomass and density distribution</span>
+            <span class="c1"># Compute the biomass and density distribution</span>
             <span class="n">out_carto</span><span class="o">.</span><span class="n">compute_biomass_density</span><span class="p">()</span>
             
         <span class="n">out_carto</span><span class="o">.</span><span class="n">class_tab_final</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">i_tree_direction</span><span class="p">()</span>
         <span class="n">out_carto</span><span class="o">.</span><span class="n">decision_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree_direction</span><span class="p">)</span>
         
-        <span class="c"># If there is more one fieldnames line edit fulled in classification tab</span>
+        <span class="c1"># If there is more one fieldnames line edit fulled in classification tab</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>     
-            <span class="c"># Compute biomass and density scale</span>
-            <span class="n">out_carto</span><span class="o">.</span><span class="n">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s">&#39;self.stats_dict[ind_stats][3]/self.max_bio&#39;</span><span class="p">)</span>
-            <span class="n">out_carto</span><span class="o">.</span><span class="n">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s">&#39;self.stats_dict[ind_stats][2]/self.max_wood_idm&#39;</span><span class="p">)</span>
+            <span class="c1"># Compute biomass and density scale</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;self.stats_dict[ind_stats][3]/self.max_bio&#39;</span><span class="p">)</span>
+            <span class="n">out_carto</span><span class="o">.</span><span class="n">append_scale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">in_class_name</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;self.stats_dict[ind_stats][2]/self.max_wood_idm&#39;</span><span class="p">)</span>
+        
+        <span class="c1"># Rasterize RPG shapefile to complete the final shapefile</span>
+        <span class="n">opt</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Remove&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">rpg_tif</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
+        <span class="n">rpg_tif</span><span class="o">.</span><span class="n">layer_rasterization</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_ortho</span><span class="p">,</span> <span class="s1">&#39;CODE_GROUP&#39;</span><span class="p">)</span>
           
-        <span class="c"># Final cartography</span>
-        <span class="n">out_carto</span><span class="o">.</span><span class="n">create_cartography</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldtype_carto</span><span class="p">)</span>
-    </div></div>
+        <span class="c1"># Final cartography</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">mono_rpg_tif</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_name</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.TIF&#39;</span>
+        <span class="n">out_carto</span><span class="o">.</span><span class="n">create_cartography</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_fieldtype_carto</span><span class="p">)</span></div>
+       
+<div class="viewcode-block" id="Processing.i_validate"><a class="viewcode-back" href="../API.html#Processing.Processing.i_validate">[docs]</a>    <span class="k">def</span> <span class="nf">i_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Interface to validate a classification. It going to rasterize the validation shapefile and the </span>
+<span class="sd">        classification shapefile with :func:`layer_rasterization`. Next, to compare pixel by pixel, the classification</span>
+<span class="sd">        quality to built a confusion matrix in a csv file.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Variable to convert the input classname to an individual interger</span>
+        <span class="c1"># Only for the validate sample</span>
+        <span class="n">class_validate</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">complete_validate_shp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span> <span class="o">+</span> <span class="s1">&#39;/validate.shp&#39;</span>
+        
+        <span class="c1"># TODO: Set this method in the Precision_moba class</span>
+        
+        <span class="c1"># Processing to rasterize the validate shapefile. 1) Merge sahpefiles 2) Rasterization</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">class_validate</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span> 
+                <span class="c1"># Grassland to 1</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">class_validate</span> <span class="o">!=</span><span class="mi">3</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out_fieldname_carto</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span>
+                    <span class="c1"># To the level 3 with woodeen to 4 and 5</span>
+                    <span class="c1">#</span>
+                    <span class="c1"># Self.valid_shp is a list of list. In this variable there is :</span>
+                    <span class="c1"># [Shapefile path, fieldname classes, classnames]</span>
+                    <span class="n">opt</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Remove&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># To overwrite </span>
+        
+                    <span class="c1"># Create a raster to valide the classification</span>
+                    <span class="c1"># First time, create a new shapefile with a new field integer</span>
+                    <span class="n">sample_val</span> <span class="o">=</span> <span class="n">Sample</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
+                    <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;add_fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> 
+                    <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CLASS_CODE&#39;</span>
+                    <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">class_validate</span><span class="p">)</span> <span class="c1"># Add integer classes</span>
+                    <span class="c1"># Set the new shapefile</span>
+                    <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_.shp&#39;</span>
+                    <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;fieldname&#39;</span><span class="p">]</span>
+                    <span class="n">val</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span>
+                    <span class="c1"># Complete the new shapefile</span>
+                    <span class="n">sample_val</span><span class="o">.</span><span class="n">fill_sample</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">)</span>
+                    <span class="c1"># Second time, merge the validate shapefile</span>
+                    <span class="k">if</span> <span class="n">class_validate</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">process_tocall_merge</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="s1">&#39;-overwrite&#39;</span><span class="p">,</span> <span class="n">complete_validate_shp</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="k">elif</span> <span class="n">class_validate</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">process_tocall_merge</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="s1">&#39;-update&#39;</span><span class="p">,</span> <span class="s1">&#39;-append&#39;</span><span class="p">,</span> <span class="n">complete_validate_shp</span><span class="p">,</span> \
+                                                 <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;-nln&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">complete_validate_shp</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]))]</span>
+                    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall_merge</span><span class="p">)</span>
+            <span class="c1"># Increrment variable</span>
+            <span class="n">class_validate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_shp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        
+        <span class="c1"># Compute precision of the classification</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">Precision_moba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path_area</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path_folder_dpt</span><span class="p">)</span>     
+        <span class="n">valid</span><span class="o">.</span><span class="n">complete_validation_shp</span> <span class="o">=</span> <span class="n">complete_validate_shp</span>
+        <span class="n">valid</span><span class="o">.</span><span class="n">ex_raster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="c1"># TODO: Call the RasterSat_by_Date class here instead of the Precision_moba class</span>
+        
+        <span class="n">valid</span><span class="o">.</span><span class="n">preprocess_to_raster_precision</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_name_moba</span><span class="p">,</span> <span class="s1">&#39;FBPHY_CODE&#39;</span><span class="p">)</span> <span class="c1"># To the classification&#39;s data</span>
+        <span class="n">valid</span><span class="o">.</span><span class="n">preprocess_to_raster_precision</span><span class="p">(</span><span class="n">complete_validate_shp</span><span class="p">,</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># To the validation&#39;s data</span>
+        
+        <span class="c1"># Compute precision on the output classification</span>
+        <span class="n">valid</span><span class="o">.</span><span class="n">confus_matrix</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">complete_img</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">img_pr</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span> \
+                            <span class="n">valid</span><span class="o">.</span><span class="n">complete_img</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">img_pr</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span></div></div>
+        
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Code du module</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

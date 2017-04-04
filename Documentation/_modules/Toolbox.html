@@ -2,172 +2,241 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Toolbox &mdash; PHYMOBAT 1 documentation</title>
+    <title>Toolbox &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" /> 
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Code du module</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <h1>Source code for Toolbox</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># This file is part of PHYMOBAT 1.1.</span>
-<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is free software: you can redistribute it and/or modify</span>
-<span class="c"># it under the terms of the GNU General Public License as published by</span>
-<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c"># (at your option) any later version.</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is distributed in the hope that it will be useful,</span>
-<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c"># GNU General Public License for more details.</span>
-<span class="c"># </span>
-<span class="c"># You should have received a copy of the GNU General Public License</span>
-<span class="c"># along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+  <h1>Code source de Toolbox</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PHYMOBAT 1.2.</span>
+<span class="c1"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 1.2 is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 1.2 is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with PHYMOBAT 1.2.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
-<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">date</span>
+<span class="kn">import</span> <span class="nn">json</span>
 
-<div class="viewcode-block" id="clip_raster"><a class="viewcode-back" href="../package.html#Toolbox.clip_raster">[docs]</a><span class="k">def</span> <span class="nf">clip_raster</span><span class="p">(</span><span class="n">imag</span><span class="p">,</span> <span class="n">vect</span><span class="p">):</span>
+<div class="viewcode-block" id="Toolbox"><a class="viewcode-back" href="../package.html#Toolbox.Toolbox">[docs]</a><span class="k">class</span> <span class="nc">Toolbox</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function to clip a raster with a vector. The raster created will be in the same folder than the input raster.</span>
-<span class="sd">    With a prefix *Clip_*.</span>
-<span class="sd">    </span>
+<span class="sd">    Class used to grouped small tools to cut raster or compute statistics on a raster. </span>
+<span class="sd">        </span>
 <span class="sd">    :param imag: Input image (path)</span>
 <span class="sd">    :type imag: str</span>
 <span class="sd">    :param vect: Extent shapefile (path)</span>
 <span class="sd">    :type vect: str</span>
-<span class="sd">    :returns: str -- variable **outclip**, output raster clip (path).</span>
-<span class="sd">    &quot;&quot;&quot;</span>    
+<span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="n">outclip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">imag</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/Clip_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">imag</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outclip</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&#39;Raster clip of &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">imag</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="c"># Command to clip a raster with a shapefile by Gdal</span>
-        <span class="n">process_tocall_clip</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;gdalwarp&#39;</span><span class="p">,</span> <span class="s">&#39;-dstnodata&#39;</span><span class="p">,</span> <span class="s">&#39;-10000&#39;</span><span class="p">,</span> <span class="s">&#39;-q&#39;</span><span class="p">,</span> <span class="s">&#39;-cutline&#39;</span><span class="p">,</span> <span class="n">vect</span><span class="p">,</span> <span class="s">&#39;-crop_to_cutline&#39;</span><span class="p">,</span> <span class="s">&#39;-of&#39;</span><span class="p">,</span> <span class="s">&#39;GTiff&#39;</span><span class="p">,</span> <span class="n">imag</span><span class="p">,</span> <span class="n">outclip</span><span class="p">]</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall_clip</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new &#39;Toolbox&#39; instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">imag</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     
-    <span class="k">return</span> <span class="n">outclip</span>
-</div>
-<div class="viewcode-block" id="calc_serie_stats"><a class="viewcode-back" href="../package.html#Toolbox.calc_serie_stats">[docs]</a><span class="k">def</span> <span class="nf">calc_serie_stats</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Function to compute stats on temporal cloud and ndvi spectral table</span>
-<span class="sd">    Ndvi stats : min    max    std    max-min</span>
-<span class="sd">    </span>
-<span class="sd">    :param table: Spectral data, cloud raster and ndvi raster</span>
-<span class="sd">    :type table: numpy.ndarray</span>
-<span class="sd">    :returns: list of numpy.ndarray -- variable **account_stats**, list of temporal NDVI stats.</span>
-<span class="sd">                  </span>
-<span class="sd">                numpy.ndarray -- variable **account_cloud**, pixel number clear on the area.</span>
-<span class="sd">    &quot;&quot;&quot;</span> 
+<div class="viewcode-block" id="Toolbox.clip_raster"><a class="viewcode-back" href="../package.html#Toolbox.Toolbox.clip_raster">[docs]</a>    <span class="k">def</span> <span class="nf">clip_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to clip a raster with a vector. The raster created will be in the same folder than the input raster.</span>
+<span class="sd">        With a prefix *Clip_*.</span>
+<span class="sd">        </span>
+<span class="sd">        :kwargs: **rm_rast** (int) - 0 (by default) or 1. Variable to remove the output raster. 0 to keep and 1 to remove.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: str -- variable **outclip**, output raster clip (path).</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+        
+        <span class="n">rm_rast</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rm_rast&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rm_rast&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">outclip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/Clip_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outclip</span><span class="p">)</span> <span class="ow">or</span> <span class="n">rm_rast</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;Raster clip of &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Command to clip a raster with a shapefile by Gdal</span>
+            <span class="n">process_tocall_clip</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdalwarp&#39;</span><span class="p">,</span> <span class="s1">&#39;-overwrite&#39;</span><span class="p">,</span> <span class="s1">&#39;-dstnodata&#39;</span><span class="p">,</span> <span class="s1">&#39;-10000&#39;</span><span class="p">,</span> <span class="s1">&#39;-q&#39;</span><span class="p">,</span> <span class="s1">&#39;-cutline&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">,</span> <span class="s1">&#39;-crop_to_cutline&#39;</span><span class="p">,</span> <span class="s1">&#39;-of&#39;</span><span class="p">,</span> <span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">outclip</span><span class="p">]</span>
+            <span class="c1"># This is a trick to remove warning with the polygons that touch themselves</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall_clip</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                    
+            <span class="k">except</span> <span class="ne">SystemExit</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dissolve vector cut of the validation !!!&quot;</span><span class="p">)</span>
+                <span class="n">vect_2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_v2.shp&#39;</span>
+                <span class="n">preprocess_tocall</span> <span class="o">=</span> <span class="s1">&#39;ogr2ogr -overwrite &#39;</span> <span class="o">+</span> <span class="n">vect_2</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">vect</span> <span class="o">+</span> <span class="s1">&#39; -dialect sqlite -sql &quot;SELECT ST_Union(geometry), * FROM &#39;</span> <span class="o">+</span> \
+                                        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vect</span><span class="p">)[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span><span class="s1">&#39;&quot;&#39;</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">preprocess_tocall</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="s1">&#39;Raster clip of &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">process_tocall_clip</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdalwarp&#39;</span><span class="p">,</span> <span class="s1">&#39;-overwrite&#39;</span><span class="p">,</span> <span class="s1">&#39;-dstnodata&#39;</span><span class="p">,</span> <span class="s1">&#39;-10000&#39;</span><span class="p">,</span> <span class="s1">&#39;-q&#39;</span><span class="p">,</span> <span class="s1">&#39;-cutline&#39;</span><span class="p">,</span> <span class="n">vect_2</span><span class="p">,</span> <span class="s1">&#39;-crop_to_cutline&#39;</span><span class="p">,</span> <span class="s1">&#39;-of&#39;</span><span class="p">,</span> <span class="s1">&#39;GTiff&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">outclip</span><span class="p">]</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall_clip</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">rem</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">vect_2</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">rem</span><span class="p">)</span>
+                    
+        <span class="k">return</span> <span class="n">outclip</span></div>
+        
+<div class="viewcode-block" id="Toolbox.calc_serie_stats"><a class="viewcode-back" href="../package.html#Toolbox.Toolbox.calc_serie_stats">[docs]</a>    <span class="k">def</span> <span class="nf">calc_serie_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to compute stats on temporal cloud and ndvi spectral table</span>
+<span class="sd">        Ndvi stats : min    max    std    max-min</span>
+<span class="sd">        </span>
+<span class="sd">        :param table: Spectral data, cloud raster and ndvi raster</span>
+<span class="sd">        :type table: numpy.ndarray</span>
+<span class="sd">        :returns: list of numpy.ndarray -- variable **account_stats**, list of temporal NDVI stats.</span>
+<span class="sd">                      </span>
+<span class="sd">                    numpy.ndarray -- variable **account_cloud**, pixel number clear on the area.</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+        
+        <span class="c1"># Compute stats on these indexes</span>
+        <span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;np.min(tab_ndvi_masked, axis=2)&#39;</span><span class="p">,</span> <span class="s1">&#39;np.max(tab_ndvi_masked, axis=2)&#39;</span><span class="p">,</span> <span class="s1">&#39;np.std(tab_ndvi_masked, axis=2)&#39;</span><span class="p">,</span> \
+               <span class="s1">&#39;np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)&#39;</span><span class="p">]</span> <span class="c1"># [Min, Max, Std, Max-Min]     </span>
+        <span class="c1"># For the cloud map </span>
+        <span class="c1"># In the input table the cloud floor is the 5th</span>
+        <span class="n">tab_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="c1"># Stack cloud table (dimension : 12*X*Y to X*Y*12)</span>
+        
+        <span class="n">cloud_true</span> <span class="o">=</span> <span class="p">(</span><span class="n">tab_cloud</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># if tab_cloud = 0 then True else False / Mask cloud</span>
+        <span class="n">account_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cloud_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Account to tab_cloud if != 0 =&gt; Sum of True. (Dimension X*Y)</span>
+        
+        <span class="c1"># For the ndvi stats</span>
+        <span class="c1"># In the input table the ndvi floor is the 7th</span>
+        <span class="n">stack_ndvi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span> <span class="c1"># Like cloud table, stack ndvi table</span>
+    <span class="c1">#     mask_ndvi = np.ma.masked_equal(stack_ndvi, -10000, copy=True) # Mask values -10000</span>
+        <span class="n">mask_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">((</span><span class="n">stack_ndvi</span> <span class="o">==</span> <span class="o">-</span><span class="mi">10000</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">tab_cloud</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">),</span> <span class="n">tab_cloud</span><span class="p">)</span> <span class="c1"># Mask values -10000 and &gt; 0(Not cloud)</span>
+    <span class="c1">#    mask_cloud = (tab_cloud != 0) | (stack_ndvi == -10000)</span>
+        <span class="n">tab_ndvi_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stack_ndvi</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask_cloud</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="c1"># mask_cloud.mask) # Ndvi table with clear values </span>
+        
+        <span class="c1"># Stats on the indexes defined above</span>
+        <span class="n">account_stats</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ind</span><span class="p">:</span>
+            <span class="n">i_stats</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c1"># Compute stats</span>
+            <span class="n">i_stats</span><span class="o">.</span><span class="n">fill_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10000</span> <span class="c1"># Substitute default fill value by -10000 </span>
+            <span class="n">account_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_stats</span><span class="o">.</span><span class="n">filled</span><span class="p">())</span> <span class="c1"># Add stats table with true fill value</span>
+            <span class="c1"># To extract index of the minimum ndvi to find the date</span>
+            <span class="k">if</span> <span class="n">ind</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">i_date</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;np.min&#39;</span><span class="p">,</span><span class="s1">&#39;np.argmin&#39;</span><span class="p">))</span>
+                
+                <span class="c1"># To create a matrix with the date of pxl with a ndvi min </span>
+                <span class="n">tab_date</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">))</span>
+                <span class="c1"># Loop on the temporal sequency</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tab_date</span><span class="p">)):</span>
+                    <span class="n">mask_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_values</span><span class="p">(</span><span class="n">i_date</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+                    <span class="n">i_date</span> <span class="o">=</span> <span class="n">mask_data</span><span class="o">.</span><span class="n">filled</span><span class="p">(</span><span class="n">date</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">tab_date</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">tab_date</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">tab_date</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span><span class="o">.</span><span class="n">toordinal</span><span class="p">())</span> <span class="c1"># Date = day for year =1 day = 1 and month = 1</span>
+                    
+                <span class="n">account_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_date</span><span class="p">)</span> <span class="c1"># Add the date table</span>
+                
+        <span class="k">return</span> <span class="n">account_stats</span><span class="p">,</span> <span class="n">account_cloud</span></div>
     
-    <span class="c"># Compute stats on these indexes</span>
-    <span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;np.min(tab_ndvi_masked, axis=2)&#39;</span><span class="p">,</span> <span class="s">&#39;np.max(tab_ndvi_masked, axis=2)&#39;</span><span class="p">,</span> <span class="s">&#39;np.std(tab_ndvi_masked, axis=2)&#39;</span><span class="p">,</span> \
-           <span class="s">&#39;np.max(tab_ndvi_masked, axis=2)-np.min(tab_ndvi_masked, axis=2)&#39;</span><span class="p">]</span> <span class="c"># [Min, Max, Std, Max-Min]</span>
-    
-    <span class="c"># For the cloud map </span>
-    <span class="c"># In the input table the cloud floor is the 5th</span>
-    <span class="n">tab_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="c"># Stack cloud table (dimension : 12*X*Y to X*Y*12)</span>
-    
-    <span class="n">cloud_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">tab_cloud</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># if tab_cloud != 0 then True else False / Mask cloud</span>
-    <span class="n">account_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cloud_true</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c"># Account to tab_cloud if != 0 =&gt; Sum of True. (Dimension X*Y)</span>
-    
-    <span class="c"># For the ndvi stats</span>
-    <span class="c"># In the input table the ndvi floor is the 7th</span>
-    <span class="n">stack_ndvi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span> <span class="c"># Like cloud table, stack ndvi table</span>
-<span class="c">#     mask_ndvi = np.ma.masked_equal(stack_ndvi, -10000, copy=True) # Mask values -10000</span>
-    <span class="n">mask_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_where</span><span class="p">((</span><span class="n">tab_cloud</span> <span class="o">==</span> <span class="o">-</span><span class="mi">10000</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">tab_cloud</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">tab_cloud</span><span class="p">)</span><span class="c"># Mask values -10000 and &gt; 0(Not cloud)</span>
-    <span class="n">tab_ndvi_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stack_ndvi</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask_cloud</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span> <span class="c"># Ndvi table with clear values </span>
-    <span class="c"># Stats on the indexes defined above</span>
-    <span class="n">account_stats</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ind</span><span class="p">:</span>
-        <span class="n">i_stats</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="c"># Compute stats</span>
-        <span class="n">i_stats</span><span class="o">.</span><span class="n">fill_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10000</span> <span class="c"># Substitute default fill value by -10000 </span>
-        <span class="n">account_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_stats</span><span class="o">.</span><span class="n">filled</span><span class="p">())</span> <span class="c"># Add stats table with true fill value</span>
+<div class="viewcode-block" id="Toolbox.check_proj"><a class="viewcode-back" href="../package.html#Toolbox.Toolbox.check_proj">[docs]</a>    <span class="k">def</span> <span class="nf">check_proj</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to check if raster&#39;s projection is RFG93. </span>
+<span class="sd">        For the moment, PHYMOBAT works with one projection only Lambert 93 EPSG:2154 </span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">account_stats</span><span class="p">,</span> <span class="n">account_cloud</span></div>
+        <span class="c1"># Projection for PHYMOBAT</span>
+        <span class="n">epsg_phymobat</span> <span class="o">=</span> <span class="s1">&#39;2154&#39;</span>
+        <span class="n">proj_phymobat</span> <span class="o">=</span> <span class="s1">&#39;AUTHORITY[&quot;EPSG&quot;,&quot;&#39;</span> <span class="o">+</span> <span class="n">epsg_phymobat</span> <span class="o">+</span> <span class="s1">&#39;&quot;]&#39;</span>
+
+        <span class="n">info_gdal</span> <span class="o">=</span> <span class="s1">&#39;gdalinfo -json &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span>
+        <span class="n">info_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">info_gdal</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="c1"># Check if projection is in Lambert 93</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">proj_phymobat</span> <span class="ow">in</span> <span class="n">info_json</span><span class="p">[</span><span class="s1">&#39;coordinateSystem&#39;</span><span class="p">][</span><span class="s1">&#39;wkt&#39;</span><span class="p">]:</span>
+            <span class="n">output_proj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_L93.tif&#39;</span>
+            <span class="n">reproj</span> <span class="o">=</span> <span class="s1">&#39;gdalwarp -t_srs EPSG:&#39;</span> <span class="o">+</span> <span class="n">epsg_phymobat</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">output_proj</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">reproj</span><span class="p">)</span>
+            <span class="c1"># Remove old file and rename new file like the old file</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">output_proj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span></div></div>
+        
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Code du module</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

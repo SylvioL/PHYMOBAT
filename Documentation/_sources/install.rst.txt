@@ -1,0 +1,107 @@
+Installation
+============
+
+Installation SIG open source
+----------------------------
+
+La chaîne de traitement est construite sous divers outils open-source, comme ``GDAL`` et ``OGR``. La démarche à suivre pour installer ces outils est indiquée ci-dessous uniquement sous Linux.
+
+- Ajouter le dépôt ubuntugis-unstable
+
+.. code-block:: bash
+	
+	$ sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+	$ sudo apt-get update
+
+- Installer GDAL et OTB
+
+.. code-block:: bash
+	
+	$ sudo apt-get install gdal-bin otb-bin
+
+Pour vérifier que GDAL est bien installé, taper :
+
+.. code-block:: bash
+
+	$ gdalinfo
+
+Il est bien installé, si vous avez l'aide de gdalinfo qui s'affiche (Idem pour OGR) :
+
+.. code-block:: bash
+
+	Usage: gdalinfo [--help-general] [-mm] [-stats] [-hist] [-nogcp] [-nomd]
+                [-norat] [-noct] [-nofl] [-checksum] [-proj4]
+                [-listmdd] [-mdd domain|`all`]*
+                [-sd subdataset] datasetname
+
+	FAILURE: No datasource specified.
+
+Vérifier que le package CURL est installé, sur certaines versions de Ubuntu il ne l'est pas :
+
+ .. code-block:: bash
+
+	$ apt-cache search curl
+
+	i A curl                                           - outil en ligne de commande pour transférer des données avec une syntaxe URL
+	p   curl:i386                                      - outil en ligne de commande pour transférer des données avec une syntaxe URL                
+	p   curlftpfs                                      - Système de fichiers pour accéder à des hôtes FTP, basé sur FUSE et cURL 
+
+Si il ne l'est pas : 
+
+ .. code-block:: bash 
+
+	$ sudo apt-get install curl
+   
+Modules python
+--------------
+
+La version de Python utilisée est 2.7. Le code n'a pas encore été testé sur Python 3.
+
+Installation des modules python
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Installer les deux modules Python ``gdal``, ``scikit-learn``, ``Shapely``, ``numpy``, ``lxml`` et ``pyQt4`` depuis le dépôt du système de la façon suivante :
+
+.. code-block:: bash
+
+	$ sudo apt-­get install python­-gdal python­-sklearn python-shapely python-numpy python-lxml pyqt4-dev-tools 
+
+Pour installer le module Python externes ``rasterstats`` version 0.3.2, il faut dans un premier temps télécharger ``pip`` sur https://pip.pypa.io/en/stable/installing/#install-pip et l'installer en tapant :
+
+.. code-block:: bash
+
+	$ sudo python get-pip.py
+
+Ensuite, télécharger le module ``rasterstats`` sur https://pypi.python.org.
+Si vous avez téléchargé les **fichiers compréssés (.zip, .tar.gz, ...)**, entrer dans le dossier du module et installer le module avec la commande :
+
+.. code-block:: bash
+
+	$ sudo python setup.py install
+
+.. note:: Si vous avez téléchargé les **fichiers compréssés wheel (.whl)**, installer le avec cette commande : sudo pip install xxxxxx-0.00.0-py2-none-any.whl
+
+Pour vérifier si les modules sont bien installé ou dèjà installé, il suffit de taper dans la console Python (Par exemple pour le module gdal):
+
+>>> from osgeo import gdal
+>>> 
+
+Si ils ne sont pas encore installé vous aurez ces réponses. Dans ce cas il faudra les installer (voir section ci-dessus) :
+
+>>> from osgeo import gdal
+ImportError: cannot import name gdal
+
+Ou
+
+>>> from osgeo import gdal
+ImportError: No module named gdal
+
+
+
+
+
+
+
+
+
+

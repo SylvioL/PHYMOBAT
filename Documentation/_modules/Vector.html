@@ -2,82 +2,87 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Vector &mdash; PHYMOBAT 1 documentation</title>
+    <title>Vector &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" /> 
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Code du module</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <h1>Source code for Vector</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># This file is part of PHYMOBAT 1.1.</span>
-<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is free software: you can redistribute it and/or modify</span>
-<span class="c"># it under the terms of the GNU General Public License as published by</span>
-<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c"># (at your option) any later version.</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is distributed in the hope that it will be useful,</span>
-<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c"># GNU General Public License for more details.</span>
-<span class="c"># </span>
-<span class="c"># You should have received a copy of the GNU General Public License</span>
-<span class="c"># along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+  <h1>Code source de Vector</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PHYMOBAT 1.2.</span>
+<span class="c1"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 1.2 is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 1.2 is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with PHYMOBAT 1.2.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="k">try</span> <span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">ogr</span>
+    <span class="kn">import</span> <span class="nn">ogr</span><span class="o">,</span> <span class="nn">gdal</span>
 <span class="k">except</span> <span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">ogr</span>
-<span class="kn">from</span> <span class="nn">rasterstats</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="o">*</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="k">import</span> <span class="n">ogr</span><span class="p">,</span> <span class="n">gdal</span>
+<span class="kn">from</span> <span class="nn">rasterstats</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">RasterSat_by_date</span> <span class="k">import</span> <span class="n">RasterSat_by_date</span>
 
 <div class="viewcode-block" id="Vector"><a class="viewcode-back" href="../package.html#Vector.Vector">[docs]</a><span class="k">class</span> <span class="nc">Vector</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;    </span>
 <span class="sd">    Vector class to extract a area, vector data and zonal statistic (``rasterstats 0.3.2 package``)</span>
 <span class="sd">    </span>
 <span class="sd">    :param vector_used: Input/Output shapefile to clip (path)</span>
@@ -88,25 +93,36 @@
 <span class="sd">    :type data_source: ogr pointer</span>
 <span class="sd">    :param stats_dict: ``Rasterstats`` results</span>
 <span class="sd">    :type stats_dict: dict</span>
+<span class="sd">    :param raster_ds: Raster information for a probably rasterization</span>
+<span class="sd">    :type raster_ds: gdal pointer</span>
+<span class="sd">    :param remove_shp: Remove shapefile or not. 0 : don&#39;t remove, 1 : remove</span>
+<span class="sd">    :type remove_shp: int</span>
+<span class="sd">    :opt: **Remove** (int) - For the remove_shp variable</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
       
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">used</span><span class="p">,</span> <span class="n">cut</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">used</span><span class="p">,</span> <span class="n">cut</span><span class="p">,</span> <span class="o">**</span><span class="n">opt</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create a new &#39;Vector&#39; instance</span>
 <span class="sd">               </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vector_cut</span> <span class="o">=</span> <span class="n">cut</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span> <span class="o">=</span> <span class="n">used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_shp</span> <span class="o">=</span> <span class="n">opt</span><span class="p">[</span><span class="s1">&#39;Remove&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">opt</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Remove&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">clip_vector</span><span class="p">()</span>
         
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">vector_data</span><span class="p">()</span>
             
-        <span class="c"># List of field name</span>
+        <span class="c1"># List of field name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">field_names</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span><span class="o">.</span><span class="n">GetFieldDefn</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span> \
                        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span><span class="o">.</span><span class="n">GetLayerDefn</span><span class="p">()</span><span class="o">.</span><span class="n">GetFieldCount</span><span class="p">())]</span>
             
         <span class="bp">self</span><span class="o">.</span><span class="n">stats_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raster_ds</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        
     
 <div class="viewcode-block" id="Vector.clip_vector"><a class="viewcode-back" href="../package.html#Vector.Vector.clip_vector">[docs]</a>    <span class="k">def</span> <span class="nf">clip_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -114,42 +130,42 @@
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>    
         
-        <span class="n">outclip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/Clip_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outclip</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&#39;Clip of &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="c"># Command to clip a vector with a shapefile by OGR</span>
-            <span class="n">process_tocall_clip</span> <span class="o">=</span>  <span class="p">[</span><span class="s">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="n">outclip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">,</span> <span class="s">&#39;-clipsrc&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_cut</span><span class="p">]</span>
+        <span class="n">outclip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/Clip_&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">outclip</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_shp</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;Clip of &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Command to clip a vector with a shapefile by OGR</span>
+            <span class="n">process_tocall_clip</span> <span class="o">=</span>  <span class="p">[</span><span class="s1">&#39;ogr2ogr&#39;</span><span class="p">,</span> <span class="s1">&#39;-overwrite&#39;</span><span class="p">,</span> <span class="s1">&#39;-skipfailures&#39;</span><span class="p">,</span> <span class="n">outclip</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">,</span> <span class="s1">&#39;-clipsrc&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_cut</span><span class="p">]</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall_clip</span><span class="p">)</span>
         
-        <span class="c"># Replace input filename by output filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span> <span class="o">=</span> <span class="n">outclip</span>
-        </div>
+        <span class="c1"># Replace input filename by output filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span> <span class="o">=</span> <span class="n">outclip</span></div>
+        
 <div class="viewcode-block" id="Vector.vector_data"><a class="viewcode-back" href="../package.html#Vector.Vector.vector_data">[docs]</a>    <span class="k">def</span> <span class="nf">vector_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to extract vector layer information </span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>  
         
-        <span class="c"># import ogr variable</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s">&#39;ESRI Shapefile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># import ogr variable</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="o">=</span> <span class="n">ogr</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;ESRI Shapefile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;Could not open file&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Could not open file&#39;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Shapefile opening : &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span><span class="o">.</span><span class="n">GetName</span><span class="p">())</span>
-</div>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Shapefile opening : &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span><span class="o">.</span><span class="n">GetName</span><span class="p">())</span></div>
+
 <div class="viewcode-block" id="Vector.close_data"><a class="viewcode-back" href="../package.html#Vector.Vector.close_data">[docs]</a>    <span class="k">def</span> <span class="nf">close_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to remove allocate memory </span>
 <span class="sd">                </span>
 <span class="sd">        &quot;&quot;&quot;</span>        
         
-        <span class="c"># Close data sources</span>
+        <span class="c1"># Close data sources</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">Destroy</span><span class="p">()</span>
         
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Shapefile closing : &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span><span class="o">.</span><span class="n">GetName</span><span class="p">())</span>
-    </div>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Shapefile closing : &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">()</span><span class="o">.</span><span class="n">GetName</span><span class="p">())</span></div>
+    
 <div class="viewcode-block" id="Vector.zonal_stats"><a class="viewcode-back" href="../package.html#Vector.Vector.zonal_stats">[docs]</a>    <span class="k">def</span> <span class="nf">zonal_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">inraster</span><span class="p">,</span> <span class="n">band</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to compute the average in every polygons for a raster</span>
@@ -162,12 +178,11 @@
 <span class="sd">                **nb_img** (int) - Number images launched with zonal stats </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="n">ranking</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;rank&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;rank&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="n">nb_img</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;nb_img&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;nb_img&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="n">ranking</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;rank&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rank&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">nb_img</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nb_img&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nb_img&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
 
-        
-        <span class="k">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; stats on &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">inraster</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">stats</span> <span class="o">=</span> <span class="n">raster_stats</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">inraster</span><span class="p">),</span>  <span class="n">stats</span> <span class="o">=</span><span class="p">[</span><span class="s">&#39;mean&#39;</span><span class="p">],</span> <span class="n">band_num</span><span class="o">=</span><span class="n">band</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Compute &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; stats on &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">inraster</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">raster_stats</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">inraster</span><span class="p">),</span>  <span class="n">stats</span> <span class="o">=</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span> <span class="n">band_num</span><span class="o">=</span><span class="n">band</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">)):</span>
             <span class="n">temp</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span> <span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">nb_img</span><span class="p">)</span>
@@ -179,49 +194,124 @@
             <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">ranking</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stats_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;End of stats on &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">inraster</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Vector.zonal_stats_pp"><a class="viewcode-back" href="../package.html#Vector.Vector.zonal_stats_pp">[docs]</a>    <span class="k">def</span> <span class="nf">zonal_stats_pp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inraster</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A zonal statistics ++ to dertermine pxl percent in every polygon</span>
+<span class="sd">        </span>
+<span class="sd">        :param inraster: Input image path</span>
+<span class="sd">        :type inraster: str </span>
+<span class="sd">        :returns: dict -- **p_stats** : dictionnary with pxl percent in every polygon. Mainly &#39;Maj_count&#39; (Majority Value) and &#39;Maj_count_perc&#39; (Majority Percent)</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">p_stats</span> <span class="o">=</span> <span class="n">raster_stats</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">inraster</span><span class="p">),</span> <span class="n">stats</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">],</span> <span class="n">copy_properties</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p_stats</span><span class="p">)):</span>
+            <span class="n">percent</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span> <span class="ow">and</span> <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;count&#39;</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span> <span class="o">&gt;</span> <span class="n">percent</span><span class="p">:</span>
+                    <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Maj_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
+                    <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Maj_count_perc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;count&#39;</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span>
+                    <span class="n">percent</span> <span class="o">=</span> <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Maj_count_perc&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="s1">&#39;Maj_count&#39;</span> <span class="ow">in</span> <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="s1">&#39;Maj_count_perc&#39;</span> <span class="ow">in</span> <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Maj_count&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+                <span class="n">p_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;Maj_count_perc&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">0</span>
+        
+        <span class="k">return</span> <span class="n">p_stats</span></div>
+                
+<div class="viewcode-block" id="Vector.layer_rasterization"><a class="viewcode-back" href="../package.html#Vector.Vector.layer_rasterization">[docs]</a>    <span class="k">def</span> <span class="nf">layer_rasterization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raster_head</span><span class="p">,</span> <span class="n">attribute_r</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to rasterize a vector. Define resolution, projection of the output raster with a raster head.</span>
+<span class="sd">        And complete the gdal pointer empty properties with the layer&#39;s information of the vector and a defined field.</span>
+<span class="sd">        If a raster has several band, in option you can choice if you want one band or more. </span>
+<span class="sd">        </span>
+<span class="sd">        :param raster_head: Raster path that will look like the final raster of the rasterization</span>
+<span class="sd">        :type raster_head: str</span>
+<span class="sd">        :param attribute_r: Field name of the shapefile that contains class names</span>
+<span class="sd">        :type attribute_r: str</span>
+<span class="sd">        :kwargs: **choice_nb_b** (int) - Output image number of band. If you choice 1, take first band. If you choice 2, take two first band etc... </span>
+<span class="sd">        :returns: str -- **valid_raster** : output raster path from the rasterization</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># Export a example of a raster out information</span>
+        <span class="c1"># for the validation shapefile</span>
+        <span class="n">example_raster</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># Call the raster class</span>
+        <span class="n">example_raster</span><span class="o">.</span><span class="n">choice_nb_b</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;choice_nb_b&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;choice_nb_b&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">raster_info</span> <span class="o">=</span> <span class="n">example_raster</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="n">raster_head</span><span class="p">)</span><span class="c1"># Extract data info</span>
+        
+        <span class="c1"># Define the validation&#39;s vector</span>
+        <span class="n">valid_raster</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_used</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;TIF&#39;</span> <span class="c1"># Name of the output raster</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">valid_raster</span><span class="p">)):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">valid_raster</span><span class="p">)</span>
             
-        <span class="k">print</span><span class="p">(</span><span class="s">&#39;End of stats on &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">inraster</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
-    
-</pre></div></div></div>
+        <span class="c1"># Create the empty raster with the same properties</span>
+        <span class="c1"># Condition for the rasters with several bands</span>
+        <span class="k">if</span> <span class="n">raster_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">RasterCount</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">data_raster</span> <span class="o">=</span> <span class="n">raster_info</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_raster</span> <span class="o">=</span> <span class="n">raster_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">info_out</span> <span class="o">=</span> <span class="n">example_raster</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">valid_raster</span><span class="p">,</span> <span class="n">data_raster</span><span class="p">,</span> <span class="n">raster_info</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raster_ds</span> <span class="o">=</span> <span class="n">example_raster</span><span class="o">.</span><span class="n">out_ds</span>
+        
+        <span class="c1"># Virtual rasterize the vector </span>
+        <span class="n">pt_rast</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">RasterizeLayer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raster_ds</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">GetLayer</span><span class="p">(),</span> \
+                                      <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ATTRIBUTE=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">attribute_r</span><span class="p">)])</span>
+        
+        <span class="k">if</span> <span class="n">pt_rast</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error rasterizing layer: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">pt_rast</span><span class="p">)</span>
+        
+        <span class="n">new_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_ds</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">raster_ds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Complete the raster creation</span>
+        <span class="n">example_raster</span><span class="o">.</span><span class="n">complete_raster</span><span class="p">(</span><span class="n">info_out</span><span class="p">,</span> <span class="n">new_data</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">valid_raster</span></div></div>
+        
+        
+        
+        
+
+</pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Code du module</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

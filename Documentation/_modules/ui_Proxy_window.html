@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ui_Proxy_window &#8212; documentation PHYMOBAT 3.0</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '3.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Code du module</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Code source de ui_Proxy_window</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1"># Form implementation generated from reading ui file &#39;Proxy_window.ui&#39;</span>
+<span class="c1">#</span>
+<span class="c1"># Created: Thu Mar  9 14:54:35 2017</span>
+<span class="c1">#      by: PyQt4 UI code generator 4.10.4</span>
+<span class="c1">#</span>
+<span class="c1"># WARNING! All changes made in this file will be lost!</span>
+
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="k">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_fromUtf8</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QString</span><span class="o">.</span><span class="n">fromUtf8</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_fromUtf8</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_encoding</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span>
+    <span class="k">def</span> <span class="nf">_translate</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">disambig</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">disambig</span><span class="p">,</span> <span class="n">_encoding</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_translate</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">disambig</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">disambig</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Ui_Proxy_window"><a class="viewcode-back" href="../API.html#ui_Proxy_window.Ui_Proxy_window">[docs]</a><span class="k">class</span> <span class="nc">Ui_Proxy_window</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to display “Proxy window”. In this windows, there is 3 lines edit to fill (proxy server, login and password).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Proxy_window</span><span class="p">):</span>
+        <span class="n">Proxy_window</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;Proxy_window&quot;</span><span class="p">))</span>
+        <span class="n">Proxy_window</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">344</span><span class="p">,</span> <span class="mi">144</span><span class="p">)</span>
+        <span class="n">Proxy_window</span><span class="o">.</span><span class="n">setContextMenuPolicy</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">DefaultContextMenu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;gridLayout&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;label_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_proxy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span><span class="o">.</span><span class="n">setInputMask</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span><span class="o">.</span><span class="n">setFrame</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;lineEdit_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_login_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_login_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;label_login_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_login_proxy</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_login_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_login_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;lineEdit_login_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_login_proxy</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_password_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_password_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;label_password_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_password_proxy</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_password_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_password_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;lineEdit_password_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_password_proxy</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox_proxy</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox_proxy</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Apply</span><span class="o">|</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Close</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox_proxy</span><span class="o">.</span><span class="n">setCenterButtons</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonBox_proxy</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s2">&quot;buttonBox_proxy&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridLayout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">buttonBox_proxy</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">Proxy_window</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Proxy_window</span><span class="p">):</span>
+        <span class="n">Proxy_window</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Proxy_window&quot;</span><span class="p">,</span> <span class="s2">&quot;Proxy&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_proxy</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Proxy_window&quot;</span><span class="p">,</span> <span class="s2">&quot;Proxy :&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lineEdit_proxy</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Proxy_window&quot;</span><span class="p">,</span> <span class="s2">&quot;http://proxy.truc.fr:8050&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_login_proxy</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Proxy_window&quot;</span><span class="p">,</span> <span class="s2">&quot;Login :&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_password_proxy</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">_translate</span><span class="p">(</span><span class="s2">&quot;Proxy_window&quot;</span><span class="p">,</span> <span class="s2">&quot;Password :&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Index général"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Index des modules Python"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Code du module</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
+    </div>
+  </body>
+</html>

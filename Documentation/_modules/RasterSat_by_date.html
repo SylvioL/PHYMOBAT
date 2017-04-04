@@ -2,79 +2,81 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>RasterSat_by_date &mdash; PHYMOBAT 1 documentation</title>
+    <title>RasterSat_by_date &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" /> 
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Code du module</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
-  <h1>Source code for RasterSat_by_date</h1><div class="highlight"><pre>
-<span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
-<span class="c">#</span>
-<span class="c"># This file is part of PHYMOBAT 1.1.</span>
-<span class="c"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is free software: you can redistribute it and/or modify</span>
-<span class="c"># it under the terms of the GNU General Public License as published by</span>
-<span class="c"># the Free Software Foundation, either version 3 of the License, or</span>
-<span class="c"># (at your option) any later version.</span>
-<span class="c"># </span>
-<span class="c"># PHYMOBAT 1.1 is distributed in the hope that it will be useful,</span>
-<span class="c"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c"># GNU General Public License for more details.</span>
-<span class="c"># </span>
-<span class="c"># You should have received a copy of the GNU General Public License</span>
-<span class="c"># along with PHYMOBAT 1.1.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+  <h1>Code source de RasterSat_by_date</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of PHYMOBAT 1.2.</span>
+<span class="c1"># Copyright 2016 Sylvio Laventure (IRSTEA - UMR TETIS)</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 1.2 is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1"># </span>
+<span class="c1"># PHYMOBAT 1.2 is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1"># </span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with PHYMOBAT 1.2.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">math</span><span class="o">,</span> <span class="nn">subprocess</span>
 <span class="k">try</span> <span class="p">:</span>
     <span class="kn">import</span> <span class="nn">gdal</span>
 <span class="k">except</span> <span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">gdal</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="k">import</span> <span class="n">gdal</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <div class="viewcode-block" id="RasterSat_by_date"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date">[docs]</a><span class="k">class</span> <span class="nc">RasterSat_by_date</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -89,6 +91,8 @@
 <span class="sd">            This variable is modified in the function :func:`mosaic_by_date()`. </span>
 <span class="sd">            To append mosaic image path, mosaic cloud image path, cloud pixel value table, mosaic ndvi image path and ndvi pixel value table.</span>
 <span class="sd">    :type one_date: list of str</span>
+<span class="sd">    :param choice_nb_b: A option to choice output image number of band :func:`layer_rasterization` in Vector&#39;s class. If this option is 0, it take input band. By default 0.</span>
+<span class="sd">    :type choice_nb_b: int</span>
 <span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>  
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_archive</span><span class="p">,</span> <span class="n">big_folder</span><span class="p">,</span> <span class="n">one_date</span><span class="p">):</span>
@@ -99,12 +103,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span> <span class="o">=</span> <span class="n">class_archive</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">=</span> <span class="n">big_folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span> <span class="o">=</span> <span class="n">one_date</span>        
-        <span class="c"># Verify list of list of str</span>
+        <span class="c1"># Verify list of list of str</span>
         <span class="k">if</span> <span class="n">one_date</span> <span class="o">==</span> <span class="p">[]:</span>
-            <span class="k">print</span> <span class="s">&quot;Enter dates to mosaic images like [[str(year), str(month), str(day)], [str(year), str(month), str(day)], ...]&quot;</span>
+            <span class="nb">print</span> <span class="s2">&quot;Enter dates to mosaic images like [[str(year), str(month), str(day)], [str(year), str(month), str(day)], ...]&quot;</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span> <span class="o">=</span> <span class="n">one_date</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choice_nb_b</span> <span class="o">=</span> <span class="mi">0</span>
            
 <div class="viewcode-block" id="RasterSat_by_date.group_by_date"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.group_by_date">[docs]</a>    <span class="k">def</span> <span class="nf">group_by_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_uni</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -116,16 +123,16 @@
 <span class="sd">        :returns: list of str -- variable **group** = [year, month, day, multispectral image path, cloud image path]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
          
-        <span class="c"># Group of images with the same date</span>
+        <span class="c1"># Group of images with the same date</span>
         <span class="n">group</span> <span class="o">=</span> <span class="p">[]</span>
          
-        <span class="c"># Take images with the same date</span>
+        <span class="c1"># Take images with the same date</span>
         <span class="k">for</span> <span class="n">d_dup</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">list_img</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">d_dup</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">d_uni</span><span class="p">:</span>
                 <span class="n">group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_dup</span><span class="p">)</span>
          
-        <span class="k">return</span> <span class="n">group</span>
-    </div>
+        <span class="k">return</span> <span class="n">group</span></div>
+    
 <div class="viewcode-block" id="RasterSat_by_date.vrt_translate_gdal"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.vrt_translate_gdal">[docs]</a>    <span class="k">def</span> <span class="nf">vrt_translate_gdal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vrt_translate</span><span class="p">,</span> <span class="n">src_data</span><span class="p">,</span> <span class="n">dst_data</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to launch gdal tools in command line. With ``gdalbuildvrt`` and ``gdal_translate``.</span>
@@ -142,84 +149,84 @@
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dst_data</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dst_data</span><span class="p">)</span>
         
-        <span class="c"># Select process</span>
-        <span class="k">if</span> <span class="n">vrt_translate</span> <span class="o">==</span> <span class="s">&#39;vrt&#39;</span><span class="p">:</span>
-            <span class="c"># Verify input data</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">src_data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;VRT file ! The data source should be composed of several data. A list minimal of 2 dimensions&#39;</span>
+        <span class="c1"># Select process</span>
+        <span class="k">if</span> <span class="n">vrt_translate</span> <span class="o">==</span> <span class="s1">&#39;vrt&#39;</span><span class="p">:</span>
+            <span class="c1"># Verify input data</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">src_data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">src_data</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">list</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s1">&#39;VRT file ! The data source should be composed of several data. A list minimal of 2 dimensions&#39;</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                 
-            <span class="k">print</span> <span class="s">&#39;Build VRT file&#39;</span>
+            <span class="nb">print</span> <span class="s1">&#39;Build VRT file&#39;</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dst_data</span><span class="p">):</span>
-                <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;gdalbuildvrt&#39;</span><span class="p">,</span> <span class="s">&#39;-srcnodata&#39;</span><span class="p">,</span> <span class="s">&#39;-10000&#39;</span><span class="p">,</span> <span class="n">dst_data</span><span class="p">]</span>
+                <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdalbuildvrt&#39;</span><span class="p">,</span> <span class="s1">&#39;-srcnodata&#39;</span><span class="p">,</span> <span class="s1">&#39;-10000&#39;</span><span class="p">,</span> <span class="n">dst_data</span><span class="p">]</span>
                 
-            <span class="c"># Copy rasters</span>
+            <span class="c1"># Copy rasters</span>
             <span class="k">for</span> <span class="n">cp_image</span> <span class="ow">in</span> <span class="n">src_data</span><span class="p">:</span>
                 <span class="n">process_tocall</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp_image</span><span class="p">)</span>
                 
-        <span class="k">elif</span> <span class="n">vrt_translate</span> <span class="o">==</span> <span class="s">&#39;translate&#39;</span><span class="p">:</span>
-            <span class="c"># Verify input data</span>
+        <span class="k">elif</span> <span class="n">vrt_translate</span> <span class="o">==</span> <span class="s1">&#39;translate&#39;</span><span class="p">:</span>
+            <span class="c1"># Verify input data</span>
             <span class="k">try</span> <span class="p">:</span>
                 <span class="n">src_data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">src_data</span><span class="p">)</span>
-            <span class="k">except</span><span class="p">:</span><span class="c"># if type(src_data) is not str:</span>
-                <span class="k">print</span> <span class="s">&#39;Geotiff file ! The data source should be composed of path file. A character string !&#39;</span>
+            <span class="k">except</span><span class="p">:</span><span class="c1"># if type(src_data) is not str:</span>
+                <span class="nb">print</span> <span class="s1">&#39;Geotiff file ! The data source should be composed of path file. A character string !&#39;</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                 
-            <span class="k">print</span> <span class="s">&#39;Build Geotiff file&#39;</span>
+            <span class="nb">print</span> <span class="s1">&#39;Build Geotiff file&#39;</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dst_data</span><span class="p">):</span>
-                <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;gdal_translate&#39;</span><span class="p">,</span> <span class="s">&#39;-a_nodata&#39;</span><span class="p">,</span> <span class="s">&#39;-10000&#39;</span><span class="p">,</span> <span class="n">src_data</span><span class="p">,</span> <span class="n">dst_data</span><span class="p">]</span>
+                <span class="n">process_tocall</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;gdal_translate&#39;</span><span class="p">,</span> <span class="s1">&#39;-a_nodata&#39;</span><span class="p">,</span> <span class="s1">&#39;-10000&#39;</span><span class="p">,</span> <span class="n">src_data</span><span class="p">,</span> <span class="n">dst_data</span><span class="p">]</span>
             
-        <span class="c"># Launch vrt process</span>
-        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span>
-        </div>
+        <span class="c1"># Launch vrt process</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">process_tocall</span><span class="p">)</span></div>
+        
 <div class="viewcode-block" id="RasterSat_by_date.mosaic_by_date"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.mosaic_by_date">[docs]</a>    <span class="k">def</span> <span class="nf">mosaic_by_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to merge images of the same date in a image group :func:`group_by_date`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Create the processing images folder if not exists</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span><span class="p">)</span>
+        <span class="c1"># Create the processing images folder if not exists</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span><span class="p">)</span>
             
-        <span class="c"># Matrix multi images for a single date </span>
-        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="p">)</span> <span class="c"># Every images [year, month, day, multispectral image, cloud image]</span>
-        <span class="n">group_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">group</span><span class="p">))</span> <span class="c"># Transpose matrix to extract path of images</span>
+        <span class="c1"># Matrix multi images for a single date </span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="p">)</span> <span class="c1"># Every images [year, month, day, multispectral image, cloud image]</span>
+        <span class="n">group_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">group</span><span class="p">))</span> <span class="c1"># Transpose matrix to extract path of images</span>
         
-        <span class="c"># Create a folder with images year if it doesn&#39;t exist</span>
-        <span class="n">index_repertory_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">)</span>
+        <span class="c1"># Create a folder with images year if it doesn&#39;t exist</span>
+        <span class="n">index_repertory_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_captor</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">)</span>
         
-        <span class="n">index_repertory_img</span> <span class="o">=</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span>
-        <span class="c"># Create a folder with images date if it doesn&#39;t exist</span>
+        <span class="n">index_repertory_img</span> <span class="o">=</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+        <span class="c1"># Create a folder with images date if it doesn&#39;t exist</span>
         <span class="k">for</span> <span class="n">d_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="p">:</span>
             <span class="n">index_repertory_img</span> <span class="o">=</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="n">d_</span>
         
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="p">)</span>
         
-        <span class="c"># Build VRT file with data images required</span>
-        <span class="n">vrt_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> \
-                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.VRT&#39;</span> <span class="c"># Multispectral VRT outfile</span>
+        <span class="c1"># Build VRT file with data images required</span>
+        <span class="n">vrt_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> \
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.VRT&#39;</span> <span class="c1"># Multispectral VRT outfile</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">vrt_out</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s">&#39;vrt&#39;</span><span class="p">,</span> <span class="n">group_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">vrt_out</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s1">&#39;vrt&#39;</span><span class="p">,</span> <span class="n">group_</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">vrt_out</span><span class="p">)</span>
         
-        <span class="n">vrtcloud_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> \
-                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span> <span class="o">+</span> <span class="n">group_</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">7</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.VRT&#39;</span> <span class="c"># Cloud TIF outfile</span>
+        <span class="n">vrtcloud_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_big_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">index_repertory_img</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> \
+                    <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_captor</span> <span class="o">+</span> <span class="n">index_repertory_img</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">group_</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">7</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.VRT&#39;</span> <span class="c1"># Cloud TIF outfile</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">vrtcloud_out</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s">&#39;vrt&#39;</span><span class="p">,</span> <span class="n">group_</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">vrtcloud_out</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s1">&#39;vrt&#39;</span><span class="p">,</span> <span class="n">group_</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">vrtcloud_out</span><span class="p">)</span>
         
-        <span class="c"># Build Geotiff file with data images required</span>
-        <span class="n">gtif_out</span> <span class="o">=</span> <span class="n">vrt_out</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.TIF&#39;</span> <span class="c"># Multispectral VRT outfile</span>
+        <span class="c1"># Build Geotiff file with data images required</span>
+        <span class="n">gtif_out</span> <span class="o">=</span> <span class="n">vrt_out</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.TIF&#39;</span> <span class="c1"># Multispectral VRT outfile</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">gtif_out</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s">&#39;translate&#39;</span><span class="p">,</span> <span class="n">vrt_out</span><span class="p">,</span> <span class="n">gtif_out</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s1">&#39;translate&#39;</span><span class="p">,</span> <span class="n">vrt_out</span><span class="p">,</span> <span class="n">gtif_out</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gtif_out</span><span class="p">)</span>
         
-        <span class="n">gtifcloud_out</span> <span class="o">=</span> <span class="n">vrtcloud_out</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.TIF&#39;</span> <span class="c"># Cloud TIF outfile</span>
+        <span class="n">gtifcloud_out</span> <span class="o">=</span> <span class="n">vrtcloud_out</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.TIF&#39;</span> <span class="c1"># Cloud TIF outfile</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">gtifcloud_out</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s">&#39;translate&#39;</span><span class="p">,</span> <span class="n">vrtcloud_out</span><span class="p">,</span> <span class="n">gtifcloud_out</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gtifcloud_out</span><span class="p">)</span>
-    </div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vrt_translate_gdal</span><span class="p">(</span><span class="s1">&#39;translate&#39;</span><span class="p">,</span> <span class="n">vrtcloud_out</span><span class="p">,</span> <span class="n">gtifcloud_out</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gtifcloud_out</span><span class="p">)</span></div>
+    
 <div class="viewcode-block" id="RasterSat_by_date.raster_data"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.raster_data">[docs]</a>    <span class="k">def</span> <span class="nf">raster_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to extract raster information.</span>
@@ -228,46 +235,49 @@
 <span class="sd">        :param img: Raster path</span>
 <span class="sd">        :type img: str</span>
 
-<span class="sd">        :returns: matrix -- variable **data**, Pixel value matrix of a raster.</span>
+<span class="sd">        :returns: numpy.array -- variable **data**, Pixel value matrix of a raster.</span>
 <span class="sd">                  </span>
 <span class="sd">                  gdal pointer -- variable **_in_ds**, Raster information.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Load Gdal&#39;s drivers</span>
+        <span class="c1"># Load Gdal&#39;s drivers</span>
         <span class="n">gdal</span><span class="o">.</span><span class="n">AllRegister</span><span class="p">()</span>
         
-        <span class="c"># Loading input raster</span>
-        <span class="k">print</span> <span class="s">&#39;Loading input raster :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">img</span><span class="p">))[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+        <span class="c1"># Loading input raster</span>
+        <span class="nb">print</span> <span class="s1">&#39;Loading input raster :&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">img</span><span class="p">))[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
         <span class="n">in_ds</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GA_ReadOnly</span><span class="p">)</span>
         
-        <span class="c"># if it doesn&#39;t exist</span>
-        <span class="k">if</span> <span class="n">in_ds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;could not open &#39;</span><span class="p">)</span>
+        <span class="c1"># if it doesn&#39;t exist</span>
+        <span class="k">if</span> <span class="n">in_ds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;could not open &#39;</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         
-        <span class="c"># Information on the input raster    </span>
-        <span class="n">nbband</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterCount</span> <span class="c"># Spectral band number</span>
-        <span class="n">rows</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterYSize</span> <span class="c"># Rows number</span>
-        <span class="n">cols</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterXSize</span> <span class="c"># Columns number</span>
+        <span class="c1"># Information on the input raster </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_nb_b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">nbband</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterCount</span> <span class="c1"># Spectral band number</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nbband</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_nb_b</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterYSize</span> <span class="c1"># Rows number</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterXSize</span> <span class="c1"># Columns number</span>
         
-        <span class="c"># Table&#39;s declaration </span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span> <span class="c">#np.float32([[0]*cols for i in xrange(rows)])</span>
+        <span class="c1"># Table&#39;s declaration </span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># np.float32([[0]*cols for i in xrange(rows)])</span>
         <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbband</span><span class="p">):</span>
             
-            <span class="n">canal</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">band</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># Select a band</span>
+            <span class="n">canal</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">band</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Select a band</span>
             <span class="k">if</span> <span class="n">nbband</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">canal</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="c"># Assign pixel values at the data</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">canal</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="c1"># Assign pixel values at the data</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">canal</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-<span class="c">#             print(&#39;Copie des pixels du raster ! Bande :&#39;,  (band + 1))</span>
+<span class="c1">#             print(&#39;Copie des pixels du raster ! Bande :&#39;,  (band + 1))</span>
         
-        <span class="c">###################################</span>
-        <span class="c"># Close input raster</span>
+        <span class="c1">###################################</span>
+        <span class="c1"># Close input raster</span>
         <span class="n">_in_ds</span> <span class="o">=</span> <span class="n">in_ds</span>
-        <span class="n">in_ds</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">in_ds</span> <span class="o">=</span> <span class="kc">None</span>
         
-        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">_in_ds</span>
-    </div>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">_in_ds</span></div>
+    
 <div class="viewcode-block" id="RasterSat_by_date.pourc_cloud"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.pourc_cloud">[docs]</a>    <span class="k">def</span> <span class="nf">pourc_cloud</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_spec</span><span class="p">,</span> <span class="n">img_cloud</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return clear pixel percentage on the image **img_spec** because of a cloud image **img_cloud**.</span>
@@ -287,169 +297,204 @@
 <span class="sd">        98</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Extract raster&#39;s information</span>
+        <span class="c1"># Extract raster&#39;s information</span>
         <span class="n">data_spec</span><span class="p">,</span> <span class="n">info_spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="n">img_spec</span><span class="p">)</span>
         <span class="n">data_cloud</span><span class="p">,</span> <span class="n">info_cloud</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="n">img_cloud</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_cloud</span><span class="p">)</span> <span class="c"># Add cloud pixel value table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_cloud</span><span class="p">)</span> <span class="c1"># Add cloud pixel value table</span>
         
-        <span class="c"># Extent of the images</span>
-        <span class="n">mask_spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">],</span> <span class="n">invert</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># ex : array([ True,  True,  True,  True, False,  True,  True,  True,  True], dtype=bool) -&gt; False where there is -10000 ou NaN</span>
+        <span class="c1"># Extent of the images</span>
+        <span class="n">mask_spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_spec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">isnan</span><span class="p">],</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># ex : array([ True,  True,  True,  True, False,  True,  True,  True,  True], dtype=bool) -&gt; False where there is -10000 ou NaN</span>
         
-        <span class="c"># Print area account of the pixel size &#39;info_spec.GetGeoTransform()&#39;</span>
-        <span class="k">print</span> <span class="s">&#39;Area = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_spec</span><span class="p">)</span>  <span class="o">*</span> <span class="n">info_spec</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">info_spec</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span><span class="o">/</span><span class="mi">10000</span><span class="p">))</span> <span class="o">+</span> <span class="s">&#39;ha&#39;</span> 
+        <span class="c1"># Print area account of the pixel size &#39;info_spec.GetGeoTransform()&#39;</span>
+        <span class="nb">print</span> <span class="s1">&#39;Area = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_spec</span><span class="p">)</span>  <span class="o">*</span> <span class="n">info_spec</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">info_spec</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span><span class="o">/</span><span class="mi">10000</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;ha&#39;</span> 
         
-        <span class="c"># Cloud mask</span>
-        <span class="n">mask_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_cloud</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># This is the same opposite False where there is 0</span>
-        <span class="n">cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">mask_cloud</span><span class="p">,</span> <span class="p">(</span><span class="bp">False</span><span class="p">,</span> <span class="n">mask_spec</span><span class="p">))</span> <span class="c">#  If True in cloud mask, it take spectral image else False</span>
-        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span> <span class="c"># Sum of True. True is cloud</span>
+        <span class="c1"># Cloud mask</span>
+        <span class="n">mask_cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">data_cloud</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1"># This is the same opposite False where there is 0</span>
+        <span class="n">cloud</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">mask_cloud</span><span class="p">,</span> <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">mask_spec</span><span class="p">))</span> <span class="c1"># If True in cloud mask, it take spectral image else False</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span> <span class="c1"># Sum of True. True is cloud</span>
         
-        <span class="c"># Computer cloud&#39;s percentage with dist (sum of cloud) by sum of the image&#39;s extent</span>
+        <span class="c1"># Computer cloud&#39;s percentage with dist (sum of cloud) by sum of the image&#39;s extent</span>
         <span class="k">try</span> <span class="p">:</span>
             <span class="n">nb0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask_spec</span><span class="p">))</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&#39;For &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">img_spec</span><span class="p">))[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;, cloud cover &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">nb0</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;%&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">img_spec</span><span class="p">))[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;, cloudy cover &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">nb0</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
             <span class="n">nb0</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;The raster isn</span><span class="se">\&#39;</span><span class="s">t in the area !&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The raster isn</span><span class="se">\&#39;</span><span class="s2">t in the area !&quot;</span><span class="p">)</span>
         
-        <span class="k">return</span> <span class="n">nb0</span>
-    </div>
+        <span class="k">return</span> <span class="n">nb0</span></div>
+    
 <div class="viewcode-block" id="RasterSat_by_date.calcul_ndvi"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.calcul_ndvi">[docs]</a>    <span class="k">def</span> <span class="nf">calcul_ndvi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img_spec</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computer NDVI index for a Landsat image.</span>
 <span class="sd">        </span>
-<span class="sd">        NDVI = band4 - band3 / band4 + band3</span>
+<span class="sd">        NDVI = band4 - band3 / band4 + band3 with nb_captor = 0</span>
+<span class="sd">        </span>
+<span class="sd">        or for Sentinel 2 image (2A) : NDVI = band3 - band2 / band3 + band2 with nb_captor = -1</span>
 <span class="sd">        </span>
 <span class="sd">        :param img_spec: Spectral image path</span>
 <span class="sd">        :type img_spec: str</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="c"># Extract raster&#39;s information</span>
+        <span class="c1"># NDVI formula index for 2 captor (L8 or S2A Theia)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class_archive</span><span class="o">.</span><span class="n">_captor</span> <span class="o">==</span> <span class="s1">&#39;SENTINEL2&#39;</span><span class="p">:</span>
+            <span class="n">n_captor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">n_captor</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># Extract raster&#39;s information</span>
         <span class="n">data</span><span class="p">,</span> <span class="n">in_ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raster_data</span><span class="p">(</span><span class="n">img_spec</span><span class="p">)</span>
         
-        <span class="c"># Computer NDVI</span>
+        <span class="c1"># Computer NDVI</span>
         <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">10000</span><span class="p">)</span>
-        <span class="n">ndvi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;(data[4]-data[3])&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;(data[4]+data[3])&#39;</span><span class="p">)))</span> <span class="c"># If True, -10000 (NaN) else compute mathematical operation</span>
+        <span class="n">ndvi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">10000</span><span class="p">,</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;(data[4+n_captor]-data[3+n_captor])&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;(data[4+n_captor]+data[3+n_captor])&#39;</span><span class="p">)))</span> <span class="c1"># If True, -10000 (NaN) else compute mathematical operation</span>
         
-        <span class="c"># Outfile name</span>
-        <span class="n">img_ndvi</span> <span class="o">=</span> <span class="n">img_spec</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;_ndvi.TIF&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_ndvi</span><span class="p">)</span> <span class="c"># Add ndvi image path</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span> <span class="c"># Add ndvi pixel value table</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">img_ndvi</span><span class="p">,</span> <span class="n">ndvi</span><span class="p">,</span> <span class="n">in_ds</span><span class="p">)</span>
-        </div>
+        <span class="c1"># Outfile name</span>
+        <span class="n">img_ndvi</span> <span class="o">=</span> <span class="n">img_spec</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_ndvi.TIF&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img_ndvi</span><span class="p">)</span> <span class="c1"># Add ndvi image path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_one_date</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ndvi</span><span class="p">)</span> <span class="c1"># Add ndvi pixel value table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">img_ndvi</span><span class="p">,</span> <span class="n">ndvi</span><span class="p">,</span> <span class="n">in_ds</span><span class="p">)</span></div>
+        
 <div class="viewcode-block" id="RasterSat_by_date.create_raster"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.create_raster">[docs]</a>    <span class="k">def</span> <span class="nf">create_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_raster</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">in_ds</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create raster </span>
+<span class="sd">        Create a raster empty with the input raster property</span>
 <span class="sd">        </span>
 <span class="sd">        :param out_raster: Output image path</span>
 <span class="sd">        :type out_raster: str</span>
 <span class="sd">        :param data: Pixel value matrix. Matrix size equal to that of a raster.</span>
-<span class="sd">        :type data: matrix</span>
+<span class="sd">        :type data: numpy.array</span>
 <span class="sd">        :param in_ds: Raster information</span>
 <span class="sd">        :type in_ds: gdal pointer</span>
 <span class="sd">        </span>
+<span class="sd">        :returns: gdal pointer -- variable **out_ds**, Raster out information.</span>
+<span class="sd">                  </span>
+<span class="sd">                  int -- variable **nbband**, Band number of the out layer. </span>
+<span class="sd">                  </span>
+<span class="sd">                  int -- variable **e**, Index to know if the raster exists. If it doesn&#39;t exists e = 0 else e = 1 (by default).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-<span class="c">#         if os.path.exists(str(out_raster)):</span>
-<span class="c">#             os.remove(str(out_raster))</span>
-        
-        <span class="c"># Verify if the processing take input band or one spectral band    </span>
-        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="c1">#         if os.path.exists(str(out_raster)):</span>
+<span class="c1">#             os.remove(str(out_raster))</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Raster out exists by default </span>
+        <span class="c1"># Verify if the processing take input band or one spectral band    </span>
+        <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_nb_b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">nbband</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nbband</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterCount</span> 
             
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">)):</span>    
-            <span class="c"># Create outfile</span>
-            <span class="n">driver</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s">&#39;GTiff&#39;</span><span class="p">)</span>
-            <span class="n">out_ds</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">),</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">,</span> <span class="n">nbband</span><span class="p">,</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_Float32</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">out_ds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s">&#39;Could not create &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">driver</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s1">&#39;GTiff&#39;</span><span class="p">)</span>  
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">)):</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="mi">0</span>    
+            <span class="c1"># Create outfile</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">),</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">RasterYSize</span><span class="p">,</span> <span class="n">nbband</span><span class="p">,</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_Float32</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="s1">&#39;Could not create &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-              
-            <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Increment for the number band</span>
+                
+            <span class="c1"># Get extent coordinates and raster resolution</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+            <span class="c1"># print transform</span>
+            
+            <span class="n">minX</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">maxY</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">pixelWidth</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">pixelHeight</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+            
+            <span class="n">geotransform</span> <span class="o">=</span> <span class="p">[</span><span class="n">minX</span><span class="p">,</span> <span class="n">pixelWidth</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxY</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pixelHeight</span><span class="p">]</span>
+            
+            <span class="c1"># Record projection</span>
+            <span class="n">def_projection</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">()</span> 
+
+            <span class="c1"># Set the geo-traking and outfile projection</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span><span class="o">.</span><span class="n">SetGeoTransform</span><span class="p">(</span><span class="n">geotransform</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span><span class="o">.</span><span class="n">SetProjection</span><span class="p">(</span><span class="n">def_projection</span><span class="p">)</span>
+        
+        <span class="k">else</span><span class="p">:</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">out_raster</span><span class="p">),</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GA_ReadOnly</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">nbband</span><span class="p">,</span> <span class="n">e</span></div>
+    
+<div class="viewcode-block" id="RasterSat_by_date.complete_raster"><a class="viewcode-back" href="../package.html#RasterSat_by_date.RasterSat_by_date.complete_raster">[docs]</a>    <span class="k">def</span> <span class="nf">complete_raster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">nbband</span><span class="p">,</span> <span class="n">e</span><span class="p">),</span> <span class="n">data</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function complete the function above :func:`create_raster()`. It </span>
+<span class="sd">        fills the raster table and close the layer.</span>
+<span class="sd">        </span>
+<span class="sd">        :param out_ds: Raster out information</span>
+<span class="sd">        :type out_ds: gdal pointer</span>
+<span class="sd">        :param nbband: Band number of the out layer</span>
+<span class="sd">        :type nbband: int</span>
+<span class="sd">        :param e: Index to know if the raster existed. If it didn&#39;t exist e = 0.</span>
+<span class="sd">        :type e: int</span>
+<span class="sd">        :param data: Pixel value matrix. Matrix size equal to that of a raster.</span>
+<span class="sd">        :type data: numpy.array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="c1"># The e index to verify if the layer existed already because of the </span>
+        <span class="c1"># function :func:`create_raster()`</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>   
+            <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Increment for the number band</span>
             <span class="k">while</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">nbband</span><span class="p">:</span>
-                <span class="c">#Incrementation</span>
+                <span class="c1">#Incrementation</span>
                 <span class="n">p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span>
-                
-                <span class="k">print</span> <span class="s">&quot;Copie sur la bande &quot;</span><span class="p">,</span> <span class="n">p</span>
-          
-                <span class="c"># Get extent coordinates and raster resolution</span>
-                <span class="n">transform</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
-                <span class="c"># print transform</span>
-                
-                <span class="n">minX</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">maxY</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-                <span class="n">pixelWidth</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">pixelHeight</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-                
-                <span class="n">geotransform</span> <span class="o">=</span> <span class="p">[</span><span class="n">minX</span><span class="p">,</span> <span class="n">pixelWidth</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">maxY</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pixelHeight</span><span class="p">]</span>
-                
-                <span class="c"># Record projection</span>
-                <span class="n">def_projection</span> <span class="o">=</span> <span class="n">in_ds</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">()</span>
-                
-                <span class="c"># Loading spectral band of outfile</span>
-                <span class="n">out_band</span> <span class="o">=</span> <span class="n">out_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> 
-                <span class="c"># write the data</span>
+            
+                <span class="nb">print</span> <span class="s2">&quot;Copy on the band &quot;</span><span class="p">,</span> <span class="n">p</span>
+      
+                <span class="c1"># Loading spectral band of outfile</span>
+                <span class="n">out_band</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> 
+                <span class="c1"># write the data</span>
                 <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="n">out_band</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">out_band</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                 
-                <span class="c"># Closing and statistics on output raster</span>
+                <span class="c1"># Closing and statistics on output raster</span>
                 <span class="n">out_band</span><span class="o">.</span><span class="n">FlushCache</span><span class="p">()</span>
                 <span class="n">out_band</span><span class="o">.</span><span class="n">SetNoDataValue</span><span class="p">(</span><span class="o">-</span><span class="mi">10000</span><span class="p">)</span>
                 <span class="n">out_band</span><span class="o">.</span><span class="n">GetStatistics</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
-                <span class="n">out_band</span> <span class="o">=</span> <span class="bp">None</span>    
-
-            <span class="c"># Set the geo-traking and outfile projection</span>
-            <span class="n">out_ds</span><span class="o">.</span><span class="n">SetGeoTransform</span><span class="p">(</span><span class="n">geotransform</span><span class="p">)</span>
-            <span class="n">out_ds</span><span class="o">.</span><span class="n">SetProjection</span><span class="p">(</span><span class="n">def_projection</span><span class="p">)</span>
+                <span class="n">out_band</span> <span class="o">=</span> <span class="kc">None</span>    
             
-            <span class="c"># Close les données ouvertes</span>
-            <span class="n">out_ds</span> <span class="o">=</span> <span class="bp">None</span>
-    
-            </div></div>
+        <span class="c1"># Close open data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_ds</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+
+            
 </pre></div>
 
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
-        <li><a href="../PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Code du module</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

@@ -2,87 +2,108 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Graphical User Interface package &mdash; PHYMOBAT 1 documentation</title>
+    <title>Graphical User Interface package &#8212; documentation PHYMOBAT 3.0</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1',
+        VERSION:     '3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="PHYMOBAT 1 documentation" href="index.html" />
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
     <link rel="prev" title="CarHab Phy MOBA package" href="package.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="genindex.html" title="Index général"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
         <li class="right" >
           <a href="package.html" title="CarHab Phy MOBA package"
-             accesskey="P">previous</a> |</li>
-        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+             accesskey="P">précédent</a> |</li>
+        <li class="nav-item nav-item-0"><a href="PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="graphical-user-interface-package">
-<h1>Graphical User Interface package<a class="headerlink" href="#graphical-user-interface-package" title="Permalink to this headline">¶</a></h1>
+<h1>Graphical User Interface package<a class="headerlink" href="#graphical-user-interface-package" title="Lien permanent vers ce titre">¶</a></h1>
 <p>The class diagram associated to the interface is this :</p>
 <div class="figure align-center">
 <img alt="Class diagram Interface" src="_images/ChainedeTraitementCarHab_API_UML_v3.png" />
 </div>
 <div class="section" id="module-PHYMOBAT">
-<span id="interface-command"></span><h2>Interface command<a class="headerlink" href="#module-PHYMOBAT" title="Permalink to this headline">¶</a></h2>
+<span id="interface-command"></span><h2>Interface command<a class="headerlink" href="#module-PHYMOBAT" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Interface main, PHYMOBAT (FB PHYsionomiquedes Milieux Ouverts de Basse Altitude par Télédétection)</p>
-<p>__name__ = &#8220;PHYMOBAT 1.1&#8221;</p>
+<p>__name__ = &#8220;PHYMOBAT 3.0&#8221;</p>
 <p>__license__ = &#8220;GPL&#8221;</p>
-<p>__version__ = &#8220;1.1&#8221;</p>
+<p>__version__ = &#8220;3.0&#8221;</p>
 <p>__author__ = &#8220;LAVENTURE Sylvio - UMR TETIS / IRSTEA&#8221;</p>
-<p>__date__ = &#8220;Janvier 2016&#8221;</p>
+<p>__date__ = &#8220;Mars 2016&#8221;</p>
 <dl class="class">
 <dt id="PHYMOBAT.MyPopup_about">
-<em class="property">class </em><tt class="descclassname">PHYMOBAT.</tt><tt class="descname">MyPopup_about</tt><big>(</big><em>parent=None</em><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_about" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">PHYMOBAT.</code><code class="descname">MyPopup_about</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_about"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_about" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Popup to display &#8220;About PHYMOBAT&#8221;. In this windows, it prints informations on the processing, license
 and version.</p>
 <dl class="method">
 <dt id="PHYMOBAT.MyPopup_about.close_window">
-<tt class="descname">close_window</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_about.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_about.close_window" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_about.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_about.close_window" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to close the &#8220;A propos PHYMOBAT&#8221;.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
+<dt id="PHYMOBAT.MyPopup_proxy_window">
+<em class="property">class </em><code class="descclassname">PHYMOBAT.</code><code class="descname">MyPopup_proxy_window</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_proxy_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_proxy_window" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Popup to display a message to tell you if you fogotten to enter a raster or a sample.</p>
+<dl class="method">
+<dt id="PHYMOBAT.MyPopup_proxy_window.close_window">
+<code class="descname">close_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_proxy_window.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_proxy_window.close_window" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to close the popup.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.MyPopup_proxy_window.id_proxy">
+<code class="descname">id_proxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_proxy_window.id_proxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_proxy_window.id_proxy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to use input proxy id</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="PHYMOBAT.MyPopup_warming_forgetting">
-<em class="property">class </em><tt class="descclassname">PHYMOBAT.</tt><tt class="descname">MyPopup_warming_forgetting</tt><big>(</big><em>parent=None</em><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_forgetting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_forgetting" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">PHYMOBAT.</code><code class="descname">MyPopup_warming_forgetting</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_forgetting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_forgetting" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Popup to display a message to tell you if you fogotten to enter a raster or a sample.</p>
 <dl class="method">
 <dt id="PHYMOBAT.MyPopup_warming_forgetting.close_window">
-<tt class="descname">close_window</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_forgetting.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_forgetting.close_window" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_forgetting.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_forgetting.close_window" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to close the popup.</p>
 </dd></dl>
 
@@ -90,11 +111,11 @@ and version.</p>
 
 <dl class="class">
 <dt id="PHYMOBAT.MyPopup_warming_study_area">
-<em class="property">class </em><tt class="descclassname">PHYMOBAT.</tt><tt class="descname">MyPopup_warming_study_area</tt><big>(</big><em>parent=None</em><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_study_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_study_area" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">PHYMOBAT.</code><code class="descname">MyPopup_warming_study_area</code><span class="sig-paren">(</span><em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_study_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_study_area" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Popup to display a message to say there isn&#8217;t declared study area file.</p>
 <dl class="method">
 <dt id="PHYMOBAT.MyPopup_warming_study_area.close_window">
-<tt class="descname">close_window</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_study_area.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_study_area.close_window" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close_window</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#MyPopup_warming_study_area.close_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.MyPopup_warming_study_area.close_window" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to close the popup.</p>
 </dd></dl>
 
@@ -102,20 +123,28 @@ and version.</p>
 
 <dl class="class">
 <dt id="PHYMOBAT.PHYMOBAT">
-<em class="property">class </em><tt class="descclassname">PHYMOBAT.</tt><tt class="descname">PHYMOBAT</tt><big>(</big><em>parent=None</em><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface main class. It makes to link <tt class="docutils literal"><span class="pre">ui_PHYMOBAT_tab</span></tt> and <tt class="docutils literal"><span class="pre">Processing</span></tt>.</p>
+<em class="property">class </em><code class="descclassname">PHYMOBAT.</code><code class="descname">PHYMOBAT</code><span class="sig-paren">(</span><em>mode=0</em>, <em>parent=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface main class. It makes to link <code class="docutils literal"><span class="pre">ui_PHYMOBAT_tab</span></code> and <code class="docutils literal"><span class="pre">Processing</span></code>.</p>
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.about_PHYMOBA">
-<tt class="descname">about_PHYMOBA</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.about_PHYMOBA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.about_PHYMOBA" title="Permalink to this definition">¶</a></dt>
+<code class="descname">about_PHYMOBA</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.about_PHYMOBA"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.about_PHYMOBA" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to open a new window &#8220;About PHYMOBAT&#8221;</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.activate_level">
+<code class="descname">activate_level</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.activate_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.activate_level" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>To activate the first levels with seath method. This is in pushing on the decision tree radio button.
+Else it activates the last level to random forest method.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.add_sample">
-<tt class="descname">add_sample</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.add_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.add_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.add_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.add_sample" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Add sample information and location to compute optimal threshold :</p>
+<p>For the expert mode (mode=1) :</p>
 <ul>
-<li><p class="first">Append a sample name by line Edit. <em>This is a check box</em> <tt class="docutils literal"><span class="pre">RPG</span></tt>, <em>if the sample is RPG file. It launch the Rpg class. And append a other sample from Rpg class</em>.</p>
+<li><p class="first">Append a sample name by line Edit. <em>This is a check box</em> <code class="docutils literal"><span class="pre">RPG</span></code>, <em>if the sample is RPG file. It launch the Rpg class. And append a other sample from Rpg class</em>.</p>
 </li>
 <li><p class="first">Append two existent sample field names by combobox. It will be the same.</p>
 </li>
@@ -126,7 +155,7 @@ and version.</p>
 <li><p class="first">Print in a plain text edit : sample name, two sample field names, sample class names and number of polygons.</p>
 </li>
 <li><dl class="first docutils">
-<dt><em>This check box</em> <tt class="docutils literal"><span class="pre">Image</span> <span class="pre">echantillonee</span></tt>, <em>image path for samples if the first processing image hasn&#8217;t been launched</em>.</dt>
+<dt><em>This check box</em> <code class="docutils literal"><span class="pre">Image</span> <span class="pre">echantillonee</span></code>, <em>image path for samples if the first processing image hasn&#8217;t been launched</em>.</dt>
 <dd><div class="first last admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This is for a image with one spectral band</p>
@@ -137,107 +166,164 @@ and version.</p>
 <li><p class="first">Clear all widget field at the end.</p>
 </li>
 </ul>
+<p>For the simply mode (mode=0):</p>
+<ul class="simple">
+<li>Append a sample name by a different line Edit (a line Edit for each sample).</li>
+<li>Append sample class names, existing sample fields and number of polygons (a different line Edit for each sample)</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.block_for_swh">
+<code class="descname">block_for_swh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.block_for_swh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.block_for_swh" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to block others function when SportWorldHeritage is selected in the comboxbox captor.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.clear_sample">
-<tt class="descname">clear_sample</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.clear_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.clear_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.clear_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.clear_sample" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to clear sample record. Clear in the interface and in the memory list.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.close_button">
-<tt class="descname">close_button</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.close_button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.close_button" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close_button</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.close_button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.close_button" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to close the interface.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.display_all_levels">
-<tt class="descname">display_all_levels</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.display_all_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.display_all_levels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">display_all_levels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.display_all_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.display_all_levels" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to display fieldnames option to launch complete classification</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.display_one_level">
-<tt class="descname">display_one_level</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.display_one_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.display_one_level" title="Permalink to this definition">¶</a></dt>
+<code class="descname">display_one_level</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.display_one_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.display_one_level" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to display fieldnames option to classifier one level</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.display_two_levels">
-<tt class="descname">display_two_levels</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.display_two_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.display_two_levels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">display_two_levels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.display_two_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.display_two_levels" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to display fieldnames option to classifier two first levels</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.enter_sample_name">
-<tt class="descname">enter_sample_name</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.enter_sample_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.enter_sample_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open a input browser box to select the sample shapefile path by line edit. With <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.add_sample" title="PHYMOBAT.PHYMOBAT.add_sample"><tt class="xref py py-func docutils literal"><span class="pre">add_sample()</span></tt></a> conditions.</p>
+<code class="descname">enter_sample_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.enter_sample_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.enter_sample_name" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Open a input browser box to select the sample shapefile path by line edit. With <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.add_sample" title="PHYMOBAT.PHYMOBAT.add_sample"><code class="xref py py-func docutils literal"><span class="pre">add_sample()</span></code></a> conditions for the expert mode.
+For the simply mode, this function is used for the RPG shapefile.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.enter_sample_name_hl">
+<code class="descname">enter_sample_name_hl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.enter_sample_name_hl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.enter_sample_name_hl" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Open a input browser box to select the grass and wooden sample shapefile path by line edit. With <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.add_sample" title="PHYMOBAT.PHYMOBAT.add_sample"><code class="xref py py-func docutils literal"><span class="pre">add_sample()</span></code></a> conditions 
+for the simply mode.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.enter_sample_name_ll">
+<code class="descname">enter_sample_name_ll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.enter_sample_name_ll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.enter_sample_name_ll" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Open a input browser box to select the wooden sample shapefile path by line edit. With <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.add_sample" title="PHYMOBAT.PHYMOBAT.add_sample"><code class="xref py py-func docutils literal"><span class="pre">add_sample()</span></code></a> conditions for the simply mode.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.f_output_name_moba">
-<tt class="descname">f_output_name_moba</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_output_name_moba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_output_name_moba" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f_output_name_moba</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_output_name_moba"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_output_name_moba" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Set the output classification shapefile path by line edit.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.f_path_area">
-<tt class="descname">f_path_area</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_area" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f_path_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_area" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Open a input browser box to select the study area shapefile path by line edit.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.f_path_folder_dpt">
-<tt class="descname">f_path_folder_dpt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_folder_dpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_folder_dpt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f_path_folder_dpt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_folder_dpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_folder_dpt" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Open a input browser box to select the main folder path by line edit.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.f_path_mnt">
-<tt class="descname">f_path_mnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_mnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_mnt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f_path_mnt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_mnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_mnt" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Open a input browser box to select the MNT image path by line edit.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.f_path_ortho">
-<tt class="descname">f_path_ortho</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_ortho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_ortho" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f_path_ortho</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_ortho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_ortho" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Open a input browser box to select the VHRS image path by line edit.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.f_path_segm">
-<tt class="descname">f_path_segm</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_segm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_segm" title="Permalink to this definition">¶</a></dt>
+<code class="descname">f_path_segm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_path_segm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_path_segm" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Open a input browser box to select segmentation shapefile path path by line edit.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.f_proxy">
+<code class="descname">f_proxy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.f_proxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.f_proxy" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to open a popup in order to enter proxy ID</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.field_display_1">
-<tt class="descname">field_display_1</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_1" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to display fieldname class 1 in the other fieldname class 2 when text changed.</p>
+<code class="descname">field_display_1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_1" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to display fieldname class 1 in the other fieldname class 2 when text changed.
+For the simply mode, this is RPG sample.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.field_display_2">
-<tt class="descname">field_display_2</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to display fieldname class 2 in the other fieldname class 2 when text changed.</p>
+<code class="descname">field_display_2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_2" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to display fieldname class 2 in the other fieldname class 2 when text changed.
+For the simply mode, this is RPG sample.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.field_display_3">
+<code class="descname">field_display_3</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_3" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>For the grass/wooden sample, a function to display fieldname class 1 in the other fieldname class 2 when text changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.field_display_4">
+<code class="descname">field_display_4</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_4" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>For the grass/wooden sample, a function to display fieldname class 2 in the other fieldname class 2 when text changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.field_display_5">
+<code class="descname">field_display_5</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_5"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_5" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>For the wooden sample, a function to display fieldname class 1 in the other fieldname class 2 when text changed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.field_display_6">
+<code class="descname">field_display_6</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.field_display_6"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.field_display_6" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>For the wooden sample, a function to display fieldname class 2 in the other fieldname class 2 when text changed.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.forget_raster_sample">
-<tt class="descname">forget_raster_sample</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.forget_raster_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.forget_raster_sample" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forget_raster_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.forget_raster_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.forget_raster_sample" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to open a new window &#8216;Alert&#8217; because user forgotten to declare rasters or samples.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.forget_study_area">
-<tt class="descname">forget_study_area</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.forget_study_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.forget_study_area" title="Permalink to this definition">¶</a></dt>
+<code class="descname">forget_study_area</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.forget_study_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.forget_study_area" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to open a new window &#8216;Alert&#8217; because user forgotten to declare study area.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.get_variable">
-<tt class="descname">get_variable</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.get_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.get_variable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_variable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.get_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.get_variable" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Add a all system value like :</p>
 <ul class="simple">
 <li>Main folder path by line edit</li>
@@ -255,25 +341,25 @@ and version.</p>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.help_tools">
-<tt class="descname">help_tools</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.help_tools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.help_tools" title="Permalink to this definition">¶</a></dt>
+<code class="descname">help_tools</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.help_tools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.help_tools" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to open html help</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.img_sample_name">
-<tt class="descname">img_sample_name</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.img_sample_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.img_sample_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open a input browser box to select the image for samples path by line edit. With <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.add_sample" title="PHYMOBAT.PHYMOBAT.add_sample"><tt class="xref py py-func docutils literal"><span class="pre">add_sample()</span></tt></a> conditions.</p>
+<code class="descname">img_sample_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.img_sample_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.img_sample_name" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Open a input browser box to select the image for samples path by line edit. With <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.add_sample" title="PHYMOBAT.PHYMOBAT.add_sample"><code class="xref py py-func docutils literal"><span class="pre">add_sample()</span></code></a> conditions.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.initUI">
-<tt class="descname">initUI</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.initUI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.initUI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">initUI</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.initUI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.initUI" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Get initial values from interface after a click button.</p>
 <p>There is :</p>
-<ul>
+<ul class="simple">
 <li><dl class="first docutils">
 <dt>Connect browser button to search a path</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>Main folder path</li>
 <li>Study area shapefile path</li>
 <li>VHRS image path</li>
@@ -286,35 +372,40 @@ and version.</p>
 </dd>
 </dl>
 </li>
-<li><p class="first">Connect button to add sample in the memory list</p>
-</li>
-<li><p class="first">Connect button to clear sample record. Clear in the interface and in the memory list</p>
-</li>
-<li><p class="first">Connect close|ok button</p>
-</li>
-<li><p class="first">Connect menu bar tab (Open backup, save in a xml file, close, help, About PHYMOBAT)</p>
-</li>
-<li><p class="first">Initialize backup variable</p>
-</li>
+<li>Connect button to add sample in the memory list</li>
+<li>Connect button to clear sample record. Clear in the interface and in the memory list</li>
+<li>Connect close|ok button</li>
+<li>Connect menu bar tab (Open backup, save in a xml file, close, help, About PHYMOBAT, mode)</li>
+<li>Initialize backup variable</li>
 </ul>
 </dd></dl>
 
 <dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.mode_expert">
+<code class="descname">mode_expert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.mode_expert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.mode_expert" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to open a new window in expert mode &#8220;PHYMOBATe&#8221;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PHYMOBAT.PHYMOBAT.mode_simpli">
+<code class="descname">mode_simpli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.mode_simpli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.mode_simpli" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to open a new window in simple mode &#8220;PHYMOBATs&#8221;</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.ok_button">
-<tt class="descname">ok_button</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.ok_button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.ok_button" title="Permalink to this definition">¶</a></dt>
+<code class="descname">ok_button</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.ok_button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.ok_button" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to launch the processing. This function take account :</p>
-<ul>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">Multi-processing</span></tt> chack box if the processing has launched with multi process. By default, this is checked. It need a computer with minimum 12Go memory.</p>
-</li>
-<li><p class="first">Append a few system value with <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.get_variable" title="PHYMOBAT.PHYMOBAT.get_variable"><tt class="xref py py-func docutils literal"><span class="pre">get_variable()</span></tt></a>.</p>
-</li>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">Multi-processing</span></code> check box if the processing has launched with multi process. By default, this is checked. It need a computer with minimum 12Go memory.</li>
+<li>Append a few system value with <a class="reference internal" href="#PHYMOBAT.PHYMOBAT.get_variable" title="PHYMOBAT.PHYMOBAT.get_variable"><code class="xref py py-func docutils literal"><span class="pre">get_variable()</span></code></a>.</li>
 <li><dl class="first docutils">
 <dt>There are 3 principal check boxes :</dt>
-<dd><ul class="first last simple">
+<dd><ul class="first last">
 <li>to get number download available images</li>
 <li>for downloading and processing on theia platform</li>
-<li>for compute optimal threshold.</li>
-<li>for computer slope raster</li>
+<li>to compute optimal threshold.</li>
+<li>to compute slope raster</li>
 <li>for classification processing.</li>
 </ul>
 </dd>
@@ -325,19 +416,19 @@ and version.</p>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.open_backup">
-<tt class="descname">open_backup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.open_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.open_backup" title="Permalink to this definition">¶</a></dt>
+<code class="descname">open_backup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.open_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.open_backup" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to load input text in every fields. The input file must be a XML file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.save_backup">
-<tt class="descname">save_backup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.save_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.save_backup" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save_backup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.save_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.save_backup" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Function to save input text in every fields. The output file must be a XML file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="PHYMOBAT.PHYMOBAT.set_variable">
-<tt class="descname">set_variable</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.set_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.set_variable" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_variable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/PHYMOBAT.html#PHYMOBAT.set_variable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PHYMOBAT.PHYMOBAT.set_variable" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Print number of available image from Theia&#8217;s GeoJSON .</p>
 </dd></dl>
 
@@ -345,25 +436,25 @@ and version.</p>
 
 <dl class="function">
 <dt id="PHYMOBAT.bin">
-<tt class="descclassname">PHYMOBAT.</tt><tt class="descname">bin</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#PHYMOBAT.bin" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">PHYMOBAT.</code><code class="descname">bin</code><span class="sig-paren">(</span><em>QTextStream</em><span class="sig-paren">)</span> &#x2192; QTextStream<a class="headerlink" href="#PHYMOBAT.bin" title="Lien permanent vers cette définition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="PHYMOBAT.hex">
-<tt class="descclassname">PHYMOBAT.</tt><tt class="descname">hex</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#PHYMOBAT.hex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">PHYMOBAT.</code><code class="descname">hex</code><span class="sig-paren">(</span><em>QTextStream</em><span class="sig-paren">)</span> &#x2192; QTextStream<a class="headerlink" href="#PHYMOBAT.hex" title="Lien permanent vers cette définition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="PHYMOBAT.oct">
-<tt class="descclassname">PHYMOBAT.</tt><tt class="descname">oct</tt><big>(</big><em>QTextStream</em><big>)</big> &rarr; QTextStream<a class="headerlink" href="#PHYMOBAT.oct" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">PHYMOBAT.</code><code class="descname">oct</code><span class="sig-paren">(</span><em>QTextStream</em><span class="sig-paren">)</span> &#x2192; QTextStream<a class="headerlink" href="#PHYMOBAT.oct" title="Lien permanent vers cette définition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-Processing">
-<span id="control-processing"></span><h2>Control processing<a class="headerlink" href="#module-Processing" title="Permalink to this headline">¶</a></h2>
+<span id="control-processing"></span><h2>Control processing<a class="headerlink" href="#module-Processing" title="Lien permanent vers ce titre">¶</a></h2>
 <dl class="class">
 <dt id="Processing.Processing">
-<em class="property">class </em><tt class="descclassname">Processing.</tt><tt class="descname">Processing</tt><a class="reference internal" href="_modules/Processing.html#Processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">Processing.</code><code class="descname">Processing</code><a class="reference internal" href="_modules/Processing.html#Processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Main processing. This class launch the others system classes. It take into account
 CarHab classification method MOBA.</p>
 <dl class="docutils">
@@ -372,6 +463,7 @@ CarHab classification method MOBA.</p>
 <li>Image Processing (Search, download and processing)</li>
 <li>Vector Processing (Optimal threshold, Sample processing)</li>
 <li>Classification</li>
+<li>Validation</li>
 </ul>
 </dd>
 </dl>
@@ -380,17 +472,17 @@ CarHab classification method MOBA.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>captor_project</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Satellite captor name</li>
-<li><strong>classif_year</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Classification year</li>
-<li><strong>nb_avalaible_images</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Number download available images</li>
-<li><strong>path_folder_dpt</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Main folder path</li>
-<li><strong>folder_archive</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Archive downloaded folder path</li>
-<li><strong>folder_processing</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Processing folder name. By default : &#8216;Traitement&#8217;</li>
-<li><strong>path_area</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Study area shapefile</li>
-<li><strong>path_ortho</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; VHRS image path</li>
-<li><strong>path_mnt</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; MNT image path</li>
-<li><strong>path_segm</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Segmentation shapefile</li>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>captor_project</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Satellite captor name</li>
+<li><strong>classif_year</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Classification year</li>
+<li><strong>nb_avalaible_images</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(disponible dans Python v2.7)"><em>int</em></a>) &#8211; Number download available images</li>
+<li><strong>path_folder_dpt</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Main folder path</li>
+<li><strong>folder_archive</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Archive downloaded folder path</li>
+<li><strong>folder_processing</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Processing folder name. By default : &#8216;Traitement&#8217;</li>
+<li><strong>path_area</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Study area shapefile</li>
+<li><strong>path_ortho</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; VHRS image path</li>
+<li><strong>path_mnt</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; MNT image path</li>
+<li><strong>path_segm</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Segmentation shapefile</li>
 </ul>
 </td>
 </tr>
@@ -401,9 +493,9 @@ CarHab classification method MOBA.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>user</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Connexion Username</li>
-<li><strong>password</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Connexion Password</li>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Connexion Username</li>
+<li><strong>password</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Connexion Password</li>
 </ul>
 </td>
 </tr>
@@ -414,10 +506,10 @@ CarHab classification method MOBA.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>output_name_moba</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Output classification shapefile</li>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
+<li><strong>output_name_moba</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Output classification shapefile</li>
 <li><strong>out_fieldname_carto</strong> (<em>list of str</em>) &#8211; Output shapefile field name</li>
-<li><strong>out_fieldtype_carto</strong> (<em>list of str (eval ogr pointer)</em>) &#8211; Output shapefile field type</li>
+<li><strong>out_fieldtype_carto</strong> (<em>list of str</em><em> (</em><em>eval ogr pointer</em><em>)</em><em></em>) &#8211; Output shapefile field type</li>
 </ul>
 </td>
 </tr>
@@ -428,7 +520,7 @@ CarHab classification method MOBA.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><ul class="first last simple">
 <li><strong>fieldname_args</strong> (<em>list of str</em>) &#8211; Sample field names 2 by 2</li>
 <li><strong>class_args</strong> (<em>list of str</em>) &#8211; Sample class names 2 by 2</li>
 <li><strong>sample_name</strong> (<em>list of str</em>) &#8211; List of sample name (path)</li>
@@ -443,7 +535,7 @@ CarHab classification method MOBA.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mp</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable -&gt; 0 or 1.</p>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>mp</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(disponible dans Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable -&gt; 0 or 1.</p>
 <ul class="simple">
 <li>0 means, not multi-processing</li>
 <li>1 means, launch process with multi-processing</li>
@@ -453,25 +545,34 @@ CarHab classification method MOBA.</p>
 </tbody>
 </table>
 <dl class="method">
-<dt id="Processing.Processing.i_classifier">
-<tt class="descname">i_classifier</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_classifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_classifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface function to launch decision tree classification with a input segmentation <a class="reference internal" href="package.html#Segmentation.Segmentation" title="Segmentation.Segmentation"><tt class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation()</span></tt></a>.</p>
-<p>This function store optimal threshold by class <strong>Segmentation.out_threshold</strong>. Then compute zonal statistics by polygons
+<dt id="Processing.Processing.i_classifier_rf">
+<code class="descname">i_classifier_rf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_classifier_rf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_classifier_rf" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface function to launch random forest classification with a input segmentation <a class="reference internal" href="package.html#Segmentation.Segmentation" title="Segmentation.Segmentation"><code class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation()</span></code></a>.</p>
+<p>This function use the sklearn module to build the best of decision tree to extract classes.
+The optimal threshold are stored by class <strong>rf</strong> variable in <a class="reference internal" href="#Processing.Processing.i_sample_rf" title="Processing.Processing.i_sample_rf"><code class="xref py py-func docutils literal"><span class="pre">Processing.i_sample_rf()</span></code></a>. Then it computes zonal statistics by polygons
+for every images in multi-processing (if <strong>mp</strong> = 1).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Processing.Processing.i_classifier_s">
+<code class="descname">i_classifier_s</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_classifier_s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_classifier_s" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface function to launch decision tree classification with a input segmentation <a class="reference internal" href="package.html#Segmentation.Segmentation" title="Segmentation.Segmentation"><code class="xref py py-func docutils literal"><span class="pre">Segmentation.Segmentation()</span></code></a>.</p>
+<p>This function store optimal threshold by class <strong>Segmentation.out_threshold</strong>. Then it computes zonal statistics by polygons
 for every images in multi-processing (if <strong>mp</strong> = 1).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Processing.Processing.i_download">
-<tt class="descname">i_download</tt><big>(</big><em>dd</em><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_download" title="Permalink to this definition">¶</a></dt>
+<code class="descname">i_download</code><span class="sig-paren">(</span><em>dd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_download" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Interface function to download archives on the website Theia Land. This function extract 
-the number of downloadable image with <a class="reference internal" href="package.html#Archive.Archive.listing" title="Archive.Archive.listing"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.listing()</span></tt></a>.</p>
-<p>Then, this function download <tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.download()</span></tt> and unzip <a class="reference internal" href="package.html#Archive.Archive.decompress" title="Archive.Archive.decompress"><tt class="xref py py-func docutils literal"><span class="pre">Archive.Archive.decompress()</span></tt></a> images
+the number of downloadable image with <a class="reference internal" href="package.html#Archive.Archive.listing" title="Archive.Archive.listing"><code class="xref py py-func docutils literal"><span class="pre">Archive.Archive.listing()</span></code></a>.</p>
+<p>Then, this function download <code class="xref py py-func docutils literal"><span class="pre">Archive.Archive.download()</span></code> and unzip <a class="reference internal" href="package.html#Archive.Archive.decompress" title="Archive.Archive.decompress"><code class="xref py py-func docutils literal"><span class="pre">Archive.Archive.decompress()</span></code></a> images
 in the archive folder (<strong>folder_archive</strong>).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dd</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable to launch download images -&gt; 0 or 1.</p>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>dd</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(disponible dans Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable to launch download images -&gt; 0 or 1.</p>
 <ul class="simple">
 <li>0 means, not downloading</li>
 <li>1 means, launch downloading</li>
@@ -483,14 +584,21 @@ in the archive folder (<strong>folder_archive</strong>).</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="Processing.Processing.i_glob">
+<code class="descname">i_glob</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_glob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_glob" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Function to load existing images to launch the processing. 
+It need to archives. Then, to select processing images, select archives</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="Processing.Processing.i_images_processing">
-<tt class="descname">i_images_processing</tt><big>(</big><em>vs</em><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_images_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_images_processing" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface function to launch processing VHRS images <a class="reference internal" href="#Processing.Processing.i_vhrs" title="Processing.Processing.i_vhrs"><tt class="xref py py-func docutils literal"><span class="pre">i_vhrs()</span></tt></a> and satellite images <a class="reference internal" href="#Processing.Processing.i_img_sat" title="Processing.Processing.i_img_sat"><tt class="xref py py-func docutils literal"><span class="pre">i_img_sat()</span></tt></a> in multi-processing.</p>
+<code class="descname">i_images_processing</code><span class="sig-paren">(</span><em>vs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_images_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_images_processing" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface function to launch processing VHRS images <a class="reference internal" href="#Processing.Processing.i_vhrs" title="Processing.Processing.i_vhrs"><code class="xref py py-func docutils literal"><span class="pre">i_vhrs()</span></code></a> and satellite images <a class="reference internal" href="#Processing.Processing.i_img_sat" title="Processing.Processing.i_img_sat"><code class="xref py py-func docutils literal"><span class="pre">i_img_sat()</span></code></a> in multi-processing.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vs</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable to launch processing because of interface checkbox -&gt; 0 or 1.</p>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>vs</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(disponible dans Python v2.7)"><em>int</em></a>) &#8211; <p>Boolean variable to launch processing because of interface checkbox -&gt; 0 or 1.</p>
 <ul class="simple">
 <li>0 means, not texture processing</li>
 <li>1 means, launch texture processing</li>
@@ -503,22 +611,22 @@ in the archive folder (<strong>folder_archive</strong>).</p>
 
 <dl class="method">
 <dt id="Processing.Processing.i_img_sat">
-<tt class="descname">i_img_sat</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_img_sat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_img_sat" title="Permalink to this definition">¶</a></dt>
+<code class="descname">i_img_sat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_img_sat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_img_sat" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Interface function to processing satellite images:</p>
 <blockquote>
 <div><p>1. Clip archive images and modify Archive class to integrate clip image path.
-With <a class="reference internal" href="package.html#Toolbox.clip_raster" title="Toolbox.clip_raster"><tt class="xref py py-func docutils literal"><span class="pre">Toolbox.clip_raster()</span></tt></a> in <tt class="docutils literal"><span class="pre">Toolbox</span></tt> module.</p>
-<p>2. Search cloud&#8217;s percentage <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.pourc_cloud" title="RasterSat_by_date.RasterSat_by_date.pourc_cloud"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.pourc_cloud()</span></tt></a>, select 
-image and compute ndvi index <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.calcul_ndvi" title="RasterSat_by_date.RasterSat_by_date.calcul_ndvi"><tt class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.calcul_ndvi()</span></tt></a>. If cloud&#8217;s percentage is 
+With <code class="xref py py-func docutils literal"><span class="pre">Toolbox.clip_raster()</span></code> in <code class="docutils literal"><span class="pre">Toolbox</span></code> module.</p>
+<p>2. Search cloud&#8217;s percentage <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.pourc_cloud" title="RasterSat_by_date.RasterSat_by_date.pourc_cloud"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.pourc_cloud()</span></code></a>, select 
+image and compute ndvi index <a class="reference internal" href="package.html#RasterSat_by_date.RasterSat_by_date.calcul_ndvi" title="RasterSat_by_date.RasterSat_by_date.calcul_ndvi"><code class="xref py py-func docutils literal"><span class="pre">RasterSat_by_date.RasterSat_by_date.calcul_ndvi()</span></code></a>. If cloud&#8217;s percentage is 
 greater than 40%, then not select and compute ndvi index.</p>
-<p>3. Compute temporal stats on ndvi index [min, max, std, min-max]. With <a class="reference internal" href="package.html#Toolbox.calc_serie_stats" title="Toolbox.calc_serie_stats"><tt class="xref py py-func docutils literal"><span class="pre">Toolbox.calc_serie_stats()</span></tt></a> 
-in <tt class="docutils literal"><span class="pre">Toolbox</span></tt> module.</p>
+<p>3. Compute temporal stats on ndvi index [min, max, std, min-max]. With <code class="xref py py-func docutils literal"><span class="pre">Toolbox.calc_serie_stats()</span></code> 
+in <code class="docutils literal"><span class="pre">Toolbox</span></code> module.</p>
 <ol class="arabic simple" start="4">
 <li>Create stats ndvi raster and stats cloud raster.</li>
 </ol>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">RasterSat_by_date</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">RasterSat_by_date</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stats_test</span> <span class="o">=</span> <span class="n">RasterSat_by_date</span><span class="p">(</span><span class="n">class_archive</span><span class="p">,</span> <span class="n">big_folder</span><span class="p">,</span> <span class="n">one_date</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_test</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">in_raster</span><span class="p">,</span> <span class="n">stats_data</span><span class="p">,</span> <span class="n">in_ds</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats_test</span><span class="o">.</span><span class="n">complete_raster</span><span class="p">(</span><span class="n">stats_test</span><span class="o">.</span><span class="n">create_raster</span><span class="p">(</span><span class="n">in_raster</span><span class="p">,</span> <span class="n">stats_data</span><span class="p">,</span> <span class="n">in_ds</span><span class="p">),</span> <span class="n">stats_data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -526,15 +634,15 @@ in <tt class="docutils literal"><span class="pre">Toolbox</span></tt> module.</p
 
 <dl class="method">
 <dt id="Processing.Processing.i_rpg">
-<tt class="descname">i_rpg</tt><big>(</big><em>path_rpg</em><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_rpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_rpg" title="Permalink to this definition">¶</a></dt>
+<code class="descname">i_rpg</code><span class="sig-paren">(</span><em>path_rpg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_rpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_rpg" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Interface function to extract mono rpg crops.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path_rpg</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) &#8211; Input RPG shapefile.</td>
+<tr class="field-odd field"><th class="field-name">Paramètres:</th><td class="field-body"><strong>path_rpg</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(disponible dans Python v2.7)"><em>str</em></a>) &#8211; Input RPG shapefile.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str &#8211; variable <strong>Rpg.vector_used</strong>, output no duplicated crops shapefile (path).</td>
+<tr class="field-even field"><th class="field-name">Retourne:</th><td class="field-body">str &#8211; variable <strong>Rpg.vector_used</strong>, output no duplicated crops shapefile (path).</td>
 </tr>
 </tbody>
 </table>
@@ -542,62 +650,98 @@ in <tt class="docutils literal"><span class="pre">Toolbox</span></tt> module.</p
 
 <dl class="method">
 <dt id="Processing.Processing.i_sample">
-<tt class="descname">i_sample</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_sample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface function to compute threshold with various sample.</p>
-<p>It create samples 2 by 2 with kwargs field names and class <a class="reference internal" href="package.html#Sample.Sample.create_sample" title="Sample.Sample.create_sample"><tt class="xref py py-func docutils literal"><span class="pre">Sample.Sample.create_sample()</span></tt></a>. 
-Then, it compute zonal statistics by polygons <tt class="xref py py-func docutils literal"><span class="pre">Vector.Sample.zonal_stats()</span></tt>.</p>
-<p>With zonal statistics computed, a optimal threshold is determined <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><tt class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></tt></a>.</p>
+<code class="descname">i_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_sample" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface function to compute threshold with various sample. It also extract a list of validation layer (shapefile) 
+to compute the precision of the next classification <a class="reference internal" href="#Processing.Processing.i_validate" title="Processing.Processing.i_validate"><code class="xref py py-func docutils literal"><span class="pre">i_validate()</span></code></a>.</p>
+<p>It create samples 2 by 2 with kwargs field names and class <a class="reference internal" href="package.html#Sample.Sample.create_sample" title="Sample.Sample.create_sample"><code class="xref py py-func docutils literal"><span class="pre">Sample.Sample.create_sample()</span></code></a>. 
+Then, it compute zonal statistics by polygons <code class="xref py py-func docutils literal"><span class="pre">Vector.Sample.zonal_stats()</span></code>.</p>
+<p>With zonal statistics computed, a optimal threshold is determined <a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><code class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></code></a> that
+will print in a text file .lg in the main folder.</p>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last"><a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><tt class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></tt></a> does not always allow to discriminate optimal threshold. 
+<p class="first admonition-title">Avertissement</p>
+<p class="last"><a class="reference internal" href="package.html#Seath.Seath.separability_and_threshold" title="Seath.Seath.separability_and_threshold"><code class="xref py py-func docutils literal"><span class="pre">Seath.Seath.separability_and_threshold()</span></code></a> does not always allow to discriminate optimal threshold. 
 Then, this function will be launch at least ten time until it reaches a optimal threshold.</p>
 </div>
 </dd></dl>
 
 <dl class="method">
+<dt id="Processing.Processing.i_sample_rf">
+<code class="descname">i_sample_rf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_sample_rf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_sample_rf" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>This function build a random forest trees like model to create a final classification.
+All of This using the method described in the <a class="reference internal" href="#Processing.Processing.i_validate" title="Processing.Processing.i_validate"><code class="xref py py-func docutils literal"><span class="pre">i_validate()</span></code></a> function and because
+of sklearn module.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="Processing.Processing.i_slope">
-<tt class="descname">i_slope</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_slope" title="Permalink to this definition">¶</a></dt>
+<code class="descname">i_slope</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_slope" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Interface function to processing slope raster. From a MNT, and with a command line gdal,
-this function compute slope in degrees <a class="reference internal" href="package.html#Slope.Slope" title="Slope.Slope"><tt class="xref py py-func docutils literal"><span class="pre">Slope.Slope()</span></tt></a>.</p>
+this function compute slope in degrees <a class="reference internal" href="package.html#Slope.Slope" title="Slope.Slope"><code class="xref py py-func docutils literal"><span class="pre">Slope.Slope()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="Processing.Processing.i_tree_direction">
-<tt class="descname">i_tree_direction</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_tree_direction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_tree_direction" title="Permalink to this definition">¶</a></dt>
+<code class="descname">i_tree_direction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_tree_direction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_tree_direction" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Interface function to can extract one level or two levels of the final classification</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="Processing.Processing.i_validate">
+<code class="descname">i_validate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_validate" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface to validate a classification. It going to rasterize the validation shapefile and the 
+classification shapefile with <code class="xref py py-func docutils literal"><span class="pre">layer_rasterization()</span></code>. Next, to compare pixel by pixel, the classification
+quality to built a confusion matrix in a csv file.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="Processing.Processing.i_vhrs">
-<tt class="descname">i_vhrs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/Processing.html#Processing.i_vhrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_vhrs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface function to processing VHRS images. It create two OTB texture images <a class="reference internal" href="package.html#Vhrs.Vhrs" title="Vhrs.Vhrs"><tt class="xref py py-func docutils literal"><span class="pre">Vhrs.Vhrs()</span></tt></a> : SFS Texture and Haralick Texture</p>
+<code class="descname">i_vhrs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Processing.html#Processing.i_vhrs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Processing.Processing.i_vhrs" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Interface function to processing VHRS images. It create two OTB texture images <a class="reference internal" href="package.html#Vhrs.Vhrs" title="Vhrs.Vhrs"><code class="xref py py-func docutils literal"><span class="pre">Vhrs.Vhrs()</span></code></a> : SFS Texture and Haralick Texture</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="module-ui_PHYMOBAT_tab">
-<span id="interface-element"></span><h2>Interface element<a class="headerlink" href="#module-ui_PHYMOBAT_tab" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-ui_PHYMOBATs_tab">
+<span id="interface-element"></span><h2>Interface element<a class="headerlink" href="#module-ui_PHYMOBATs_tab" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="class">
+<dt id="ui_PHYMOBATs_tab.Ui_PHYMOBAT">
+<em class="property">class </em><code class="descclassname">ui_PHYMOBATs_tab.</code><code class="descname">Ui_PHYMOBAT</code><a class="reference internal" href="_modules/ui_PHYMOBATs_tab.html#Ui_PHYMOBAT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_PHYMOBATs_tab.Ui_PHYMOBAT" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class to display “Simplify PHYMOBAT window”.</p>
+</dd></dl>
+
+<span class="target" id="module-ui_PHYMOBATe_tab"></span><dl class="class">
+<dt id="ui_PHYMOBATe_tab.Ui_PHYMOBAT">
+<em class="property">class </em><code class="descclassname">ui_PHYMOBATe_tab.</code><code class="descname">Ui_PHYMOBAT</code><a class="reference internal" href="_modules/ui_PHYMOBATe_tab.html#Ui_PHYMOBAT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_PHYMOBATe_tab.Ui_PHYMOBAT" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class to display “Expert PHYMOBAT window”.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-ui_A_propos_PHYMOBAT_window">
-<span id="popup-about-and-warming"></span><h2>Popup about and warming<a class="headerlink" href="#module-ui_A_propos_PHYMOBAT_window" title="Permalink to this headline">¶</a></h2>
+<span id="popup-about-and-warming"></span><h2>Popup about and warming<a class="headerlink" href="#module-ui_A_propos_PHYMOBAT_window" title="Lien permanent vers ce titre">¶</a></h2>
 <dl class="class">
 <dt id="ui_A_propos_PHYMOBAT_window.Ui_About">
-<em class="property">class </em><tt class="descclassname">ui_A_propos_PHYMOBAT_window.</tt><tt class="descname">Ui_About</tt><a class="reference internal" href="_modules/ui_A_propos_PHYMOBAT_window.html#Ui_About"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_A_propos_PHYMOBAT_window.Ui_About" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ui_A_propos_PHYMOBAT_window.</code><code class="descname">Ui_About</code><a class="reference internal" href="_modules/ui_A_propos_PHYMOBAT_window.html#Ui_About"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_A_propos_PHYMOBAT_window.Ui_About" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Class to display &#8220;About PHYMOBAT&#8221;. In this windows, it prints informations on the processing, license
 and version.</p>
 </dd></dl>
 
 <span class="target" id="module-ui_Warming_study_area"></span><dl class="class">
 <dt id="ui_Warming_study_area.Ui_Warming_study_area">
-<em class="property">class </em><tt class="descclassname">ui_Warming_study_area.</tt><tt class="descname">Ui_Warming_study_area</tt><a class="reference internal" href="_modules/ui_Warming_study_area.html#Ui_Warming_study_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_Warming_study_area.Ui_Warming_study_area" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ui_Warming_study_area.</code><code class="descname">Ui_Warming_study_area</code><a class="reference internal" href="_modules/ui_Warming_study_area.html#Ui_Warming_study_area"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_Warming_study_area.Ui_Warming_study_area" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Class to display a message to say there isn&#8217;t declared study area file.</p>
 </dd></dl>
 
 <span class="target" id="module-ui_Warming_forgetting"></span><dl class="class">
 <dt id="ui_Warming_forgetting.Ui_Warming_forgetting">
-<em class="property">class </em><tt class="descclassname">ui_Warming_forgetting.</tt><tt class="descname">Ui_Warming_forgetting</tt><a class="reference internal" href="_modules/ui_Warming_forgetting.html#Ui_Warming_forgetting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_Warming_forgetting.Ui_Warming_forgetting" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ui_Warming_forgetting.</code><code class="descname">Ui_Warming_forgetting</code><a class="reference internal" href="_modules/ui_Warming_forgetting.html#Ui_Warming_forgetting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_Warming_forgetting.Ui_Warming_forgetting" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Class to display a message to tell you if you fogotten to enter a raster or a sample.</p>
+</dd></dl>
+
+<span class="target" id="module-ui_Proxy_window"></span><dl class="class">
+<dt id="ui_Proxy_window.Ui_Proxy_window">
+<em class="property">class </em><code class="descclassname">ui_Proxy_window.</code><code class="descname">Ui_Proxy_window</code><a class="reference internal" href="_modules/ui_Proxy_window.html#Ui_Proxy_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ui_Proxy_window.Ui_Proxy_window" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Class to display “Proxy window”. In this windows, there is 3 lines edit to fill (proxy server, login and password).</p>
 </dd></dl>
 
 </div>
@@ -607,62 +751,61 @@ and version.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="PHYMOBAT_documentation.html">Table Of Contents</a></h3>
+  <h3><a href="PHYMOBAT_documentation.html">Table des Matières</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Graphical User Interface package</a><ul>
 <li><a class="reference internal" href="#module-PHYMOBAT">Interface command</a></li>
 <li><a class="reference internal" href="#module-Processing">Control processing</a></li>
-<li><a class="reference internal" href="#module-ui_PHYMOBAT_tab">Interface element</a></li>
+<li><a class="reference internal" href="#module-ui_PHYMOBATs_tab">Interface element</a></li>
 <li><a class="reference internal" href="#module-ui_A_propos_PHYMOBAT_window">Popup about and warming</a></li>
 </ul>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
+  <h4>Sujet précédent</h4>
   <p class="topless"><a href="package.html"
-                        title="previous chapter">CarHab Phy MOBA package</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/API.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
+                        title="Chapitre précédent">CarHab Phy MOBA package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>Cette page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/API.rst.txt"
+            rel="nofollow">Montrer le code source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Recherche rapide</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
+          <a href="genindex.html" title="Index général"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
+          <a href="py-modindex.html" title="Index des modules Python"
              >modules</a> |</li>
         <li class="right" >
           <a href="package.html" title="CarHab Phy MOBA package"
-             >previous</a> |</li>
-        <li><a href="PHYMOBAT_documentation.html">PHYMOBAT 1 documentation</a> &raquo;</li> 
+             >précédent</a> |</li>
+        <li class="nav-item nav-item-0"><a href="PHYMOBAT_documentation.html">documentation PHYMOBAT 3.0</a> &#187;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2016, LAVENTURE Sylvio &lt;sylvio.laventure@teledetection.fr&gt;.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, LAVENTURE Sylvio (UMR TETIS/IRSTEA).
+      Créé avec <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.3.
     </div>
   </body>
 </html>

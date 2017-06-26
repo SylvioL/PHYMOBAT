@@ -192,30 +192,30 @@ class Vector():
         
         # Define the validation's vector
         valid_raster = self.vector_used[:-3]+'TIF' # Name of the output raster
-        if os.path.exists(str(valid_raster)):
-            os.remove(valid_raster)
+        if not os.path.exists(str(valid_raster)):
+#             os.remove(valid_raster)
             
-        # Create the empty raster with the same properties
-        # Condition for the rasters with several bands
-        if raster_info[1].RasterCount > 1:
-            data_raster = raster_info[0][0]
-        else:
-            data_raster = raster_info[0]
-        info_out = example_raster.create_raster(valid_raster, data_raster, raster_info[1])
-        self.raster_ds = example_raster.out_ds
-        
-        # Virtual rasterize the vector 
-        pt_rast = gdal.RasterizeLayer(self.raster_ds, [1], self.data_source.GetLayer(), \
-                                      options=["ATTRIBUTE=" + str(attribute_r)])
-        
-        if pt_rast != 0:
-            raise Exception("error rasterizing layer: %s" % pt_rast)
-        
-        new_data = self.raster_ds.ReadAsArray()
-        
-        self.raster_ds = None
-        # Complete the raster creation
-        example_raster.complete_raster(info_out, new_data)
+            # Create the empty raster with the same properties
+            # Condition for the rasters with several bands
+            if raster_info[1].RasterCount > 1:
+                data_raster = raster_info[0][0]
+            else:
+                data_raster = raster_info[0]
+            info_out = example_raster.create_raster(valid_raster, data_raster, raster_info[1])
+            self.raster_ds = example_raster.out_ds
+            
+            # Virtual rasterize the vector 
+            pt_rast = gdal.RasterizeLayer(self.raster_ds, [1], self.data_source.GetLayer(), \
+                                          options=["ATTRIBUTE=" + str(attribute_r)])
+            
+            if pt_rast != 0:
+                raise Exception("error rasterizing layer: %s" % pt_rast)
+            
+            new_data = self.raster_ds.ReadAsArray()
+            
+            self.raster_ds = None
+            # Complete the raster creation
+            example_raster.complete_raster(info_out, new_data)
         
         return valid_raster
         
